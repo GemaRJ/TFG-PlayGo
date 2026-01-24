@@ -7,31 +7,39 @@
     --font-main: 'Fredoka', sans-serif;
 }
 
+/* ================= CUERPO PRINCIPAL ================= */
 body {
     margin: 0;
     font-family: var(--font-main);
     background: var(--bg-gradient);
-    height: 100vh; /* Altura fija */
+    height: 100vh;
     width: 100vw;
-    overflow: hidden; /* IMPORTANTE: Bloquea scroll de la página entera */
+    overflow: hidden; /* Bloquea scroll */
     color: var(--text-dark);
-    /* Evita el rebote en iOS */
-    overscroll-behavior: none;
+    overscroll-behavior: none; /* Evita rebote en iOS */
 }
 
-/* --- GESTOR DE PANTALLAS --- */
+/* ================= GESTOR DE PANTALLAS ================= */
 .pantalla {
-    position: fixed; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    width: 100%; height: 100%;
-    padding: 15px; /* Un poco de margen para que no toque bordes */
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
     box-sizing: border-box;
     z-index: 1;
 }
-.oculto { display: none !important; opacity: 0; }
 
-/* --- CAJITA BLANCA (BASE) --- */
+.oculto {
+    display: none !important;
+    opacity: 0;
+}
+
+/* ================= CAJITA BLANCA (BASE) ================= */
 .panel-central {
     background: white;
     padding: 1.5rem;
@@ -40,171 +48,369 @@ body {
     text-align: center;
     width: 100%;
     max-width: 550px;
-    
-    /* Flexbox para organizar contenido verticalmente */
+
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
-    
-    /* Control de altura y scroll */
-    max-height: 95vh; /* Nunca más alto que la pantalla */
-    overflow-y: auto; /* Permite deslizar si no cabe */
-    
-    /* --- TRUCO: OCULTAR BARRA DE SCROLL VISUALMENTE --- */
+
+    max-height: 95vh;
+    overflow-y: auto;
+
     scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE/Edge */
+    -ms-overflow-style: none; /* IE/Edge */
 }
 
-/* Ocultar barra en Chrome/Safari/Opera */
 .panel-central::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Opera */
+}
+
+/* ================= PANEL JUEGO ================= */
+.panel-juego {
+    max-width: 800px;
+    height: 100%;
+    max-height: 92vh;
+    padding: 0;
+    overflow: hidden; /* No scroll en juego */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* ================= ELEMENTOS DE SETUP ================= */
+.control-jugadores {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.control-jugadores button {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    background: #f0f0f0;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.control-jugadores button:active {
+    transform: scale(0.9);
+}
+
+.lista-nombres {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    scrollbar-width: none;
+}
+
+.lista-nombres::-webkit-scrollbar {
     display: none;
 }
 
-/* --- ESTILO ESPECÍFICO PARA EL JUEGO (SIN SCROLL) --- */
-.panel-juego {
-    max-width: 800px;
-    height: 100%; /* Ocupa todo el alto disponible del contenedor padre */
-    max-height: 92vh; /* Margen de seguridad */
-    padding: 0; 
-    overflow: hidden; /* En el juego PROHIBIDO el scroll */
-    justify-content: space-between; 
+.input-nombre {
+    width: 80%;
+    padding: 10px;
+    border: 3px solid #eee;
+    border-radius: 20px;
+    text-align: center;
+    font-family: var(--font-main);
+    font-size: 1.1rem;
+    margin: 0 auto;
 }
 
-/* SETUP ELEMENTOS */
-.control-jugadores { display: flex; justify-content: center; gap: 20px; font-size: 2rem; font-weight: bold; margin: 15px 0; }
-.control-jugadores button { width: 45px; height: 45px; border-radius: 50%; border: none; background: #f0f0f0; cursor: pointer; transition: 0.2s;}
-.control-jugadores button:active { transform: scale(0.9); }
-
-.lista-nombres { 
-    display: flex; flex-direction: column; gap: 10px; width: 100%; 
-    max-height: 200px; overflow-y: auto; margin-bottom: 15px;
-    /* Ocultar scroll también aquí */
-    scrollbar-width: none; 
+.input-nombre:focus {
+    border-color: var(--card-azul);
+    outline: none;
 }
-.lista-nombres::-webkit-scrollbar { display: none; }
 
-.input-nombre { width: 80%; padding: 10px; border: 3px solid #eee; border-radius: 20px; text-align: center; font-family: var(--font-main); font-size: 1.1rem; margin: 0 auto;}
-.input-nombre:focus { border-color: var(--card-azul); outline: none; }
+/* ================= MENÚ CARDS ================= */
+.titulo-menu {
+    font-size: 2.5rem;
+    margin: 10px 0 20px 0;
+    color: #333;
+}
 
-/* MENÚ CARDS */
-.titulo-menu { font-size: 2.5rem; margin-bottom: 20px; color: #333; margin-top: 10px;}
-.grid-juegos { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; width: 100%; padding-bottom: 20px;}
+.grid-juegos {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    padding-bottom: 20px;
+}
 
 .card {
-    width: 100px; height: 120px;
-    border-radius: 25px; display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    color: white; font-weight: bold; font-size: 1.1rem;
-    cursor: pointer; transition: transform 0.2s;
+    width: 100px;
+    height: 120px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s;
     box-shadow: 0 8px 15px rgba(0,0,0,0.1);
 }
-.card:active { transform: scale(0.95); }
-.card .icono { font-size: 3rem; margin-bottom: 5px; }
+
+.card:active {
+    transform: scale(0.95);
+}
+
+.card .icono {
+    font-size: 3rem;
+    margin-bottom: 5px;
+}
+
 .card-roja { background: var(--card-roja); }
 .card-azul { background: var(--card-azul); }
 .card-verde { background: var(--card-verde); }
 
-/* --- DENTRO DEL JUEGO (HEADER) --- */
+/* ================= HEADER JUEGO ================= */
 .header-juego {
-    width: 100%; padding: 10px 20px; box-sizing: border-box;
-    display: flex; justify-content: space-between; align-items: center;
-    background: #fdfdfd; border-bottom: 2px solid #f0f0f0;
-    flex-shrink: 0; /* No encoger nunca */
+    width: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fdfdfd;
+    border-bottom: 2px solid #f0f0f0;
+    flex-shrink: 0;
 }
+
 .info-partida { text-align: right; }
-.turno-badge { background: white; padding: 4px 10px; border-radius: 10px; color: var(--card-azul); font-weight: bold; font-size: 0.8rem; border: 1px solid #eee;}
-.puntos-badge { color: #f1c40f; font-weight: bold; font-size: 1.2rem; text-shadow: 1px 1px #eee; }
-.btn-salir { background: #ff4757; color: white; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; box-shadow: 0 3px 0 #d63031; font-size: 0.9rem;}
 
-/* --- ZONA INTERACTIVA (ELASTICIDAD) --- */
-.zona-interactiva {
-    flex: 1; /* Ocupa todo el espacio sobrante */
-    position: relative; width: 100%; background: white;
-    overflow: hidden; /* Corta frutas que salgan */
-    min-height: 0; /* IMPORTANTE: Permite que flexbox encoja esto si hace falta */
+.turno-badge {
+    background: white;
+    padding: 4px 10px;
+    border-radius: 10px;
+    color: var(--card-azul);
+    font-weight: bold;
+    font-size: 0.8rem;
+    border: 1px solid #eee;
 }
 
-/* FRUTAS */
+.puntos-badge {
+    color: #f1c40f;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-shadow: 1px 1px #eee;
+}
+
+.btn-salir {
+    background: #ff4757;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 3px 0 #d63031;
+    font-size: 0.9rem;
+}
+
+/* ================= ZONA INTERACTIVA ================= */
+.zona-interactiva {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    background: white;
+    overflow: hidden;
+    min-height: 0;
+}
+
 .fruta {
-    position: absolute; font-size: 3.5rem; top: -15%; opacity: 0; z-index: 50;
-    transition: top 3s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 3s ease-out, opacity 0.5s ease-in;
+    position: absolute;
+    font-size: 3.5rem;
+    top: -15%;
+    opacity: 0;
+    z-index: 50;
+    transition: top 3s cubic-bezier(0.25,0.46,0.45,0.94),
+                transform 3s ease-out,
+                opacity 0.5s ease-in;
 }
 
 .operacion-texto {
-    font-size: 4rem; font-weight: 800; color: #333; background: #fff;
-    padding: 10px 30px; border-radius: 30px; position: absolute;
-    top: 50%; left: 50%; transform: translate(-50%, -50%); border: 4px solid #f0f0f0;
+    font-size: 4rem;
+    font-weight: 800;
+    color: #333;
+    background: #fff;
+    padding: 10px 30px;
+    border-radius: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 4px solid #f0f0f0;
 }
 
-/* CONTROLES (INPUT) */
+/* ================= CONTROLES INPUT ================= */
 .controles-respuesta {
-    display: flex; justify-content: center; align-items: center; gap: 10px;
-    padding: 10px; width: 100%; box-sizing: border-box; background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    background: #fff;
     flex-shrink: 0;
 }
+
 #input-respuesta {
-    font-size: 2rem; width: 100px; text-align: center;
-    border: 3px solid #ccc; border-radius: 15px;
-    color: var(--card-azul); font-weight: bold; background: #fdfdfd;
+    font-size: 2rem;
+    width: 100px;
+    text-align: center;
+    border: 3px solid #ccc;
+    border-radius: 15px;
+    color: var(--card-azul);
+    font-weight: bold;
+    background: #fdfdfd;
 }
+
 .btn-check {
-    background: #2ed573; color: white; font-size: 1.5rem;
-    width: 50px; height: 50px; border: none; border-radius: 12px;
-    cursor: pointer; box-shadow: 0 4px 0 #21a357;
-    display: flex; justify-content: center; align-items: center;
+    background: #2ed573;
+    color: white;
+    font-size: 1.5rem;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #21a357;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.btn-check:active { transform: translateY(4px); box-shadow: none; }
 
-/* TECLADO */
+.btn-check:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+/* ================= TECLADO ================= */
 .teclado-virtual {
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px;
-    padding: 10px; background: #f4f4f4; width: 100%; box-sizing: border-box;
-    border-top: 2px solid #eee; flex-shrink: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    padding: 10px;
+    background: #f4f4f4;
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 2px solid #eee;
+    flex-shrink: 0;
 }
-.teclado-virtual button {
-    height: 45px; border-radius: 10px; border: none; background: white;
-    font-size: 1.2rem; font-weight: bold; cursor: pointer;
-    box-shadow: 0 2px 0 #ddd; color: #555;
-}
-.teclado-virtual button:active { transform: translateY(2px); box-shadow: none; background: #eee; }
-.btn-borrar { background: #ff7675 !important; color: white !important; font-size: 0.9rem !important; }
 
-/* --- RESULTADOS RANKING --- */
-.panel-ranking-final {
-    max-width: 750px !important; padding: 2rem !important;
-    background: rgba(255, 255, 255, 0.95); border: 5px solid #fff;
+.teclado-virtual button {
+    height: 45px;
+    border-radius: 10px;
+    border: none;
+    background: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 0 #ddd;
+    color: #555;
 }
-.titulo-final { font-size: 2.5rem; color: #333; margin-bottom: 20px; }
+
+.teclado-virtual button:active {
+    transform: translateY(2px);
+    box-shadow: none;
+    background: #eee;
+}
+
+.btn-borrar {
+    background: #ff7675 !important;
+    color: white !important;
+    font-size: 0.9rem !important;
+}
+
+/* ================= RESULTADOS RANKING ================= */
+.panel-ranking-final {
+    max-width: 750px !important;
+    padding: 2rem !important;
+    background: rgba(255, 255, 255, 0.95);
+    border: 5px solid #fff;
+}
+
+.titulo-final {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
 
 .card-ganador {
     background: linear-gradient(135deg, #f1c40f, #f39c12);
-    padding: 20px; border-radius: 30px; color: white;
-    margin: 10px auto; width: 80%; transform: scale(1.1);
-    box-shadow: 0 10px 20px rgba(241, 196, 15, 0.4);
+    padding: 20px;
+    border-radius: 30px;
+    color: white;
+    margin: 10px auto;
+    width: 80%;
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px rgba(241,196,15,0.4);
     animation: flotar 3s infinite ease-in-out;
-    display: flex; flex-direction: column; align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
 @keyframes flotar {
     0%, 100% { transform: scale(1.1) translateY(0); }
     50% { transform: scale(1.1) translateY(-10px); }
 }
+
 .corona { font-size: 4rem; margin-bottom: 5px; }
 .nombre-ganador { font-size: 2rem; font-weight: bold; text-transform: uppercase; }
 
-.lista-resultados { width: 100%; margin-top: 15px; }
-.fila-resultado {
-    display: flex; justify-content: space-between; background: #f8f9fa;
-    padding: 10px 15px; border-radius: 10px; margin-bottom: 8px; font-weight: bold;
-    border-left: 5px solid #ccc; font-size: 1.1rem;
+.lista-resultados {
+    width: 100%;
+    margin-top: 15px;
 }
 
-.btn-grande { width: 100%; padding: 15px; border-radius: 50px; border: none; font-size: 1.2rem; font-weight: bold; color: white; cursor: pointer; margin-top: 15px;}
-.btn-azul { background: var(--card-azul); box-shadow: 0 5px 0 #29b6f6; }
+.fila-resultado {
+    display: flex;
+    justify-content: space-between;
+    background: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    border-left: 5px solid #ccc;
+    font-size: 1.1rem;
+}
 
-/* MÓVILES */
+.btn-grande {
+    width: 100%;
+    padding: 15px;
+    border-radius: 50px;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.btn-azul {
+    background: var(--card-azul);
+    box-shadow: 0 5px 0 #29b6f6;
+}
+
+/* ================= MÓVILES ================= */
 @media (max-height: 700px) {
-    .panel-juego { height: 98vh; } /* Aprovechar más espacio */
+    .panel-juego { height: 98vh; }
     .fruta { font-size: 3rem; }
     .teclado-virtual button { height: 40px; }
 }
