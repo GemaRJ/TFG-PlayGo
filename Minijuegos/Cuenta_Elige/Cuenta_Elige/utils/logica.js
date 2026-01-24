@@ -1,3 +1,6 @@
+// ================================
+// CONFIGURACIÓN GLOBAL
+// ================================
 let config = {
   numJugadores: 1,
   jugadores: [],
@@ -12,44 +15,54 @@ let config = {
 
 let vistas, inputRespuesta, zonaJuego, txtJugadorActual, txtRonda, txtPuntos;
 
+// ================================
+// INICIALIZACIÓN
+// ================================
 document.addEventListener("DOMContentLoaded", () => {
   vistas = {
-    setup: document.getElementById("vista-setup"),
-    menu: document.getElementById("vista-menu"),
-    juego: document.getElementById("vista-juego"),
-    ranking: document.getElementById("vista-ranking"),
+    setup: document.querySelector("#vista-setup"),
+    menu: document.querySelector("#vista-menu"),
+    juego: document.querySelector("#vista-juego"),
+    ranking: document.querySelector("#vista-ranking"),
   };
-  inputRespuesta = document.getElementById("input-respuesta");
-  zonaJuego = document.getElementById("zona-interactiva");
-  txtJugadorActual = document.getElementById("nombre-jugador-actual");
-  txtRonda = document.getElementById("num-ronda");
-  txtPuntos = document.getElementById("puntos-actuales");
+
+  inputRespuesta = document.querySelector("#input-respuesta");
+  zonaJuego = document.querySelector("#zona-interactiva");
+  txtJugadorActual = document.querySelector("#nombre-jugador-actual");
+  txtRonda = document.querySelector("#num-ronda");
+  txtPuntos = document.querySelector("#puntos-actuales");
 
   generarInputsNombres();
   cambiarVista("setup");
 });
 
+// ================================
+// FUNCIONES DE CONFIGURACIÓN DE JUGADORES
+// ================================
 function ajustarJugadores(delta) {
   const nombresTemp = [];
   for (let i = 0; i < config.numJugadores; i++) {
-    const el = document.getElementById(`nombre-${i}`);
+    const el = document.querySelector(`#nombre-${i}`);
     if (el) nombresTemp.push(el.value);
   }
+
   let nuevoVal = config.numJugadores + delta;
   if (nuevoVal >= 1 && nuevoVal <= 4) {
     config.numJugadores = nuevoVal;
-    document.getElementById("num-jugadores").innerText = config.numJugadores;
+    document.querySelector("#num-jugadores").textContent = config.numJugadores;
     generarInputsNombres();
-    for (let i = 0; i < nombresTemp.length; i++) {
-      const el = document.getElementById(`nombre-${i}`);
-      if (el && i < config.numJugadores) el.value = nombresTemp[i];
-    }
+
+    nombresTemp.forEach((valor, i) => {
+      const el = document.querySelector(`#nombre-${i}`);
+      if (el && i < config.numJugadores) el.value = valor;
+    });
   }
 }
 
 function generarInputsNombres() {
-  const contenedor = document.getElementById("contenedor-nombres");
+  const contenedor = document.querySelector("#contenedor-nombres");
   if (!contenedor) return;
+
   contenedor.innerHTML = "";
   for (let i = 0; i < config.numJugadores; i++) {
     const div = document.createElement("div");
@@ -61,14 +74,17 @@ function generarInputsNombres() {
 function irAlMenu() {
   config.jugadores = [];
   for (let i = 0; i < config.numJugadores; i++) {
-    const el = document.getElementById(`nombre-${i}`);
+    const el = document.querySelector(`#nombre-${i}`);
     let nombre =
       el && el.value.trim() !== "" ? el.value.trim() : `Jugador ${i + 1}`;
-    config.jugadores.push({ nombre: nombre, puntos: 0 });
+    config.jugadores.push({ nombre, puntos: 0 });
   }
   cambiarVista("menu");
 }
 
+// ================================
+// FUNCIONES DE VISTAS
+// ================================
 function cambiarVista(nombre) {
   Object.values(vistas).forEach((v) => {
     if (v) v.classList.add("oculto");
@@ -76,6 +92,9 @@ function cambiarVista(nombre) {
   if (vistas[nombre]) vistas[nombre].classList.remove("oculto");
 }
 
+// ================================
+// FUNCIONES DE JUEGO
+// ================================
 function prepararJuego(tipo, desc) {
   Swal.fire({
     title: "¿Listos?",
@@ -99,17 +118,21 @@ function iniciarPartida(tipo) {
 function cargarTurno() {
   config.intentos = 0;
   if (inputRespuesta) inputRespuesta.value = "";
+
   const jug = config.jugadores[config.turnoActual];
 
-  if (txtJugadorActual) txtJugadorActual.innerText = jug.nombre;
-  if (txtRonda) txtRonda.innerText = config.rondaGlobal;
-  if (txtPuntos) txtPuntos.innerText = jug.puntos;
+  if (txtJugadorActual) txtJugadorActual.textContent = jug.nombre;
+  if (txtRonda) txtRonda.textContent = config.rondaGlobal;
+  if (txtPuntos) txtPuntos.textContent = jug.puntos;
 
   if (config.juegoActual === "contar") logicaContar();
   else if (config.juegoActual === "sumar") logicaOperacion("+");
   else if (config.juegoActual === "restar") logicaOperacion("-");
 }
 
+// ================================
+// LÓGICA DE MINIJUEGOS
+// ================================
 function logicaContar() {
   if (!zonaJuego) return;
   zonaJuego.innerHTML = "";
@@ -129,7 +152,6 @@ function logicaContar() {
 
     window.getComputedStyle(f).top;
 
-    // Las frutas caen entre el 50% y el 75% de la altura disponible para que no se oculten
     const posicionFinal = Math.floor(Math.random() * 25) + 50;
 
     setTimeout(
@@ -150,18 +172,25 @@ function logicaOperacion(op) {
   let b = Math.floor(Math.random() * 9) + 1;
   if (op === "-" && b > a) [a, b] = [b, a];
   config.respuestaCorrecta = op === "+" ? a + b : a - b;
+
   const div = document.createElement("div");
   div.className = "operacion-texto";
   div.textContent = `${a} ${op} ${b}`;
   zonaJuego.appendChild(div);
 }
 
+// ================================
+// TECLADO VIRTUAL
+// ================================
 function teclear(v) {
   if (!inputRespuesta) return;
   if (v === "C") inputRespuesta.value = "";
   else if (inputRespuesta.value.length < 2) inputRespuesta.value += v;
 }
 
+// ================================
+// VERIFICAR RESPUESTA
+// ================================
 function verificar() {
   if (!inputRespuesta || inputRespuesta.value === "") return;
   const val = parseInt(inputRespuesta.value);
@@ -169,9 +198,8 @@ function verificar() {
 
   if (val === config.respuestaCorrecta) {
     jug.puntos += 10;
-    if (txtPuntos) txtPuntos.innerText = jug.puntos;
+    if (txtPuntos) txtPuntos.textContent = jug.puntos;
 
-    // Acierto: Alerta rápida y pasamos turno
     Swal.fire({
       title: `¡Bien ${jug.nombre}! 🎉`,
       text: "+10 Puntos",
@@ -189,7 +217,7 @@ function verificar() {
       }).then(pasarTurno);
     } else {
       jug.puntos = Math.max(0, jug.puntos - 2);
-      if (txtPuntos) txtPuntos.innerText = jug.puntos;
+      if (txtPuntos) txtPuntos.textContent = jug.puntos;
       Swal.fire({
         title: "¡Casi!",
         text: "(-2 pts)",
@@ -202,52 +230,40 @@ function verificar() {
   }
 }
 
+// ================================
+// PASAR TURNO Y FIN DE JUEGO
+// ================================
 function pasarTurno() {
   const jugAnterior = config.jugadores[config.turnoActual].nombre;
   config.turnoActual++;
 
-  // Vuelta completa de jugadores
   if (config.turnoActual >= config.jugadores.length) {
     config.turnoActual = 0;
     config.rondaGlobal++;
   }
 
-  const rankTemp = [...config.jugadores].sort((a, b) => b.puntos - a.puntos);
-  let htmlRes =
-    '<div style="text-align:left; background:#f9f9f9; padding:10px; border-radius:10px; margin-top:10px;">';
-  rankTemp.forEach((j, i) => {
-    let ico = i === 0 ? "👑" : "🔸";
-    htmlRes += `<div>${ico} <b>${j.nombre}</b>: ${j.puntos}</div>`;
-  });
-  htmlRes += "</div>";
-
-  // 1. ¿Se acabó el juego?
-  if (config.rondaGlobal > config.maxRondas) {
-    mostrarRanking();
-  }
-  // 2. ¿Sigue el juego?
+  if (config.rondaGlobal > config.maxRondas) mostrarRanking();
   else {
-    // CORRECCIÓN AQUÍ: Si hay más de 1 jugador, avisamos.
     if (config.jugadores.length > 1) {
       const sigJug = config.jugadores[config.turnoActual].nombre;
       Swal.fire({
         title: `Fin de turno: ${jugAnterior}`,
-        html: `${htmlRes}<br><h3>👉 ¡Le toca a ${sigJug}!</h3>`,
+        html: `<h3>👉 ¡Le toca a ${sigJug}!</h3>`,
         icon: "info",
         confirmButtonText: "¡Estoy listo!",
         allowOutsideClick: false,
       }).then(cargarTurno);
-    } else {
-      // Si es 1 solo jugador, pasamos directo sin molestar
-      cargarTurno();
-    }
+    } else cargarTurno();
   }
 }
 
+// ================================
+// RANKING Y CONFETI
+// ================================
 function mostrarRanking() {
   cambiarVista("ranking");
-  const podio = document.getElementById("contenedor-podio");
-  const resto = document.getElementById("lista-resto");
+  const podio = document.querySelector("#contenedor-podio");
+  const resto = document.querySelector("#lista-resto");
   if (podio) podio.innerHTML = "";
   if (resto) resto.innerHTML = "";
 
@@ -266,12 +282,13 @@ function mostrarRanking() {
       resto.appendChild(div);
     }
   });
+
   lanzarConfeti();
 }
 
 function lanzarConfeti() {
   if (typeof confetti === "undefined") return;
-  var end = Date.now() + 3000;
+  const end = Date.now() + 3000;
   (function frame() {
     confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
     confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
@@ -279,10 +296,13 @@ function lanzarConfeti() {
   })();
 }
 
+// ================================
+// FUNCIONES DE UTILIDAD
+// ================================
 function volverInicio() {
   config.jugadores = [];
   config.numJugadores = 1;
-  document.getElementById("num-jugadores").innerText = "1";
+  document.querySelector("#num-jugadores").textContent = "1";
   generarInputsNombres();
   cambiarVista("setup");
 }
