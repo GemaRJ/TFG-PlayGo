@@ -101,3 +101,13 @@ button:active {
     border: 2px solid #764ba2;
     transform: rotateY(180deg);
 }
+
+/* ESTILO PARA CUANDO ACIERTAS LA PAREJA */
+.carta.emparejada {
+    background: #4CAF50 !important; /* Verde éxito */
+    color: white !important;        /* Emoji visible */
+    border: 2px solid #2E7D32;      /* Borde verde oscuro */
+    transform: scale(1.05);         /* Un pelín más grande para resaltarlo */
+    box-shadow: 0 0 10px #4CAF50;   /* Brillo verde jiji */
+    transition: all 0.3s ease;
+}

@@ -4,21 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Game Kids</title>
+    
     <link rel="stylesheet" href="style.css">
-</head>
+    
+    </head>
 <body>
     <div class="contenedor-juego">
 
         <h1>🦄 MEMORY KIDS</h1>
         
         <div class="stats">
+            <span>✅ Aciertos: <b id="aciertos">0</b></span>
+            <span>❌ Errores: <b id="errores">0</b></span>
             <span>Movimientos: <b id="movimientos">0</b></span>
+            
             <button id="reiniciar-btn" onclick="reiniciarJuego()">🔄 Reiniciar</button>
         </div>
 
         <div class="tablero" id="tablero"></div>
 
     </div> 
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script src="script.js"></script>
 </body>
 </html>
