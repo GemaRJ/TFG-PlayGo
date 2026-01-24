@@ -1,0 +1,72 @@
+/* Estilos generales para centrar todo */
+body {
+    background-color: #e0f7fa; /* Azul pastel */
+    font-family: 'Comic Sans MS', sans-serif; /* Fuente infantil */
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    min-height: 100vh;
+    margin: 0;
+}
+
+.contenedor-juego {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* --- EL TABLERO (Explicación técnica: CSS GRID) --- */
+.tablero {
+    display: grid; /* Convertimos el contenedor en una rejilla */
+    grid-template-columns: repeat(4, 100px); /* 4 columnas de 100px */
+    gap: 15px; /* Espacio entre cartas */
+    margin-top: 20px;
+}
+
+/* --- LAS CARTAS --- */
+.carta {
+    width: 100px;
+    height: 100px;
+    background-color: #ffcc80; /* Color naranja (Reverso) */
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombrita suave */
+    transition: transform 0.3s ease; /* Animación suave al crecer */
+    user-select: none; /* Evita que se seleccione el texto al hacer click rápido */
+}
+
+/* Efecto Hover: Al pasar el ratón, crece un poquito */
+.carta:hover {
+    transform: scale(1.05);
+}
+
+/* ESTADO 1: CARTA GIRADA (Clase que añade JS) */
+.carta.girada {
+    background-color: #ffffff; /* Fondo blanco */
+    cursor: default; /* Ya no parece clicable */
+    transform: rotateY(0); /* (Aquí podrías meter efectos 3D si quisieras complicarlo) */
+}
+
+/* ESTADO 2: CARTA EMPAREJADA (Acierto) */
+.carta.emparejada {
+    background-color: #a5d6a7; /* Verde éxito */
+    animation: brinco 0.5s; /* Animación de saltito */
+}
+
+/* Definimos la animación del saltito */
+@keyframes brinco {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+button {
+    background-color: #ffab91;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 10px;
+}
