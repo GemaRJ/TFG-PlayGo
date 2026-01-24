@@ -1,144 +1,194 @@
-// 1. DATOS INICIALES
-const iconos = ['🦁', '🦁', '🐘', '🐘', '🐶', '🐶', '🐸', '🐸', '🦄', '🦄', '🐙', '🐙'];
+// --- CONFIGURACIÓN ---
+const iconosBase = ['🦁', '🐘', '🐶', '🐸', '🦄', '🐙'];
+// Duplicamos los iconos para tener parejas
+let iconos = [...iconosBase, ...iconosBase];
 
-// Variables de estado
-let cartasLevantadas = [];  
-let bloqueoTablero = false; 
-let movimientos = 0;
-let aciertos = 0; // <<< NUEVA VARIABLE
-let errores = 0;  // <<< NUEVA VARIABLE
-let parejasEncontradas = 0;
+// --- ESTADO DEL JUEGO ---
+let jugadores = []; // Aquí guardaremos: [{nombre: "Ana", puntos: 0}, ...]
+let turnoActual = 0; // Índice del jugador que está jugando (0, 1, 2...)
+let cartasLevantadas = [];
+let bloqueoTablero = false;
+let parejasTotales = 0;
 
-// Referencias al HTML
+// --- REFERENCIAS DOM ---
+const pantallaInicio = document.getElementById('pantalla-inicio');
+const pantallaJuego = document.getElementById('pantalla-juego');
+const divMarcador = document.getElementById('marcador');
 const tablero = document.getElementById('tablero');
-const textoMovimientos = document.getElementById('movimientos');
-const textoAciertos = document.getElementById('aciertos'); // <<< REF NUEVA
-const textoErrores = document.getElementById('errores');   // <<< REF NUEVA
+const contenedorNombres = document.getElementById('lista-nombres');
+const selectJugadores = document.getElementById('num-jugadores');
 
-// --- FUNCIÓN PRINCIPAL ---
-function iniciarJuego() {
-    // A. Reseteamos variables a 0
+// 1. GENERAR INPUTS PARA LOS NOMBRES
+function generarInputsNombres() {
+    const cantidad = selectJugadores.value;
+    contenedorNombres.innerHTML = ''; // Limpiar anteriores
+
+    for (let i = 1; i <= cantidad; i++) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = `Nombre Jugador ${i}`;
+        input.classList.add('input-nombre');
+        input.id = `jugador-${i}`;
+        // Ponemos nombres por defecto si quieren ir rápido
+        input.value = `Jugador ${i}`;
+        contenedorNombres.appendChild(input);
+    }
+}
+
+// 2. EMPEZAR LA PARTIDA
+function comenzarPartida() {
+    // Recoger nombres
+    const cantidad = selectJugadores.value;
+    jugadores = [];
+    
+    for (let i = 1; i <= cantidad; i++) {
+        const nombre = document.getElementById(`jugador-${i}`).value || `Jugador ${i}`;
+        jugadores.push({ nombre: nombre, puntos: 0 });
+    }
+
+    // Configuración inicial
+    turnoActual = 0;
+    parejasTotales = 0;
     cartasLevantadas = [];
     bloqueoTablero = false;
-    movimientos = 0;
-    aciertos = 0; // <<< RESETEAMOS
-    errores = 0;  // <<< RESETEAMOS
-    parejasEncontradas = 0;
 
-    // B. Actualizamos el HTML visualmente
-    textoMovimientos.innerText = '0';
-    textoAciertos.innerText = '0'; // <<< PONE A 0
-    textoErrores.innerText = '0';  // <<< PONE A 0
-    tablero.innerHTML = ''; 
+    // Cambiar pantalla
+    pantallaInicio.style.display = 'none';
+    pantallaJuego.style.display = 'block';
 
-    // C. Barajar y crear cartas
-    iconos.sort(() => 0.5 - Math.random());
+    renderizarTablero();
+    actualizarMarcador();
+}
+
+// 3. DIBUJAR EL TABLERO
+function renderizarTablero() {
+    tablero.innerHTML = '';
+    iconos.sort(() => 0.5 - Math.random()); // Barajar
 
     iconos.forEach(icono => {
         const carta = document.createElement('div');
         carta.classList.add('carta');
-        carta.dataset.emoji = icono; 
-        carta.innerText = '❓'; 
+        carta.dataset.emoji = icono;
+        carta.innerText = '❓';
         carta.addEventListener('click', voltearCarta);
         tablero.appendChild(carta);
     });
 }
 
-// --- AL HACER CLICK ---
+// 4. ACTUALIZAR MARCADOR (Muestra puntos y turno)
+function actualizarMarcador() {
+    divMarcador.innerHTML = '';
+
+    jugadores.forEach((jugador, index) => {
+        const div = document.createElement('div');
+        div.classList.add('tarjeta-jugador');
+        
+        // Si es su turno, añadimos la clase 'activo'
+        if (index === turnoActual) {
+            div.classList.add('activo');
+        }
+
+        div.innerHTML = `
+            <div>${jugador.nombre}</div>
+            <div style="font-size: 1.5rem">${jugador.puntos} pts</div>
+        `;
+        divMarcador.appendChild(div);
+    });
+}
+
+// 5. LÓGICA DE JUEGO
 function voltearCarta() {
-    if (bloqueoTablero || this === cartasLevantadas[0]) return;
+    if (bloqueoTablero || this === cartasLevantadas[0] || this.classList.contains('emparejada')) return;
 
-    this.classList.add('girada'); 
-    this.innerText = this.dataset.emoji; 
-
-    cartasLevantadas.push(this); 
+    this.classList.add('girada');
+    this.innerText = this.dataset.emoji;
+    cartasLevantadas.push(this);
 
     if (cartasLevantadas.length === 2) {
-        // Ya no sumamos movimientos aquí, lo hacemos al comprobar
         comprobarPareja();
     }
 }
 
-// --- ¿SON IGUALES? ---
 function comprobarPareja() {
-    movimientos++; // Contamos 1 movimiento (intento)
-    textoMovimientos.innerText = movimientos;
-
     const carta1 = cartasLevantadas[0];
     const carta2 = cartasLevantadas[1];
+    bloqueoTablero = true; // Bloqueamos para que no toquen más
 
     if (carta1.dataset.emoji === carta2.dataset.emoji) {
-        desactivarCartas(carta1, carta2);
-    } else {
-        devolverCartas(carta1, carta2);
-    }
-}
-
-// CASO ACIERTO ✅
-function desactivarCartas(c1, c2) {
-    aciertos++; // <<< SUMAMOS ACIERTO
-    textoAciertos.innerText = aciertos; // <<< ACTUALIZAMOS PANTALLA
-
-    // Añadimos la clase CSS nueva para que se pongan verdes
-    c1.classList.add('emparejada'); 
-    c2.classList.add('emparejada');
-
-    c1.removeEventListener('click', voltearCarta);
-    c2.removeEventListener('click', voltearCarta);
-
-    cartasLevantadas = [];
-    parejasEncontradas++;
-
-    // ¿Juego terminado?
-    if (parejasEncontradas === iconos.length / 2) {
-        lanzarConfeti(); // <<< LLAMAMOS A LA FUNCIÓN FINAL
-    }
-}
-
-// CASO FALLO ❌
-function devolverCartas(c1, c2) {
-    errores++; // <<< SUMAMOS ERROR
-    textoErrores.innerText = errores; // <<< ACTUALIZAMOS PANTALLA
-
-    bloqueoTablero = true; 
-
-    setTimeout(() => {
-        c1.classList.remove('girada');
-        c2.classList.remove('girada');
-        c1.innerText = '❓';
-        c2.innerText = '❓';
+        // --- ACIERTO ---
+        jugadores[turnoActual].puntos++; // Suma punto al jugador actual
+        parejasTotales++;
+        
+        // Sonido o efecto visual breve
+        carta1.classList.add('emparejada');
+        carta2.classList.add('emparejada');
+        
         cartasLevantadas = [];
         bloqueoTablero = false;
-    }, 1000);
+        actualizarMarcador(); // Actualiza los puntos
+        
+        // Si hay acierto, REPRODUCE TURNO (no cambiamos de jugador)
+        // Comprobar si fin del juego
+        if (parejasTotales === iconos.length / 2) {
+            finDelJuego();
+        }
+
+    } else {
+        // --- FALLO ---
+        setTimeout(() => {
+            carta1.classList.remove('girada');
+            carta2.classList.remove('girada');
+            carta1.innerText = '❓';
+            carta2.innerText = '❓';
+            
+            cartasLevantadas = [];
+            bloqueoTablero = false;
+            
+            // Pasa el turno al siguiente
+            passarTurno();
+        }, 1000);
+    }
 }
 
-// --- MENSAJE FINAL BONITO (SweetAlert) ---
-function lanzarConfeti() {
-    // Usamos la librería SweetAlert que pusimos en el HTML
+function passarTurno() {
+    turnoActual++;
+    // Si llegamos al último jugador, volvemos al primero (bucle)
+    if (turnoActual >= jugadores.length) {
+        turnoActual = 0;
+    }
+    actualizarMarcador();
+}
+
+// 6. FIN DEL JUEGO
+function finDelJuego() {
+    // Ordenamos jugadores por puntos de mayor a menor
+    // [...jugadores] crea una copia para no romper el array original
+    const ranking = [...jugadores].sort((a, b) => b.puntos - a.puntos);
+    const ganador = ranking[0];
+    const esEmpate = ranking.length > 1 && ranking[0].puntos === ranking[1].puntos;
+
+    let mensaje = '';
+    if (esEmpate) {
+        mensaje = `¡Empate! Ambos sois unos cracks 🦄`;
+    } else {
+        mensaje = `¡Ha ganado <b>${ganador.nombre}</b> con ${ganador.puntos} puntos! 🏆`;
+    }
+
     Swal.fire({
-        title: '¡Ganaste! 🦄',
-        html: `
-            Has completado el juego en: <br>
-            <b>${movimientos}</b> movimientos <br>
-            ❌ Errores cometidos: <b>${errores}</b>
-        `,
+        title: '¡Juego Terminado!',
+        html: mensaje,
         icon: 'success',
-        confirmButtonText: '¡Jugar otra vez!',
-        background: '#fff',
-        backdrop: `
-            rgba(0,0,123,0.4)
-            url("https://cdn.pixabay.com/animation/2022/10/16/12/37/12-37-37-299_512.gif")
-            left top
-            no-repeat
-        `
+        confirmButtonText: 'Jugar otra vez',
+        backdrop: `rgba(0,0,123,0.4) url("https://cdn.pixabay.com/animation/2022/10/16/12/37/12-37-37-299_512.gif") center top no-repeat`
     }).then(() => {
-        reiniciarJuego();
+        volverAlInicio();
     });
 }
 
-function reiniciarJuego() {
-    iniciarJuego();
+function volverAlInicio() {
+    pantallaJuego.style.display = 'none';
+    pantallaInicio.style.display = 'block';
 }
 
-// Arrancamos
-iniciarJuego();
+// Inicializar la primera vez
+generarInputsNombres();

@@ -4,29 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Game Kids</title>
-    
     <link rel="stylesheet" href="style.css">
-    
-    </head>
+</head>
 <body>
-    <div class="contenedor-juego">
 
+    <div class="contenedor-juego" id="pantalla-inicio">
         <h1>🦄 MEMORY KIDS</h1>
+        <h3>¿Quién va a jugar hoy?</h3>
+
+<div class="config-zona">
+    <label class="titulo-opcion">👥 Jugadores:</label>
+    
+    <div class="select-wrapper">
+        <select id="num-jugadores" class="select-bonito" onchange="generarInputsNombres()">
+            <option value="1">1 Jugador 👤</option>
+            <option value="2">2 Jugadores 👥</option>
+            <option value="3">3 Jugadores 👨‍👩‍👧</option>
+            <option value="4">4 Jugadores 👨‍👩‍👧‍👦</option>
+        </select>
+    </div>
+</div>
+
+        <div id="lista-nombres" class="lista-nombres">
+            </div>
+
+        <button class="btn-grande" onclick="comenzarPartida()">▶️ ¡EMPEZAR!</button>
+    </div>
+
+
+    <div class="contenedor-juego" id="pantalla-juego" style="display: none;">
         
-        <div class="stats">
-            <span>✅ Aciertos: <b id="aciertos">0</b></span>
-            <span>❌ Errores: <b id="errores">0</b></span>
-            <span>Movimientos: <b id="movimientos">0</b></span>
-            
-            <button id="reiniciar-btn" onclick="reiniciarJuego()">🔄 Reiniciar</button>
-        </div>
+        <div class="marcador" id="marcador"></div>
 
         <div class="tablero" id="tablero"></div>
 
+        <div class="controles-abajo">
+            <button id="reiniciar-btn" onclick="volverAlInicio()">🏠 Volver al Inicio</button>
+        </div>
     </div> 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
     <script src="script.js"></script>
 </body>
 </html>
