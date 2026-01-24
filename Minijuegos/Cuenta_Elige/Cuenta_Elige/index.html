@@ -6,28 +6,34 @@
     <title>Mini Genios</title>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <link
       href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
-
     <link rel="stylesheet" href="utils/style.css" />
   </head>
   <body>
+    <!-- PANTALLA DE SETUP -->
     <section id="vista-setup" class="pantalla activa">
       <div class="panel-central">
-        <h1>¡Hola! 👋</h1>
-        <p>¿Cuántos amigos van a jugar?</p>
+        <h1>¡Bienvenidos a Cuenta y Aprenderás!</h1>
+        <p>¿Cuántos van a jugar?</p>
+
         <div class="control-jugadores">
           <button onclick="ajustarJugadores(-1)">➖</button>
           <span id="num-jugadores">1</span>
           <button onclick="ajustarJugadores(1)">➕</button>
         </div>
-        <button class="btn-grande" onclick="irAlMenu()">¡Entrar!</button>
+
+        <div id="contenedor-nombres" class="lista-nombres"></div>
+
+        <button class="btn-grande" onclick="irAlMenu()">
+          ¡Guardar y Entrar!
+        </button>
       </div>
     </section>
 
+    <!-- MENÚ PRINCIPAL -->
     <section id="vista-menu" class="pantalla oculto">
       <h2 class="titulo-menu">Elige tu Reto</h2>
       <div class="grid-juegos">
@@ -63,11 +69,9 @@
           <span>Restar</span>
         </div>
       </div>
-      <div class="footer-info">
-        Jugadores: <span id="info-jugadores">1</span>
-      </div>
     </section>
 
+    <!-- PANTALLA DE JUEGO -->
     <section id="vista-juego" class="pantalla oculto">
       <div class="header-juego">
         <button class="btn-salir" onclick="confirmarSalida()">🏠 Salir</button>
