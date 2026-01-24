@@ -1,0 +1,147 @@
+:root {
+    --primary: #1976d2;
+    --accent: #ffb300;
+    --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #f0f4ff 100%);
+    --card-bg: rgba(255, 255, 255, 0.8);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.game-wrapper {
+    width: 90%;
+    max-width: 800px;
+    background: white;
+    padding: 30px;
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.game-title {
+    color: #2c3e50;
+    font-weight: 800;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.highlight { color: var(--accent); }
+
+.instruction-card {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 15px;
+    margin: 20px 0;
+    border-left: 5px solid var(--primary);
+    font-weight: 500;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-box {
+    background: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+}
+
+.juego-container {
+    position: relative;
+    height: 350px;
+    background: #f0f7ff;
+    border: 8px solid white;
+    border-radius: 25px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+/* Frutas Animadas */
+.fruta {
+    position: absolute;
+    top: -60px;
+    font-size: 3rem;
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1));
+    animation: caer 3.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes caer {
+    to { transform: translateY(450px) rotate(360deg); }
+}
+
+/* Opciones Estilo Burbuja */
+.options-grid {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.options-grid button {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 4px solid white;
+    background: white;
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: bold;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.options-grid button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    background: var(--primary);
+    color: white;
+}
+
+/* Overlays y Botones */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    border-radius: 17px;
+}
+
+.btn-main {
+    background: #28a745;
+    color: white;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(40, 167, 69, 0.4);
+}
+
+.btn-main:hover { background: #218838; }
+
+.oculto { display: none !important; }
+
+.feedback-text {
+    height: 30px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
