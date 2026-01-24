@@ -1,0 +1,426 @@
+/**
+ * ------------------------------------------------------------------
+ * PROYECTO: APRENDE Y COMPLETA PRO
+ * DESARROLLADO POR: GEMA
+ * ASIGNATURA: Desarrollo Web
+ * FECHA: Enero 2026
+ * ------------------------------------------------------------------
+ */
+
+const BANCO_DATOS = {
+  // CATEGORÍA 1: ADIVINA CON IMÁGENES (Vocabulario y asociación)
+  imagenes: [
+    { pista: "☀️", palabra: "SOL", display: "S_L", falta: "O" },
+    { pista: "🐱", palabra: "GATO", display: "_ATO", falta: "G" },
+    { pista: "🏠", palabra: "CASA", display: "CA_A", falta: "S" },
+    { pista: "🍎", palabra: "MANZANA", display: "MAN__NA", falta: "ZA" },
+    { pista: "🚗", palabra: "COCHE", display: "CO__E", falta: "CH" },
+    { pista: "🍐", palabra: "PERA", display: "PE_A", falta: "R" },
+    { pista: "🦒", palabra: "JIRAFA", display: "_IRAFA", falta: "J" },
+    { pista: "🐢", palabra: "TORTUGA", display: "TOR_UGA", falta: "T" },
+    { pista: "🎈", palabra: "GLOBO", display: "GL_BO", falta: "O" },
+    { pista: "🚲", palabra: "BICI", display: "BI_I", falta: "C" },
+    { pista: "🍦", palabra: "HELADO", display: "_ELADO", falta: "H" },
+    { pista: "🐋", palabra: "BALLENA", display: "BA_LENA", falta: "L" },
+    { pista: "🐘", palabra: "ELEFANTE", display: "ELE_ANTE", falta: "F" },
+    { pista: "🍄", palabra: "SETA", display: "S_TA", falta: "E" },
+    { pista: "🦋", palabra: "MARIPOSA", display: "MARI_OSA", falta: "P" },
+    { pista: "🌵", palabra: "CACTUS", display: "CAC_US", falta: "T" },
+    { pista: "🍩", palabra: "DONA", display: "D_NA", falta: "O" },
+    { pista: "🎸", palabra: "GUITARRA", display: "GUI__RRA", falta: "TA" },
+    { pista: "🚀", palabra: "COHETE", display: "CO_ETE", falta: "H" },
+    { pista: "🛸", palabra: "OVNI", display: "OV_I", falta: "N" },
+  ],
+
+  // CATEGORÍA 2: COMPLETA LA SERIE (Lógica, tiempo y secuencias)
+  series: [
+    {
+      pista: "Días",
+      palabra: "MARTES",
+      display: "Lunes, ____, Miércoles",
+      falta: "MARTES",
+    },
+    {
+      pista: "Días",
+      palabra: "SÁBADO",
+      display: "Viernes, ____, Domingo",
+      falta: "SÁBADO",
+    },
+    {
+      pista: "Días",
+      palabra: "JUEVES",
+      display: "Miércoles, ____, Viernes",
+      falta: "JUEVES",
+    },
+    {
+      pista: "Días",
+      palabra: "LUNES",
+      display: "____, Martes, Miércoles",
+      falta: "LUNES",
+    },
+    {
+      pista: "Meses",
+      palabra: "FEBRERO",
+      display: "Enero, ____, Marzo",
+      falta: "FEBRERO",
+    },
+    {
+      pista: "Meses",
+      palabra: "AGOSTO",
+      display: "Julio, ____, Septiembre",
+      falta: "AGOSTO",
+    },
+    {
+      pista: "Meses",
+      palabra: "MAYO",
+      display: "Abril, ____, Junio",
+      falta: "MAYO",
+    },
+    {
+      pista: "Meses",
+      palabra: "NOVIEMBRE",
+      display: "Octubre, ____, Diciembre",
+      falta: "NOVIEMBRE",
+    },
+    {
+      pista: "Meses",
+      palabra: "DICIEMBRE",
+      display: "Octubre, Noviembre, ____",
+      falta: "DICIEMBRE",
+    },
+    {
+      pista: "Planetas",
+      palabra: "TIERRA",
+      display: "Venus, ____, Marte",
+      falta: "TIERRA",
+    },
+    {
+      pista: "Planetas",
+      palabra: "SATURNO",
+      display: "Júpiter, ____, Urano",
+      falta: "SATURNO",
+    },
+    {
+      pista: "Planetas",
+      palabra: "VENUS",
+      display: "Mercurio, ____, Tierra",
+      falta: "VENUS",
+    },
+    {
+      pista: "Números",
+      palabra: "CUATRO",
+      display: "Dos, Tres, ____",
+      falta: "CUATRO",
+    },
+    {
+      pista: "Números",
+      palabra: "DIEZ",
+      display: "Ocho, Nueve, ____",
+      falta: "DIEZ",
+    },
+    {
+      pista: "Estaciones",
+      palabra: "VERANO",
+      display: "Primavera, ____, Otoño",
+      falta: "VERANO",
+    },
+    {
+      pista: "Estaciones",
+      palabra: "INVIERNO",
+      display: "Otoño, ____, Primavera",
+      falta: "INVIERNO",
+    },
+    {
+      pista: "Comidas",
+      palabra: "CENA",
+      display: "Desayuno, Almuerzo, ____",
+      falta: "CENA",
+    },
+    {
+      pista: "Crecimiento",
+      palabra: "ADULTO",
+      display: "Bebé, Niño, ____",
+      falta: "ADULTO",
+    },
+    {
+      pista: "Tamaño",
+      palabra: "GRANDE",
+      display: "Pequeño, Mediano, ____",
+      falta: "GRANDE",
+    },
+    {
+      pista: "Horas",
+      palabra: "TARDE",
+      display: "Mañana, ____, Noche",
+      falta: "TARDE",
+    },
+  ],
+
+  // CATEGORÍA 3: LETRA QUE FALTA (Ortografía y fonética)
+  letras: [
+    { pista: "Animal", palabra: "PERRO", display: "P_RRO", falta: "E" },
+    { pista: "Objeto", palabra: "LÁPIZ", display: "LÁPI_", falta: "Z" },
+    { pista: "Animal", palabra: "COCODRILO", display: "COCO_RILO", falta: "D" },
+    { pista: "Fruta", palabra: "UVA", display: "_VA", falta: "U" },
+    { pista: "Transporte", palabra: "TREN", display: "TR_N", falta: "E" },
+    { pista: "Color", palabra: "BLANCO", display: "BL_NCO", falta: "A" },
+    { pista: "Ropa", palabra: "ZAPATO", display: "_APATO", falta: "Z" },
+    { pista: "Cuerpo", palabra: "BRAZO", display: "BR_ZO", falta: "A" },
+    { pista: "Escuela", palabra: "LIBRO", display: "LI_RO", falta: "B" },
+    { pista: "Familia", palabra: "PADRE", display: "PA_RE", falta: "D" },
+    { pista: "Instrumento", palabra: "PIANO", display: "PI_NO", falta: "A" },
+    { pista: "Deporte", palabra: "FÚTBOL", display: "FÚT_OL", falta: "B" },
+    { pista: "Invierno", palabra: "NIEVE", display: "NI_VE", falta: "E" },
+    { pista: "Higiene", palabra: "JABÓN", display: "_ABÓN", falta: "J" },
+    { pista: "Cocina", palabra: "HORNO", display: "_ORNO", falta: "H" },
+    { pista: "Naturaleza", palabra: "ÁRBOL", display: "ÁR_OL", falta: "B" },
+    { pista: "Espacio", palabra: "ESTRELLA", display: "ES_RELLA", falta: "T" },
+    { pista: "Insecto", palabra: "ABEJA", display: "A_EJA", falta: "B" },
+    { pista: "Sentimiento", palabra: "AMOR", display: "AM_R", falta: "O" },
+    { pista: "Juguete", palabra: "PELOTA", display: "PE_OTA", falta: "L" },
+  ],
+
+  // CATEGORÍA 4: INGLÉS CON IMÁGENES
+  ingles: [
+    // Vocabulario básico
+    {
+      pista: "👋",
+      palabra: "HELLO",
+      display: "_ELLO",
+      falta: "H",
+      categoria: "Vocabulario básico",
+    },
+    {
+      pista: "🙏",
+      palabra: "THANKS",
+      display: "_HANKS",
+      falta: "T",
+      categoria: "Vocabulario básico",
+    },
+    {
+      pista: "😃",
+      palabra: "SMILE",
+      display: "_MILE",
+      falta: "S",
+      categoria: "Vocabulario básico",
+    },
+    {
+      pista: "👋",
+      palabra: "BYE",
+      display: "_YE",
+      falta: "B",
+      categoria: "Vocabulario básico",
+    },
+    {
+      pista: "💧",
+      palabra: "WATER",
+      display: "_ATER",
+      falta: "W",
+      categoria: "Vocabulario básico",
+    },
+    {
+      pista: "🍎",
+      palabra: "APPLE",
+      display: "_PPLE",
+      falta: "A",
+      categoria: "Vocabulario básico",
+    },
+    {
+      pista: "🍌",
+      palabra: "BANANA",
+      display: "_ANANA",
+      falta: "B",
+      categoria: "Vocabulario básico",
+    },
+
+    // Partes del cuerpo
+    {
+      pista: "🖐️",
+      palabra: "HAND",
+      display: "_AND",
+      falta: "H",
+      categoria: "Partes del cuerpo",
+    },
+    {
+      pista: "👁️",
+      palabra: "EYE",
+      display: "_YE",
+      falta: "E",
+      categoria: "Partes del cuerpo",
+    },
+    {
+      pista: "👂",
+      palabra: "EAR",
+      display: "_AR",
+      falta: "E",
+      categoria: "Partes del cuerpo",
+    },
+    {
+      pista: "👃",
+      palabra: "NOSE",
+      display: "_OSE",
+      falta: "N",
+      categoria: "Partes del cuerpo",
+    },
+    {
+      pista: "👄",
+      palabra: "MOUTH",
+      display: "_OUTH",
+      falta: "M",
+      categoria: "Partes del cuerpo",
+    },
+    {
+      pista: "🦵",
+      palabra: "LEG",
+      display: "_EG",
+      falta: "L",
+      categoria: "Partes del cuerpo",
+    },
+    {
+      pista: "🦶",
+      palabra: "FOOT",
+      display: "_OOT",
+      falta: "F",
+      categoria: "Partes del cuerpo",
+    },
+
+    // Transportes
+    {
+      pista: "🚗",
+      palabra: "CAR",
+      display: "_AR",
+      falta: "C",
+      categoria: "Transportes",
+    },
+    {
+      pista: "✈️",
+      palabra: "PLANE",
+      display: "_LANE",
+      falta: "P",
+      categoria: "Transportes",
+    },
+    {
+      pista: "🚂",
+      palabra: "TRAIN",
+      display: "_RAIN",
+      falta: "T",
+      categoria: "Transportes",
+    },
+    {
+      pista: "🛳️",
+      palabra: "BOAT",
+      display: "_OAT",
+      falta: "B",
+      categoria: "Transportes",
+    },
+    {
+      pista: "🚌",
+      palabra: "BUS",
+      display: "_US",
+      falta: "B",
+      categoria: "Transportes",
+    },
+    {
+      pista: "🚲",
+      palabra: "BICYCLE",
+      display: "_ICYCLE",
+      falta: "B",
+      categoria: "Transportes",
+    },
+
+    // Tiempo / Clima
+    {
+      pista: "🌞",
+      palabra: "SUN",
+      display: "_UN",
+      falta: "S",
+      categoria: "Tiempo",
+    },
+    {
+      pista: "🌧️",
+      palabra: "RAIN",
+      display: "_AIN",
+      falta: "R",
+      categoria: "Tiempo",
+    },
+    {
+      pista: "❄️",
+      palabra: "SNOW",
+      display: "_NOW",
+      falta: "S",
+      categoria: "Tiempo",
+    },
+    {
+      pista: "☁️",
+      palabra: "CLOUD",
+      display: "_LOUD",
+      falta: "C",
+      categoria: "Tiempo",
+    },
+    {
+      pista: "🌬️",
+      palabra: "WIND",
+      display: "_IND",
+      falta: "W",
+      categoria: "Tiempo",
+    },
+    {
+      pista: "🌈",
+      palabra: "RAINBOW",
+      display: "_AINBOW",
+      falta: "R",
+      categoria: "Tiempo",
+    },
+
+    // Animales
+    {
+      pista: "🐱",
+      palabra: "CAT",
+      display: "_AT",
+      falta: "C",
+      categoria: "Animales",
+    },
+    {
+      pista: "🐘",
+      palabra: "ELEPHANT",
+      display: "_LEPHANT",
+      falta: "E",
+      categoria: "Animales",
+    },
+    {
+      pista: "🐶",
+      palabra: "DOG",
+      display: "_OG",
+      falta: "D",
+      categoria: "Animales",
+    },
+    {
+      pista: "🦁",
+      palabra: "LION",
+      display: "_ION",
+      falta: "L",
+      categoria: "Animales",
+    },
+    {
+      pista: "🐵",
+      palabra: "MONKEY",
+      display: "_ONKEY",
+      falta: "M",
+      categoria: "Animales",
+    },
+    {
+      pista: "🐸",
+      palabra: "FROG",
+      display: "_ROG",
+      falta: "F",
+      categoria: "Animales",
+    },
+    {
+      pista: "🐧",
+      palabra: "PENGUIN",
+      display: "_ENGUIN",
+      falta: "P",
+      categoria: "Animales",
+    },
+  ],
+};
