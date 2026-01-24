@@ -1,11 +1,14 @@
 /* Estilos generales para centrar todo */
 body {
-    background-color: #e0f7fa; /* Azul pastel */
-    font-family: 'Comic Sans MS', sans-serif; /* Fuente infantil */
+    font-family: 'Varela Round', sans-serif;
+    
+    background: url('img/fondo.jpg') no-repeat center center fixed;
+    
+    background-size: cover;
     display: flex;
-    justify-content: center; /* Centrado horizontal */
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
-    margin: 0;
 }
 
 .contenedor-juego {
@@ -15,7 +18,7 @@ body {
 
 /* --- EL TABLERO (Explicación técnica: CSS GRID) --- */
 .tablero {
-    display: grid; /* Convertimos el contenedor en una rejilla */
+    display: grid; /* Convierto el contenedor en una rejilla */
     grid-template-columns: repeat(4, 100px); /* 4 columnas de 100px */
     gap: 15px; /* Espacio entre cartas */
     margin-top: 20px;
@@ -45,8 +48,8 @@ body {
 /* ESTADO 1: CARTA GIRADA (Clase que añade JS) */
 .carta.girada {
     background-color: #ffffff; /* Fondo blanco */
-    cursor: default; /* Ya no parece clicable */
-    transform: rotateY(0); /* (Aquí podrías meter efectos 3D si quisieras complicarlo) */
+    cursor: default; 
+    transform: rotateY(0); /* (Aca podemos meter efectos 3D si quisieramos mas profesional) */
 }
 
 /* ESTADO 2: CARTA EMPAREJADA (Acierto) */
@@ -55,7 +58,7 @@ body {
     animation: brinco 0.5s; /* Animación de saltito */
 }
 
-/* Definimos la animación del saltito */
+/* Defino la animación del saltito */
 @keyframes brinco {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.2); }
