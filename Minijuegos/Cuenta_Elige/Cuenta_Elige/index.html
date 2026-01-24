@@ -3,50 +3,104 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cuenta y Elige PRO</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
-      crossorigin="anonymous"
-    ></script>
-    <!-- SweetAlert2 -->
+    <title>Mini Genios</title>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <link rel="stylesheet" href="utils/style.css" />
   </head>
   <body>
-    <div class="game-wrapper">
-      <h1 class="game-title">
-        ¡Cuenta y Elige <span class="highlight">PRO!</span>
-      </h1>
-
-      <div class="instruction-card">
-        Observa las frutas y selecciona el número correcto.
+    <section id="vista-setup" class="pantalla activa">
+      <div class="panel-central">
+        <h1>¡Hola! 👋</h1>
+        <p>¿Cuántos amigos van a jugar?</p>
+        <div class="control-jugadores">
+          <button onclick="ajustarJugadores(-1)">➖</button>
+          <span id="num-jugadores">1</span>
+          <button onclick="ajustarJugadores(1)">➕</button>
+        </div>
+        <button class="btn-grande" onclick="irAlMenu()">¡Entrar!</button>
       </div>
+    </section>
 
-      <div class="stats-container">
-        <div class="stat-box">Puntaje: <span id="puntaje">0</span></div>
-        <div class="stat-box">Tiempo: <span id="temporizador">10s</span></div>
-      </div>
-
-      <div class="juego-container">
-        <div id="zona-juego"></div>
-        <div id="overlay" class="overlay">
-          <div id="overlay-content">
-            <button id="btn-empezar" class="btn-main">Empezar Juego</button>
-          </div>
+    <section id="vista-menu" class="pantalla oculto">
+      <h2 class="titulo-menu">Elige tu Reto</h2>
+      <div class="grid-juegos">
+        <div
+          class="card card-roja"
+          onclick="
+            prepararJuego(
+              'contar',
+              'Cuenta las frutas que caen y escribe el número.',
+            )
+          "
+        >
+          <div class="icono">🍎</div>
+          <span>Contar</span>
+        </div>
+        <div
+          class="card card-azul"
+          onclick="
+            prepararJuego(
+              'sumar',
+              'Suma los dos números y escribe el resultado.',
+            )
+          "
+        >
+          <div class="icono">➕</div>
+          <span>Sumar</span>
+        </div>
+        <div
+          class="card card-verde"
+          onclick="prepararJuego('restar', 'Resta el número menor al mayor.')"
+        >
+          <div class="icono">➖</div>
+          <span>Restar</span>
         </div>
       </div>
+      <div class="footer-info">
+        Jugadores: <span id="info-jugadores">1</span>
+      </div>
+    </section>
 
-      <div id="feedback" class="feedback-text"></div>
-      <div id="opciones-container" class="options-grid"></div>
-    </div>
+    <section id="vista-juego" class="pantalla oculto">
+      <div class="header-juego">
+        <button class="btn-salir" onclick="confirmarSalida()">🏠 Salir</button>
+        <span class="nivel-badge">Juego en curso</span>
+      </div>
+
+      <div id="zona-interactiva" class="zona-interactiva"></div>
+
+      <div class="controles-respuesta">
+        <input
+          type="number"
+          id="input-respuesta"
+          placeholder="?"
+          readonly
+          onclick="abrirTecladoVirtual()"
+        />
+        <button class="btn-check" onclick="verificar()">✅</button>
+      </div>
+
+      <div class="teclado-virtual">
+        <button onclick="teclear(1)">1</button>
+        <button onclick="teclear(2)">2</button>
+        <button onclick="teclear(3)">3</button>
+        <button onclick="teclear(4)">4</button>
+        <button onclick="teclear(5)">5</button>
+        <button onclick="teclear(6)">6</button>
+        <button onclick="teclear(7)">7</button>
+        <button onclick="teclear(8)">8</button>
+        <button onclick="teclear(9)">9</button>
+        <button onclick="teclear('C')" class="btn-borrar">Borrar</button>
+        <button onclick="teclear(0)">0</button>
+      </div>
+    </section>
 
     <script src="utils/logica.js"></script>
   </body>
