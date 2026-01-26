@@ -1,0 +1,157 @@
+/* style.css - Diseño Candy + Responsivo */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap');
+
+:root {
+    --primary: #FF6B6B;      /* Rojo suave */
+    --secondary: #4ECDC4;    /* Turquesa */
+    --accent: #FFE66D;       /* Amarillo */
+    --dark: #292f36;
+    --light: #f7fff7;
+    --board-bg: #fff;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #8EC5FC;
+    background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    /* RESPONSIVE: Añadido padding para que no toque los bordes en móvil */
+    padding: 20px;
+    box-sizing: border-box; 
+}
+
+h1, h2, h3 {
+    font-family: 'Fredoka One', cursive;
+    color: var(--dark);
+    text-shadow: 2px 2px 0px rgba(255,255,255,0.5);
+    margin-top: 0;
+    /* RESPONSIVE: El texto escala entre 24px y 40px */
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+}
+
+/* Tarjetas con estilo "Flotante" */
+.game-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border: 4px solid white;
+    width: 100%;        /* RESPONSIVE: Ocupa todo el ancho disponible... */
+    max-width: 450px;   /* ...hasta 450px */
+    text-align: center;
+    box-sizing: border-box; /* Para que el padding no rompa el ancho */
+}
+
+/* Botones estilo "Gominola" */
+.btn-custom {
+    background-color: var(--secondary);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: 0 6px 0 #2a9d8f; /* Efecto 3D */
+    width: 100%;
+    margin-top: 1rem;
+    text-decoration: none; /* Asegura que no parezca un enlace */
+    display: inline-block;
+}
+
+.btn-custom:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #2a9d8f;
+}
+
+.btn-warning { background-color: var(--accent); color: var(--dark); box-shadow: 0 6px 0 #d4c04d; }
+.btn-warning:active { box-shadow: 0 2px 0 #d4c04d; }
+
+.btn-primary { background-color: var(--primary); box-shadow: 0 6px 0 #c94646; }
+.btn-primary:active { box-shadow: 0 2px 0 #c94646; }
+
+/* Selectores bonitos */
+select.form-select {
+    width: 100%; /* RESPONSIVE */
+    border: 3px solid #eee;
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+}
+
+/* Tablero de Juego */
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+    gap: 15px;
+    background-color: var(--dark);
+    padding: 15px;
+    border-radius: 20px;
+    margin: 20px auto;
+    /* RESPONSIVE: Quitamos el width: fit-content */
+    width: 100%;
+    max-width: 380px; /* Limite para que no se vea gigante en PC */
+    box-sizing: border-box;
+}
+
+.cell {
+    /* RESPONSIVE: Medidas flexibles en lugar de 90px fijos */
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Mantiene siempre la forma cuadrada */
+    
+    background-color: var(--light);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* RESPONSIVE: El emoji crece/decrece según la pantalla */
+    font-size: clamp(2rem, 10vw, 3.5rem); 
+    
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.cell:hover {
+    background-color: #e9ecef;
+    transform: scale(1.05);
+}
+
+.cell.winner {
+    background-color: var(--accent);
+    animation: bounce 0.5s infinite alternate;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-5px); }
+}
+
+/* Podio en Resultados */
+.podio-box {
+    background: #fff9c4;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    border: 2px dashed var(--accent);
+}
+
+.history-item {
+    background: white;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    color: #555;
+}
