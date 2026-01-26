@@ -221,6 +221,25 @@ body {
     font-size: 0.9rem;
 }
 
+/* BOTÓN ROJO PARA SALIR AL MENÚ PRINCIPAL */
+.btn-rojo {
+    background: #ff4757;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px;
+    box-shadow: 0 4px 0 #d63031;
+}
+
+.btn-rojo:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
 /* ================= ZONA INTERACTIVA ================= */
 .zona-interactiva {
     flex: 1;
