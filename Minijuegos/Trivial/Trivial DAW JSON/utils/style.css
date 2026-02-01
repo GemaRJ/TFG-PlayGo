@@ -1,98 +1,89 @@
-/* RESET BÁSICO */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* BODY */
+/* ESTRUCTURA GENERAL */
 body {
-  font-family: "Fredoka", sans-serif;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  min-height: 100vh;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    background-color: transparent; 
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* CONTENEDOR GENERAL */
-.contenedor-principal {
-  width: 100%;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/*FONDO  / OVERLAY */
+.bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('imagenes/fondo.png') no-repeat center center;
+    background-size: cover;
+    opacity: 0.6; /* Ajusta opacidad */
+    z-index: -1;
 }
 
-/* TARJETA */
-.card {
-  background: rgba(255, 255, 255, 0.15);
-  padding: 25px;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 600px;
-  backdrop-filter: blur(6px);
+/* BOTONES DE RESPUESTA */
+.btn-answer {
+    text-align: left;
+    border: 1px solid #dee2e6;
+    background-color: rgba(255, 255, 255, 0.95); /* Semitransparente */
+    padding: 15px;
+    font-size: 1rem;
+    color: #212529;
+    transition: all 0.2s ease-in-out;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 0.5rem;
 }
 
-/* INPUTS Y SELECTS */
-input,
-select {
-  width: 100%;
-  padding: 12px;
-  margin-top: 6px;
-  margin-bottom: 12px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-  font-size: 1rem;
+.btn-answer:hover {
+    background-color: #ffffff;
+    border-color: #adb5bd;
+    transform: translateX(5px);
+    cursor: pointer;
 }
 
-/* BOTÓN COMENZAR */
-#boton-comenzar,
-#btn-home,
-#btn-clear {
-  width: 100%;
-  padding: 14px;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+/* ESTADOS DE RESPUESTA*/
+.btn-correct {
+    background-color: #198754 !important;
+    color: #ffffff !important;
+    border-color: #198754 !important;
 }
 
-#boton-comenzar:hover,
-#btn-home:hover,
-#btn-clear:hover {
-  transform: scale(1.05);
+.btn-wrong {
+    background-color: #dc3545 !important;
+    color: #ffffff !important;
+    border-color: #dc3545 !important;
 }
 
-/* ÁREA DE PREGUNTAS */
-#area-pregunta {
-  width: 100%;
+.text-danger {
+    color: #dc3545 !important;
 }
 
-/* BOTONES RESPUESTAS */
-#area-pregunta button {
-  width: 100%;
-  margin: 6px 0;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-weight: 500;
-  transition: transform 0.2s ease;
+/* ELEMENTOS DE INTERFAZ ADICIONALES */
+#question-text {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
 }
 
-#area-pregunta button:hover {
-  transform: scale(1.03);
+#answers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-/* MARCADORES */
-#marcador-puntos,
-#marcador-tiempo,
-#nombre-jugador-turno {
-  font-weight: bold;
+#score, #timer, #current-question-num, #total-questions-num {
+    font-weight: bold;
 }
-
+@media (max-width: 400px) {
+  h1.display-5 {
+    font-size: 1.5rem;
+  }
+  h4.card-title,
+  #question-text {
+    font-size: 1rem;
+  }
+  button.btn {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+}

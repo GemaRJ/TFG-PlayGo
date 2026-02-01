@@ -1,87 +1,148 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>Trivial DAW</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Bootstrap -->
+    <title>Trivial DAW</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
       rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
       crossorigin="anonymous"
     />
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
       crossorigin="anonymous"
     ></script>
 
-    <!-- Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- SweetAlert -->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- CSS externo -->
     <link rel="stylesheet" href="./utils/style.css" />
   </head>
-
   <body>
-    <div class="container contenedor-principal">
-      <!-- PANTALLA CONFIGURACIÓN -->
-      <div id="pantalla-configuracion" class="card shadow-lg">
-        <h2 class="text-center mb-4">TRIVIAL</h2>
-
-        <label class="form-label">Número de jugadores</label>
-        <select id="numero-jugadores" class="form-select mb-3">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
-
-        <div id="nombres-jugadores" class="mb-3"></div>
-
-        <div class="row">
-          <div class="col-md-6">
-            <label class="form-label">Categoría</label>
-            <select id="categoria" class="form-select mb-3">
-              <option value="Animales">Animales</option>
-              <option value="Videojuegos">Videojuegos</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label">Dificultad</label>
-            <select id="dificultad" class="form-select mb-3">
-              <option value="easy">Fácil</option>
-              <option value="medium">Media</option>
-              <option value="hard">Difícil</option>
-            </select>
+    <div class="bg-overlay"></div>
+    <main class="container py-5">
+      <div id="start-screen" class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+              <h4 class="card-title text-center mb-4">TRIVIAL DAM</h4>
+              <div class="mb-3">
+                <label class="form-label fw-bold text-primary"
+                  >¿Cuántos jugadores?</label
+                >
+                <select id="num-players" class="form-select">
+                  <option value="1">1 Jugador</option>
+                  <option value="2">2 Jugadores</option>
+                  <option value="3">3 Jugadores</option>
+                  <option value="4">4 Jugadores</option>
+                </select>
+              </div>
+              <div id="container-nombres" class="mb-3">
+                <input
+                  type="text"
+                  class="form-control mb-2 player-input"
+                  placeholder="Nombre Jugador 1"
+                  required
+                />
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-6">
+                  <div class="mb-3">
+                    <label for="select-category" class="form-label fw-bold"
+                      >Categoría:</label
+                    >
+                    <select id="select-category" class="form-select">
+                      <option value="all" selected>Todas</option>
+                      <option value="DESARROLLO WEB EN ENTORNO CLIENTE">
+                        DESARROLLO WEB EN ENTORNO CLIENTE
+                      </option>
+                      <option value="DESARROLLO WEB EN ENTORNO SERVIDOR">
+                        DESARROLLO WEB EN ENTORNO SERVIDOR
+                      </option>
+                      <option value="Interfaces">INTERFACES</option>
+                      <option value="Sostenibilidad">SOSTENIBILIDAD</option>
+                      <option value="Despliegue de aplicaciones web">
+                        DESPLIEGUE DE APLICACIONES WEB
+                      </option>
+                      <option value="Digitalizacion">DIGITALIZACIÓN</option>
+                      <option value="Ingles">INGLÉS</option>
+                      <option
+                        value="Itinerario Personal para la Empleabilidad II"
+                      >
+                        ITINERARIO PERSONAL PARA LA EMPLEABILIDAD II
+                      </option>
+                      <option value="Python">PROGRAMACIÓN EN PYTHON</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mb-4">
+                    <label for="select-difficulty" class="form-label fw-bold"
+                      >Dificultad:</label
+                    >
+                    <select id="select-difficulty" class="form-select">
+                      <option value="all" selected>Cualquiera</option>
+                      <option value="easy">Fácil</option>
+                      <option value="medium">Medio</option>
+                      <option value="hard">Difícil</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <button
+                id="btn-comenzar"
+                class="btn btn-primary w-100 py-2 fw-bold"
+              >
+                COMENZAR TORNEO
+              </button>
+            </div>
           </div>
         </div>
-
-        <button id="boton-comenzar" class="btn btn-success mt-2">
-          Comenzar juego
-        </button>
       </div>
 
-      <!-- PANTALLA JUEGO -->
-      <div id="pantalla-juego" class="card d-none shadow-lg">
-        <div class="d-flex justify-content-between border-bottom pb-3 mb-4">
-          <div>👤 <span id="nombre-jugador-turno"></span></div>
-          <div>⭐ <span id="marcador-puntos">0</span> pts</div>
-          <div>⏱️ <span id="marcador-tiempo">30</span>s</div>
+      <div id="game-screen" class="row justify-content-center d-none">
+        <div class="col-md-8 col-lg-6">
+          <div class="card shadow-lg border-0">
+            <div
+              class="card-header bg-white border-bottom-0 pt-4 pb-0 d-flex justify-content-between align-items-center"
+            >
+              <span id="category-badge" class="badge bg-secondary"
+                >Categoría</span
+              >
+              <div class="text-muted small">
+                Tiempo: <span id="timer" class="fw-bold text-dark">30</span>s
+              </div>
+            </div>
+            <div class="card-body p-4">
+              <div class="text-end mb-2">
+                <span class="text-uppercase small text-muted">Puntos</span>
+                <span id="score" class="h4 fw-bold text-primary ms-1">0</span>
+              </div>
+              <div class="progress mb-4" style="height: 5px">
+                <div
+                  id="progress-bar"
+                  class="progress-bar bg-success"
+                  role="progressbar"
+                  style="width: 0%"
+                ></div>
+              </div>
+              <div class="text-center mb-4">
+                <h4 id="question-text" class="fw-normal">Cargando...</h4>
+              </div>
+              <div id="answers-container" class="d-grid gap-2"></div>
+            </div>
+            <div class="card-footer bg-light text-center py-3 text-muted small">
+              Pregunta <span id="current-question-num">1</span> de
+              <span id="total-questions-num">5</span>
+            </div>
+          </div>
         </div>
-
-        <div id="area-pregunta"></div>
       </div>
-    </div>
+    </main>
 
-    <script src="./utils/logica.js"></script>
+    <script type="module" src="./utils/logica.js"></script>
   </body>
 </html>

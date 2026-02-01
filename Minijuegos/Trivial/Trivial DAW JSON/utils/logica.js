@@ -1,241 +1,237 @@
-// EJECUTAR DOM
+import { preguntasTrivial } from "./preguntas.js";
+
+/* VARIABLES DE ESTADO*/
+
+let listaJugadores = [];
+let turnoActual = 0;
+let preguntasUsadasIds = [];
+let preguntasPartida = [];
+let indicePregunta = 0;
+let puntuacion = 0;
+let tiempoRestante = 30;
+let intervaloTiempo;
+
+/* SELECTORES DOM */
+
+const startScreen = document.getElementById("start-screen");
+const gameScreen = document.getElementById("game-screen");
+
+const selectCategoria = document.getElementById("select-category");
+const selectDificultad = document.getElementById("select-difficulty");
+
+const uiCategoria = document.getElementById("category-badge");
+const uiTiempo = document.getElementById("timer");
+const uiPuntuacion = document.getElementById("score");
+const uiBarraProgreso = document.getElementById("progress-bar");
+
+const uiPregunta = document.getElementById("question-text");
+const uiRespuestas = document.getElementById("answers-container");
+
+const uiNumActual = document.getElementById("current-question-num");
+const uiNumTotal = document.getElementById("total-questions-num");
+
+/* EVENTOS INICIALES */
 
 document.addEventListener("DOMContentLoaded", () => {
-  generarInputsJugadores();
-  selectorNumeroJugadores.addEventListener("change", generarInputsJugadores);
-  botonComenzar.addEventListener("click", iniciarJuego);
+  const btnComenzar = document.getElementById("btn-comenzar");
+  if (btnComenzar) btnComenzar.addEventListener("click", prepararPartida);
+
+  const selectNumPlayers = document.getElementById("num-players");
+  if (selectNumPlayers) {
+    selectNumPlayers.addEventListener("change", generarInputsNombres);
+  }
 });
 
-// SELECTORES DOM
+/* CONFIGURACIÓN INICIAL */
 
-const selectorNumeroJugadores = document.querySelector("#numero-jugadores");
-const contenedorNombresJugadores = document.querySelector("#nombres-jugadores");
-const botonComenzar = document.querySelector("#boton-comenzar");
+function generarInputsNombres() {
+  const num = document.getElementById("num-players").value;
+  const container = document.getElementById("container-nombres");
+  container.innerHTML = "";
 
-const selectorCategoria = document.querySelector("#categoria");
-const selectorDificultad = document.querySelector("#dificultad");
-
-const pantallaConfiguracion = document.querySelector("#pantalla-configuracion");
-const pantallaJuego = document.querySelector("#pantalla-juego");
-
-const nombreJugadorTurno = document.querySelector("#nombre-jugador-turno");
-const areaPregunta = document.querySelector("#area-pregunta");
-
-const marcadorPuntos = document.querySelector("#marcador-puntos");
-const marcadorTiempo = document.querySelector("#marcador-tiempo");
-
-// VARIABLES
-
-let jugadores = [];
-let turnoActual = 0;
-let preguntas = [];
-let indicePregunta = 0;
-let puntos = 0;
-let tiempo = 30;
-let intervaloTiempo = null;
-
-// FUNCIONES
-
-// Decodificar HTML
-function decodeHTML(html) {
-  const txt = document.createElement("textarea");
-  txt.innerHTML = html;
-  return txt.value;
-}
-
-// Generar inputs de nombres de jugadores según el número seleccionado
-function generarInputsJugadores() {
-  contenedorNombresJugadores.innerHTML = "";
-  for (let i = 1; i <= selectorNumeroJugadores.value; i++) {
-    const input = document.createElement("input");
-    input.type = "text";
-    input.placeholder = `Nombre jugador ${i}`;
-    input.className = "form-control mb-2 player-input";
-    contenedorNombresJugadores.appendChild(input);
+  for (let i = 1; i <= num; i++) {
+    container.innerHTML += `
+      <input type="text"
+             class="form-control mb-2 player-input"
+             placeholder="Nombre Jugador ${i}"
+             required>
+    `;
   }
 }
 
-// Iniciar juego
-async function iniciarJuego() {
-  const inputs = document.querySelectorAll(".player-input");
-  jugadores = [];
-
-  for (let input of inputs) {
-    if (!input.value.trim()) {
-      Swal.fire("Error", "Introduce todos los nombres", "warning");
-      return;
-    }
-    jugadores.push({ nombre: input.value.trim(), puntos: 0 });
-  }
-
-  await cargarPreguntasAPI();
-  if (preguntas.length === 0) return;
-
-  turnoActual = 0;
-  iniciarTurno();
-}
-
-// Obtener URL de preguntas según categoría y dificultad
-function obtenerURLPreguntas() {
-  const categoria = selectorCategoria.value;
-  const dificultad = selectorDificultad.value;
-
-  const urls = {
-    Animales: {
-      easy: "https://opentdb.com/api.php?amount=10&category=27&difficulty=easy&type=multiple",
-      medium:
-        "https://opentdb.com/api.php?amount=10&category=27&difficulty=medium&type=multiple",
-      hard: "https://opentdb.com/api.php?amount=10&category=27&difficulty=hard&type=multiple",
-    },
-    Videojuegos: {
-      easy: "https://opentdb.com/api.php?amount=10&category=15&difficulty=easy&type=multiple",
-      medium:
-        "https://opentdb.com/api.php?amount=10&category=15&difficulty=medium&type=multiple",
-      hard: "https://opentdb.com/api.php?amount=10&category=15&difficulty=hard&type=multiple",
-    },
-  };
-
-  return urls[categoria][dificultad];
-}
-
-// Cargar preguntas de API
-async function cargarPreguntasAPI() {
-  try {
-    const response = await fetch(obtenerURLPreguntas());
-    const data = await response.json();
-
-    if (data.response_code !== 0) throw new Error();
-
-    preguntas = data.results.map((p) => ({
-      pregunta: decodeHTML(p.question),
-      correcta: decodeHTML(p.correct_answer),
-      incorrectas: p.incorrect_answers.map(decodeHTML),
-    }));
-  } catch {
-    Swal.fire("Error", "No se pudieron cargar las preguntas", "error");
-  }
-}
-
-// Iniciar turno de un jugador
-function iniciarTurno() {
-  puntos = 0;
-  indicePregunta = 0;
-  marcadorPuntos.textContent = 0;
-
-  pantallaConfiguracion.classList.add("d-none");
-  pantallaJuego.classList.remove("d-none");
-
-  nombreJugadorTurno.textContent = jugadores[turnoActual].nombre;
-  mostrarPregunta();
-}
-
-// Mostrar pregunta actual
-function mostrarPregunta() {
-  if (indicePregunta >= preguntas.length) {
-    finalizarTurno();
+function prepararPartida() {
+  if (!preguntasTrivial?.results) {
+    console.error("No se han cargado las preguntas");
     return;
   }
 
-  const p = preguntas[indicePregunta];
-  areaPregunta.innerHTML = `<p class="fw-bold">${p.pregunta}</p>`;
+  const inputs = document.querySelectorAll(".player-input");
+  listaJugadores = [];
 
-  const opciones = [...p.incorrectas, p.correcta].sort(
+  for (let input of inputs) {
+    if (!input.value.trim()) {
+      Swal.fire(
+        "Faltan datos",
+        "Introduce el nombre de todos los jugadores",
+        "warning",
+      );
+      return;
+    }
+    listaJugadores.push({ nombre: input.value.trim(), puntos: 0 });
+  }
+
+  turnoActual = 0;
+  preguntasUsadasIds = [];
+
+  startScreen.classList.add("d-none");
+  gameScreen.classList.remove("d-none");
+
+  iniciarTurnoJugador();
+}
+
+/* FLUJO DEL TORNEO */
+
+function iniciarTurnoJugador() {
+  const jugador = listaJugadores[turnoActual].nombre;
+
+  mostrarAlerta(`Turno de ${jugador}`, "Responderás 5 preguntas", "info", () =>
+    comenzarRonda(),
+  );
+}
+
+function comenzarRonda() {
+  puntuacion = 0;
+  indicePregunta = 0;
+  uiPuntuacion.innerText = "0";
+
+  const categoria = selectCategoria.value;
+  const dificultad = selectDificultad.value;
+
+  const pool = preguntasTrivial.results.filter((p) => {
+    const catOk = categoria === "all" || p.category === categoria;
+    const difOk = dificultad === "all" || p.difficulty === dificultad;
+    return catOk && difOk && !preguntasUsadasIds.includes(p.id);
+  });
+
+  pool.sort(() => Math.random() - 0.5);
+
+  preguntasPartida = pool.slice(0, 5);
+  preguntasPartida.forEach((p) => preguntasUsadasIds.push(p.id));
+
+  uiNumTotal.innerText = preguntasPartida.length;
+  cargarSiguientePregunta();
+}
+
+/*  MOTOR DEL JUEGO */
+
+function cargarSiguientePregunta() {
+  if (indicePregunta >= preguntasPartida.length) {
+    finDeTurno();
+    return;
+  }
+
+  const data = preguntasPartida[indicePregunta];
+  uiPregunta.innerHTML = data.question;
+  uiCategoria.innerText = data.category;
+  uiNumActual.innerText = indicePregunta + 1;
+
+  uiBarraProgreso.style.width =
+    (indicePregunta / preguntasPartida.length) * 100 + "%";
+
+  uiRespuestas.innerHTML = "";
+
+  const opciones = [...data.incorrect_answers, data.correct_answer].sort(
     () => Math.random() - 0.5,
   );
 
-  opciones.forEach((op) => {
+  opciones.forEach((texto) => {
     const btn = document.createElement("button");
-    btn.textContent = op;
-    btn.className = "btn btn-outline-light w-100 mb-2";
-    btn.onclick = () => comprobarRespuesta(op, p.correcta, btn);
-    areaPregunta.appendChild(btn);
+    btn.className = "btn btn-answer w-100 mb-2";
+    btn.innerText = texto;
+    btn.onclick = () => verificarRespuesta(texto, data.correct_answer, btn);
+    uiRespuestas.appendChild(btn);
   });
 
-  iniciarTemporizador();
+  iniciarCronometro();
 }
 
-// Comprobar respuesta seleccionada
-function comprobarRespuesta(seleccion, correcta, boton) {
+function verificarRespuesta(seleccion, correcta, btn) {
   clearInterval(intervaloTiempo);
 
-  const botones = document.querySelectorAll("#area-pregunta button");
+  const botones = uiRespuestas.querySelectorAll("button");
   botones.forEach((b) => (b.disabled = true));
 
   if (seleccion === correcta) {
-    boton.classList.replace("btn-outline-light", "btn-success");
-    puntos += 10;
-    marcadorPuntos.textContent = puntos;
+    btn.classList.add("btn-correct");
+    puntuacion += 10;
+    uiPuntuacion.innerText = puntuacion;
   } else {
-    boton.classList.replace("btn-outline-light", "btn-danger");
+    btn.classList.add("btn-wrong");
     botones.forEach((b) => {
-      if (b.textContent === correcta) {
-        b.classList.replace("btn-outline-light", "btn-success");
-      }
+      if (b.innerText === correcta) b.classList.add("btn-correct");
     });
   }
 
-  // Pasar a la siguiente pregunta tras 1.5s
   setTimeout(() => {
     indicePregunta++;
-    mostrarPregunta();
-  }, 1500);
+    cargarSiguientePregunta();
+  }, 2000);
 }
 
-// Temporizador de 30 segundos por pregunta
-function iniciarTemporizador() {
+/*  TIEMPO*/
+
+function iniciarCronometro() {
   clearInterval(intervaloTiempo);
-  tiempo = 30;
-  marcadorTiempo.textContent = tiempo;
+  tiempoRestante = 30;
+  uiTiempo.innerText = tiempoRestante;
 
   intervaloTiempo = setInterval(() => {
-    tiempo--;
-    marcadorTiempo.textContent = tiempo;
+    tiempoRestante--;
+    uiTiempo.innerText = tiempoRestante;
 
-    if (tiempo <= 0) {
+    if (tiempoRestante <= 0) {
       clearInterval(intervaloTiempo);
-
-      // Última pregunta del último jugador
-      if (
-        indicePregunta >= preguntas.length - 1 &&
-        turnoActual >= jugadores.length - 1
-      ) {
-        finalizarTurno();
-      } else {
-        indicePregunta++;
-        mostrarPregunta();
-      }
+      indicePregunta++;
+      cargarSiguientePregunta();
     }
   }, 1000);
 }
 
-// Finalizar turno o juego completo
-function finalizarTurno() {
-  jugadores[turnoActual].puntos = puntos;
-  turnoActual++;
+/*   FINALIZACIÓN */
 
-  if (turnoActual < jugadores.length) {
-    Swal.fire(
-      "Cambio de turno",
-      `Ahora es el turno de ${jugadores[turnoActual].nombre}`,
-      "info",
-    ).then(() => iniciarTurno());
+function finDeTurno() {
+  listaJugadores[turnoActual].puntos = puntuacion;
+
+  if (turnoActual < listaJugadores.length - 1) {
+    turnoActual++;
+    iniciarTurnoJugador();
   } else {
-    // Guardar historial completo
-    const historial =
-      JSON.parse(localStorage.getItem("historialTrivial")) || [];
-    historial.push({
-      fecha: new Date().toLocaleString(),
-      categoria: selectorCategoria.value,
-      dificultad: selectorDificultad.value,
-      jugadores: jugadores,
-    });
-    localStorage.setItem("historialTrivial", JSON.stringify(historial));
+    // --- GUARDAR RESULTADOS ---
+    localStorage.setItem("ultimosResultados", JSON.stringify(listaJugadores));
 
-    // Mostrar resultados
-    Swal.fire("Fin del juego", "Mostrando resultados finales", "success").then(
-      () => {
-        window.location.href = "resultado.html";
-      },
-    );
+    // Obtener ranking histórico previo
+    const rankingHist =
+      JSON.parse(localStorage.getItem("rankingTrivialDAW")) || [];
+
+    // Añadir resultados actuales
+    listaJugadores.forEach((jugador) => rankingHist.push(jugador));
+
+    // Guardar ranking actualizado
+    localStorage.setItem("rankingTrivialDAW", JSON.stringify(rankingHist));
+
+    // Redirigir a resultados
+    window.location.href = "resultados.html";
   }
+}
+
+/* UTILIDADES */
+
+function mostrarAlerta(titulo, texto, icono, callback) {
+  Swal.fire({
+    title: titulo,
+    text: texto,
+    icon: icono,
+    confirmButtonText: "OK",
+    allowOutsideClick: false,
+  }).then(() => callback && callback());
 }
