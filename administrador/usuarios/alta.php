@@ -1,8 +1,10 @@
 <?php
-// Actualización de rutas para la nueva estructura de PlayGo
+// UBICACIÓN: /playgo/administrador/usuarios/alta.php
+
+// 1. Configuración y Seguridad
 require_once "../../configuracion/sesiones.php";
 require_once "../../configuracion/conexion.php";
-comprobarAdmin(); // Solo los administradores del equipo acceden aquí
+comprobarAdmin(); 
 
 $mensaje = '';
 $error = '';
@@ -11,19 +13,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombres = mysqli_real_escape_string($conn, $_POST['nombres']);
     $correo = mysqli_real_escape_string($conn, $_POST['correo']);
     $clave = password_hash($_POST['clave'], PASSWORD_DEFAULT);
-    $tipo_usuario = $_POST['tipo_usuario']; // nino, adulto o administrador
+    $tipo_usuario = $_POST['tipo_usuario']; 
 
-    // Verificación de correo duplicado en la base de datos playgo
+    // Comprobar duplicados
     $check = mysqli_query($conn, "SELECT * FROM usuario WHERE correo='$correo'");
     if(mysqli_num_rows($check) > 0){
         $error = "Ese correo electrónico ya está registrado.";
     } else {
-        // Registro en la tabla usuario
+        // Insertar nuevo usuario
         $sql = "INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES ('$nombres','$correo','$clave','$tipo_usuario')";
         if(mysqli_query($conn, $sql)){
-            $mensaje = "Jugador registrado correctamente.";
+            $mensaje = "Usuario registrado correctamente.";
         } else {
-            $error = "Error técnico al registrar: " . mysqli_error($conn);
+            $error = "Error técnico: " . mysqli_error($conn);
         }
     }
 }
@@ -35,70 +37,111 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alta de Usuario | PlayGo Admin</title>
-    <link rel="stylesheet" href="../../assets/css/estilos.css">
-    <link rel="stylesheet" href="../../assets/css/admin.css">
+    <title>Alta Usuario | PlayGo Admin</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/menu.css">
 </head>
 
-<body>
-    <div class="caja-principal" style="max-width: 500px; margin-top: 50px;">
-        <div class="admin-header">
-            <h1 class="titulo-hola" style="color: #1a5276;">Nuevo Usuario</h1>
-            <p class="texto-rol">REGISTRO INTERNO DE JUGADORES</p>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-playgo shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../menu.php">
+                <span>🎮</span> Admin PlayGo
+            </a>
+            <div class="text-white small">
+                Gestión de Usuarios
+            </div>
         </div>
+    </nav>
 
-        <?php if($mensaje): ?>
-        <div class="alerta alerta-exito">✅ <?php echo $mensaje; ?></div>
-        <?php endif; ?>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
 
-        <?php if($error): ?>
-        <div class="alerta alerta-error">⚠️ <?php echo $error; ?></div>
-        <?php endif; ?>
+                <div class="card shadow-sm border-0 rounded-4 animate-fade-in">
+                    <div class="card-body p-5">
 
-        <form method="POST">
-            <div style="text-align: left; margin-bottom: 15px;">
-                <label class="label-bold">Nombre Completo:</label>
-                <input type="text" name="nombres" class="input-control" placeholder="Nombre del jugador" required>
+                        <div class="text-center mb-4">
+                            <div class="icon-circle bg-light-blue mb-3"
+                                style="width: 60px; height: 60px; font-size: 1.5rem;">
+                                👤
+                            </div>
+                            <h2 class="fw-bold text-playgo">Nuevo Usuario</h2>
+                            <p class="text-muted small">Registra un jugador o administrador manualmente</p>
+                        </div>
+
+                        <?php if($mensaje): ?>
+                        <div class="alert alert-success d-flex align-items-center" role="alert">
+                            <span class="me-2">✅</span>
+                            <div><?php echo $mensaje; ?></div>
+                        </div>
+                        <?php endif; ?>
+
+                        <?php if($error): ?>
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <span class="me-2">⚠️</span>
+                            <div><?php echo $error; ?></div>
+                        </div>
+                        <?php endif; ?>
+
+                        <form method="POST">
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small text-muted">NOMBRE COMPLETO</label>
+                                <input type="text" name="nombres" class="form-control form-control-lg"
+                                    placeholder="Ej: Gema Rodríguez" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small text-muted">CORREO ELECTRÓNICO</label>
+                                <input type="email" name="correo" class="form-control form-control-lg"
+                                    placeholder="usuario@playgo.com" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold small text-muted">CONTRASEÑA TEMPORAL</label>
+                                <input type="password" name="clave" class="form-control form-control-lg"
+                                    placeholder="••••••••" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold small text-muted">TIPO DE PERFIL</label>
+                                <select name="tipo_usuario" class="form-select form-select-lg" required>
+                                    <option value="" selected disabled>Selecciona el rol...</option>
+                                    <option value="nino">🧸 Niño (Acceso Infantil)</option>
+                                    <option value="adulto">🧠 Adulto (Acceso General)</option>
+                                    <option value="administrador">🛡️ Administrador (Gestión)</option>
+                                </select>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg fw-bold"
+                                    style="background-color: var(--playgo-blue); border: none;">
+                                    Guardar Usuario
+                                </button>
+                                <a href="listar.php" class="btn btn-outline-secondary">
+                                    Cancelar y Volver
+                                </a>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="../menu.php" class="text-decoration-none text-muted small">
+                        ← Volver al Panel Principal
+                    </a>
+                </div>
+
             </div>
-
-            <div style="text-align: left; margin-bottom: 15px;">
-                <label class="label-bold">Correo Electrónico:</label>
-                <input type="email" name="correo" class="input-control" placeholder="correo@playgo.com" required>
-            </div>
-
-            <div style="text-align: left; margin-bottom: 15px;">
-                <label class="label-bold">Contraseña:</label>
-                <input type="password" name="clave" class="input-control" placeholder="••••••••" required>
-            </div>
-
-            <div style="text-align: left; margin-bottom: 25px;">
-                <label class="label-bold" style="color: #1a5276;">Asignar Perfil:</label>
-                <select name="tipo_usuario" class="select-control" required>
-                    <option value="nino">Niño (Acceso infantil)</option>
-                    <option value="adulto">Adulto (Acceso general)</option>
-                    <option value="administrador">Administrador (Gestión)</option>
-                </select>
-            </div>
-
-            <button type="submit" class="boton-principal" style="width: 100%;">
-                Registrar Usuario
-            </button>
-        </form>
-
-        <div class="separador-footer" style="margin-top: 25px;">
-            <a href="listar.php" class="nav-link">⬅ Volver al listado</a>
         </div>
     </div>
 
-    <footer class="footer-admin">
-        <div class="footer-contenido">
-            <p class="logo-proyecto">🎮 PLAYGO</p>
-            <p class="subtexto">Plataforma de Minijuegos - Proyecto DAW</p>
-            <div class="copyright">
-                &copy; <?php echo date('Y'); ?> - Desarrollado por el Equipo de PlayGo
-            </div>
-        </div>
-    </footer>
+
 </body>
 
 </html>

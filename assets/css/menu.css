@@ -1,0 +1,74 @@
+/* UBICACIÓN: /playgo/assets/css/menu.css */
+
+:root {
+    --playgo-blue: #1a5276;
+    --playgo-dark: #154360;
+    --bg-soft: #f4f6f7;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-soft);
+}
+
+/* --- COLORES CORPORATIVOS --- */
+.bg-playgo {
+    background-color: var(--playgo-blue) !important;
+}
+
+.text-playgo {
+    color: var(--playgo-blue) !important;
+}
+
+/* --- TARJETAS (CARDS) --- */
+.card {
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-10px); /* Efecto de elevación al pasar el ratón */
+    box-shadow: 0 15px 30px rgba(26, 82, 118, 0.15) !important;
+}
+
+/* --- ÍCONOS CIRCULARES --- */
+.icon-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto; /* Centrado */
+}
+
+.bg-light-blue { background-color: #eaf2f8; color: #1a5276; }
+.bg-light-green { background-color: #e8f8f5; color: #27ae60; }
+.bg-light-purple { background-color: #f4ecf7; color: #8e44ad; }
+
+/* --- BOTONES PERSONALIZADOS --- */
+.btn-outline-primary {
+    color: var(--playgo-blue);
+    border-color: var(--playgo-blue);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--playgo-blue);
+    color: white;
+}
+
+.btn-success {
+    background-color: #27ae60;
+    border: none;
+}
+
+/* --- ANIMACIÓN --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
