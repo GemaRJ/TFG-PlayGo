@@ -1,7 +1,3 @@
-/* =========================================
-   🤖 CHATBOT DE SOPORTE - LOGICA TFG
-   ========================================= */
-
 const chatBtn = document.getElementById('chat-toggle-btn');
 const chatWindow = document.getElementById('chat-window');
 const closeChatBtn = document.getElementById('chat-close-btn');
@@ -37,7 +33,6 @@ function agregarMensaje(texto, remitente) {
 
 function botSaludar() {
     setTimeout(() => {
-        // Recuperamos el nombre del usuario si existe (del login)
         const nombreUsuario = localStorage.getItem('playgo_user') || "Jugador";
         agregarMensaje(`¡Hola ${nombreUsuario}! Soy el asistente virtual de PlayGo. 🤖`, 'bot');
         
@@ -71,8 +66,7 @@ function crearBoton(texto, accion) {
 
 // 3. CEREBRO DEL BOT (RESPUESTAS)
 async function procesarEleccion(accion) {
-    // Eliminamos los botones viejos para que quede limpio
-    const opcionesViejas = document.querySelector('.chat-options');
+   const opcionesViejas = document.querySelector('.chat-options');
     if (opcionesViejas) opcionesViejas.remove();
 
     if (accion === 'sugerencia') {
@@ -109,10 +103,10 @@ function enviarMensajeUsuario() {
     setTimeout(() => {
         if (estadoChat === 'esperando_sugerencia' || estadoChat === 'esperando_queja') {
             
-            // --- AQUÍ GUARDAMOS LOS DATOS (IMPORTANTE TFG) ---
+         
             const tipo = estadoChat === 'esperando_sugerencia' ? 'SUGERENCIA' : 'QUEJA';
             guardarEnLocalStorage(tipo, texto);
-            // ------------------------------------------------
+            
 
             agregarMensaje("¡Recibido! 📝 He guardado tu mensaje en el sistema. ¡Gracias!", 'bot');
             estadoChat = 'inicio';
