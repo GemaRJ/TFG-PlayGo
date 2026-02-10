@@ -1,6 +1,6 @@
 # PROYECTO_Play_Go
 
-# 🎮 PlayGo - Plataforma Educativa y de Entretenimiento
+# PlayGo - Plataforma Educativa y de Entretenimiento
 
 **PlayGo** es una plataforma web interactiva diseñada para ofrecer una experiencia de juego adaptada a diferentes rangos de edad (Niños y Adultos). Este proyecto combina una gestión robusta de usuarios con una interfaz moderna y responsiva.
 
