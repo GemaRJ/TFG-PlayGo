@@ -1,0 +1,197 @@
+/* Importamos las fuentes del estilo Trivial */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Fira+Code:wght@500;700&display=swap');
+
+:root {
+    --neon-green: #00ff88;
+    --neon-blue: #00b8ff;
+    --neon-red: #ff4757;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-color: #fff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    /* Fondo oscuro degradado igual que el Trivial */
+    background-color: #0f0c29;
+    background-image: linear-gradient(315deg, #0f0c29 0%, #302b63 74%, #24243e 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+/* --- TARJETA CON EFECTO CRISTAL (Glassmorphism) --- */
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px); /* El efecto borroso detrás */
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-out;
+}
+
+h1 {
+    font-family: 'Fira Code', monospace;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: var(--neon-green);
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5); /* Resplandor neón */
+}
+
+p { 
+    font-size: 1rem; 
+    margin-bottom: 20px; 
+    color: #ccc;
+}
+
+/* PALABRA CLAVE (La grande) */
+.target-word {
+    font-family: 'Fira Code', monospace;
+    font-size: 2.5rem;
+    color: var(--neon-blue);
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--glass-border);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 0 0 15px rgba(0, 184, 255, 0.4);
+}
+
+/* LISTA PROHIBIDA */
+.forbidden-list {
+    background: rgba(0, 0, 0, 0.2); /* Fondo un poco más oscuro */
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.forbidden-item {
+    font-weight: 600;
+    color: var(--neon-red);
+    font-size: 1.3rem;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 0 5px rgba(255, 71, 87, 0.3);
+}
+
+.forbidden-item::before {
+    content: "🚫";
+    margin-right: 10px;
+    font-size: 1rem;
+    filter: grayscale(1); /* Icono un poco apagado */
+}
+
+/* BOTONES */
+.btn-action {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    border: 2px solid transparent;
+}
+
+.btn-start {
+    background: linear-gradient(90deg, #00ff88, #00b8ff);
+    color: #0f0c29;
+    font-weight: 800;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+.btn-start:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+}
+
+/* Botón Acertar (Verde transparente) */
+.btn-success { 
+    background: rgba(0, 255, 136, 0.1);
+    color: var(--neon-green);
+    border-color: var(--neon-green);
+}
+.btn-success:hover {
+    background: var(--neon-green);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+/* Botón Fallar/Pasar (Rojo transparente) */
+.btn-skip { 
+    background: rgba(255, 71, 87, 0.1); 
+    color: var(--neon-red); 
+    border-color: var(--neon-red);
+}
+.btn-skip:hover {
+    background: var(--neon-red);
+    color: white;
+    box-shadow: 0 0 20px rgba(255, 71, 87, 0.4);
+}
+
+.btn-reset { 
+    background: rgba(255, 255, 255, 0.1); 
+    color: white; 
+    margin-top: 20px;
+}
+.btn-reset:hover { background: rgba(255, 255, 255, 0.3); }
+
+/* BARRA DE TIEMPO */
+.timer-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.timer-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
+    width: 100%;
+    transition: width 1s linear;
+    box-shadow: 0 0 10px var(--neon-blue);
+}
+
+/* PUNTUACIÓN Y UTILIDADES */
+.score-display { 
+    font-family: 'Fira Code', monospace;
+    font-size: 1.2rem; 
+    margin-top: 15px; 
+    color: #ccc;
+}
+.score-display span { color: var(--neon-green); font-size: 1.5rem; }
+
+.hidden { display: none !important; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ajuste responsive para móviles */
+@media (max-width: 400px) {
+    h1 { font-size: 2rem; }
+    .card { padding: 1.5rem; }
+}
