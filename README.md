@@ -1,2 +1,2 @@
-# PROYECTO_Block_Land
+# PROYECTO_Play_Go
 
