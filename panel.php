@@ -1,6 +1,4 @@
 ﻿<?php
-// UBICACIÓN: /playgo/panel.php
-
 require_once "configuracion/sesiones.php";
 // require_once "configuracion/conexion.php"; 
 comprobarJugador();
@@ -41,7 +39,7 @@ comprobarJugador();
         </div>
     </nav>
 
-    <div class="d-flex min-vh-100 pt-5 main-layout">
+    <div class="d-flex pt-5 main-layout">
 
         <div class="sidebar-area overflow-auto py-4 shadow-sm">
             <h6 class="px-4 text-muted fw-bold small mb-4 border-start border-4 border-primary ms-3 title-menu">
@@ -156,27 +154,27 @@ comprobarJugador();
             </div>
         </div>
 
-        <div class="game-area d-flex flex-column p-4 bg-secondary-subtle">
+        <div class="game-area p-4 bg-secondary-subtle">
 
-            <div class="d-flex flex-column flex-grow-1 shadow-lg rounded-4 overflow-hidden bg-dark">
+            <div class="game-card-container">
+
                 <div class="bg-white border-bottom px-4 py-3 d-flex justify-content-between align-items-center"
-                    style="height: 60px;">
+                    style="height: 60px; flex-shrink: 0;">
                     <span class="badge bg-danger fw-bold animate-pulse">🔴 EN JUEGO</span>
                     <button class="btn btn-sm btn-outline-dark rounded-pill fw-bold px-3" onclick="pantallaCompleta()">
                         ⛶ Pantalla Completa
                     </button>
                 </div>
 
-                <div class="position-relative bg-black">
+                <div class="position-relative bg-black flex-grow-1 overflow-hidden">
                     <iframe id="pantalla-juego"
                         src="<?php echo ($_SESSION['tipo_usuario'] === 'adulto') ? 'juegos/adultos/trivial/index.html' : 'juegos/niños/cuenta_numeros/index.html'; ?>"
-                        style="width: 100%; border: none; min-height: 800px;" onload="ajustarAltura(this)"
                         allowfullscreen>
                     </iframe>
                 </div>
             </div>
 
-            <footer class="pie-pagina text-center mt-4">
+            <footer class="pie-pagina">
                 <div class="contenido-footer">
                     <p class="logo-footer mb-0">🎮 PLAYGO</p>
                     <p class="mb-0">&copy; <?php echo date('Y'); ?> PlayGo Team - Proyecto DAW</p>
@@ -187,29 +185,25 @@ comprobarJugador();
 
     </div>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     /* 1. VARIABLES GLOBALES */
-    // Las declaramos aquí para que todas las funciones puedan verlas
     let iframeJuego = null;
     let botonesMenu = null;
 
     /* 2. INICIALIZACIÓN DEL DOM */
     document.addEventListener("DOMContentLoaded", () => {
-
-        // Guardamos los selectores una sola vez al cargar
+        // Guardamos los selectores una sola vez
         iframeJuego = document.querySelector('#pantalla-juego');
         botonesMenu = document.querySelectorAll('.list-group-item');
 
-        // Efecto Hover usando la variable ya guardada
+        // Efecto Hover
         if (botonesMenu) {
             botonesMenu.forEach(item => {
                 item.addEventListener('mouseover', () => {
-                    if (!item.classList.contains('active')) {
-                        item.style.transform = 'translateX(5px)';
-                    }
+                    if (!item.classList.contains('active')) item.style.transform =
+                        'translateX(5px)';
                 });
-
                 item.addEventListener('mouseout', () => {
                     item.style.transform = 'translateX(0)';
                 });
@@ -219,60 +213,35 @@ comprobarJugador();
 
     /* 3. FUNCIONES GLOBALES */
 
-    // Función: Carga el juego y actualiza estilos
+    // Cargar juego y actualizar menú
     function cargarJuego(ruta, btn) {
-        // Usamos la variable global del iframe
         if (iframeJuego) iframeJuego.src = ruta;
 
-        // Usamos la variable global de los botones
         if (botonesMenu) {
             botonesMenu.forEach(el => {
                 el.classList.remove('active', 'bg-primary', 'text-white');
                 el.classList.add('bg-white', 'text-dark');
-
                 const icon = el.querySelector('span');
                 if (icon) icon.style.background = '#f8f9fa';
             });
         }
 
-        // Activar botón pulsado
         btn.classList.remove('bg-white', 'text-dark');
         btn.classList.add('active', 'bg-primary', 'text-white');
-
         const activeIcon = btn.querySelector('span');
         if (activeIcon) activeIcon.style.background = 'rgba(255,255,255,0.2)';
     }
 
-    // Función: Pantalla Completa
+    // Pantalla Completa
     function pantallaCompleta() {
         if (!iframeJuego) return;
-
-        if (iframeJuego.requestFullscreen) {
-            iframeJuego.requestFullscreen();
-        } else if (iframeJuego.webkitRequestFullscreen) {
-            iframeJuego.webkitRequestFullscreen();
-        } else if (iframeJuego.msRequestFullscreen) {
-            iframeJuego.msRequestFullscreen();
-        }
+        if (iframeJuego.requestFullscreen) iframeJuego.requestFullscreen();
+        else if (iframeJuego.webkitRequestFullscreen) iframeJuego.webkitRequestFullscreen();
+        else if (iframeJuego.msRequestFullscreen) iframeJuego.msRequestFullscreen();
     }
 
-    // Función: Ajuste de altura automático
-    function ajustarAltura(iframe) {
-        // Esta función usa el elemento 'this' que le pasa el HTML, es independiente
-        if (iframe) {
-            iframe.style.height = "800px";
-
-            try {
-                const alturaContenido = iframe.contentWindow.document.body.scrollHeight;
-                if (alturaContenido > 800) {
-                    iframe.style.height = (alturaContenido + 50) + "px";
-                }
-            } catch (e) {
-                // Fallback de seguridad
-                iframe.style.height = "1300px";
-            }
-        }
-    }
+    // NOTA: Se ha eliminado la función 'ajustarAltura' porque ahora usamos CSS Zoom
     </script>
+</body>
 
 </html>
