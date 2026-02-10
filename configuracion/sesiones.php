@@ -1,16 +1,20 @@
 <?php
-// Evitamos iniciar la sesión si ya está activa para evitar el aviso (Notice)
+// /playgo/configuracion/sesiones.php
+
+// 1. Iniciamos la sesión si no está iniciada
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 /**
  * Verifica si hay un usuario logueado.
- * Si no, lo manda al login de PlayGo.
+ * Si no, lo redirige al login usando la RUTA ABSOLUTA.
+ * Al poner /playgo/ al principio, funcionará desde cualquier carpeta.
  */
 function comprobarSesion() {
     if (!isset($_SESSION['id'])) {
-        header("Location: /minijuegos-daw/autenticacion/login.php");
+        // CORRECCIÓN CLAVE: Usamos la ruta completa desde la raíz del servidor
+        header("Location: /playgo/autenticacion/login.php");
         exit;
     }
 }
@@ -19,22 +23,22 @@ function comprobarSesion() {
  * Verifica si el usuario es ADMINISTRADOR.
  */
 function comprobarAdmin() {
-    comprobarSesion();
+    comprobarSesion(); // Primero miramos si está logueado
     if ($_SESSION['tipo_usuario'] !== 'administrador') {
-        header("Location: /minijuegos-daw/index.html");
+        // Si intenta entrar y no es admin, lo mandamos a la portada
+        header("Location: /playgo/index.php");
         exit;
     }
 }
 
 /**
- * Verifica si el usuario es un JUGADOR (Niño o Adulto).
- * Útil para proteger el panel principal de juegos.
+ * Verifica si el usuario es JUGADOR (Niño o Adulto).
  */
 function comprobarJugador() {
-    comprobarSesion();
-    // Verificamos que sea niño o adulto según la nueva temática
+    comprobarSesion(); // Primero miramos si está logueado
     if ($_SESSION['tipo_usuario'] !== 'nino' && $_SESSION['tipo_usuario'] !== 'adulto') {
-        header("Location: /minijuegos-daw/index.html");
+        // Si es admin o algo raro, a la portada
+        header("Location: /playgo/index.php");
         exit;
     }
 }

@@ -19,6 +19,6 @@ session_destroy();
 
 // Redirigimos a la nueva Landing Page de PlayGo
 // Según tu estructura, subimos un nivel para salir de 'autenticacion' y llegar a la raíz
-header("Location: ../index.html"); 
+header("Location: ../index.php"); 
 exit;
 ?>

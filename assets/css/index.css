@@ -1,0 +1,268 @@
+/* UBICACIÓN: /playgo/assets/css/index.css */
+
+/* --- CONFIGURACIÓN GENERAL --- */
+:root {
+    --azul: #1a5276;
+    --azul-oscuro: #154360;
+    --rojo: #e74c3c;
+    --gris-fondo: #f8f9fa;
+    --blanco: #ffffff;
+    --texto: #2c3e50;
+    --sombra-suave: 0 4px 6px rgba(0,0,0,0.05);
+    --sombra-fuerte: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--gris-fondo);
+    color: var(--texto);
+}
+
+a { text-decoration: none; }
+
+/* --- 1. BARRA DE NAVEGACIÓN --- */
+.barra-navegacion {
+    background-color: var(--blanco);
+    padding: 15px 0;
+    position: sticky; /* Se queda pegada arriba */
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--sombra-suave);
+}
+
+.contenido-nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--azul);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu-derecha {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.enlace-texto {
+    color: #666;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.enlace-texto:hover { color: var(--azul); }
+
+.separador { color: #ccc; }
+
+.boton-principal {
+    background-color: var(--azul);
+    color: white;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.boton-principal:hover {
+    background-color: var(--azul-oscuro);
+    transform: translateY(-2px);
+}
+
+/* --- 2. HERO BANNER (Versión Estática - FOTO FIJA) --- */
+.hero-banner {
+    /* Degradado azul corporativo + Imagen de fondo */
+    background: linear-gradient(135deg, rgba(26, 82, 118, 0.9) 0%, rgba(41, 128, 185, 0.85) 100%), url('../img/fondo-juegos.jpg');
+    
+    background-size: cover;
+    background-position: center;
+    background-color: var(--azul); 
+    height: 500px;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 20px;
+    position: relative;
+}
+
+.hero-contenido {
+    width: 100%;
+    max-width: 800px;
+    z-index: 2;
+}
+
+.hero-contenido h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.hero-contenido p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 40px;
+}
+
+/* El buscador bonito */
+.buscador {
+    background: white;
+    padding: 8px;
+    border-radius: 50px;
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: var(--sombra-fuerte);
+}
+
+.buscador input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding-left: 20px;
+    font-size: 1rem;
+    border-radius: 50px;
+}
+
+.boton-buscar {
+    background-color: var(--azul);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.boton-buscar:hover { background-color: var(--azul-oscuro); }
+
+/* --- 3. REJILLA DE JUEGOS (GRID) --- */
+.seccion-principal {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.titulo-seccion {
+    text-align: center;
+    color: var(--azul);
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+.rejilla-juegos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* --- 4. TARJETAS (CARDS) --- */
+.tarjeta {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--sombra-suave);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+}
+
+.tarjeta:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--sombra-fuerte);
+}
+
+.tarjeta-imagen {
+    height: 180px;
+    background: linear-gradient(135deg, #e0f7fa 0%, #e1bee7 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+}
+
+.tarjeta-cuerpo {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.etiqueta {
+    align-self: flex-start;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+.etiqueta-nino { background-color: #e8f8f5; color: #16a085; }
+.etiqueta-adulto { background-color: #fce4ec; color: #d81b60; }
+
+.tarjeta-cuerpo h3 {
+    margin-bottom: 10px;
+    color: var(--texto);
+}
+
+.tarjeta-cuerpo p {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.boton-tarjeta {
+    display: block;
+    text-align: center;
+    border: 2px solid var(--azul);
+    color: var(--azul);
+    padding: 10px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.boton-tarjeta:hover {
+    background-color: var(--azul);
+    color: white;
+}
+
+/* --- 5. FOOTER --- */
+.pie-pagina {
+    background-color: var(--azul); 
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 50px;
+    border-top: 5px solid rgba(0,0,0,0.1);
+}
+
+.logo-footer {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    opacity: 1;
+}
+
+.contenido-footer p {
+    opacity: 0.8;
+    font-size: 0.95rem;
+    margin-top: 5px;
+}

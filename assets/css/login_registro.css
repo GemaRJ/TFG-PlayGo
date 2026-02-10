@@ -1,0 +1,76 @@
+/* UBICACIÓN: /playgo/assets/css/login.css */
+
+:root {
+    --playgo-blue: #1a5276;       /* Tu azul corporativo */
+    --playgo-hover: #154360;      /* Azul más oscuro para hover */
+    --bg-color: #f0f4f8;          /* Fondo suave */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+}
+
+/* Título de la marca */
+.brand-title {
+    color: var(--playgo-blue);
+    font-weight: 800;
+    font-size: 2rem;
+}
+
+/* Barra decorativa superior de la tarjeta */
+.card-header-bar {
+    height: 8px;
+    background: linear-gradient(90deg, var(--playgo-blue) 0%, #2980b9 100%);
+    width: 100%;
+}
+
+/* PERSONALIZACIÓN BOOTSTRAP */
+
+/* Sobrescribir el botón primario */
+.btn-primary {
+    background-color: var(--playgo-blue);
+    border-color: var(--playgo-blue);
+    padding: 12px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--playgo-hover);
+    border-color: var(--playgo-hover);
+    transform: translateY(-2px); /* Efecto elevación */
+    box-shadow: 0 5px 15px rgba(26, 82, 118, 0.3);
+}
+
+/* Colores de texto */
+.text-primary {
+    color: var(--playgo-blue) !important;
+}
+
+/* Inputs del formulario más bonitos */
+.form-control:focus, .form-select:focus {
+    border-color: var(--playgo-blue);
+    box-shadow: 0 0 0 0.25rem rgba(26, 82, 118, 0.15);
+}
+
+.form-control {
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+/* ANIMACIÓN DE ENTRADA (Fade In Up) */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
