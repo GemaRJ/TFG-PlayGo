@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivial Kids 🎈</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Titan+One&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="contenedor-principal">
+        
+        <div id="pantalla-inicio" class="tarjeta-juego bounce-in">
+            <header class="encabezado">
+                <h1>🦄 Trivial Kids 🍭</h1>
+                <p>¡Vamos a jugar!</p>
+            </header>
+
+            <div class="config-zona">
+                <label>¿Cuántos amigos sois?</label>
+                <div class="select-wrapper">
+                    <select id="num-jugadores" class="select-bonito" onchange="generarInputsNombres()">
+                        <option value="1">1 Amigo 🧒</option>
+                        <option value="2">2 Amigos 🧒👧</option>
+                        <option value="3">3 Amigos 🧒👧👦</option>
+                        <option value="4">4 Amigos 🧒👧👦👧</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="lista-nombres" class="lista-nombres">
+                </div>
+
+            <button class="btn-start" onclick="comenzarPartida()">🚀 ¡DESPEGAR!</button>
+        </div>
+
+
+        <div id="pantalla-juego" class="tarjeta-juego oculto">
+            
+            <header class="encabezado">
+                <h1>🌟 Preguntas 🌟</h1>
+                
+                <div class="panel-estado">
+                    <div class="caja-turno">
+                        <span class="etiqueta">Le toca a:</span>
+                        <span id="nombre-jugador-activo" class="jugador-activo">Jugador 1</span>
+                    </div>
+                    <div class="caja-timer">
+                        ⏰ <span id="tiempo-restante">20</span>s
+                    </div>
+                </div>
+
+                <div class="info-juego">
+                    <span id="puntuacion-actual">Estrellas: 0 ⭐</span>
+                </div>
+                
+                <div class="barra-progreso-fondo">
+                    <div id="barra-progreso" class="barra-progreso-relleno"></div>
+                </div>
+            </header>
+
+            <main class="zona-pregunta">
+                <h2 id="texto-pregunta">Cargando...</h2>
+                
+                <div id="grid-respuestas" class="grid-respuestas">
+                    </div>
+            </main>
+
+            <footer class="pie-juego">
+                <button id="btn-siguiente" class="btn-siguiente oculto" onclick="siguientePregunta()">Siguiente ➡️</button>
+            </footer>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js"></script>
+</body>
+</html>
