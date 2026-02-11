@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabú Adultos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        
+        <div id="start-screen" class="card">
+            <h1>TABÚ 🤫</h1>
+            <p>Describe la palabra sin decir las prohibidas.</p>
+            <p style="font-size: 0.9rem; opacity: 0.7;">Edición Adultos</p>
+            <button class="btn-action btn-start" onclick="startGame()">¡JUGAR!</button>
+        </div>
+
+        <div id="game-screen" class="card hidden">
+            <div class="timer-container">
+                <div id="timer-bar" class="timer-fill"></div>
+            </div>
+
+            <h2 id="target-word" class="target-word">CARGANDO...</h2>
+
+            <div id="forbidden-list" class="forbidden-list">
+                </div>
+
+            <button class="btn-action btn-success" onclick="nextCard(true)">✅ ACERTADA</button>
+            <button class="btn-action btn-skip" onclick="nextCard(false)">❌ TABÚ / PASO</button>
+            
+            <div class="score-display">Puntos: <span id="score">0</span></div>
+        </div>
+
+        <div id="end-screen" class="card hidden">
+            <h1>¡TIEMPO! ⏰</h1>
+            <p>Tu puntuación final es:</p>
+            <div style="font-size: 4rem; font-weight: 900; color: var(--accent); margin-bottom: 20px;">
+                <span id="final-score">0</span>
+            </div>
+            <button class="btn-action btn-reset" onclick="location.reload()">Jugar otra vez</button>
+        </div>
+
+    </div>
+
+    <script src="tabu.js"></script>
+</body>
+</html>

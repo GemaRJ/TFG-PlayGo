@@ -1,0 +1,22 @@
+[
+    {
+        "palabra": "RESACA",
+        "prohibidas": ["Alcohol", "Dolor", "Cabeza", "Beber", "Mañana"]
+    },
+    {
+        "palabra": "TINDER",
+        "prohibidas": ["App", "Citas", "Ligues", "Deslizar", "Match"]
+    },
+    {
+        "palabra": "SUEGRA",
+        "prohibidas": ["Madre", "Pareja", "Familia", "Visita", "Comida"]
+    },
+    {
+        "palabra": "SALARIO",
+        "prohibidas": ["Dinero", "Mes", "Cobrar", "Trabajo", "Nómina"]
+    },
+    {
+        "palabra": "EX",
+        "prohibidas": ["Novio", "Novia", "Pasado", "Ruptura", "Relación"]
+    }
+]
