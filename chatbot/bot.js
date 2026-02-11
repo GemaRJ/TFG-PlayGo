@@ -1,16 +1,7 @@
 (function() {
-    // --- 0. CONFIGURACIÓN Y AUTO-INYECCIÓN ---
-    const basePath = '/playgo/chatbot';
+    console.log("🤖 Bot PlayGo: Cargando...");
 
-    // Inyectar el CSS automáticamente
-    if (!document.querySelector(`link[href="${basePath}/bot.css"]`)) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = basePath + '/bot.css';
-        document.head.appendChild(link);
-    }
-
-    // Inyectar el HTML del chat al final del body
+    // 1. INYECTAR EL HTML AUTOMÁTICAMENTE
     const chatHTML = `
         <div id="chat-widget">
             <button id="chat-toggle-btn">
@@ -29,9 +20,11 @@
             </div>
         </div>
     `;
+
+    // Insertamos el HTML al final del body
     document.body.insertAdjacentHTML('beforeend', chatHTML);
 
-    // --- TU LÓGICA ORIGINAL ADAPTADA ---
+    // 2. AHORA SÍ DEFINIMOS LAS CONSTANTES (porque los elementos ya existen)
     const chatBtn = document.getElementById('chat-toggle-btn');
     const chatWindow = document.getElementById('chat-window');
     const closeChatBtn = document.getElementById('chat-close-btn');
@@ -42,19 +35,16 @@
 
     let estadoChat = 'inicio';
 
-    // 1. ABRIR Y CERRAR
+    // --- LÓGICA DE FUNCIONAMIENTO ---
+
     chatBtn.addEventListener('click', () => {
         chatWindow.classList.toggle('hidden');
         if (notifDot) notifDot.style.display = 'none';
-        
-        if (chatBody.children.length === 0) {
-            botSaludar();
-        }
+        if (chatBody.children.length === 0) botSaludar();
     });
 
     closeChatBtn.addEventListener('click', () => chatWindow.classList.add('hidden'));
 
-    // 2. FUNCIONES DE MENSAJERIA
     function agregarMensaje(texto, remitente) {
         const div = document.createElement('div');
         div.classList.add('msg', remitente === 'bot' ? 'bot-msg' : 'user-msg');
@@ -66,10 +56,9 @@
     function botSaludar() {
         setTimeout(() => {
             const nombreUsuario = localStorage.getItem('playgo_user') || "Jugador";
-            agregarMensaje(`¡Hola ${nombreUsuario}! Soy el asistente virtual de PlayGo. 🤖`, 'bot');
-            
+            agregarMensaje(`¡Hola ${nombreUsuario}! Soy el asistente de PlayGo. 🤖`, 'bot');
             setTimeout(() => {
-                agregarMensaje("¿En qué puedo ayudarte hoy?", 'bot');
+                agregarMensaje("¿En qué puedo ayudarte?", 'bot');
                 mostrarOpciones();
             }, 600);
         }, 500);
@@ -78,40 +67,35 @@
     function mostrarOpciones() {
         const div = document.createElement('div');
         div.classList.add('chat-options');
-        div.appendChild(crearBoton("💡 Tengo una sugerencia", "sugerencia"));
-        div.appendChild(crearBoton("🐞 He encontrado un fallo", "queja"));
-        div.appendChild(crearBoton("👋 Solo saludar", "saludo"));
+        div.appendChild(crearBoton("💡 Sugerencia", "sugerencia"));
+        div.appendChild(crearBoton("🐞 Error/Fallo", "queja"));
+        div.appendChild(crearBoton("👋 Saludo", "saludo"));
         chatBody.appendChild(div);
-        chatBody.scrollTop = chatBody.scrollHeight;
     }
 
     function crearBoton(texto, accion) {
         const btn = document.createElement('button');
         btn.classList.add('option-btn');
         btn.innerText = texto;
-        btn.onclick = () => procesarEleccion(accion);
+        btn.onclick = () => {
+            divs = document.querySelectorAll('.chat-options');
+            divs.forEach(d => d.remove());
+            
+            if (accion === 'sugerencia' || accion === 'queja') {
+                agregarMensaje(texto, 'user');
+                agregarMsgBot(accion);
+            } else {
+                agregarMensaje("¡Hola! Diviértete jugando. 🎮", 'bot');
+                setTimeout(mostrarOpciones, 2000);
+            }
+        };
         return btn;
     }
 
-    async function procesarEleccion(accion) {
-        const opcionesViejas = document.querySelector('.chat-options');
-        if (opcionesViejas) opcionesViejas.remove();
-
-        if (accion === 'sugerencia') {
-            agregarMensaje("¡Genial! Nos encanta mejorar. Escribe tu idea abajo 👇", 'bot');
-            estadoChat = 'esperando_sugerencia';
-            activarInput();
-        } else if (accion === 'queja') {
-            agregarMensaje("Vaya... 😢 Cuéntame qué ha pasado para arreglarlo:", 'bot');
-            estadoChat = 'esperando_queja';
-            activarInput();
-        } else {
-            agregarMensaje("¡Hola! Espero que te diviertas mucho jugando. 🎮", 'bot');
-            setTimeout(mostrarOpciones, 2000);
-        }
-    }
-
-    function activarInput() {
+    function agregarMsgBot(accion) {
+        const msg = accion === 'sugerencia' ? "Escribe tu idea abajo 👇" : "Cuéntame el fallo:";
+        estadoChat = 'esperando_' + accion;
+        agregarMensaje(msg, 'bot');
         chatInput.disabled = false;
         chatInput.focus();
     }
@@ -125,33 +109,20 @@
         chatInput.disabled = true;
 
         setTimeout(() => {
-            if (estadoChat === 'esperando_sugerencia' || estadoChat === 'esperando_queja') {
-                const tipo = estadoChat === 'esperando_sugerencia' ? 'SUGERENCIA' : 'QUEJA';
-                guardarEnLocalStorage(tipo, texto);
-                agregarMensaje("¡Recibido! 📝 He guardado tu mensaje en el sistema.", 'bot');
-                estadoChat = 'inicio';
-                setTimeout(() => {
-                    agregarMensaje("¿Necesitas algo más?", 'bot');
-                    mostrarOpciones();
-                }, 1500);
-            }
+            const tipo = estadoChat === 'esperando_sugerencia' ? 'SUGERENCIA' : 'QUEJA';
+            
+            // GUARDAR EN LOCALSTORAGE
+            const feedback = JSON.parse(localStorage.getItem('playgo_feedback') || "[]");
+            feedback.push({ tipo, mensaje: texto, fecha: new Date().toLocaleString() });
+            localStorage.setItem('playgo_feedback', JSON.stringify(feedback));
+
+            agregarMensaje("¡Recibido! Guardado en el sistema local. ✅", 'bot');
+            estadoChat = 'inicio';
+            setTimeout(mostrarOpciones, 1500);
         }, 1000);
     }
 
-    function guardarEnLocalStorage(tipo, mensaje) {
-        const feedback = JSON.parse(localStorage.getItem('playgo_feedback')) || [];
-        feedback.push({
-            usuario: localStorage.getItem('playgo_user') || 'Anónimo',
-            tipo: tipo,
-            mensaje: mensaje,
-            fecha: new Date().toLocaleString()
-        });
-        localStorage.setItem('playgo_feedback', JSON.stringify(feedback));
-    }
-
     chatSend.addEventListener('click', enviarMensajeUsuario);
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') enviarMensajeUsuario();
-    });
+    chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') enviarMensajeUsuario(); });
 
 })();
