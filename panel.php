@@ -242,6 +242,7 @@ comprobarJugador();
 
     // NOTA: Se ha eliminado la función 'ajustarAltura' porque ahora usamos CSS Zoom
     </script>
+    <script src="/playgo/chatbot/bot.js"></script>
 </body>
 
 </html>
