@@ -1,5 +1,5 @@
 (function() {
-    console.log("🤖 Bot PlayGo: Cargando...");
+    console.log("🤖 Bot PlayGo: Sistema de Soporte Activado");
 
     // 1. INYECTAR EL HTML AUTOMÁTICAMENTE
     const chatHTML = `
@@ -21,10 +21,8 @@
         </div>
     `;
 
-    // Insertamos el HTML al final del body
     document.body.insertAdjacentHTML('beforeend', chatHTML);
 
-    // 2. AHORA SÍ DEFINIMOS LAS CONSTANTES (porque los elementos ya existen)
     const chatBtn = document.getElementById('chat-toggle-btn');
     const chatWindow = document.getElementById('chat-window');
     const closeChatBtn = document.getElementById('chat-close-btn');
@@ -35,8 +33,7 @@
 
     let estadoChat = 'inicio';
 
-    // --- LÓGICA DE FUNCIONAMIENTO ---
-
+    // --- ABRIR Y CERRAR ---
     chatBtn.addEventListener('click', () => {
         chatWindow.classList.toggle('hidden');
         if (notifDot) notifDot.style.display = 'none';
@@ -58,18 +55,23 @@
             const nombreUsuario = localStorage.getItem('playgo_user') || "Jugador";
             agregarMensaje(`¡Hola ${nombreUsuario}! Soy el asistente de PlayGo. 🤖`, 'bot');
             setTimeout(() => {
-                agregarMensaje("¿En qué puedo ayudarte?", 'bot');
+                agregarMensaje("¿Cómo puedo ayudarte?", 'bot');
                 mostrarOpciones();
             }, 600);
         }, 500);
     }
 
+    // --- MENÚ DE OPCIONES ---
     function mostrarOpciones() {
         const div = document.createElement('div');
         div.classList.add('chat-options');
-        div.appendChild(crearBoton("💡 Sugerencia", "sugerencia"));
+        
+        // Botón que abre el PHP en pestaña nueva (La forma más fácil)
+        div.appendChild(crearBoton("❓ AYUDA O SUGERENCIAS", "abrir_soporte"));
+        
         div.appendChild(crearBoton("🐞 Error/Fallo", "queja"));
         div.appendChild(crearBoton("👋 Saludo", "saludo"));
+        
         chatBody.appendChild(div);
     }
 
@@ -77,15 +79,28 @@
         const btn = document.createElement('button');
         btn.classList.add('option-btn');
         btn.innerText = texto;
+        
         btn.onclick = () => {
-            divs = document.querySelectorAll('.chat-options');
-            divs.forEach(d => d.remove());
-            
-            if (accion === 'sugerencia' || accion === 'queja') {
+            // Eliminar botones anteriores
+            const opcionesViejas = document.querySelectorAll('.chat-options');
+            opcionesViejas.forEach(d => d.remove());
+
+            if (accion === 'abrir_soporte') {
+                agregarMensaje(texto, 'user');
+                agregarMensaje("Abriendo formulario de soporte en una pestaña nueva... ", 'bot');
+                
+                // --- RUTA AL PHP ---
+                // Ajusta esta ruta según donde tengas tu archivo soporte.php
+                setTimeout(() => {
+                    window.open('/playgo/autenticacion/soporte.php', '_blank');
+                    setTimeout(mostrarOpciones, 2000);
+                }, 1000);
+                
+            } else if (accion === 'queja') {
                 agregarMensaje(texto, 'user');
                 agregarMsgBot(accion);
             } else {
-                agregarMensaje("¡Hola! Diviértete jugando. 🎮", 'bot');
+                agregarMensaje("¡Hola! Espero que te estés divirtiendo. 🎮", 'bot');
                 setTimeout(mostrarOpciones, 2000);
             }
         };
@@ -93,9 +108,8 @@
     }
 
     function agregarMsgBot(accion) {
-        const msg = accion === 'sugerencia' ? "Escribe tu idea abajo 👇" : "Cuéntame el fallo:";
-        estadoChat = 'esperando_' + accion;
-        agregarMensaje(msg, 'bot');
+        estadoChat = 'esperando_queja';
+        agregarMensaje("Por favor, descríbenos el error para que podamos ayudarte:", 'bot');
         chatInput.disabled = false;
         chatInput.focus();
     }
@@ -109,14 +123,12 @@
         chatInput.disabled = true;
 
         setTimeout(() => {
-            const tipo = estadoChat === 'esperando_sugerencia' ? 'SUGERENCIA' : 'QUEJA';
-            
-            // GUARDAR EN LOCALSTORAGE
+            // Guardar en LocalStorage para que no se pierda la queja
             const feedback = JSON.parse(localStorage.getItem('playgo_feedback') || "[]");
-            feedback.push({ tipo, mensaje: texto, fecha: new Date().toLocaleString() });
+            feedback.push({ tipo: 'QUEJA_BOT', mensaje: texto, fecha: new Date().toLocaleString() });
             localStorage.setItem('playgo_feedback', JSON.stringify(feedback));
 
-            agregarMensaje("¡Recibido! Guardado en el sistema local. ✅", 'bot');
+            agregarMensaje("¡Entendido! He guardado tu reporte localmente. ✅", 'bot');
             estadoChat = 'inicio';
             setTimeout(mostrarOpciones, 1500);
         }, 1000);

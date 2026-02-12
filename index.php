@@ -129,23 +129,6 @@ if (isset($conn) && $conn) {
         </div>
     </footer>
 
-    <div id="chat-widget">
-        <button id="chat-toggle-btn">
-            💬 <span class="notification-dot">1</span>
-        </button>
-
-        <div id="chat-window" class="hidden">
-            <header class="chat-header">
-                <span>🤖 Soporte PlayGo</span>
-                <button id="chat-close-btn">✖</button>
-            </header>
-            <div id="chat-messages" class="chat-body"></div>
-            <footer class="chat-footer">
-                <input type="text" id="chat-input" placeholder="Escribe aquí..." disabled>
-                <button id="chat-send-btn">➤</button>
-            </footer>
-        </div>
-    </div>
     
     <script src="chatbot/bot.js"></script>
 </body>
