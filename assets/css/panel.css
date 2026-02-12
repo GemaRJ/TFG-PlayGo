@@ -77,7 +77,7 @@ body {
     margin-bottom: 5px;
     
     /* Centramos el contenido por si el zoom deja espacios a los lados */
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
 }
 
@@ -88,13 +88,6 @@ iframe {
     border: none;
     display: block;
     
-    /* === EL TRUCO === */
-    /* Reducimos el juego al 80% para que quepa todo de un vistazo */
-    zoom: 0.80;
-    
-    /* Compatibilidad con Firefox */
-    -moz-transform: scale(0.80);
-    -moz-transform-origin: top center;
 }
 
 /* Animación "En Juego" */

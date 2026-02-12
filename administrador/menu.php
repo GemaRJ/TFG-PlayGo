@@ -91,7 +91,7 @@ comprobarAdmin(); // Seguridad: Solo el administrador entra aquí
                         <p class="text-muted small">Configura las respuestas del bot.</p>
 
                         <div class="d-grid gap-2 mt-4">
-                            <a href="../chatbot/chatbot.php" class="btn btn-outline-dark btn-sm">Configurar Chatbot</a>
+                            <a href="/playgo/administrador/chatbot/gestionar.php" class="btn btn-outline-dark btn-sm">Configurar Chatbot</a>
                             <button class="btn btn-secondary btn-sm disabled" disabled>Estadísticas (Pronto)</button>
                         </div>
                     </div>
