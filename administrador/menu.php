@@ -1,9 +1,22 @@
 <?php
-// UBICACIÓN: /playgo/administrador/menu.php
-
+/**
+ * MENU PRINCIPAL DEL ADMINISTRADOR (DASHBOARD)
+ * Gestión centralizada: Usuarios, Juegos y Soporte.
+ */
 require_once "../configuracion/conexion.php";
 require_once "../configuracion/sesiones.php";
-comprobarAdmin(); // Seguridad: Solo el administrador entra aquí
+comprobarSesion(); // [TICKET SEGURIDAD] Verifica sesión
+
+// Seguridad adicional: Solo admin
+if ($_SESSION['tipo_usuario'] !== 'administrador') {
+    header("Location: ../index.php");
+    exit;
+}
+
+// LÓGICA DE DATOS: Contar incidencias pendientes para el aviso
+$sql_pendientes = "SELECT COUNT(*) as total FROM incidencias WHERE estado = 'pendiente'";
+$res_pendientes = mysqli_query($conn, $sql_pendientes);
+$cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
 ?>
 
 <!DOCTYPE html>
@@ -14,14 +27,19 @@ comprobarAdmin(); // Seguridad: Solo el administrador entra aquí
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración | PlayGo</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/menu.css">
 </head>
 
 <body class="bg-light">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-playgo shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">
                 <span>🎮</span> Panel PlayGo
@@ -38,25 +56,21 @@ comprobarAdmin(); // Seguridad: Solo el administrador entra aquí
     <div class="container my-5">
 
         <div class="text-center mb-5 animate-fade-in">
-            <h1 class="display-5 fw-bold text-playgo">Centro de Comando</h1>
-            <p class="text-muted">Gestiona usuarios, juegos y configuraciones desde aquí.</p>
+            <h1 class="display-5 fw-bold text-dark">Centro de Comando</h1>
+            <p class="text-muted">Gestiona usuarios, juegos y soporte técnico.</p>
         </div>
 
-        <div class="row g-4">
+        <div class="row g-4 justify-content-center">
 
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 card-hover">
                     <div class="card-body text-center p-4">
-                        <div class="icon-circle bg-light-blue mb-3">
-                            👥
-                        </div>
-                        <h3 class="h4 text-playgo fw-bold">Usuarios</h3>
+                        <div class="fs-1 mb-3">👥</div>
+                        <h3 class="h4 fw-bold">Usuarios</h3>
                         <p class="text-muted small">Administra los jugadores registrados.</p>
-
                         <div class="d-grid gap-2 mt-4">
                             <a href="usuarios/listar.php" class="btn btn-outline-primary btn-sm">Listar Todos</a>
                             <a href="usuarios/alta.php" class="btn btn-outline-primary btn-sm">Crear Nuevo</a>
-                            <a href="usuarios/buscar.php" class="btn btn-outline-primary btn-sm">Buscar</a>
                         </div>
                     </div>
                 </div>
@@ -65,34 +79,43 @@ comprobarAdmin(); // Seguridad: Solo el administrador entra aquí
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 card-hover">
                     <div class="card-body text-center p-4">
-                        <div class="icon-circle bg-light-green mb-3">
-                            🕹️
-                        </div>
-                        <h3 class="h4 text-playgo fw-bold">Catálogo</h3>
+                        <div class="fs-1 mb-3">🕹️</div>
+                        <h3 class="h4 fw-bold">Catálogo</h3>
                         <p class="text-muted small">Añade o edita los minijuegos.</p>
-
                         <div class="d-grid gap-2 mt-4">
                             <a href="juegos/listar.php" class="btn btn-outline-success btn-sm">Gestionar Catálogo</a>
-                            <a href="juegos/alta.php" class="btn btn-success btn-sm text-white">
-                                + Nuevo Juego
-                            </a>
+                            <a href="juegos/alta.php" class="btn btn-success btn-sm text-white">+ Nuevo Juego</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6 col-lg-4 mx-auto">
+            <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 card-hover">
                     <div class="card-body text-center p-4">
-                        <div class="icon-circle bg-light-purple mb-3">
-                            🤖
-                        </div>
-                        <h3 class="h4 text-playgo fw-bold">Inteligencia</h3>
-                        <p class="text-muted small">Configura las respuestas del bot.</p>
-
+                        <div class="fs-1 mb-3">✉️</div>
+                        <h3 class="h4 fw-bold">Soporte</h3>
+                        <p class="text-muted small">Tickets, reportes y estadísticas.</p>
                         <div class="d-grid gap-2 mt-4">
+<<<<<<< Updated upstream
                             <a href="../chatbot/chatbot.php" class="btn btn-outline-dark btn-sm">Configurar Chatbot</a>
+=======
+<<<<<<< HEAD
+                            <a href="soporte/listar.php" class="btn btn-outline-danger btn-sm position-relative">
+                                Gestionar Tickets
+                                <?php if($cont_pendientes > 0): ?>
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
+                                    <?php echo $cont_pendientes; ?>
+                                </span>
+                                <?php endif; ?>
+                            </a>
+                            <a href="soporte/estadisticas.php" class="btn btn-outline-danger btn-sm">Ver Resumen</a>
+=======
+                            <a href="/playgo/administrador/chatbot/gestionar.php" class="btn btn-outline-dark btn-sm">Configurar Chatbot</a>
+>>>>>>> Stashed changes
                             <button class="btn btn-secondary btn-sm disabled" disabled>Estadísticas (Pronto)</button>
+>>>>>>> 4d17a056d6355f5650586c20c3eaa1d6c160b858
                         </div>
                     </div>
                 </div>
@@ -100,11 +123,11 @@ comprobarAdmin(); // Seguridad: Solo el administrador entra aquí
 
         </div>
     </div>
+
     <footer class="bg-white text-center py-4 mt-5 border-top">
-        <p class="mb-0 fw-bold text-playgo">🎮 PLAYGO ADMIN</p>
+        <p class="mb-0 fw-bold text-secondary">🎮 PLAYGO ADMIN</p>
         <small class="text-muted">&copy; <?php echo date('Y'); ?> - Panel de Control Interno</small>
     </footer>
-
 
 </body>
 

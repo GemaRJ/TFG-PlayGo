@@ -1,11 +1,15 @@
 <?php
-// Iniciamos la sesión para poder destruirla
+/**
+ * Limpia la sesión en el servidor y la memoria del chatbot en el cliente.
+ */
+
+// 1. Iniciamos la sesión para poder destruirla
 session_start();
 
-// Limpiamos todas las variables de sesión
+// 2. Limpiamos todas las variables de sesión del servidor
 $_SESSION = array();
 
-// Si se desea destruir la sesión completamente, borramos también la cookie de sesión
+// 3. Borramos la cookie de sesión si existe
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
     setcookie(session_name(), '', time() - 42000,
@@ -14,11 +18,15 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-// Destruimos la sesión en el servidor
+// 4. Destruimos la sesión en el servidor
 session_destroy();
 
-// Redirigimos a la nueva Landing Page de PlayGo
-// Según tu estructura, subimos un nivel para salir de 'autenticacion' y llegar a la raíz
-header("Location: ../index.php"); 
+// 5. Limpiamos el LocalStorage y redirigimos mediante JS
+// Esto asegura que el chatbot vuelva a tratar al usuario como "Invitado"
+echo "<script>
+    localStorage.removeItem('usuario_id');
+    localStorage.removeItem('usuario_nombre');
+    window.location.href = '../index.php';
+</script>";
 exit;
 ?>
