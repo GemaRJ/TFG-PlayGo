@@ -92,7 +92,7 @@ comprobarJugador();
                 <?php else: ?>
                 <button
                     class="list-group-item list-group-item-action border-0 shadow-sm p-3 mb-3 rounded-4 d-flex gap-3 align-items-center active"
-                    onclick="cargarJuego('juegos/ninos/cuenta_numeros/index.html', this)">
+                    onclick="cargarJuego('juegos/niños/cuenta_numeros/index.html', this)">
                     <span class="fs-3 p-2 bg-light-purple rounded-3">🔢</span>
                     <div>
                         <div class="fw-bold fs-5">Cuenta Números</div>
@@ -102,7 +102,7 @@ comprobarJugador();
 
                 <button
                     class="list-group-item list-group-item-action border-0 shadow-sm p-3 mb-3 rounded-4 d-flex gap-3 align-items-center"
-                    onclick="cargarJuego('juegos/ninos/cuenta_letras/index.html', this)">
+                    onclick="cargarJuego('juegos/niños/cuenta_letras/index.html', this)">
                     <span class="fs-3 p-2 bg-light-blue rounded-3">🔤</span>
                     <div>
                         <div class="fw-bold fs-5">Cuenta Letras</div>
@@ -112,7 +112,7 @@ comprobarJugador();
 
                 <button
                     class="list-group-item list-group-item-action border-0 shadow-sm p-3 mb-3 rounded-4 d-flex gap-3 align-items-center"
-                    onclick="cargarJuego('juegos/ninos/memory/index.html', this)">
+                    onclick="cargarJuego('juegos/niños/memory/index.html', this)">
                     <span class="fs-3 p-2 bg-light-green rounded-3">🃏</span>
                     <div>
                         <div class="fw-bold fs-5">Memory</div>
@@ -122,7 +122,7 @@ comprobarJugador();
 
                 <button
                     class="list-group-item list-group-item-action border-0 shadow-sm p-3 mb-3 rounded-4 d-flex gap-3 align-items-center"
-                    onclick="cargarJuego('juegos/ninos/tres_raya/menu.html', this)">
+                    onclick="cargarJuego('juegos/niños/tres_raya/menu.html', this)">
                     <span class="fs-3 p-2 bg-light rounded-3">❌</span>
                     <div>
                         <div class="fw-bold fs-5">Tres en Raya</div>
@@ -132,7 +132,7 @@ comprobarJugador();
 
                 <button
                     class="list-group-item list-group-item-action border-0 shadow-sm p-3 mb-3 rounded-4 d-flex gap-3 align-items-center"
-                    onclick="cargarJuego('juegos/ninos/trivial/index.html', this)">
+                    onclick="cargarJuego('juegos/niños/trivial/index.html', this)">
                     <span class="fs-3 p-2 bg-light-blue rounded-3">🎓</span>
                     <div>
                         <div class="fw-bold fs-5">Trivial Kids</div>
@@ -142,7 +142,7 @@ comprobarJugador();
 
                 <button
                     class="list-group-item list-group-item-action border-0 shadow-sm p-3 mb-3 rounded-4 d-flex gap-3 align-items-center"
-                    onclick="cargarJuego('juegos/ninos/tabu/index.html', this)">
+                    onclick="cargarJuego('juegos/niños/tabu/index.html', this)">
                     <span class="fs-3 p-2 bg-light-purple rounded-3">🙊</span>
                     <div>
                         <div class="fw-bold fs-5">Tabú Kids</div>
@@ -168,7 +168,7 @@ comprobarJugador();
 
                 <div class="position-relative bg-black flex-grow-1 overflow-hidden">
                     <iframe id="pantalla-juego"
-                        src="<?php echo ($_SESSION['tipo_usuario'] === 'adulto') ? 'juegos/adultos/trivial/index.html' : 'juegos/ninos/cuenta_numeros/index.html'; ?>"
+                        src="<?php echo ($_SESSION['tipo_usuario'] === 'adulto') ? 'juegos/adultos/trivial/index.html' : 'juegos/niños/cuenta_numeros/index.html'; ?>"
                         allowfullscreen>
                     </iframe>
                 </div>
@@ -242,7 +242,6 @@ comprobarJugador();
 
     // NOTA: Se ha eliminado la función 'ajustarAltura' porque ahora usamos CSS Zoom
     </script>
-    <script src="/playgo/chatbot/bot.js"></script>
 </body>
 
 </html>
