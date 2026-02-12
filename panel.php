@@ -11,7 +11,12 @@ comprobarJugador();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zona de Juegos | PlayGo</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="assets/css/panel.css?v=<?php echo time(); ?>">
@@ -185,7 +190,7 @@ comprobarJugador();
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
     /* 1. VARIABLES GLOBALES */
     let iframeJuego = null;
@@ -242,6 +247,7 @@ comprobarJugador();
 
     // NOTA: Se ha eliminado la función 'ajustarAltura' porque ahora usamos CSS Zoom
     </script>
+    <script src="/playgo/chatbot/bot.js"></script>
 </body>
 
 </html>

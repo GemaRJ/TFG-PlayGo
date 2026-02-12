@@ -20,50 +20,70 @@ body {
     color: var(--playgo-blue) !important;
 }
 
-/* --- TARJETAS (CARDS) --- */
-.card {
-    border-radius: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* --- VISTA MAESTRA EXTRA COMPACTA (ESTILO INMOBILIARIA) --- */
+
+.img-miniatura {
+    width: 70px !important;    /* Ancho exacto de inmobiliaria */
+    height: 50px !important;   /* Alto exacto de inmobiliaria */
+    object-fit: cover;         /* Evita que la foto se estire o aplaste */
+    border-radius: 4px;        /* Bordes suaves */
+    border: 1px solid #ccc;    /* Borde gris fino */
+    display: block;
 }
 
-.card-hover:hover {
-    transform: translateY(-10px); /* Efecto de elevación al pasar el ratón */
-    box-shadow: 0 15px 30px rgba(26, 82, 118, 0.15) !important;
+/* Reducción de la fuente para que la tabla sea compacta */
+.table-juegos {
+    font-size: 0.85rem !important;
 }
 
-/* --- ÍCONOS CIRCULARES --- */
-.icon-circle {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    margin: 0 auto; /* Centrado */
+.table-juegos td {
+    padding: 8px !important;
+    vertical-align: middle;
 }
 
-.bg-light-blue { background-color: #eaf2f8; color: #1a5276; }
-.bg-light-green { background-color: #e8f8f5; color: #27ae60; }
-.bg-light-purple { background-color: #f4ecf7; color: #8e44ad; }
-
-/* --- BOTONES PERSONALIZADOS --- */
-.btn-outline-primary {
+.ruta-tecnica {
+    font-size: 0.75rem;
     color: var(--playgo-blue);
+    background-color: #f4f6f7;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+/* Miniaturas ultra pequeñas */
+.img-juego-min {
+    width: 25px !important;    /* Tamaño mini forzado */
+    height: 25px !important;   /* Tamaño mini forzado */
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Zoom potente al pasar el ratón para compensar el tamaño */
+.img-juego-min:hover {
+    transform: scale(3.5); 
+    cursor: pointer;
+    z-index: 1000;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     border-color: var(--playgo-blue);
 }
 
-.btn-outline-primary:hover {
-    background-color: var(--playgo-blue);
-    color: white;
+.ruta-tecnica {
+    font-size: 0.65rem;
+    color: var(--playgo-blue);
+    background-color: #f0f4f7;
+    padding: 1px 4px;
+    border-radius: 3px;
+    border: 1px solid #d1dce5;
 }
 
-.btn-success {
-    background-color: #27ae60;
-    border: none;
+.badge-categoria {
+    font-size: 0.6rem !important;
+    padding: 0.2rem 0.5rem !important;
+    text-transform: uppercase;
 }
 
-/* --- ANIMACIÓN --- */
+/* --- ANIMACIONES --- */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
