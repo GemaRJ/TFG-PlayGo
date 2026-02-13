@@ -57,3 +57,47 @@ INSERT INTO juegos (nombre, ruta, archivo_entrada, categoria) VALUES
 ('Tabú Kids', 'tabu', 'index.html', 'niños'),
 ('Tres en Raya', 'tres_raya', 'juego.html', 'niños'), 
 ('Trivial Kids', 'trivial', 'index.html', 'niños');
+
+-- 5. TABLA DE RANKINGS Y PARTIDAS
+-- Registra la puntuación de los usuarios en cada juego
+CREATE TABLE IF NOT EXISTS ranking (
+    id_ranking INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    id_juego INT NOT NULL,
+    puntuacion INT NOT NULL,
+    fecha_partida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_usuario_ranking FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) ON DELETE CASCADE,
+    CONSTRAINT fk_juego_ranking FOREIGN KEY (id_juego) REFERENCES juegos(id_juego) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+-- 6. TABLA DE HISTORIAL DEL CHATBOT
+-- Almacena las consultas para mejorar la asistencia del modelo
+CREATE TABLE IF NOT EXISTS chatbot_logs (
+    id_log INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NULL,
+    mensaje_usuario TEXT NOT NULL,
+    respuesta_bot TEXT NOT NULL,
+    fecha_consulta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_usuario_chatbot FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+-- 7. TABLA DE GESTIÓN DE INCIDENCIAS Y SOPORTE
+-- Centraliza los reportes enviados mediante el sistema híbrido
+CREATE TABLE IF NOT EXISTS incidencias (
+    id_incidencia INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NULL,
+    tipo ENUM(
+        'sugerencia', 'queja', 'error_alta_usuario', 
+        'solicitud_baja_usuario', 'solicitud_modificacion_usuario', 
+        'incidencia_juego', 'fallo_seguridad', 'error_ranking'
+    ) NOT NULL,
+    asunto VARCHAR(150) NOT NULL,
+    mensaje TEXT NOT NULL,
+    estado ENUM('pendiente', 'resuelta') DEFAULT 'pendiente',
+    fecha_reporte TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_usuario_incidencia FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
