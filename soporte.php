@@ -67,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="sugerencia" <?php echo ($tipo_pre == 'sugerencia') ? 'selected' : ''; ?>>💡 Sugerencia</option>
                 <option value="incidencia_juego" <?php echo ($tipo_pre == 'incidencia_juego') ? 'selected' : ''; ?>>🕹️ Error en Juego</option>
                 <option value="fallo_seguridad" <?php echo ($tipo_pre == 'fallo_seguridad') ? 'selected' : ''; ?>>🛡️ Fallo de Seguridad</option>
+                <option value="solicitud_baja" <?php echo ($tipo_pre == 'solicitud_baja') ? 'selected' : ''; ?>>Solicitud de baja usuario</option>
             </select>
 
             <label>Asunto breve</label>

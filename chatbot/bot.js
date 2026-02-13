@@ -1,26 +1,61 @@
 /**
  * UBICACIÓN: chatbot/bot.js
- * ASISTENTE INTERACTIVO PLAYGO - ESTILO NEÓN/SPACE
+ * ASISTENTE INTERACTIVO PLAYGO - AUTO-INYECTABLE
  */
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --- 1. CONFIGURACIÓN DE RUTAS ---
-  // Ajusta estas rutas si tu estructura de carpetas es diferente
+  
+  // --- 1. INYECCIÓN DE ESTILOS (CSS) ---
+  const botStyle = `
+    <style>
+        #chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 10000; font-family: 'Poppins', sans-serif; }
+        #chat-toggle-btn { 
+            width: 60px; height: 60px; border-radius: 50%; background: #00d2ff; border: none; 
+            font-size: 24px; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4); 
+            display: flex; align-items: center; justify-content: center; position: relative;
+        }
+        .notification-dot { 
+            position: absolute; top: 0; right: 0; width: 20px; height: 20px; background: red; 
+            color: white; font-size: 11px; border-radius: 50%; justify-content: center; align-items: center; 
+        }
+        #chat-window { 
+            position: absolute; bottom: 80px; right: 0; width: 320px; height: 450px; 
+            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); border: 1px solid #00d2ff; 
+            border-radius: 20px; display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.3s ease;
+        }
+        #chat-window.hidden { display: none; transform: translateY(20px); opacity: 0; }
+        .chat-header { background: #00d2ff; color: #0f172a; padding: 15px; display: flex; justify-content: space-between; font-weight: 900; }
+        .chat-header button { background: none; border: none; font-weight: bold; cursor: pointer; }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .msg { padding: 10px 15px; border-radius: 15px; max-width: 80%; font-size: 0.9rem; line-height: 1.4; }
+        .bot-msg { background: rgba(255, 255, 255, 0.1); color: white; align-self: flex-start; border-bottom-left-radius: 2px; }
+        .user-msg { background: #00d2ff; color: #0f172a; align-self: flex-end; border-bottom-right-radius: 2px; font-weight: 600; }
+        .chat-options { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+        .option-btn { 
+            background: transparent; border: 1px solid #00d2ff; color: #00d2ff; padding: 8px; 
+            border-radius: 10px; cursor: pointer; transition: 0.3s; font-size: 0.85rem; text-align: left;
+        }
+        .option-btn:hover { background: #00d2ff; color: #0f172a; }
+    </style>`;
+  document.head.insertAdjacentHTML("beforeend", botStyle);
+
+  // --- 2. CONFIGURACIÓN DE RUTAS INTELIGENTES ---
+  // Usamos rutas relativas a la raíz si es posible para que no fallen en subcarpetas
   const RUTAS = {
-    soporte: "soporte.php", // Si estás en index, esto funciona. Si no, usa ruta absoluta "/playgo/soporte.php"
+    soporte: "soporte.php",
     login: "autenticacion/login.php",
-    juegos: "juegos/listar.php"
+    registro: "autenticacion/registro.php"
   };
 
-  // --- 2. INYECCIÓN DEL HTML (Estructura limpia) ---
+  // --- 3. INYECCIÓN DEL HTML ---
   const chatHTML = `
         <div id="chat-widget">
             <button id="chat-toggle-btn">
                 🤖 
                 <span class="notification-dot" style="display: flex;">1</span>
             </button>
-            
             <div id="chat-window" class="hidden">
                 <header class="chat-header">
                     <span>ASISTENTE <span style="color:white">IA</span></span>
@@ -29,50 +64,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div id="chat-messages" class="chat-body"></div>
             </div>
         </div>`;
-        
   document.body.insertAdjacentHTML("beforeend", chatHTML);
 
-  // --- 3. SELECTORES ---
+  // --- 4. SELECTORES Y EVENTOS ---
   const chatWindow = document.querySelector("#chat-window");
   const toggleBtn = document.querySelector("#chat-toggle-btn");
   const closeBtn = document.querySelector("#chat-close-btn");
   const chatBody = document.querySelector("#chat-messages");
   const notifDot = document.querySelector(".notification-dot");
 
-  // --- 4. EVENTOS DE CONTROL ---
   toggleBtn.addEventListener("click", () => {
-    const estaCerrado = chatWindow.classList.contains("hidden");
-    
-    // Toggle clase
-    if (estaCerrado) {
+    if (chatWindow.classList.contains("hidden")) {
         chatWindow.classList.remove("hidden");
-        // Ocultar notificación al abrir
         if (notifDot) notifDot.style.display = "none";
-        // Iniciar conversación si está vacío
-        if (chatBody.innerHTML.trim() === "") {
-            reiniciarYSaludar();
-        }
+        if (chatBody.innerHTML.trim() === "") reiniciarYSaludar();
     } else {
         chatWindow.classList.add("hidden");
     }
   });
 
-  closeBtn.addEventListener("click", () => {
-    chatWindow.classList.add("hidden");
-  });
+  closeBtn.addEventListener("click", () => chatWindow.classList.add("hidden"));
 
   // --- 5. LÓGICA DEL BOT ---
-  
-  // Simulación de check de sesión (puedes conectarlo con PHP vía AJAX si quieres)
-  function verificarSesionActiva() {
-    // Esto es un placeholder. Lo ideal es comprobar una cookie o variable JS inyectada por PHP
-    return document.cookie.includes("PHPSESSID"); 
-  }
-
   function reiniciarYSaludar() {
     chatBody.innerHTML = "";
     escribirBurbuja("¡Hola! Soy la IA de PlayGo. 🚀", "bot");
-    
     setTimeout(() => {
         escribirBurbuja("¿En qué misión puedo ayudarte hoy?", "bot");
         setTimeout(() => menuPrincipal(), 500);
@@ -82,11 +98,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function menuPrincipal() {
     limpiarOpciones();
     const contenedor = crearContenedorOpciones();
-    
     contenedor.appendChild(crearBoton("🕹️ Quiero Jugar", () => menuJuegos()));
     contenedor.appendChild(crearBoton("📝 Soporte / Ayuda", () => menuSoporte()));
     contenedor.appendChild(crearBoton("👋 Cerrar", () => cerrarAsistente()));
-    
     chatBody.appendChild(contenedor);
     hacerScroll();
   }
@@ -94,22 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function menuSoporte() {
     limpiarOpciones();
     escribirBurbuja("Entendido, ¿qué tipo de asistencia necesitas?", "bot");
-
-    const motivos = [
-      { txt: "💡 Sugerencia", val: "sugerencia", privado: false },
-      { txt: "🚫 Reportar Error", val: "error", privado: false },
-      { txt: "🔓 Problemas Acceso", val: "acceso", privado: true },
-    ];
-
     const contenedor = crearContenedorOpciones();
-    motivos.forEach((m) => {
-      contenedor.appendChild(
-        crearBoton(m.txt, () => {
-             // Redirigir a soporte
-             window.location.href = `${RUTAS.soporte}?motivo=${m.val}`;
-        }),
-      );
-    });
+    contenedor.appendChild(crearBoton("💡 Sugerencia", () => window.location.href = RUTAS.soporte + "?motivo=sugerencia"));
+    contenedor.appendChild(crearBoton("🚫 Reportar Error", () => window.location.href = RUTAS.soporte + "?motivo=error"));
     contenedor.appendChild(crearBoton("⬅️ Volver", () => menuPrincipal()));
     chatBody.appendChild(contenedor);
     hacerScroll();
@@ -117,13 +118,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function menuJuegos() {
     limpiarOpciones();
-    escribirBurbuja("Excelente elección. ¿Para quién buscamos juegos?", "bot");
-    
+    escribirBurbuja("Excelente elección. ¿Tienes una cuenta?", "bot");
     const contenedor = crearContenedorOpciones();
-    contenedor.appendChild(crearBoton("🧠 Adultos (Estrategia)", () => window.location.href = "autenticacion/login.php"));
-    contenedor.appendChild(crearBoton("🧸 Niños (Educativo)", () => window.location.href = "autenticacion/login.php"));
+    contenedor.appendChild(crearBoton("🔑 Ya tengo cuenta", () => window.location.href = RUTAS.login));
+    contenedor.appendChild(crearBoton("🚀 Crear cuenta", () => window.location.href = RUTAS.registro));
     contenedor.appendChild(crearBoton("⬅️ Volver", () => menuPrincipal()));
-    
     chatBody.appendChild(contenedor);
     hacerScroll();
   }
@@ -131,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- 6. UTILIDADES ---
   function escribirBurbuja(texto, tipo) {
     const div = document.createElement("div");
-    div.classList.add("msg", tipo === "bot" ? "bot-msg" : "user-msg");
+    div.className = `msg ${tipo === "bot" ? "bot-msg" : "user-msg"}`;
     div.innerText = texto;
     chatBody.appendChild(div);
     hacerScroll();
@@ -139,30 +138,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function crearBoton(texto, callback) {
     const btn = document.createElement("button");
-    btn.classList.add("option-btn");
+    btn.className = "option-btn";
     btn.innerText = texto;
-    btn.onclick = () => {
-        // Efecto visual al clickar: añadir mensaje de usuario
-        escribirBurbuja(texto, "user");
-        callback();
-    };
+    btn.onclick = () => { escribirBurbuja(texto, "user"); callback(); };
     return btn;
   }
 
   function crearContenedorOpciones() {
     const div = document.createElement("div");
-    div.classList.add("chat-options");
+    div.className = "chat-options";
     return div;
   }
 
   function limpiarOpciones() {
-    // Elimina botones anteriores para que no se puedan volver a pulsar
     document.querySelectorAll(".chat-options").forEach((el) => el.remove());
   }
 
   function cerrarAsistente() {
     escribirBurbuja("¡Cambio y fuera! 🛸", "bot");
-    setTimeout(() => chatWindow.classList.add("hidden"), 1500);
+    setTimeout(() => chatWindow.classList.add("hidden"), 1000);
   }
 
   function hacerScroll() {

@@ -1,33 +1,33 @@
-// UBICACIÓN: assets/js/registro-animation.js
+// assets/js/registro-animation.js
 
 let scene, camera, renderer;
 let robotGroup; 
 let headGroup, bodyGroup;
-let neckMesh; // El cuello cromado
+let neckMesh; 
 let eyeL, eyeR;
 let armL, armR;
 let antennaPole, antennaBall;
 
 // Variables de estado
 let mouseX = 0, mouseY = 0;
-let isPasswordFocus = false; // ¿Está escribiendo la contraseña?
-let spinSuccess = 0;         // Variable para la vuelta de felicidad
-let antennaVelocity = 0;     // Física de la antena
+let isPasswordFocus = false; 
+let spinSuccess = 0;         
+let antennaVelocity = 0;     
 let antennaAngle = 0;
 
 function init() {
     const container = document.getElementById('canvas-container');
 
-    // 1. ESCENA
+    // 1. ESCENA (Con niebla oscura para profundidad)
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x0f172a, 0.02); // Niebla azulada oscura (ajustada al fondo del registro)
+    scene.fog = new THREE.FogExp2(0x0f172a, 0.02); 
     
     // 2. CÁMARA
     camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
     camera.position.z = 14; 
     camera.position.y = 0;
 
-    // 3. RENDERIZADOR (Calidad Alta igual que Login)
+    // 3. RENDERIZADOR (Misma calidad que el Login)
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio); 
@@ -37,7 +37,7 @@ function init() {
     renderer.toneMappingExposure = 1.0;
     container.appendChild(renderer.domElement);
 
-    // 4. LUCES
+    // 4. LUCES (Copiadas del Login para el mismo brillo)
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.6);
     scene.add(hemiLight);
 
@@ -55,14 +55,14 @@ function init() {
     fillLight.position.set(0, -5, 5);
     scene.add(fillLight);
 
-    // 5. MATERIALES (IDÉNTICOS AL LOGIN)
+    // 5. MATERIALES (Mismos que el Login para coherencia visual)
     const matPlasticWhite = new THREE.MeshPhysicalMaterial({
         color: 0xeeeeee, metalness: 0.1, roughness: 0.2, clearcoat: 1.0, clearcoatRoughness: 0.1,
     });
     const matDarkMetal = new THREE.MeshStandardMaterial({
         color: 0x2a2a2a, metalness: 0.8, roughness: 0.4
     });
-    const matChrome = new THREE.MeshPhysicalMaterial({ // Cuello brillante
+    const matChrome = new THREE.MeshPhysicalMaterial({ 
         color: 0xaaaaaa, metalness: 1.0, roughness: 0.2, clearcoat: 1.0
     });
     const matScreenGlass = new THREE.MeshPhysicalMaterial({
@@ -70,11 +70,11 @@ function init() {
     });
     const matGlow = new THREE.MeshBasicMaterial({ color: 0x00ffff, toneMapped: false });
 
-    // 6. CONSTRUCCIÓN DEL ROBOT (Estructura Login)
+    // 6. CONSTRUCCIÓN
     robotGroup = new THREE.Group();
     scene.add(robotGroup);
 
-    // --- A. CUERPO (BAJADO) ---
+    // --- A. CUERPO ---
     bodyGroup = new THREE.Group();
     bodyGroup.position.y = -2.2; 
 
@@ -98,7 +98,7 @@ function init() {
     bodyGroup.add(bodyMain, bodyDome, bodyBottom, coreRing, coreLight);
     robotGroup.add(bodyGroup);
 
-    // --- B. CUELLO (CROMADO) ---
+    // --- B. CUELLO ---
     const neckGeo = new THREE.CylinderGeometry(0.4, 0.4, 1.5, 32);
     neckMesh = new THREE.Mesh(neckGeo, matChrome);
     neckMesh.position.y = -0.5; 
@@ -144,26 +144,18 @@ function init() {
     armR.position.set(2.5, -1.5, 0.5);
     robotGroup.add(armL, armR);
 
-    // 7. EVENTOS DE INTERACCIÓN INTELIGENTE
-    
-    // Detectamos el input de contraseña específicamente
+    // 7. EVENTOS DE INTERACCIÓN
     const passInput = document.querySelector('input[type="password"]');
-    // El resto de inputs para la celebración
-    const normalInputs = document.querySelectorAll('input:not([type="password"]), select');
+    const otherInputs = document.querySelectorAll('input:not([type="password"]), select');
 
-    // Lógica Contraseña (Tapar ojos)
     if (passInput) {
         passInput.addEventListener('focus', () => { isPasswordFocus = true; });
         passInput.addEventListener('blur', () => { isPasswordFocus = false; });
     }
 
-    // Lógica Celebración (Resto de campos)
-    normalInputs.forEach(input => {
+    otherInputs.forEach(input => {
         input.addEventListener('blur', (e) => { 
-            // Si el usuario escribió algo y sale del campo -> ¡Vuelta de felicidad!
-            if(e.target.value.length > 0) {
-                triggerSpin();
-            }
+            if(e.target.value.length > 0) triggerSpin();
         });
     });
 
@@ -171,17 +163,14 @@ function init() {
 }
 
 function triggerSpin() {
-    // Si no se está tapando los ojos, permitir giro
-    if (!isPasswordFocus) {
-        spinSuccess = Math.PI * 2; 
-    }
+    if (!isPasswordFocus) spinSuccess = Math.PI * 2; 
 }
 
 function animate() {
     requestAnimationFrame(animate);
     const time = Date.now() * 0.002;
 
-    // --- FÍSICA DE LA ANTENA (Siempre activa) ---
+    // FÍSICA ANTENA
     let targetAngle = (mouseX * 2) * -0.5; 
     const force = (targetAngle - antennaAngle) * 0.1;
     antennaVelocity += force;
@@ -189,80 +178,44 @@ function animate() {
     antennaAngle += antennaVelocity;
     antennaPole.rotation.z = antennaAngle + (Math.sin(time * 3) * 0.05);
 
-    // --- MÁQUINA DE ESTADOS ---
-
-    // ESTADO 1: CELEBRACIÓN (Prioridad Alta)
     if (spinSuccess > 0) {
-        // Gira todo el grupo
+        // CELEBRACIÓN
         robotGroup.rotation.y += 0.15; 
         spinSuccess -= 0.15;
-        
-        // Brazos arriba de felicidad
-        moveObj(armL, -2.8, 1.5, 0); // Manos altas
+        moveObj(armL, -2.8, 1.5, 0); 
         moveObj(armR, 2.8, 1.5, 0);
-        
-        // Ojos felices (normales)
         eyeL.scale.y = 1; eyeR.scale.y = 1;
-
-        if(spinSuccess <= 0) {
-            robotGroup.rotation.y = 0; // Reset exacto
-            spinSuccess = 0;
-        }
+        if(spinSuccess <= 0) { robotGroup.rotation.y = 0; spinSuccess = 0; }
     } 
-    // ESTADO 2: CONTRASEÑA (Vergüenza / Privacidad)
     else if (isPasswordFocus) {
-        // Cuerpo quieto al frente
-        bodyGroup.rotation.y = THREE.MathUtils.lerp(bodyGroup.rotation.y, 0, 0.1);
-        
-        // Cabeza mira abajo
+        // PASSWORD MODE (Tapar ojos)
         headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, 0.4, 0.1);
-        headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, 0, 0.1);
         neckMesh.rotation.x = headGroup.rotation.x * 0.5;
-
-        // Ojos finos (cerrados)
         eyeL.scale.y = THREE.MathUtils.lerp(eyeL.scale.y, 0.05, 0.2);
         eyeR.scale.y = THREE.MathUtils.lerp(eyeR.scale.y, 0.05, 0.2);
-
-        // Manos tapan la cara (Ajustadas a la altura de la cabeza nueva Y=1.3)
         moveObj(armL, -0.9, 1.4, 2.2); 
         moveObj(armR, 0.9, 1.4, 2.2); 
-        armL.rotation.z = -0.5;
-        armR.rotation.z = 0.5;
+        armL.rotation.z = -0.5; armR.rotation.z = 0.5;
     } 
-    // ESTADO 3: NORMAL (Seguir mouse y flotar)
     else {
-        // Flotar
-        const floatY = Math.sin(time) * 0.15;
-        robotGroup.position.y = floatY;
-        
-        // Ojos abiertos
+        // NORMAL MODE
+        robotGroup.position.y = Math.sin(time) * 0.15;
         eyeL.scale.y = THREE.MathUtils.lerp(eyeL.scale.y, 1.0, 0.2);
         eyeR.scale.y = THREE.MathUtils.lerp(eyeR.scale.y, 1.0, 0.2);
-
-        // Brazos relajados abajo
         const handBob = Math.cos(time * 2) * 0.1;
         moveObj(armL, -2.6, -1.8 + handBob, 0.5);
         moveObj(armR, 2.6, -1.8 + handBob, 0.5);
         armL.rotation.z = 0; armR.rotation.z = 0;
 
-        // Mirar al mouse
-        const targetHeadRotY = mouseX * 0.8; 
-        const targetHeadRotX = mouseY * 0.6; 
-
-        headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, targetHeadRotY, 0.1);
-        headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, targetHeadRotX, 0.1);
-
+        headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, mouseX * 0.8, 0.1);
+        headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, mouseY * 0.6, 0.1);
         bodyGroup.rotation.y = THREE.MathUtils.lerp(bodyGroup.rotation.y, mouseX * 0.3, 0.05);
-        bodyGroup.rotation.x = THREE.MathUtils.lerp(bodyGroup.rotation.x, mouseY * 0.1, 0.05);
-        
         neckMesh.rotation.y = bodyGroup.rotation.y * 1.1;
-        neckMesh.rotation.x = bodyGroup.rotation.x + (headGroup.rotation.x * 0.3);
     }
 
     renderer.render(scene, camera);
 }
 
-// Función para animar posiciones suavemente
 function moveObj(obj, x, y, z) {
     obj.position.x = THREE.MathUtils.lerp(obj.position.x, x, 0.1);
     obj.position.y = THREE.MathUtils.lerp(obj.position.y, y, 0.1);

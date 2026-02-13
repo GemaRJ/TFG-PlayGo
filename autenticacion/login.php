@@ -192,6 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
     <script src="../assets/js/login-animation.js"></script>
+    <script src="../chatbot/bot.js"></script>
 
 </body>
 </html>
