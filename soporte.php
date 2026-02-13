@@ -1,11 +1,16 @@
 <?php
-
+/**
+ * SOPORTE TÉCNICO PLAYGO - VERSIÓN FINAL BLINDADA
+ */
 require_once "configuracion/conexion.php";
 require_once "configuracion/sesiones.php";
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// 1. DEFINICIÓN DE VARIABLE DE RESPALDO (Crucial para que Formspree no falle)
+$correo_remitente = isset($_SESSION['correo']) ? $_SESSION['correo'] : 'invitado@playgo.com';
 
 $tipo_pre = isset($_GET['tipo']) ? htmlspecialchars($_GET['tipo']) : '';
 $asunto_auto = "";
@@ -40,12 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soporte Técnico | PlayGo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
-    </script>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="assets/css/soporte.css">
 </head>
@@ -54,7 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="soporte-card">
         <h2>📩 Ayuda PlayGo</h2>
         <form id="formSoporte" method="POST">
-            <input type="hidden" name="email" value="soporte.ayuda.playgo@gmail.com">
+            <input type="hidden" name="email" value="<?php echo $correo_remitente; ?>">
+            <input type="hidden" name="_subject" value="PlayGo Soporte: <?php echo $asunto_auto; ?>">
 
             <label>¿Qué tipo de mensaje es?</label>
             <select name="tipo" id="tipo" required>
@@ -88,7 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <script>
     <?php if ($enviar_email_js): ?>
-    // Enviar a Formspree usando tu ID real: mkovjpda
     fetch("https://formspree.io/f/mkovjpda", {
             method: "POST",
             body: new FormData(document.getElementById("formSoporte")),
@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .then(function() {
             Swal.fire({
                 title: '¡Recibido!',
-                text: 'Ticket guardado en base de datos y alerta enviada al correo.',
+                text: 'Ticket guardado y alerta enviada al administrador.',
                 icon: 'success',
                 timer: 2500,
                 showConfirmButton: false
