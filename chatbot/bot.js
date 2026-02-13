@@ -1,6 +1,6 @@
 /**
- * ASISTENTE INTERACTIVO PLAYGO - CÓDIGO FINAL CORREGIDO
- * Funcionalidad: Redimensionable, Acceso Condicional y Retorno al Soporte.
+ * ASISTENTE INTERACTIVO PLAYGO - CÓDIGO FINAL UNIFICADO
+ * Funcionalidad: Redimensionable, Acceso Condicional y Soporte.
  */
 "use strict";
 
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>`;
   document.body.insertAdjacentHTML("beforeend", chatHTML);
 
-  // --- 3. SELECTORES MODERNOS ---
+  // --- 3. SELECTORES ---
   const chatWindow = document.querySelector("#chat-window");
   const toggleBtn = document.querySelector("#chat-toggle-btn");
   const closeBtn = document.querySelector("#chat-close-btn");
@@ -33,13 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const notifDot = document.querySelector(".notification-dot");
 
   // --- 4. EVENTOS DE CONTROL ---
-
   toggleBtn.addEventListener("click", () => {
     const estaCerrado = chatWindow.classList.contains("hidden");
     chatWindow.classList.toggle("hidden");
     if (notifDot) notifDot.style.display = "none";
 
-    // Resetea y saluda cada vez que se abre
     if (estaCerrado) {
       reiniciarYSaludar();
     }
@@ -50,10 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // --- 5. FUNCIONES DE FLUJO ---
-
-  /**
-   * Comprueba la sesión activa en el navegador
-   */
   function verificarSesionActiva() {
     return localStorage.getItem("usuario_id") !== null;
   }
@@ -81,9 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
     hacerScroll();
   }
 
-  /**
-   * Menú Soporte: Generación de botones con lógica de seguridad
-   */
   function menuSoporte() {
     limpiarOpciones();
     escribirBurbuja("¿Sobre qué motivo es tu ticket?", "bot");
@@ -117,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
             );
             setTimeout(
               () => irARuta(`${RUTAS.login}?destino=soporte&tipo=${m.val}`),
-              3000,
+              2000,
             );
           } else {
             irARuta(`${RUTAS.soporte}?tipo=${m.val}`);
@@ -136,54 +127,23 @@ document.addEventListener("DOMContentLoaded", () => {
       "¿A qué categoría pertenecen los juegos que buscas?",
       "bot",
     );
-
     const contenedor = crearContenedorOpciones();
     contenedor.appendChild(
-      crearBoton("👨‍💻 Adultos", () => listaJuegos("adultos")),
+      crearBoton("👨‍💻 Adultos", () =>
+        irARuta("/playgo/juegos/listar.php?cat=adultos"),
+      ),
     );
-    contenedor.appendChild(crearBoton("🧸 Niños", () => listaJuegos("niños")));
+    contenedor.appendChild(
+      crearBoton("🧸 Niños", () =>
+        irARuta("/playgo/juegos/listar.php?cat=niños"),
+      ),
+    );
     contenedor.appendChild(crearBoton("⬅️ Volver", () => menuPrincipal()));
-
-    chatBody.appendChild(contenedor);
-    hacerScroll();
-  }
-
-  function listaJuegos(categoria) {
-    limpiarOpciones();
-    escribirBurbuja(`Listado de juegos para ${categoria}:`, "bot");
-
-    const juegos =
-      categoria === "adultos"
-        ? ["🧠 Trivial", "♠️ Blackjack", "🕵️ Impostor", "🚫 Tabú"]
-        : [
-            "🔢 Cuenta Números",
-            "🔤 Cuenta Letras",
-            "🃏 Memory",
-            "❌ Tres en Raya",
-            "🎓 Trivial Kids",
-            "🙊 Tabú Kids",
-          ];
-
-    const contenedor = crearContenedorOpciones();
-    juegos.forEach((juego) => {
-      contenedor.appendChild(
-        crearBoton(juego, () => {
-          escribirBurbuja(
-            `¡Genial! Para jugar a ${juego} inicia sesión.`,
-            "bot",
-          );
-          setTimeout(() => irARuta(RUTAS.login), 1200);
-        }),
-      );
-    });
-    contenedor.appendChild(crearBoton("⬅️ Volver", () => menuJuegos()));
-
     chatBody.appendChild(contenedor);
     hacerScroll();
   }
 
   // --- 6. UTILIDADES ---
-
   function escribirBurbuja(texto, clase) {
     const div = document.createElement("div");
     div.classList.add("msg", clase === "bot" ? "bot-msg" : "user-msg");
@@ -215,11 +175,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function cerrarAsistente() {
-    escribirBurbuja("¡Hasta pronto! Vuelve cuando quieras. 👋", "bot");
-    setTimeout(() => {
-      // Redirige a la página principal en lugar de solo ocultar el chat
-      window.location.href = "/playgo/index.php";
-    }, 1200);
+    escribirBurbuja("¡Hasta pronto! 👋", "bot");
+    setTimeout(() => chatWindow.classList.add("hidden"), 1000);
   }
 
   function hacerScroll() {
