@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </script>
 
     <link rel="stylesheet" href="../assets/css/login_registro.css">
+    <link rel="stylesheet" href="/playgo/chatbot/bot.css">
 </head>
 
 <body class="bg-light-blue d-flex align-items-center min-vh-100">
@@ -79,15 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
     </div>
-<<<<<<< Updated upstream
-
-=======
-<<<<<<< HEAD
-=======
-<script src="/playgo/chatbot/bot.js"></script>
->>>>>>> Stashed changes
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
->>>>>>> 4d17a056d6355f5650586c20c3eaa1d6c160b858
 </body>
 
 </html>
