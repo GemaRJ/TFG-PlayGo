@@ -1,19 +1,13 @@
 <?php
-/**
- * SOPORTE TÉCNICO PLAYGO - VERSIÓN FINAL UNIFICADA
- */
+
 require_once "configuracion/conexion.php";
 require_once "configuracion/sesiones.php";
 
-// SOLUCIÓN AL ERROR DE TU IMAGEN: Evita el "Notice: session_start()" duplicado
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// 1. CAPTURAR DATOS DE LA URL
 $tipo_pre = isset($_GET['tipo']) ? htmlspecialchars($_GET['tipo']) : '';
-
-// 2. LÓGICA DE ASUNTO AUTOMÁTICO
 $asunto_auto = "";
 switch($tipo_pre) {
     case 'solicitud_baja_usuario': $asunto_auto = "Solicitud de baja de cuenta"; break;
@@ -23,34 +17,19 @@ switch($tipo_pre) {
     case 'error_alta_usuario': $asunto_auto = "Error en el proceso de registro"; break;
 }
 
-$mensaje_js = "";
+$enviar_email_js = false; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tipo = mysqli_real_escape_string($conn, $_POST['tipo']);
     $asunto = mysqli_real_escape_string($conn, $_POST['asunto']);
     $mensaje = mysqli_real_escape_string($conn, $_POST['mensaje']);
-    
-    // Usamos 'id' que es tu clave de sesión en login.php
     $usuario_id = isset($_SESSION['id']) ? $_SESSION['id'] : "NULL";
 
     $sql = "INSERT INTO incidencias (usuario_id, tipo, asunto, mensaje, estado) 
             VALUES ($usuario_id, '$tipo', '$asunto', '$mensaje', 'pendiente')";
 
     if (mysqli_query($conn, $sql)) {
-        // Al enviar con éxito, redirigimos a la landing page (index.php)
-        $mensaje_js = "
-            Swal.fire({
-                title: '¡Recibido!',
-                text: 'Tu incidencia ha sido registrada. Volviendo a la página principal...',
-                icon: 'success',
-                timer: 2500,
-                showConfirmButton: false
-            }).then(() => { 
-                window.location.href = 'index.php'; 
-            });
-        ";
-    } else {
-        $mensaje_js = "Swal.fire('Error', 'No se pudo guardar en la base de datos.', 'error');";
+        $enviar_email_js = true; 
     }
 }
 ?>
@@ -61,7 +40,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soporte Técnico | PlayGo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="assets/css/soporte.css">
 </head>
@@ -69,7 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="soporte-card">
         <h2>📩 Ayuda PlayGo</h2>
-        <form method="POST">
+        <form id="formSoporte" method="POST">
+            <input type="hidden" name="email" value="soporte.ayuda.playgo@gmail.com">
+
             <label>¿Qué tipo de mensaje es?</label>
             <select name="tipo" id="tipo" required>
                 <option value="queja" <?php echo ($tipo_pre == 'queja') ? 'selected' : ''; ?>>😡 Queja</option>
@@ -99,8 +85,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="index.php" class="volver-link">Cancelar y volver al inicio</a>
         </form>
     </div>
+
     <script>
-    <?php echo $mensaje_js; ?>
+    <?php if ($enviar_email_js): ?>
+    // Enviar a Formspree usando tu ID real: mkovjpda
+    fetch("https://formspree.io/f/mkovjpda", {
+            method: "POST",
+            body: new FormData(document.getElementById("formSoporte")),
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(function() {
+            Swal.fire({
+                title: '¡Recibido!',
+                text: 'Ticket guardado en base de datos y alerta enviada al correo.',
+                icon: 'success',
+                timer: 2500,
+                showConfirmButton: false
+            }).then(function() {
+                window.location.href = 'index.php';
+            });
+        });
+    <?php endif; ?>
     </script>
 </body>
 
