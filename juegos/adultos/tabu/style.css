@@ -1,0 +1,294 @@
+/* Importamos las fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Fira+Code:wght@500;700&display=swap');
+
+:root {
+    --neon-green: #00ff88;
+    --neon-blue: #00b8ff;
+    --neon-red: #ff4757;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-color: #fff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0f0c29;
+    background-image: linear-gradient(315deg, #0f0c29 0%, #302b63 74%, #24243e 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    padding: 20px;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+}
+
+/* --- TARJETA CON EFECTO CRISTAL --- */
+.card, .pantalla {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem; /* Ajustado ligeramente */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: visible; /* IMPORTANTE: Visible para que nada se corte */
+    animation: fadeIn 0.5s ease-out;
+    width: 100%;
+}
+
+h1 {
+    font-family: 'Fira Code', monospace;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--neon-green);
+    text-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+}
+
+h2 {
+    font-family: 'Fira Code', monospace;
+    color: white;
+}
+
+p { 
+    font-size: 1rem; 
+    margin-bottom: 20px; 
+    color: #ddd;
+    line-height: 1.5;
+}
+
+/* --- PALABRA CLAVE --- */
+.target-word {
+    font-family: 'Fira Code', monospace;
+    font-size: 2.5rem;
+    color: var(--neon-blue);
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--glass-border);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 0 0 15px rgba(0, 184, 255, 0.4);
+}
+
+/* --- LISTA PROHIBIDA --- */
+.forbidden-list {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.forbidden-item {
+    font-weight: 600;
+    color: var(--neon-red);
+    font-size: 1.3rem;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 0 5px rgba(255, 71, 87, 0.3);
+}
+
+.forbidden-item::before {
+    content: "⛔"; 
+    margin-right: 10px;
+    font-size: 1rem;
+    filter: opacity(0.8);
+}
+
+/* --- BOTONES --- */
+.btn-action, .btn-jugar {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    border: none;
+    letter-spacing: 1px;
+}
+
+.btn-jugar {
+    background: linear-gradient(90deg, #00ff88, #00b8ff);
+    color: #0f0c29;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+    margin-top: 10px;
+}
+
+.btn-jugar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
+}
+
+.btn-success { 
+    background: rgba(0, 255, 136, 0.15);
+    color: var(--neon-green);
+    border: 2px solid var(--neon-green);
+}
+
+.btn-success:hover {
+    background: var(--neon-green);
+    color: #000;
+}
+
+.btn-skip { 
+    background: rgba(255, 71, 87, 0.15); 
+    color: var(--neon-red); 
+    border: 2px solid var(--neon-red);
+}
+
+.btn-skip:hover {
+    background: var(--neon-red);
+    color: white;
+}
+
+.btn-reset { 
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white; 
+    margin-top: 20px;
+}
+
+/* --- BARRA DE TIEMPO --- */
+.timer-container {
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.timer-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
+    width: 100%;
+    transition: width 1s linear;
+}
+
+.score-display { 
+    font-family: 'Fira Code', monospace;
+    font-size: 1.2rem; 
+    margin-top: 15px; 
+    color: #ccc;
+}
+
+.hidden { display: none !important; }
+
+/* =========================================
+   NUEVOS ESTILOS MULTIJUGADOR
+   ========================================= */
+
+/* Grupo Input + Botón */
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#new-team-name {
+    flex-grow: 1;
+    padding: 12px;
+    border-radius: 50px;
+    border: 2px solid var(--neon-green);
+    background: rgba(0,0,0,0.3);
+    color: white;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+.btn-add {
+    background: var(--neon-green);
+    border: none;
+    border-radius: 50%;
+    width: 46px;
+    height: 46px; /* Hacemos que sea un círculo perfecto */
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #004d2c;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.btn-add:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--neon-green);
+}
+
+/* Lista de Equipos */
+.team-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    max-height: 250px;
+    overflow-y: auto; /* Scroll si hay muchos equipos */
+}
+
+.team-item {
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 8px;
+    padding: 10px 15px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    animation: fadeIn 0.3s;
+}
+
+.team-item span {
+    font-weight: 600;
+}
+
+.btn-delete {
+    background: transparent;
+    border: none;
+    color: var(--neon-red);
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-left: 10px;
+    opacity: 0.7;
+}
+
+.btn-delete:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Botón Deshabilitado (Gris) */
+.disabled {
+    background: #444 !important;
+    color: #888 !important;
+    cursor: not-allowed;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 400px) {
+    h1 { font-size: 2rem; }
+    .card { padding: 1.5rem; }
+}

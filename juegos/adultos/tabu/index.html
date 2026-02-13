@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabú Adultos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=MULTI_1">
+</head>
+<body>
+
+    <div class="container">
+        
+        <div id="start-screen" class="pantalla activa">
+            <h1>TABÚ 🤫</h1>
+            <p>Añade los equipos que van a jugar</p>
+            
+            <div class="team-setup">
+                <div class="input-group">
+                    <input type="text" id="new-team-name" placeholder="Nombre del equipo..." autocomplete="off">
+                    <button class="btn-add" onclick="agregarEquipo()">➕</button>
+                </div>
+                
+                <ul id="team-list" class="team-list">
+                    </ul>
+            </div>
+
+            <button id="btn-start-game" class="btn-jugar disabled" onclick="iniciarPartidaMultijugador()">
+                👥 MÍNIMO 2 EQUIPOS
+            </button>
+            
+            <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.6;">Edición Multijugador</p>
+        </div>
+
+        <div id="turn-screen" class="card hidden" style="text-align: center;">
+            <h2>TURNO DE:</h2>
+            <h1 id="next-team-name" style="font-size: 2.5rem; color: var(--neon-blue); margin: 20px 0; text-shadow: 0 0 15px var(--neon-blue);">EQUIPO 1</h1>
+            
+            <div class="score-summary">
+                <p>Puntuación total:</p>
+                <div id="current-team-score" style="font-size: 2rem; font-weight: bold; color: var(--neon-green);">0</div>
+            </div>
+
+            <p style="margin-top: 20px; color: #aaa;">Pásale el móvil al equipo...</p>
+            
+            <button class="btn-jugar" onclick="comenzarRonda()">
+                🚀 EMPEZAR TIEMPO
+            </button>
+        </div>
+
+        <div id="game-screen" class="card hidden">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: #aaa;">
+                <span id="playing-team" style="color: var(--neon-blue); font-weight: bold;">Jugando: ???</span>
+                <span id="timer-text">60s</span>
+            </div>
+
+            <div class="timer-container">
+                <div id="timer-bar" class="timer-fill"></div>
+            </div>
+
+            <h2 id="target-word" class="target-word">CARGANDO...</h2>
+            <div id="forbidden-list" class="forbidden-list"></div>
+
+            <button class="btn-action btn-success" onclick="nextCard(true)">✅ ACERTADA</button>
+            <button class="btn-action btn-skip" onclick="nextCard(false)">❌ TABÚ / PASO</button>
+            
+            <div class="score-display">Puntos ronda: <span id="round-score">0</span></div>
+        </div>
+
+        <div id="end-screen" class="card hidden">
+            <h1>🏆 CLASIFICACIÓN</h1>
+            
+            <ul id="ranking-list" class="team-list">
+                </ul>
+            
+            <button class="btn-action btn-reset" onclick="location.reload()">🔄 Nueva Partida</button>
+        </div>
+
+    </div>
+
+    <script src="tabu.js"></script>
+</body>
+</html>
