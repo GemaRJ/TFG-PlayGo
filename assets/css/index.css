@@ -1,268 +1,245 @@
-/* UBICACIÓN: /playgo/assets/css/index.css */
+/* UBICACIÓN: assets/css/index.css */
 
-/* --- CONFIGURACIÓN GENERAL --- */
-:root {
-    --azul: #1a5276;
-    --azul-oscuro: #154360;
-    --rojo: #e74c3c;
-    --gris-fondo: #f8f9fa;
-    --blanco: #ffffff;
-    --texto: #2c3e50;
-    --sombra-suave: 0 4px 6px rgba(0,0,0,0.05);
-    --sombra-fuerte: 0 10px 25px rgba(0,0,0,0.15);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
+/* --- RESET BÁSICO --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    background-color: var(--gris-fondo);
-    color: var(--texto);
+    /* Usamos un color sólido de respaldo por si falla el gradiente */
+    background-color: #0f172a; 
+    background: radial-gradient(circle at center, #1e3a8a 0%, #0f172a 100%);
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    /* Importante: min-height permite que el fondo crezca si hay scroll */
+    min-height: 100vh; 
+    position: relative;
+    overflow-x: hidden;
 }
 
-a { text-decoration: none; }
+/* --- FONDO DE ESTRELLAS (CORREGIDO) --- */
+/* Usamos position: fixed para que las estrellas no se muevan ni se corten al hacer scroll */
+body::before {
+    content: "";
+    position: fixed; 
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: stars-move 100s linear infinite;
+    opacity: 0.3;
+    z-index: -1; /* Se queda al fondo */
+    pointer-events: none;
+}
 
-/* --- 1. BARRA DE NAVEGACIÓN --- */
+@keyframes stars-move {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+}
+
+/* --- NAVEGACIÓN (Efecto Cristal) --- */
 .barra-navegacion {
-    background-color: var(--blanco);
-    padding: 15px 0;
-    position: sticky; /* Se queda pegada arriba */
-    top: 0;
-    z-index: 100;
-    box-shadow: var(--sombra-suave);
+    position: fixed; 
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 80px; /* Definimos altura fija para calcular el espacio después */
+    z-index: 1000;
+    padding: 0 5%;
+    display: flex;
+    align-items: center; /* Centrar verticalmente */
+    
+    /* Efecto Glassmorphism */
+    background: rgba(15, 23, 42, 0.85); /* Un poco más oscuro para legibilidad */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Soporte Safari/Chrome antiguo */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .contenido-nav {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; justify-content: space-between; align-items: center; 
+    width: 100%; max-width: 1200px; margin: 0 auto;
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--azul);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    font-size: 1.8rem; font-weight: 900; color: #fff; text-decoration: none; letter-spacing: 1px;
 }
+.logo span { color: #00d2ff; text-shadow: 0 0 10px #00d2ff; }
 
-.menu-derecha {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
+.menu-derecha { display: flex; align-items: center; gap: 20px; }
 
-.enlace-texto {
-    color: #666;
-    font-weight: 500;
-    transition: color 0.3s;
-}
-.enlace-texto:hover { color: var(--azul); }
-
-.separador { color: #ccc; }
+.enlace-texto { color: #ccc; text-decoration: none; font-weight: 500; transition: 0.3s; }
+.enlace-texto:hover { color: #00d2ff; }
 
 .boton-principal {
-    background-color: var(--azul);
-    color: white;
-    padding: 10px 25px;
-    border-radius: 50px;
-    font-weight: 600;
-    transition: transform 0.2s, background 0.2s;
+    background: #00d2ff; color: #0f172a;
+    padding: 8px 20px; border-radius: 20px;
+    text-decoration: none; font-weight: 700;
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+    transition: 0.3s;
+    white-space: nowrap; /* Evita que el texto se rompa */
 }
+.boton-principal:hover { transform: scale(1.05); background: #33ddff; box-shadow: 0 0 25px rgba(0, 210, 255, 0.6); }
 
-.boton-principal:hover {
-    background-color: var(--azul-oscuro);
-    transform: translateY(-2px);
-}
-
-/* --- 2. HERO BANNER (Versión Estática - FOTO FIJA) --- */
+/* --- HERO (Banner Principal) - CORREGIDO --- */
 .hero-banner {
-    /* Degradado azul corporativo + Imagen de fondo */
-    background: linear-gradient(135deg, rgba(26, 82, 118, 0.9) 0%, rgba(41, 128, 185, 0.85) 100%), url('../img/fondo-juegos.jpg');
+    width: 100%;
+    min-height: 60vh; 
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 20px;
     
-    background-size: cover;
-    background-position: center;
-    background-color: var(--azul); 
-    height: 500px;
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-    padding: 20px;
-    position: relative;
+    /* SOLUCIÓN AL CORTE: Añadimos padding arriba igual a la altura del menú + extra */
+    padding-top: 120px; 
 }
 
 .hero-contenido {
-    width: 100%;
     max-width: 800px;
-    z-index: 2;
+    animation: fadeIn 1s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .hero-contenido h1 {
-    font-size: 3rem;
-    margin-bottom: 15px;
-    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    font-size: 3.5rem; margin-bottom: 15px; font-weight: 800;
+    line-height: 1.2;
+    background: linear-gradient(to right, #fff, #00d2ff);
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent;
+    /* Fallback por si el gradiente de texto falla */
+    color: white; 
 }
 
-.hero-contenido p {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    margin-bottom: 40px;
-}
+.hero-contenido p { font-size: 1.2rem; color: #aaa; margin-bottom: 30px; }
 
-/* El buscador bonito */
+/* Buscador */
 .buscador {
-    background: white;
-    padding: 8px;
-    border-radius: 50px;
-    display: flex;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    box-shadow: var(--sombra-fuerte);
+    display: flex; justify-content: center; gap: 10px; margin-top: 20px; flex-wrap: wrap;
 }
 
 .buscador input {
-    flex: 1;
-    border: none;
-    outline: none;
-    padding-left: 20px;
+    padding: 15px 25px; width: 350px; border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white; outline: none; font-family: 'Poppins', sans-serif;
     font-size: 1rem;
-    border-radius: 50px;
+    transition: 0.3s;
 }
+.buscador input::placeholder { color: #888; }
+.buscador input:focus { border-color: #00d2ff; box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
 
 .boton-buscar {
-    background-color: var(--azul);
-    color: white;
-    padding: 12px 30px;
-    border-radius: 50px;
-    font-weight: bold;
-    cursor: pointer;
+    padding: 15px 30px; border-radius: 50px;
+    background: transparent; border: 2px solid #00d2ff;
+    color: #00d2ff; font-weight: 700; text-decoration: none;
+    transition: 0.3s;
 }
-.boton-buscar:hover { background-color: var(--azul-oscuro); }
+.boton-buscar:hover { background: #00d2ff; color: #000; box-shadow: 0 0 20px rgba(0, 210, 255, 0.4); }
 
-/* --- 3. REJILLA DE JUEGOS (GRID) --- */
+/* --- SECCIÓN PRINCIPAL --- */
 .seccion-principal {
-    max-width: 1200px;
-    margin: 50px auto;
-    padding: 0 20px;
+    max-width: 1200px; margin: 0 auto; padding: 50px 20px;
+    position: relative; z-index: 1;
 }
 
 .titulo-seccion {
-    text-align: center;
-    color: var(--azul);
-    font-size: 2rem;
-    margin-bottom: 40px;
+    text-align: center; font-size: 2rem; margin-bottom: 40px;
+    color: white; 
+    position: relative;
+}
+.titulo-seccion::after {
+    content: ''; display: block; width: 50px; height: 3px; 
+    background: #00d2ff; margin: 10px auto 0; border-radius: 2px;
 }
 
+/* --- REJILLA DE JUEGOS --- */
 .rejilla-juegos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajustado para pantallas pequeñas */
     gap: 30px;
 }
 
-/* --- 4. TARJETAS (CARDS) --- */
+.alert { padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center; }
+.alert.error { background: rgba(255, 0, 0, 0.2); border: 1px solid #ff4444; color: #ffcccc; }
+.mensaje-vacio { text-align: center; color: #888; grid-column: 1 / -1; }
+
+/* --- TARJETA --- */
 .tarjeta {
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: var(--sombra-suave);
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid #eee;
-    display: flex;
-    flex-direction: column;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    transition: 0.3s;
+    display: flex; flex-direction: column; align-items: center;
+    position: relative;
+    /* Fix para Chrome overflow en tarjetas redondeadas */
+    transform: translateZ(0); 
 }
 
 .tarjeta:hover {
     transform: translateY(-10px);
-    box-shadow: var(--sombra-fuerte);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #00d2ff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .tarjeta-imagen {
-    height: 180px;
-    background: linear-gradient(135deg, #e0f7fa 0%, #e1bee7 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 4rem;
+    font-size: 4rem; 
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.4));
+    transition: transform 0.3s;
 }
 
-.tarjeta-cuerpo {
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
+.tarjeta:hover .tarjeta-imagen { transform: scale(1.1) rotate(5deg); }
 
 .etiqueta {
-    align-self: flex-start;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-}
-.etiqueta-nino { background-color: #e8f8f5; color: #16a085; }
-.etiqueta-adulto { background-color: #fce4ec; color: #d81b60; }
-
-.tarjeta-cuerpo h3 {
-    margin-bottom: 10px;
-    color: var(--texto);
+    font-size: 0.75rem; padding: 5px 12px; border-radius: 10px;
+    font-weight: 800; letter-spacing: 1px; margin-bottom: 10px;
+    display: inline-block;
 }
 
-.tarjeta-cuerpo p {
-    font-size: 0.9rem;
-    color: #777;
-    margin-bottom: 20px;
-    flex: 1;
-}
+.etiqueta-nino { background: rgba(255, 204, 0, 0.15); color: #ffcc00; border: 1px solid rgba(255, 204, 0, 0.3); }
+.etiqueta-adulto { background: rgba(0, 210, 255, 0.15); color: #00d2ff; border: 1px solid rgba(0, 210, 255, 0.3); }
+
+.tarjeta h3 { margin: 10px 0; font-size: 1.4rem; color: white; }
+.tarjeta p { font-size: 0.9rem; color: #bbb; margin-bottom: 25px; line-height: 1.5; }
 
 .boton-tarjeta {
-    display: block;
-    text-align: center;
-    border: 2px solid var(--azul);
-    color: var(--azul);
-    padding: 10px;
-    border-radius: 50px;
-    font-weight: 600;
+    padding: 10px 25px;
+    background: linear-gradient(90deg, #00d2ff, #0099ff);
+    color: white; text-decoration: none; border-radius: 20px;
+    font-weight: 700; font-size: 0.9rem;
+    box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3);
     transition: 0.3s;
 }
-
 .boton-tarjeta:hover {
-    background-color: var(--azul);
-    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 210, 255, 0.5);
+    background: linear-gradient(90deg, #33ddff, #00bbff);
 }
 
-/* --- 5. FOOTER --- */
+/* --- FOOTER --- */
 .pie-pagina {
-    background-color: var(--azul); 
-    color: white;
-    text-align: center;
-    padding: 40px 20px;
     margin-top: 50px;
-    border-top: 5px solid rgba(0,0,0,0.1);
+    padding: 40px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
+.logo-footer { font-weight: 900; font-size: 1.2rem; color: #fff; margin-bottom: 10px; }
+.contenido-footer p { font-size: 0.9rem; color: #666; }
 
-.logo-footer {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 15px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    opacity: 1;
-}
-
-.contenido-footer p {
-    opacity: 0.8;
-    font-size: 0.95rem;
-    margin-top: 5px;
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-banner { padding-top: 150px; } /* Más espacio en móvil */
+    .hero-contenido h1 { font-size: 2.5rem; }
+    .buscador input { width: 100%; margin-bottom: 10px; }
+    .boton-buscar { width: 100%; display: block; }
 }

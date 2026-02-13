@@ -1,76 +1,99 @@
-/* UBICACIÓN: /playgo/assets/css/login.css */
-
-:root {
-    --playgo-blue: #1a5276;       /* Tu azul corporativo */
-    --playgo-hover: #154360;      /* Azul más oscuro para hover */
-    --bg-color: #f0f4f8;          /* Fondo suave */
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, #1e3a8a 0%, #0f172a 100%);
     font-family: 'Poppins', sans-serif;
-    background-color: var(--bg-color);
+    overflow: hidden;
+    position: relative;
 }
 
-/* Título de la marca */
-.brand-title {
-    color: var(--playgo-blue);
-    font-weight: 800;
-    font-size: 2rem;
+/* Capa de estrellas animadas */
+body::before {
+    content: "";
+    position: absolute;
+    width: 200%; height: 200%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: stars-move 100s linear infinite;
+    opacity: 0.4;
 }
 
-/* Barra decorativa superior de la tarjeta */
-.card-header-bar {
-    height: 8px;
-    background: linear-gradient(90deg, var(--playgo-blue) 0%, #2980b9 100%);
-    width: 100%;
+@keyframes stars-move {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
 }
 
-/* PERSONALIZACIÓN BOOTSTRAP */
-
-/* Sobrescribir el botón primario */
-.btn-primary {
-    background-color: var(--playgo-blue);
-    border-color: var(--playgo-blue);
-    padding: 12px;
-    transition: all 0.3s ease;
+.glass-card {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    width: 950px; height: 580px;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 40px;
+    box-shadow: 0 0 40px rgba(0, 210, 255, 0.3);
 }
 
-.btn-primary:hover {
-    background-color: var(--playgo-hover);
-    border-color: var(--playgo-hover);
-    transform: translateY(-2px); /* Efecto elevación */
-    box-shadow: 0 5px 15px rgba(26, 82, 118, 0.3);
+.login-side { 
+    flex: 1; 
+    padding: 50px; 
+    color: white;
+    /* HE QUITADO EL MARGIN-TOP DE AQUÍ */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Esto centra el contenido verticalmente en la tarjeta */
 }
 
-/* Colores de texto */
-.text-primary {
-    color: var(--playgo-blue) !important;
+/* --- ESTA ES LA REGLA NUEVA PARA SEPARAR LOS INPUTS --- */
+.login-side form {
+    margin-top: 40px; /* Si quieres bajarlo MÁS, cambia 40px por 60px o más */
 }
 
-/* Inputs del formulario más bonitos */
-.form-control:focus, .form-select:focus {
-    border-color: var(--playgo-blue);
-    box-shadow: 0 0 0 0.25rem rgba(26, 82, 118, 0.15);
+.brand { font-size: 2rem; font-weight: 900; color: #00d2ff; margin-bottom: 10px; }
+.brand span { color: #fff; text-shadow: 0 0 10px #00d2ff; }
+
+/* Ajuste para los textos de bienvenida */
+.login-side h2 { margin-bottom: 5px; }
+.login-side p { margin-bottom: 0; opacity: 0.8; font-size: 0.9rem; }
+
+.input-group { position: relative; margin-bottom: 25px; }
+
+.input-group input {
+    width: 100%; padding: 12px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px; outline: none; color: white;
 }
 
-.form-control {
-    border-radius: 10px;
-    background-color: #f8f9fa;
-    border: 1px solid #e9ecef;
+/* Estilo para etiquetas flotantes o fijas (opcional si usas placeholder) */
+.input-group label {
+    position: absolute;
+    left: 12px;
+    top: -22px; /* Ajusta esto si usas etiquetas fuera del input */
+    font-size: 14px;
+    color: #00d2ff;
 }
 
-/* ANIMACIÓN DE ENTRADA (Fade In Up) */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.btn-space {
+    width: 100%; padding: 15px;
+    background: #00d2ff; border: none; border-radius: 12px;
+    color: #0f172a; font-weight: 800; cursor: pointer;
+    box-shadow: 0 5px 20px rgba(0,210,255,0.5);
+    transition: transform 0.2s;
 }
 
-.animate-fade-in {
-    animation: fadeInUp 0.6s ease-out forwards;
+.btn-space:hover {
+    transform: scale(1.02);
 }
+
+.visual-side { flex: 1.2; position: relative; }
+#canvas-container { width: 100%; height: 100%; }

@@ -1,28 +1,35 @@
 /**
- * ASISTENTE INTERACTIVO PLAYGO - CÓDIGO FINAL UNIFICADO
- * Funcionalidad: Redimensionable, Acceso Condicional y Soporte.
+ * UBICACIÓN: chatbot/bot.js
+ * ASISTENTE INTERACTIVO PLAYGO - ESTILO NEÓN/SPACE
  */
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
   // --- 1. CONFIGURACIÓN DE RUTAS ---
+  // Ajusta estas rutas si tu estructura de carpetas es diferente
   const RUTAS = {
-    soporte: "/playgo/soporte.php",
-    login: "/playgo/autenticacion/login.php",
+    soporte: "soporte.php", // Si estás en index, esto funciona. Si no, usa ruta absoluta "/playgo/soporte.php"
+    login: "autenticacion/login.php",
+    juegos: "juegos/listar.php"
   };
 
-  // --- 2. INYECCIÓN DEL HTML ---
+  // --- 2. INYECCIÓN DEL HTML (Estructura limpia) ---
   const chatHTML = `
         <div id="chat-widget">
-            <button id="chat-toggle-btn">💬 <span class="notification-dot">1</span></button>
+            <button id="chat-toggle-btn">
+                🤖 
+                <span class="notification-dot" style="display: flex;">1</span>
+            </button>
+            
             <div id="chat-window" class="hidden">
                 <header class="chat-header">
-                    <span>🤖 Asistente PlayGo</span>
-                    <button id="chat-close-btn">✖</button>
+                    <span>ASISTENTE <span style="color:white">IA</span></span>
+                    <button id="chat-close-btn">✕</button>
                 </header>
                 <div id="chat-messages" class="chat-body"></div>
             </div>
         </div>`;
+        
   document.body.insertAdjacentHTML("beforeend", chatHTML);
 
   // --- 3. SELECTORES ---
@@ -35,11 +42,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- 4. EVENTOS DE CONTROL ---
   toggleBtn.addEventListener("click", () => {
     const estaCerrado = chatWindow.classList.contains("hidden");
-    chatWindow.classList.toggle("hidden");
-    if (notifDot) notifDot.style.display = "none";
-
+    
+    // Toggle clase
     if (estaCerrado) {
-      reiniciarYSaludar();
+        chatWindow.classList.remove("hidden");
+        // Ocultar notificación al abrir
+        if (notifDot) notifDot.style.display = "none";
+        // Iniciar conversación si está vacío
+        if (chatBody.innerHTML.trim() === "") {
+            reiniciarYSaludar();
+        }
+    } else {
+        chatWindow.classList.add("hidden");
     }
   });
 
@@ -47,72 +61,52 @@ document.addEventListener("DOMContentLoaded", () => {
     chatWindow.classList.add("hidden");
   });
 
-  // --- 5. FUNCIONES DE FLUJO ---
+  // --- 5. LÓGICA DEL BOT ---
+  
+  // Simulación de check de sesión (puedes conectarlo con PHP vía AJAX si quieres)
   function verificarSesionActiva() {
-    return localStorage.getItem("usuario_id") !== null;
+    // Esto es un placeholder. Lo ideal es comprobar una cookie o variable JS inyectada por PHP
+    return document.cookie.includes("PHPSESSID"); 
   }
 
   function reiniciarYSaludar() {
     chatBody.innerHTML = "";
-    escribirBurbuja(
-      "¡Bienvenido de nuevo a PlayGo! 🎮 ¿En qué te puedo ayudar?",
-      "bot",
-    );
-    setTimeout(() => menuPrincipal(), 500);
+    escribirBurbuja("¡Hola! Soy la IA de PlayGo. 🚀", "bot");
+    
+    setTimeout(() => {
+        escribirBurbuja("¿En qué misión puedo ayudarte hoy?", "bot");
+        setTimeout(() => menuPrincipal(), 500);
+    }, 600);
   }
 
   function menuPrincipal() {
     limpiarOpciones();
     const contenedor = crearContenedorOpciones();
-    contenedor.appendChild(
-      crearBoton("📝 Abrir Ticket Soporte", () => menuSoporte()),
-    );
+    
     contenedor.appendChild(crearBoton("🕹️ Quiero Jugar", () => menuJuegos()));
-    contenedor.appendChild(
-      crearBoton("❌ Salir Asistente", () => cerrarAsistente()),
-    );
+    contenedor.appendChild(crearBoton("📝 Soporte / Ayuda", () => menuSoporte()));
+    contenedor.appendChild(crearBoton("👋 Cerrar", () => cerrarAsistente()));
+    
     chatBody.appendChild(contenedor);
     hacerScroll();
   }
 
   function menuSoporte() {
     limpiarOpciones();
-    escribirBurbuja("¿Sobre qué motivo es tu ticket?", "bot");
+    escribirBurbuja("Entendido, ¿qué tipo de asistencia necesitas?", "bot");
 
     const motivos = [
-      { txt: "😡 Queja General", val: "queja", privado: false },
       { txt: "💡 Sugerencia", val: "sugerencia", privado: false },
-      {
-        txt: "👤 Error Alta Usuario",
-        val: "error_alta_usuario",
-        privado: true,
-      },
-      {
-        txt: "📉 Solicitud de Baja",
-        val: "solicitud_baja_usuario",
-        privado: true,
-      },
-      { txt: "🕹️ Incidencia en Juego", val: "incidencia_juego", privado: true },
-      { txt: "🛡️ Fallo de Seguridad", val: "fallo_seguridad", privado: true },
-      { txt: "🏆 Error en Ranking", val: "error_ranking", privado: true },
+      { txt: "🚫 Reportar Error", val: "error", privado: false },
+      { txt: "🔓 Problemas Acceso", val: "acceso", privado: true },
     ];
 
     const contenedor = crearContenedorOpciones();
     motivos.forEach((m) => {
       contenedor.appendChild(
         crearBoton(m.txt, () => {
-          if (m.privado && !verificarSesionActiva()) {
-            escribirBurbuja(
-              `⚠️ Por seguridad, para gestionar una ${m.txt} es necesario iniciar sesión.`,
-              "bot",
-            );
-            setTimeout(
-              () => irARuta(`${RUTAS.login}?destino=soporte&tipo=${m.val}`),
-              2000,
-            );
-          } else {
-            irARuta(`${RUTAS.soporte}?tipo=${m.val}`);
-          }
+             // Redirigir a soporte
+             window.location.href = `${RUTAS.soporte}?motivo=${m.val}`;
         }),
       );
     });
@@ -123,30 +117,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function menuJuegos() {
     limpiarOpciones();
-    escribirBurbuja(
-      "¿A qué categoría pertenecen los juegos que buscas?",
-      "bot",
-    );
+    escribirBurbuja("Excelente elección. ¿Para quién buscamos juegos?", "bot");
+    
     const contenedor = crearContenedorOpciones();
-    contenedor.appendChild(
-      crearBoton("👨‍💻 Adultos", () =>
-        irARuta("/playgo/juegos/listar.php?cat=adultos"),
-      ),
-    );
-    contenedor.appendChild(
-      crearBoton("🧸 Niños", () =>
-        irARuta("/playgo/juegos/listar.php?cat=niños"),
-      ),
-    );
+    contenedor.appendChild(crearBoton("🧠 Adultos (Estrategia)", () => window.location.href = "autenticacion/login.php"));
+    contenedor.appendChild(crearBoton("🧸 Niños (Educativo)", () => window.location.href = "autenticacion/login.php"));
     contenedor.appendChild(crearBoton("⬅️ Volver", () => menuPrincipal()));
+    
     chatBody.appendChild(contenedor);
     hacerScroll();
   }
 
   // --- 6. UTILIDADES ---
-  function escribirBurbuja(texto, clase) {
+  function escribirBurbuja(texto, tipo) {
     const div = document.createElement("div");
-    div.classList.add("msg", clase === "bot" ? "bot-msg" : "user-msg");
+    div.classList.add("msg", tipo === "bot" ? "bot-msg" : "user-msg");
     div.innerText = texto;
     chatBody.appendChild(div);
     hacerScroll();
@@ -156,7 +141,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = document.createElement("button");
     btn.classList.add("option-btn");
     btn.innerText = texto;
-    btn.onclick = callback;
+    btn.onclick = () => {
+        // Efecto visual al clickar: añadir mensaje de usuario
+        escribirBurbuja(texto, "user");
+        callback();
+    };
     return btn;
   }
 
@@ -167,16 +156,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function limpiarOpciones() {
+    // Elimina botones anteriores para que no se puedan volver a pulsar
     document.querySelectorAll(".chat-options").forEach((el) => el.remove());
   }
 
-  function irARuta(url) {
-    window.location.href = url;
-  }
-
   function cerrarAsistente() {
-    escribirBurbuja("¡Hasta pronto! 👋", "bot");
-    setTimeout(() => chatWindow.classList.add("hidden"), 1000);
+    escribirBurbuja("¡Cambio y fuera! 🛸", "bot");
+    setTimeout(() => chatWindow.classList.add("hidden"), 1500);
   }
 
   function hacerScroll() {

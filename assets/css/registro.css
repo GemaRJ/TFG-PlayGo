@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #05070a; /* Fondo base oscuro */
+    color: white;
+    font-family: 'Space Grotesk', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#stars-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ROBOTS VOLADORES */
+.robot-floating {
+    position: absolute;
+    font-size: 50px;
+    z-index: 1;
+    filter: drop-shadow(0 0 15px #00d2ff);
+    animation: float 10s ease-in-out infinite;
+    pointer-events: none;
+    top: 15%; right: 10%;
+}
+
+.satellite {
+    font-size: 30px;
+    top: 70%; left: 10%;
+    animation-duration: 15s;
+    animation-delay: -5s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-40px, 50px) rotate(15deg); }
+}
+
+.soporte-card {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 210, 255, 0.3);
+    border-radius: 20px;
+    padding: 40px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 0 50px rgba(0, 210, 255, 0.2);
+    z-index: 10;
+}
+
+h2 {
+    text-align: center;
+    background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+input, textarea, select {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 210, 255, 0.2);
+    border-radius: 10px;
+    padding: 15px;
+    color: white;
+    margin-bottom: 20px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+input:focus, textarea:focus {
+    border-color: #00d2ff;
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover { transform: scale(1.02); filter: brightness(1.2); }
