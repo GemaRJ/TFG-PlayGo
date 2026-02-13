@@ -107,9 +107,8 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
                                 <?php endif; ?>
                             </a>
                             <a href="soporte/estadisticas.php" class="btn btn-outline-danger btn-sm">Ver Resumen</a>
-                            <a href="/playgo/administrador/chatbot/gestionar.php"
-                                class="btn btn-outline-dark btn-sm">Configurar Chatbot</a>
-                            <button class="btn btn-secondary btn-sm disabled" disabled>Estadísticas (Pronto)</button>
+
+
                         </div>
                     </div>
                 </div>
