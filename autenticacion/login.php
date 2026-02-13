@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </script>
 
     <link rel="stylesheet" href="../assets/css/login_registro.css">
+    <link rel="stylesheet" href="/playgo/chatbot/bot.css">
 </head>
 
 <body class="bg-light-blue d-flex align-items-center min-vh-100">
