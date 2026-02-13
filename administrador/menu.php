@@ -97,7 +97,6 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
                         <h3 class="h4 fw-bold">Soporte</h3>
                         <p class="text-muted small">Tickets, reportes y estadísticas.</p>
                         <div class="d-grid gap-2 mt-4">
-<<<<<<< HEAD
                             <a href="soporte/listar.php" class="btn btn-outline-danger btn-sm position-relative">
                                 Gestionar Tickets
                                 <?php if($cont_pendientes > 0): ?>
@@ -108,10 +107,9 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
                                 <?php endif; ?>
                             </a>
                             <a href="soporte/estadisticas.php" class="btn btn-outline-danger btn-sm">Ver Resumen</a>
-=======
-                            <a href="/playgo/administrador/chatbot/gestionar.php" class="btn btn-outline-dark btn-sm">Configurar Chatbot</a>
+                            <a href="/playgo/administrador/chatbot/gestionar.php"
+                                class="btn btn-outline-dark btn-sm">Configurar Chatbot</a>
                             <button class="btn btn-secondary btn-sm disabled" disabled>Estadísticas (Pronto)</button>
->>>>>>> 4d17a056d6355f5650586c20c3eaa1d6c160b858
                         </div>
                     </div>
                 </div>
