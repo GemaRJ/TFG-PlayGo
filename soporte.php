@@ -44,34 +44,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soporte Técnico | PlayGo</title>
+    <title>Soporte Galáctico | PlayGo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="assets/css/soporte.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family= Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/soporte.css?v=<?php echo time(); ?>">
 </head>
 
 <body>
+
     <div class="soporte-card">
         <h2>📩 Ayuda PlayGo</h2>
         <form id="formSoporte" method="POST">
             <input type="hidden" name="email" value="<?php echo $correo_remitente; ?>">
             <input type="hidden" name="_subject" value="PlayGo Soporte: <?php echo $asunto_auto; ?>">
 
-            <label>¿Qué tipo de mensaje es?</label>
+            <label for="tipo">¿Qué tipo de mensaje es?</label>
             <select name="tipo" id="tipo" required>
                 <option value="queja" <?php echo ($tipo_pre == 'queja') ? 'selected' : ''; ?>>😡 Queja</option>
+
                 <option value="sugerencia" <?php echo ($tipo_pre == 'sugerencia') ? 'selected' : ''; ?>>💡 Sugerencia
                 </option>
+
                 <option value="incidencia_juego" <?php echo ($tipo_pre == 'incidencia_juego') ? 'selected' : ''; ?>>🕹️
                     Error en Juego</option>
+
                 <option value="fallo_seguridad" <?php echo ($tipo_pre == 'fallo_seguridad') ? 'selected' : ''; ?>>🛡️
                     Fallo de Seguridad</option>
-                <option value="error_alta_usuario" <?php echo ($tipo_pre == 'error_alta_usuario') ? 'selected' : ''; ?>>
-                    👤 Problema Registro</option>
-                <option value="solicitud_baja_usuario"
-                    <?php echo ($tipo_pre == 'solicitud_baja_usuario') ? 'selected' : ''; ?>>📉 Solicitud de Baja
-                </option>
-                <option value="error_ranking" <?php echo ($tipo_pre == 'error_ranking') ? 'selected' : ''; ?>>🏆
+
+                <option value="problema_registro" <?php echo ($tipo_pre == 'problema_registro') ? 'selected' : ''; ?>>👤
+                    Problema Registro</option>
+
+                <option value="solicitud_baja" <?php echo ($tipo_pre == 'solicitud_baja') ? 'selected' : ''; ?>>📉
+                    Solicitud de Baja</option>
+
+                <option value="problema_ranking" <?php echo ($tipo_pre == 'problema_ranking') ? 'selected' : ''; ?>>🏆
                     Problema Ranking</option>
             </select>
 

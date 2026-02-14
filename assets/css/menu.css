@@ -20,14 +20,14 @@ body {
     color: var(--playgo-blue) !important;
 }
 
-/* --- VISTA MAESTRA EXTRA COMPACTA (ESTILO INMOBILIARIA) --- */
+/* --- VISTA MAESTRA EXTRA COMPACTA --- */
 
 .img-miniatura {
-    width: 70px !important;    /* Ancho exacto de inmobiliaria */
-    height: 50px !important;   /* Alto exacto de inmobiliaria */
-    object-fit: cover;         /* Evita que la foto se estire o aplaste */
-    border-radius: 4px;        /* Bordes suaves */
-    border: 1px solid #ccc;    /* Borde gris fino */
+    width: 70px !important;   
+    height: 50px !important;  
+    object-fit: cover;         
+    border-radius: 4px;        
+    border: 1px solid #ccc;    
     display: block;
 }
 
@@ -50,8 +50,8 @@ body {
 }
 /* Miniaturas ultra pequeñas */
 .img-juego-min {
-    width: 25px !important;    /* Tamaño mini forzado */
-    height: 25px !important;   /* Tamaño mini forzado */
+    width: 25px !important;   
+    height: 25px !important;  
     object-fit: cover;
     border-radius: 4px;
     border: 1px solid #ddd;
