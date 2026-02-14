@@ -5,7 +5,6 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
-  
   // --- 1. INYECCIÓN DE ESTILOS (CSS) ---
   const botStyle = `
     <style>
@@ -46,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const RUTAS = {
     soporte: "soporte.php",
     login: "autenticacion/login.php",
-    registro: "autenticacion/registro.php"
+    registro: "autenticacion/registro.php",
   };
 
   // --- 3. INYECCIÓN DEL HTML ---
@@ -75,11 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   toggleBtn.addEventListener("click", () => {
     if (chatWindow.classList.contains("hidden")) {
-        chatWindow.classList.remove("hidden");
-        if (notifDot) notifDot.style.display = "none";
-        if (chatBody.innerHTML.trim() === "") reiniciarYSaludar();
+      chatWindow.classList.remove("hidden");
+      if (notifDot) notifDot.style.display = "none";
+      if (chatBody.innerHTML.trim() === "") reiniciarYSaludar();
     } else {
-        chatWindow.classList.add("hidden");
+      chatWindow.classList.add("hidden");
     }
   });
 
@@ -90,8 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
     chatBody.innerHTML = "";
     escribirBurbuja("¡Hola! Soy la IA de PlayGo. 🚀", "bot");
     setTimeout(() => {
-        escribirBurbuja("¿En qué misión puedo ayudarte hoy?", "bot");
-        setTimeout(() => menuPrincipal(), 500);
+      escribirBurbuja("¿En qué misión puedo ayudarte hoy?", "bot");
+      setTimeout(() => menuPrincipal(), 500);
     }, 600);
   }
 
@@ -99,7 +98,9 @@ document.addEventListener("DOMContentLoaded", () => {
     limpiarOpciones();
     const contenedor = crearContenedorOpciones();
     contenedor.appendChild(crearBoton("🕹️ Quiero Jugar", () => menuJuegos()));
-    contenedor.appendChild(crearBoton("📝 Soporte / Ayuda", () => menuSoporte()));
+    contenedor.appendChild(
+      crearBoton("📝 Soporte / Ayuda", () => menuSoporte()),
+    );
     contenedor.appendChild(crearBoton("👋 Cerrar", () => cerrarAsistente()));
     chatBody.appendChild(contenedor);
     hacerScroll();
@@ -109,8 +110,49 @@ document.addEventListener("DOMContentLoaded", () => {
     limpiarOpciones();
     escribirBurbuja("Entendido, ¿qué tipo de asistencia necesitas?", "bot");
     const contenedor = crearContenedorOpciones();
-    contenedor.appendChild(crearBoton("💡 Sugerencia", () => window.location.href = RUTAS.soporte + "?motivo=sugerencia"));
-    contenedor.appendChild(crearBoton("🚫 Reportar Error", () => window.location.href = RUTAS.soporte + "?motivo=error"));
+
+    // --- OPCIONES ABIERTAS (Sin Login) ---
+    contenedor.appendChild(
+      crearBoton("😡 Queja", () => {
+        window.location.href = RUTAS.soporte + "?tipo=queja";
+      }),
+    );
+    contenedor.appendChild(
+      crearBoton("💡 Sugerencia", () => {
+        window.location.href = RUTAS.soporte + "?tipo=sugerencia";
+      }),
+    );
+    contenedor.appendChild(
+      crearBoton("👤 Problema Registro", () => {
+        window.location.href = RUTAS.soporte + "?tipo=problema_registro";
+      }),
+    );
+
+    // --- OPCIONES PROTEGIDAS (Requieren Login) ---
+    // Si el usuario elige estas, lo mandamos primero al login por seguridad
+    const rutasProtegidas = [
+      { txt: "🕹️ Error en Juego", slug: "incidencia_juego" },
+      { txt: "🛡️ Fallo de Seguridad", slug: "fallo_seguridad" },
+      { txt: "🏆 Problema Ranking", slug: "problema_ranking" },
+      { txt: "📉 Solicitud de Baja", slug: "solicitud_baja" },
+    ];
+
+    rutasProtegidas.forEach((opcion) => {
+      contenedor.appendChild(
+        crearBoton(opcion.txt, () => {
+          escribirBurbuja(
+            "Esta gestión requiere validar tu identidad. Redirigiendo al login...",
+            "bot",
+          );
+          setTimeout(() => {
+            // Guardamos el destino para que tras el login vuelva a soporte con el tipo marcado
+            window.location.href =
+              RUTAS.login + "?redirect=soporte.php&tipo=" + opcion.slug;
+          }, 1000);
+        }),
+      );
+    });
+
     contenedor.appendChild(crearBoton("⬅️ Volver", () => menuPrincipal()));
     chatBody.appendChild(contenedor);
     hacerScroll();
@@ -120,8 +162,21 @@ document.addEventListener("DOMContentLoaded", () => {
     limpiarOpciones();
     escribirBurbuja("Excelente elección. ¿Tienes una cuenta?", "bot");
     const contenedor = crearContenedorOpciones();
-    contenedor.appendChild(crearBoton("🔑 Ya tengo cuenta", () => window.location.href = RUTAS.login));
-    contenedor.appendChild(crearBoton("🚀 Crear cuenta", () => window.location.href = RUTAS.registro));
+
+    contenedor.appendChild(
+      crearBoton("🔑 Ya tengo cuenta", () => {
+        // Redirige al login para identificarse antes de jugar
+        window.location.href = RUTAS.login;
+      }),
+    );
+
+    contenedor.appendChild(
+      crearBoton("🚀 Crear cuenta", () => {
+        // Redirige al registro
+        window.location.href = RUTAS.registro;
+      }),
+    );
+
     contenedor.appendChild(crearBoton("⬅️ Volver", () => menuPrincipal()));
     chatBody.appendChild(contenedor);
     hacerScroll();
@@ -140,7 +195,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = document.createElement("button");
     btn.className = "option-btn";
     btn.innerText = texto;
-    btn.onclick = () => { escribirBurbuja(texto, "user"); callback(); };
+    btn.onclick = () => {
+      escribirBurbuja(texto, "user");
+      callback();
+    };
     return btn;
   }
 
