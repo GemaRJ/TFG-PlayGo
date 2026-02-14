@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SOPORTE TÉCNICO PLAYGO - VERSIÓN FINAL BLINDADA
  */
@@ -14,15 +15,25 @@ $correo_remitente = isset($_SESSION['correo']) ? $_SESSION['correo'] : 'invitado
 
 $tipo_pre = isset($_GET['tipo']) ? htmlspecialchars($_GET['tipo']) : '';
 $asunto_auto = "";
-switch($tipo_pre) {
-    case 'solicitud_baja_usuario': $asunto_auto = "Solicitud de baja de cuenta"; break;
-    case 'fallo_seguridad': $asunto_auto = "Reporte de vulnerabilidad detectada"; break;
-    case 'error_ranking': $asunto_auto = "Error en la puntuación del ranking"; break;
-    case 'incidencia_juego': $asunto_auto = "Problema técnico en juego"; break;
-    case 'error_alta_usuario': $asunto_auto = "Error en el proceso de registro"; break;
+switch ($tipo_pre) {
+    case 'solicitud_baja_usuario':
+        $asunto_auto = "Solicitud de baja de cuenta";
+        break;
+    case 'fallo_seguridad':
+        $asunto_auto = "Reporte de vulnerabilidad detectada";
+        break;
+    case 'error_ranking':
+        $asunto_auto = "Error en la puntuación del ranking";
+        break;
+    case 'incidencia_juego':
+        $asunto_auto = "Problema técnico en juego";
+        break;
+    case 'error_alta_usuario':
+        $asunto_auto = "Error en el proceso de registro";
+        break;
 }
 
-$enviar_email_js = false; 
+$enviar_email_js = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tipo = mysqli_real_escape_string($conn, $_POST['tipo']);
@@ -34,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ($usuario_id, '$tipo', '$asunto', '$mensaje', 'pendiente')";
 
     if (mysqli_query($conn, $sql)) {
-        $enviar_email_js = true; 
+        $enviar_email_js = true;
     }
 }
 ?>
@@ -98,26 +109,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <script>
-    <?php if ($enviar_email_js): ?>
-    fetch("https://formspree.io/f/mkovjpda", {
-            method: "POST",
-            body: new FormData(document.getElementById("formSoporte")),
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        .then(function() {
-            Swal.fire({
-                title: '¡Recibido!',
-                text: 'Ticket guardado y alerta enviada al administrador.',
-                icon: 'success',
-                timer: 2500,
-                showConfirmButton: false
-            }).then(function() {
-                window.location.href = 'index.php';
-            });
-        });
-    <?php endif; ?>
+        <?php if ($enviar_email_js): ?>
+            fetch("https://formspree.io/f/mkovjpda", {
+                    method: "POST",
+                    body: new FormData(document.getElementById("formSoporte")),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(function() {
+                    Swal.fire({
+                        title: '¡Recibido!',
+                        text: 'Ticket guardado y alerta enviada al administrador.',
+                        icon: 'success',
+                        timer: 2500,
+                        showConfirmButton: false
+                    }).then(function() {
+                        window.location.href = 'index.php';
+                    });
+                });
+        <?php endif; ?>
     </script>
 </body>
 
