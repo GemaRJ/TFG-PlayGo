@@ -162,34 +162,46 @@ body::before {
 }
 .tarjeta-portal:hover .btn-accion { background: white; color: black; transform: translateY(-5px); }
 
-/* --- 7. BURBUJAS FLOTANTES --- */
+/* --- 7. BURBUJAS FLOTANTES (TAMAÑOS MEJORADOS) --- */
 .game-bubble {
     position: absolute;
-    width: 70px; height: 70px;
+    width: 100px; height: 100px; 
     border-radius: 50%;
     overflow: hidden;
     background: #000;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-    z-index: 1; 
+    border: 3px solid rgba(255, 255, 255, 0.4); 
+    box-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 15px rgba(255, 255, 255, 0.1);
+    z-index: 5;
     animation: flotar 6s ease-in-out infinite;
     display: flex; justify-content: center; align-items: center;
+    transition: all 0.4s ease; 
+}
+
+/* Efecto lupa al pasar el ratón por la tarjeta */
+.tarjeta-portal:hover .game-bubble {
+    transform: scale(1.2); 
+    border-color: #fff;
+    box-shadow: 0 0 30px currentColor;
 }
 
 .game-bubble img {
     width: 100%; height: 100%;
     object-fit: cover;
-    opacity: 0.8;
+    opacity: 0.9;
     transition: 0.3s;
+    transform: scale(1.1); 
 }
 
-.tarjeta-portal:hover .game-bubble img { opacity: 1; }
+/* --- TAMAÑOS PERSONALIZADOS (Aún más grandes) --- */
+/* Sector Niños */
+.b-kids-1 { width: 120px; height: 120px; animation-delay: 0s; }
+.b-kids-2 { width: 100px; height: 100px; animation-delay: 1s; }
+.b-kids-3 { width: 110px; height: 110px; animation-delay: 2s; }
 
-@keyframes flotar {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-15px); }
-    100% { transform: translateY(0px); }
-}
+/* Sector Adultos */
+.b-adults-1 { width: 130px; height: 130px; animation-delay: 0.5s; }
+.b-adults-2 { width: 115px; height: 115px; animation-delay: 1.5s; }
+.b-adults-3 { width: 125px; height: 125px; animation-delay: 2.5s; }
 
 /* Colores Específicos Burbujas */
 .kids .game-bubble { border-color: rgba(255, 170, 0, 0.3); box-shadow: 0 0 15px rgba(255, 170, 0, 0.2); }
