@@ -110,80 +110,74 @@ document.addEventListener("DOMContentLoaded", () => {
     limpiarOpciones();
     escribirBurbuja("Entendido, ¿qué tipo de asistencia necesitas?", "bot");
     const contenedor = crearContenedorOpciones();
+
+    // --- OPCIONES ABIERTAS (Sin Login) ---
     contenedor.appendChild(
-      crearBoton(
-        "💡 Sugerencia",
-        () => (window.location.href = RUTAS.soporte + "?motivo=sugerencia"),
-      ),
+      crearBoton("😡 Queja", () => {
+        window.location.href = RUTAS.soporte + "?tipo=queja";
+      }),
     );
     contenedor.appendChild(
-      crearBoton(
-        "🚫 Reportar Error",
-        () => (window.location.href = RUTAS.soporte + "?motivo=error"),
-      ),
+      crearBoton("💡 Sugerencia", () => {
+        window.location.href = RUTAS.soporte + "?tipo=sugerencia";
+      }),
     );
+    contenedor.appendChild(
+      crearBoton("👤 Problema Registro", () => {
+        window.location.href = RUTAS.soporte + "?tipo=problema_registro";
+      }),
+    );
+
+    // --- OPCIONES PROTEGIDAS (Requieren Login) ---
+    // Si el usuario elige estas, lo mandamos primero al login por seguridad
+    const rutasProtegidas = [
+      { txt: "🕹️ Error en Juego", slug: "incidencia_juego" },
+      { txt: "🛡️ Fallo de Seguridad", slug: "fallo_seguridad" },
+      { txt: "🏆 Problema Ranking", slug: "problema_ranking" },
+      { txt: "📉 Solicitud de Baja", slug: "solicitud_baja" },
+    ];
+
+    rutasProtegidas.forEach((opcion) => {
+      contenedor.appendChild(
+        crearBoton(opcion.txt, () => {
+          escribirBurbuja(
+            "Esta gestión requiere validar tu identidad. Redirigiendo al login...",
+            "bot",
+          );
+          setTimeout(() => {
+            // Guardamos el destino para que tras el login vuelva a soporte con el tipo marcado
+            window.location.href =
+              RUTAS.login + "?redirect=soporte.php&tipo=" + opcion.slug;
+          }, 1000);
+        }),
+      );
+    });
+
     contenedor.appendChild(crearBoton("⬅️ Volver", () => menuPrincipal()));
     chatBody.appendChild(contenedor);
     hacerScroll();
   }
 
-  function menuSoporte() {
+  function menuJuegos() {
     limpiarOpciones();
-    escribirBurbuja("Entendido, ¿qué tipo de asistencia necesitas?", "bot");
-
+    escribirBurbuja("Excelente elección. ¿Tienes una cuenta?", "bot");
     const contenedor = crearContenedorOpciones();
 
-    // Botones de categorías según el formulario
     contenedor.appendChild(
-      crearBoton(
-        "😡 Queja",
-        () => (window.location.href = RUTAS.soporte + "?motivo=queja"),
-      ),
-    );
-    contenedor.appendChild(
-      crearBoton(
-        "💡 Sugerencia",
-        () => (window.location.href = RUTAS.soporte + "?motivo=sugerencia"),
-      ),
-    );
-    contenedor.appendChild(
-      crearBoton(
-        "🕹️ Error en Juego",
-        () =>
-          (window.location.href = RUTAS.soporte + "?motivo=incidencia_juego"),
-      ),
-    );
-    contenedor.appendChild(
-      crearBoton(
-        "🛡️ Fallo Seguridad",
-        () =>
-          (window.location.href = RUTAS.soporte + "?motivo=fallo_seguridad"),
-      ),
-    );
-    contenedor.appendChild(
-      crearBoton(
-        "👤 Problema Registro",
-        () =>
-          (window.location.href = RUTAS.soporte + "?motivo=problema_registro"),
-      ),
-    );
-    contenedor.appendChild(
-      crearBoton(
-        "📉 Solicitud de Baja",
-        () => (window.location.href = RUTAS.soporte + "?motivo=solicitud_baja"),
-      ),
-    );
-    contenedor.appendChild(
-      crearBoton(
-        "🏆 Problema Ranking",
-        () =>
-          (window.location.href = RUTAS.soporte + "?motivo=problema_ranking"),
-      ),
+      crearBoton("🔑 Ya tengo cuenta", () => {
+        // Redirige al login para identificarse antes de jugar
+        window.location.href = RUTAS.login;
+      }),
     );
 
-    // Botón de navegación
+    contenedor.appendChild(
+      crearBoton("🚀 Crear cuenta", () => {
+        // Redirige al registro
+        window.location.href = RUTAS.registro;
+      }),
+    );
+
     contenedor.appendChild(crearBoton("⬅️ Volver", () => menuPrincipal()));
-
     chatBody.appendChild(contenedor);
     hacerScroll();
   }

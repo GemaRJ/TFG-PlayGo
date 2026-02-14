@@ -68,30 +68,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="assets/css/soporte.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="chatbot/bot.css">
 </head>
 
 <body>
+
     <div class="soporte-card">
         <h2>📩 Ayuda PlayGo</h2>
         <form id="formSoporte" method="POST">
             <input type="hidden" name="email" value="<?php echo $correo_remitente; ?>">
             <input type="hidden" name="_subject" value="PlayGo Soporte: <?php echo $asunto_auto; ?>">
 
-            <label for="tipo">¿Qué tipo de mensaje es?</label>
+            <label>¿Qué tipo de mensaje es?</label>
+
             <select name="tipo" id="tipo" required>
+
                 <option value="queja" <?php echo ($tipo_pre == 'queja') ? 'selected' : ''; ?>>😡 Queja</option>
+
                 <option value="sugerencia" <?php echo ($tipo_pre == 'sugerencia') ? 'selected' : ''; ?>>💡 Sugerencia
                 </option>
+
                 <option value="incidencia_juego" <?php echo ($tipo_pre == 'incidencia_juego') ? 'selected' : ''; ?>>🕹️
                     Error en Juego</option>
+
                 <option value="fallo_seguridad" <?php echo ($tipo_pre == 'fallo_seguridad') ? 'selected' : ''; ?>>🛡️
                     Fallo de Seguridad</option>
+
                 <option value="problema_registro" <?php echo ($tipo_pre == 'problema_registro') ? 'selected' : ''; ?>>👤
                     Problema Registro</option>
-                <option value="solicitud_baja" <?php echo ($tipo_pre == 'solicitud_baja') ? 'selected' : ''; ?>>📉
-                    Solicitud de Baja</option>
+
                 <option value="problema_ranking" <?php echo ($tipo_pre == 'problema_ranking') ? 'selected' : ''; ?>>🏆
                     Problema Ranking</option>
+
+                <option value="solicitud_baja" <?php echo ($tipo_pre == 'solicitud_baja') ? 'selected' : ''; ?>>📉
+                    Solicitud de baja usuario</option>
+
             </select>
 
             <label>Asunto breve</label>
@@ -129,5 +140,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php endif; ?>
     </script>
 </body>
+<script src="assets/js/soporte.js"></script>
 
 </html>
