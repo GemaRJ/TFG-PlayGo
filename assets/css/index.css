@@ -116,15 +116,15 @@ body::before {
 .contenedor-opciones {
     display: flex;
     gap: 30px;
-    height: 450px; /* Altura de los portales */
+    height: 450px; 
     margin-bottom: 40px;
 }
 
 .tarjeta-portal {
-    flex: 1; /* Ocupan 50% cada uno */
+    flex: 1; 
     position: relative;
     border-radius: 30px;
-    overflow: hidden; /* Importante para que las burbujas no se salgan */
+    overflow: hidden; 
     display: flex; align-items: center; justify-content: center;
     text-align: center;
     text-decoration: none;
@@ -162,7 +162,7 @@ body::before {
 }
 .tarjeta-portal:hover .btn-accion { background: white; color: black; transform: translateY(-5px); }
 
-/* --- 7. BURBUJAS FLOTANTES (NUEVO) --- */
+/* --- 7. BURBUJAS FLOTANTES --- */
 .game-bubble {
     position: absolute;
     width: 70px; height: 70px;
@@ -171,7 +171,7 @@ body::before {
     background: #000;
     border: 2px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-    z-index: 1; /* Detrás del texto (z-index 2) */
+    z-index: 1; 
     animation: flotar 6s ease-in-out infinite;
     display: flex; justify-content: center; align-items: center;
 }
@@ -233,6 +233,6 @@ body::before {
     .hero-banner { padding-top: 150px; }
     .hero-contenido h1 { font-size: 2.5rem; }
     
-    /* En móvil las burbujas pueden molestar, las ocultamos o hacemos pequeñas */
+    /* En móvil las burbujas pueden molestar, las dejamos ocultass o las hacemos pequeñas? */
     .game-bubble { display: none; } 
 }

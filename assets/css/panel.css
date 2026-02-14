@@ -1,6 +1,6 @@
 /* UBICACIÓN: /playgo/assets/css/panel.css */
 
-/* --- 1. CONFIGURACIÓN DEL UNIVERSO (Variables) --- */
+/* --- 1. CONFIGURACIÓN DEL UNIVERSO --- */
 :root {
     --fondo-espacio: #050511;
     --gradiente-espacio: linear-gradient(180deg, #090919 0%, #16163a 100%);
@@ -19,8 +19,8 @@ body {
     color: var(--texto-principal);
     margin: 0;
     padding: 0;
-    height: 100vh; /* Altura completa de la ventana */
-    overflow: hidden; /* Evitamos scroll en la página principal */
+    height: 100vh; 
+    overflow: hidden;
 }
 
 /* Scrollbar personalizada */
@@ -44,15 +44,15 @@ body {
 /* --- 4. LAYOUT PRINCIPAL (La clave del ajuste) --- */
 .main-layout {
     display: flex;
-    height: 100vh; /* Ocupa toda la pantalla */
-    padding-top: 70px; /* Empujamos el contenido debajo de la navbar */
+    height: 100vh; 
+    padding-top: 70px; 
     box-sizing: border-box;
 }
 
 /* --- 5. SIDEBAR (Menú Lateral) --- */
 .sidebar-area {
     width: 280px;
-    flex-shrink: 0; /* No dejes que se encoja */
+    flex-shrink: 0; 
     background: rgba(0, 0, 0, 0.2);
     border-right: 1px solid var(--borde-tenue);
     height: 100%;
@@ -101,12 +101,12 @@ body {
 
 /* --- 6. ZONA DE JUEGO (Derecha) --- */
 .game-area {
-    flex-grow: 1; /* Ocupa todo el espacio restante */
+    flex-grow: 1; 
     display: flex;
     flex-direction: column;
     padding: 20px;
     height: 100%;
-    overflow: hidden; /* Corta lo que sobre */
+    overflow: hidden;
 }
 
 /* Alerta de Invitado */
@@ -145,9 +145,9 @@ body {
 
 /* Contenedor del Iframe */
 .iframe-wrapper {
-    flex-grow: 1; /* Ocupa todo el alto disponible en la tarjeta */
+    flex-grow: 1;
     position: relative;
-    background: #fff; /* IMPORTANTE: Fondo blanco para que el juego se vea bien */
+    background: #fff; /* IMPORTANTE: El fondo blanco para que el juego se vea bien */
 }
 
 iframe {
