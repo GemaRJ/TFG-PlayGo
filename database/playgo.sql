@@ -1,53 +1,129 @@
--- 1. CREACIÓN DE LA BASE DE DATOS
-CREATE DATABASE IF NOT EXISTS playgo CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
-USE playgo;
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 13-02-2026 a las 12:22:12
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `playgo`
+--
 
 -- --------------------------------------------------------
 
--- 2. TABLA DE USUARIOS
-CREATE TABLE IF NOT EXISTS usuario (
-    usuario_id INT AUTO_INCREMENT PRIMARY KEY,
-    nombres VARCHAR(100) NOT NULL,
-    correo VARCHAR(100) NOT NULL UNIQUE,
-    clave VARCHAR(255) NOT NULL,
-    tipo_usuario ENUM('nino', 'adulto', 'administrador') NOT NULL, 
-    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+--
+-- Estructura de tabla para la tabla `chatbot_logs`
+--
+
+CREATE TABLE `chatbot_logs` (
+  `id_log` int(11) NOT NULL,
+  `usuario_id` int(11) DEFAULT NULL,
+  `mensaje_usuario` text NOT NULL,
+  `respuesta_bot` text NOT NULL,
+  `fecha_consulta` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `incidencias`
+--
+
+CREATE TABLE `incidencias` (
+  `id_incidencia` int(11) NOT NULL,
+  `usuario_id` int(11) DEFAULT NULL,
+  `tipo` enum('sugerencia','queja','error_alta_usuario','solicitud_baja_usuario','solicitud_modificacion_usuario','incidencia_juego','fallo_seguridad','error_ranking') NOT NULL,
+  `asunto` varchar(150) NOT NULL,
+  `mensaje` text NOT NULL,
+  `estado` enum('pendiente','resuelta') DEFAULT 'pendiente',
+  `fecha_reporte` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `incidencias`
+--
+
+INSERT INTO `incidencias` (`id_incidencia`, `usuario_id`, `tipo`, `asunto`, `mensaje`, `estado`, `fecha_reporte`) VALUES
+(1, NULL, 'sugerencia', 'zxczxcz', 'cxzczxc', 'pendiente', '2026-02-12 21:10:17'),
+(4, 2, 'incidencia_juego', 'Problema técnico en juego', 'no carga el juego correctamente', 'pendiente', '2026-02-12 22:24:48'),
+(5, NULL, 'queja', 'no me gusta la web', 'no me gusta', 'resuelta', '2026-02-12 22:28:44'),
+(6, 2, 'solicitud_baja_usuario', 'Solicitud de baja de cuenta', 'quiero dar de baja mi cuenta', 'pendiente', '2026-02-12 22:29:20'),
+(7, NULL, 'error_alta_usuario', 'Error en el proceso de registro', 'no puede acceder', 'pendiente', '2026-02-13 09:42:39'),
+(8, NULL, 'queja', 'no me gusta la web', 'no me gusta la web', 'pendiente', '2026-02-13 09:44:44'),
+(9, 2, 'solicitud_baja_usuario', 'Solicitud de baja de cuenta', 'no quiero estar registrado', 'pendiente', '2026-02-13 09:50:41');
+
 -- --------------------------------------------------------
 
--- 3. TABLA DE JUEGOS
-CREATE TABLE IF NOT EXISTS juegos (
-    id_juego INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    ruta VARCHAR(100) NOT NULL,
-    archivo_entrada VARCHAR(50) NOT NULL,
-    categoria ENUM('niños', 'adultos') NOT NULL,
-    descripcion TEXT,
-    activo BOOLEAN DEFAULT TRUE
+--
+-- Estructura de tabla para la tabla `juegos`
+--
+
+CREATE TABLE `juegos` (
+  `id_juego` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `ruta` varchar(100) NOT NULL,
+  `archivo_entrada` varchar(50) NOT NULL,
+  `categoria` enum('niños','adultos') NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  `activo` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `juegos`
+--
+
+INSERT INTO `juegos` (`id_juego`, `nombre`, `ruta`, `archivo_entrada`, `categoria`, `descripcion`, `activo`) VALUES
+(1, 'Blackjack', 'blackjack', 'index.html', 'adultos', NULL, 1),
+(2, 'Impostor', 'impostor', 'index.html', 'adultos', NULL, 1),
+(3, 'Tabú', 'tabu', 'index.html', 'adultos', NULL, 1),
+(4, 'Trivial', 'trivial', 'index.html', 'adultos', NULL, 1),
+(5, 'Cuenta Letras', 'cuenta_letras', 'index.html', 'niños', NULL, 1),
+(6, 'Cuenta Números', 'cuenta_numeros', 'index.html', 'niños', NULL, 1),
+(7, 'Memory', 'memory', 'index.html', 'niños', NULL, 1),
+(8, 'Tabú Kids', 'tabu', 'index.html', 'niños', NULL, 1),
+(9, 'Tres en Raya', 'tres_raya', 'juego.html', 'niños', NULL, 1),
+(10, 'Trivial Kids', 'trivial', 'index.html', 'niños', NULL, 1);
+
 -- --------------------------------------------------------
 
--- 4. DATOS INICIALES
+--
+-- Estructura de tabla para la tabla `ranking`
+--
 
--- A. Insertar al ADMINISTRADOR (Corregido: faltaba el rol al final)
-INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES 
-('Equipo PlayGo', 'admin@playgo.com', '$2a$10$vY37nlRiKR7X30hzsOhi7.ce75hyMIL54KVo4mBVfF9W8epa4Gn9K', 'administrador');
+CREATE TABLE `ranking` (
+  `id_ranking` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `id_juego` int(11) NOT NULL,
+  `puntuacion` int(11) NOT NULL,
+  `fecha_partida` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- B. Insertar USUARIOS DE PRUEBA
-INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES 
-('Enzo Niño', 'nino@playgo.com', '$2a$10$vY37nlRiKR7X30hzsOhi7.ce75hyMIL54KVo4mBVfF9W8epa4Gn9K', 'nino'),
-('Gema Adulto', 'adulto@playgo.com', '$2a$10$vY37nlRiKR7X30hzsOhi7.ce75hyMIL54KVo4mBVfF9W8epa4Gn9K', 'adulto');
+-- --------------------------------------------------------
 
--- C. Insertar el CATÁLOGO DE JUEGOS
+--
+-- Estructura de tabla para la tabla `usuario`
+--
 
--- Juegos ADULTOS
-INSERT INTO juegos (nombre, ruta, archivo_entrada, categoria) VALUES 
-('Blackjack', 'blackjack', 'index.html', 'adultos'),
-('Impostor', 'impostor', 'index.html', 'adultos'),
-('Tabú', 'tabu', 'index.html', 'adultos'),
-('Trivial', 'trivial', 'index.html', 'adultos');
+CREATE TABLE `usuario` (
+  `usuario_id` int(11) NOT NULL,
+  `nombres` varchar(100) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `clave` varchar(255) NOT NULL,
+  `tipo_usuario` enum('nino','adulto','administrador') NOT NULL,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- Juegos NIÑOS
 INSERT INTO juegos (nombre, ruta, archivo_entrada, categoria) VALUES 

@@ -1,152 +1,176 @@
 /* UBICACIÓN: /playgo/assets/css/panel.css */
 
-/* --- 1. ESTRUCTURA GLOBAL --- */
+/* --- 1. CONFIGURACIÓN DEL UNIVERSO --- */
 :root {
-    --playgo-blue: #1a5276;
-    --playgo-dark: #154360;
+    --fondo-espacio: #050511;
+    --gradiente-espacio: linear-gradient(180deg, #090919 0%, #16163a 100%);
+    --neon-azul: #00f3ff;
+    --neon-rosa: #d600ff;
+    --cristal: rgba(255, 255, 255, 0.05);
+    --borde-tenue: rgba(255, 255, 255, 0.1);
+    --texto-principal: #ffffff;
+    --texto-gris: #adb5bd;
 }
 
+/* --- 2. ESTRUCTURA GLOBAL --- */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa;
-    /* IMPORTANTE: Bloqueamos el scroll de la página completa */
-    overflow: hidden; 
-    height: 100vh;
+    background: var(--gradiente-espacio);
+    color: var(--texto-principal);
+    margin: 0;
+    padding: 0;
+    height: 100vh; 
+    overflow: hidden;
 }
 
-/* Navbar Personalizado */
+/* Scrollbar personalizada */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #3f3f6e; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--neon-azul); }
+
+/* --- 3. NAVBAR (Barra Superior) --- */
 .main-navbar {
     height: 70px;
-    background: linear-gradient(90deg, #1a5276 0%, #154360 100%);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    background: rgba(5, 5, 20, 0.95) !important;
+    border-bottom: 1px solid var(--borde-tenue);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+    backdrop-filter: blur(10px);
     z-index: 1050;
 }
 
-/* Contenedor Principal */
+.navbar-brand span { filter: drop-shadow(0 0 5px var(--neon-rosa)); }
+
+/* --- 4. LAYOUT PRINCIPAL (La clave del ajuste) --- */
 .main-layout {
-    padding-top: 70px !important;
-    height: 100vh; /* Ocupa exactamente toda la pantalla */
-    display: flex; /* Activa el modo columnas */
+    display: flex;
+    height: 100vh; 
+    padding-top: 70px; 
+    box-sizing: border-box;
 }
 
-/* --- 2. BARRA LATERAL (MENÚ) --- */
+/* --- 5. SIDEBAR (Menú Lateral) --- */
 .sidebar-area {
-    width: 280px; 
-    flex-shrink: 0;
-    background: white; 
-    border-right: 1px solid #dee2e6;
+    width: 280px;
+    flex-shrink: 0; 
+    background: rgba(0, 0, 0, 0.2);
+    border-right: 1px solid var(--borde-tenue);
     height: 100%;
-    overflow-y: auto; /* El menú sí puede tener scroll si es necesario */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
-.title-menu { letter-spacing: 1px; }
+.title-menu {
+    color: var(--neon-azul) !important;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
+    margin-top: 1.5rem;
+}
 
 /* Botones del Menú */
-.list-group-item { transition: transform 0.2s, background-color 0.2s; }
+.list-group-item {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    color: var(--texto-gris) !important;
+    margin-bottom: 5px;
+    border-radius: 8px !important;
+    transition: all 0.3s ease;
+}
 
-/* Colores específicos para iconos */
-.bg-light-blue { background-color: #eaf2f8; color: #1a5276; }
-.bg-light-purple { background-color: #f4ecf7; color: #8e44ad; }
-.bg-light-green { background-color: #e8f8f5; color: #27ae60; }
+.list-group-item:hover {
+    background: var(--cristal) !important;
+    color: #fff !important;
+    transform: translateX(5px);
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
 
-/* Estilos para el botón activo */
-.list-group-item.active .fw-bold { color: white !important; }
-.list-group-item.active small { color: rgba(255,255,255,0.8) !important; }
+/* Botón Activo */
+.list-group-item.active {
+    background: linear-gradient(90deg, rgba(0, 243, 255, 0.1) 0%, transparent 100%) !important;
+    border-left: 3px solid var(--neon-azul) !important;
+    color: #fff !important;
+    text-shadow: 0 0 5px var(--neon-azul);
+}
 
+.list-group-item span.fs-3 {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    transition: 0.3s;
+}
 
-/* --- 3. ZONA DE JUEGO (MODO ZOOM OUT) --- */
+/* --- 6. ZONA DE JUEGO (Derecha) --- */
 .game-area {
     flex-grow: 1; 
     display: flex;
-    flex-direction: column; 
-    height: 100%; 
-    overflow: hidden; /* Nada de scroll aquí */
-    padding-bottom: 0 !important;
+    flex-direction: column;
+    padding: 20px;
+    height: 100%;
+    overflow: hidden;
 }
 
-/* Contenedor de la Tarjeta Negra */
+/* Alerta de Invitado */
+.alert-invitado {
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid #ffc107;
+    color: #ffca2c;
+    font-size: 0.9rem;
+}
+.alert-invitado a { color: #fff; text-decoration: underline; }
+
+/* Tarjeta Negra del Juego */
 .game-card-container {
+    flex-grow: 1; /* ESTO HACE QUE SE ESTIRE HASTA EL FONDO */
     display: flex;
     flex-direction: column;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    border-radius: 1rem;
-    background-color: #000;
-    width: 100%;
-    flex-grow: 1; /* Ocupa todo el alto disponible */
-    overflow: hidden; /* Cortamos lo que sobre */
+    background: #000;
+    border-radius: 12px;
+    border: 1px solid var(--borde-tenue);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
     margin-bottom: 5px;
-    
-    /* Centramos el contenido por si el zoom deja espacios a los lados */
-    align-items: stretch;
-    justify-content: center;
 }
 
-/* ESTILO DEL IFRAME CON ZOOM */
+/* Cabecera del juego */
+.game-header {
+    height: 50px;
+    flex-shrink: 0;
+    background: #111;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* Contenedor del Iframe */
+.iframe-wrapper {
+    flex-grow: 1;
+    position: relative;
+    background: #fff; /* IMPORTANTE: El fondo blanco para que el juego se vea bien */
+}
+
 iframe {
     width: 100%;
     height: 100%;
     border: none;
     display: block;
-    
 }
 
-/* Animación "En Juego" */
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
-}
-.animate-pulse { animation: pulse 2s infinite; }
-
-/* --- 4. FOOTER --- */
+/* Footer */
 .pie-pagina {
     text-align: center;
-    padding-top: 5px;  /* Reducido para ganar espacio */
-    padding-bottom: 5px;
-    color: #6c757d;
-    font-size: 0.75rem; /* Letra un poco más pequeña */
-    background-color: transparent;
-    flex-shrink: 0; 
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.3);
+    padding-top: 5px;
+    flex-shrink: 0;
 }
 
-.logo-footer {
-    font-weight: 700;
-    color: #1a5276;
-    letter-spacing: 1px;
-}
-
-/* --- 5. RESPONSIVE (Móvil y Tablet) --- */
+/* --- 7. RESPONSIVE (Móviles) --- */
 @media (max-width: 768px) {
-    body {
-        overflow: auto; /* En móvil permitimos scroll */
-        height: auto;
-    }
-    
-    .main-layout {
-        flex-direction: column;
-        height: auto !important;
-        display: block;
-    }
-    
-    .sidebar-area {
-        width: 100%;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid #dee2e6;
-    }
-    
-    .game-area {
-        height: auto;
-        padding: 15px !important;
-    }
-
-    .game-card-container {
-        height: 600px; 
-    }
-    
-    /* En móvil quitamos el zoom para que se vea grande y legible */
-    iframe {
-        zoom: 1;
-        -moz-transform: scale(1);
-    }
+    body { height: auto; overflow: auto; } /* Permitir scroll en móvil */
+    .main-layout { display: block; height: auto; padding-top: 70px; }
+    .sidebar-area { width: 100%; height: auto; border-right: none; margin-bottom: 20px; }
+    .game-area { height: auto; padding: 15px; }
+    .game-card-container { height: 500px; } /* Altura fija en móvil */
 }
