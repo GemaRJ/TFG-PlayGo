@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SOPORTE TÉCNICO PLAYGO - VERSIÓN FINAL BLINDADA
+ * SOPORTE TÉCNICO PLAYGO - VERSIÓN FINAL CORREGIDA
  */
 require_once "configuracion/conexion.php";
 require_once "configuracion/sesiones.php";
@@ -10,26 +10,32 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// 1. DEFINICIÓN DE VARIABLE DE RESPALDO (Crucial para que Formspree no falle)
 $correo_remitente = isset($_SESSION['correo']) ? $_SESSION['correo'] : 'invitado@playgo.com';
-
 $tipo_pre = isset($_GET['tipo']) ? htmlspecialchars($_GET['tipo']) : '';
 $asunto_auto = "";
+
+// Unificamos el switch con los nuevos valores del formulario
 switch ($tipo_pre) {
-    case 'solicitud_baja_usuario':
+    case 'solicitud_baja':
         $asunto_auto = "Solicitud de baja de cuenta";
         break;
     case 'fallo_seguridad':
         $asunto_auto = "Reporte de vulnerabilidad detectada";
         break;
-    case 'error_ranking':
+    case 'problema_ranking':
         $asunto_auto = "Error en la puntuación del ranking";
         break;
     case 'incidencia_juego':
         $asunto_auto = "Problema técnico en juego";
         break;
-    case 'error_alta_usuario':
+    case 'problema_registro':
         $asunto_auto = "Error en el proceso de registro";
+        break;
+    case 'queja':
+        $asunto_auto = "Reclamación de usuario";
+        break;
+    case 'sugerencia':
+        $asunto_auto = "Nueva idea de mejora";
         break;
 }
 
@@ -59,14 +65,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link
-        href="https://fonts.googleapis.com/css2?family= Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
-
     <link rel="stylesheet" href="assets/css/soporte.css?v=<?php echo time(); ?>">
 </head>
 
 <body>
-
     <div class="soporte-card">
         <h2>📩 Ayuda PlayGo</h2>
         <form id="formSoporte" method="POST">
@@ -76,22 +80,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="tipo">¿Qué tipo de mensaje es?</label>
             <select name="tipo" id="tipo" required>
                 <option value="queja" <?php echo ($tipo_pre == 'queja') ? 'selected' : ''; ?>>😡 Queja</option>
-
                 <option value="sugerencia" <?php echo ($tipo_pre == 'sugerencia') ? 'selected' : ''; ?>>💡 Sugerencia
                 </option>
-
                 <option value="incidencia_juego" <?php echo ($tipo_pre == 'incidencia_juego') ? 'selected' : ''; ?>>🕹️
                     Error en Juego</option>
-
                 <option value="fallo_seguridad" <?php echo ($tipo_pre == 'fallo_seguridad') ? 'selected' : ''; ?>>🛡️
                     Fallo de Seguridad</option>
-
                 <option value="problema_registro" <?php echo ($tipo_pre == 'problema_registro') ? 'selected' : ''; ?>>👤
                     Problema Registro</option>
-
                 <option value="solicitud_baja" <?php echo ($tipo_pre == 'solicitud_baja') ? 'selected' : ''; ?>>📉
                     Solicitud de Baja</option>
-
                 <option value="problema_ranking" <?php echo ($tipo_pre == 'problema_ranking') ? 'selected' : ''; ?>>🏆
                     Problema Ranking</option>
             </select>
