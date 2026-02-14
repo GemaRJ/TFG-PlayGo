@@ -49,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family= Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="assets/css/soporte.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="chatbot/bot.css">
 </head>
 <body>
 
@@ -100,5 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
     <?php endif; ?>
     </script>
+    <script src="assets/js/soporte.js"></script>
 </body>
 </html>
