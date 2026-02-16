@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>PlayGo Bot Pro | Theme Switcher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-night: #0f0c29;
+            --bg-day: #ff9f43;
+            --bot-white: #eeeeee;
+            --bot-dark: #2a2a2a;
+            --neon-cyan: #00ffff;
+            --sand-dark: #b18d71;
+            --sand-light: #d35400;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-night);
+            transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Fredoka', sans-serif;
+            overflow: hidden;
+        }
+
+        body.day-mode { background-color: var(--bg-day); }
+
+        .title { color: white; margin-bottom: 50px; text-transform: uppercase; letter-spacing: 3px; z-index: 10; }
+        body.day-mode .title { color: #2d3436; }
+
+        /* EL INTERRUPTOR */
+        .playgo-toggle {
+            position: relative;
+            width: 180px;
+            height: 80px;
+            cursor: pointer;
+        }
+
+        .playgo-toggle input { display: none; }
+
+        /* EL FONDO DEL SLIDER (ESCENARIO) */
+        .slider {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #1a1a2e;
+            border-radius: 80px;
+            transition: 0.6s;
+            overflow: hidden;
+            border: 4px solid #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        input:checked + .slider { background-color: #48dbfb; }
+
+        /* --- DETALLES MODO NOCHE: CRÁTERES --- */
+        .slider::after {
+            content: "";
+            position: absolute;
+            width: 20px; height: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            top: 15px; left: 40px;
+            box-shadow: 60px 20px 0 rgba(255,255,255,0.05), 30px 40px 0 rgba(255,255,255,0.05);
+            transition: 0.5s;
+        }
+        input:checked + .slider::after { opacity: 0; }
+
+        /* --- DETALLES MODO DÍA: DUNAS Y ARENA --- */
+        .scenery-day {
+            position: absolute;
+            width: 100%; height: 100%;
+            bottom: -100%;
+            background: var(--sand-dark);
+            transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1;
+        }
+
+        /* Duna secundaria */
+        .scenery-day::before {
+            content: "";
+            position: absolute;
+            width: 120%; height: 100%;
+            background: var(--sand-light);
+            border-radius: 50%;
+            top: -40%; left: -10%;
+        }
+
+        input:checked + .slider .scenery-day { transform: translateY(-100%); }
+
+        /* Nubes que aparecen en el cielo azul */
+        .cloud {
+            position: absolute;
+            width: 30px; height: 12px;
+            background: white;
+            border-radius: 20px;
+            top: 20%; left: 150px;
+            transition: 0.7s;
+            opacity: 0;
+        }
+        input:checked + .slider .cloud { transform: translateX(-110px); opacity: 1; }
+
+        /* EL ROBOT (Estilo Login) */
+        .robot-container {
+            position: absolute;
+            left: 10px;
+            bottom: 12px;
+            width: 55px;
+            transition: 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.3);
+            z-index: 5;
+        }
+
+        .bot-head {
+            width: 40px; height: 30px;
+            background: var(--bot-white);
+            border-radius: 6px;
+            border: 3px solid var(--bot-dark);
+            position: relative;
+            margin: 0 auto;
+            z-index: 2;
+        }
+
+        .bot-screen {
+            position: absolute;
+            top: 4px; left: 4px;
+            width: 26px; height: 16px;
+            background: #000;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .bot-eye {
+            width: 7px; height: 8px;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        .bot-antenna {
+            position: absolute;
+            top: -14px; left: 26px;
+            width: 3px; height: 14px;
+            background: var(--bot-dark);
+        }
+        .bot-antenna::after {
+            content: "";
+            position: absolute; top: -5px; left: -4px;
+            width: 10px; height: 10px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        .bot-body {
+            width: 50px; height: 38px;
+            background: var(--bot-white);
+            border-radius: 20px 20px 12px 12px;
+            border: 3px solid var(--bot-dark);
+            margin-top: -3px;
+            position: relative;
+        }
+
+        .bot-core {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 14px; height: 14px;
+            border: 2px solid var(--bot-dark);
+            border-radius: 50%;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        /* ANIMACIÓN AL ACTIVAR */
+        input:checked ~ .robot-container {
+            transform: translateX(105px) rotate(10deg);
+        }
+
+        /* Estrellas para el modo noche */
+        .stars {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: white;
+            border-radius: 50%;
+            top: 30%; left: 70%;
+            box-shadow: 20px 20px 0 white, -40px 10px 0 white, -10px -15px 0 white;
+            transition: 0.4s;
+        }
+        input:checked + .slider .stars { opacity: 0; }
+
+    </style>
+</head>
+<body>
+
+    <h1 class="title" id="status-text">PLAYGO STATION: NOCHE</h1>
+
+    <label class="playgo-toggle">
+        <input type="checkbox" id="theme-btn">
+        <div class="slider">
+            <div class="stars"></div>
+            <div class="cloud"></div>
+            <div class="scenery-day"></div>
+        </div>
+        
+        <div class="robot-container">
+            <div class="bot-head">
+                <div class="bot-antenna"></div>
+                <div class="bot-screen">
+                    <div class="bot-eye"></div>
+                    <div class="bot-eye"></div>
+                </div>
+            </div>
+            <div class="bot-body">
+                <div class="bot-core"></div>
+            </div>
+        </div>
+    </label>
+
+    <script>
+        const btn = document.getElementById('theme-btn');
+        const text = document.getElementById('status-text');
+
+        btn.addEventListener('change', () => {
+            document.body.classList.toggle('day-mode');
+            text.innerText = btn.checked ? "PLAYGO STATION: DESIERTO" : "PLAYGO STATION: NOCHE";
+        });
+    </script>
+</body>
+</html>
