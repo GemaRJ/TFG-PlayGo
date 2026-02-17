@@ -1,0 +1,94 @@
+/* UBICACIÓN: /playgo/assets/css/menu.css */
+
+:root {
+    --playgo-blue: #1a5276;
+    --playgo-dark: #154360;
+    --bg-soft: #f4f6f7;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-soft);
+}
+
+/* --- COLORES CORPORATIVOS --- */
+.bg-playgo {
+    background-color: var(--playgo-blue) !important;
+}
+
+.text-playgo {
+    color: var(--playgo-blue) !important;
+}
+
+/* --- VISTA MAESTRA EXTRA COMPACTA --- */
+
+.img-miniatura {
+    width: 70px !important;   
+    height: 50px !important;  
+    object-fit: cover;         
+    border-radius: 4px;        
+    border: 1px solid #ccc;    
+    display: block;
+}
+
+/* Reducción de la fuente para que la tabla sea compacta */
+.table-juegos {
+    font-size: 0.85rem !important;
+}
+
+.table-juegos td {
+    padding: 8px !important;
+    vertical-align: middle;
+}
+
+.ruta-tecnica {
+    font-size: 0.75rem;
+    color: var(--playgo-blue);
+    background-color: #f4f6f7;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+/* Miniaturas ultra pequeñas */
+.img-juego-min {
+    width: 25px !important;   
+    height: 25px !important;  
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Zoom potente al pasar el ratón para compensar el tamaño */
+.img-juego-min:hover {
+    transform: scale(3.5); 
+    cursor: pointer;
+    z-index: 1000;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border-color: var(--playgo-blue);
+}
+
+.ruta-tecnica {
+    font-size: 0.65rem;
+    color: var(--playgo-blue);
+    background-color: #f0f4f7;
+    padding: 1px 4px;
+    border-radius: 3px;
+    border: 1px solid #d1dce5;
+}
+
+.badge-categoria {
+    font-size: 0.6rem !important;
+    padding: 0.2rem 0.5rem !important;
+    text-transform: uppercase;
+}
+
+/* --- ANIMACIONES --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}

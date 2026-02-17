@@ -1,0 +1,112 @@
+/* assets/css/registro.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, #1e3a8a 0%, #0f172a 100%);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Capa de estrellas animadas igual al Login */
+body::before {
+    content: "";
+    position: absolute;
+    width: 200%; height: 200%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: stars-move 100s linear infinite;
+    opacity: 0.4;
+}
+
+@keyframes stars-move {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+}
+
+.glass-card {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    width: 950px; height: 620px; 
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 40px;
+    box-shadow: 0 0 40px rgba(0, 210, 255, 0.3);
+}
+
+.login-side { 
+    flex: 1; 
+    padding: 50px; 
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+}
+
+.login-side form {
+    margin-top: 40px; 
+}
+
+.brand { font-size: 2rem; font-weight: 900; color: #00d2ff; margin-bottom: 10px; }
+.brand span { color: #fff; text-shadow: 0 0 10px #00d2ff; }
+
+.login-side h2 { margin-bottom: 5px; }
+.login-side p { margin-bottom: 0; opacity: 0.8; font-size: 0.9rem; }
+
+/* Estilo de Inputs idéntico */
+.input-group { position: relative; margin-bottom: 30px; }
+
+.input-group input, .input-group select {
+    width: 100%; padding: 12px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px; outline: none; color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Para que las opciones del select se vean oscuras */
+.input-group select option {
+    background: #0f172a;
+    color: white;
+}
+
+.input-group label {
+    position: absolute;
+    left: 12px;
+    top: -22px; 
+    font-size: 13px;
+    color: #00d2ff;
+    font-weight: 600;
+}
+
+.btn-space {
+    width: 100%; padding: 15px;
+    background: #00d2ff; border: none; border-radius: 12px;
+    color: #0f172a; font-weight: 800; cursor: pointer;
+    box-shadow: 0 5px 20px rgba(0,210,255,0.5);
+    transition: transform 0.2s;
+    text-transform: uppercase;
+}
+
+.btn-space:hover {
+    transform: scale(1.02);
+}
+
+/* Lado del Robot */
+.visual-side { flex: 1.2; position: relative; }
+#canvas-container { width: 100%; height: 100%; }
+
+.links { text-align: center; margin-top: 20px; font-size: 0.85rem; }
+.links a { color: #00d2ff; text-decoration: none; font-weight: bold; }

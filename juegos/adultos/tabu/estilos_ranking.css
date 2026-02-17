@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    font-family: 'Fredoka', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.panel-ranking-final {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 30px;
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+.titulo-final {
+    color: #4a4a4a;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+/* EL GANADOR */
+.card-ganador {
+    background: linear-gradient(to right, #f1c40f, #f39c12);
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(241, 196, 15, 0.4);
+    animation: flotar 3s infinite ease-in-out;
+}
+
+@keyframes flotar {
+    0%, 100% { transform: scale(1.05) translateY(0); }
+    50% { transform: scale(1.05) translateY(-10px); }
+}
+
+.corona { font-size: 3rem; }
+.nombre-ganador { font-size: 2rem; font-weight: bold; text-transform: uppercase; }
+.puntos-ganador { font-size: 1.5rem; font-weight: bold; }
+.fecha-record { font-size: 0.8rem; opacity: 0.8; margin-top: 5px; }
+
+/* LISTA DE LOS DEMÁS */
+.lista-resultados {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.fila-resultado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-left: 5px solid #667eea;
+}
+
+.medalla { font-size: 1.5rem; width: 40px; }
+.nombre-lista { font-weight: bold; flex-grow: 1; text-align: left; }
+.puntos-lista { background: #667eea; color: white; padding: 5px 10px; border-radius: 10px; font-size: 0.9rem; }
+
+/* BOTONES */
+.botones-finales { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn-grande { background: #6c5ce7; color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-size: 1.1rem; font-weight: bold; }
+.btn-peque { background: #ff7675; color: white; border: none; padding: 10px 15px; border-radius: 50px; cursor: pointer; }
+.btn-salir { background: #dfe6e9; color: #333; text-decoration: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; display: inline-block; }

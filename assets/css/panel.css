@@ -1,0 +1,176 @@
+/* UBICACIÓN: /playgo/assets/css/panel.css */
+
+/* --- 1. CONFIGURACIÓN DEL UNIVERSO --- */
+:root {
+    --fondo-espacio: #050511;
+    --gradiente-espacio: linear-gradient(180deg, #090919 0%, #16163a 100%);
+    --neon-azul: #00f3ff;
+    --neon-rosa: #d600ff;
+    --cristal: rgba(255, 255, 255, 0.05);
+    --borde-tenue: rgba(255, 255, 255, 0.1);
+    --texto-principal: #ffffff;
+    --texto-gris: #adb5bd;
+}
+
+/* --- 2. ESTRUCTURA GLOBAL --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--gradiente-espacio);
+    color: var(--texto-principal);
+    margin: 0;
+    padding: 0;
+    height: 100vh; 
+    overflow: hidden;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #3f3f6e; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--neon-azul); }
+
+/* --- 3. NAVBAR (Barra Superior) --- */
+.main-navbar {
+    height: 70px;
+    background: rgba(5, 5, 20, 0.95) !important;
+    border-bottom: 1px solid var(--borde-tenue);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+    backdrop-filter: blur(10px);
+    z-index: 1050;
+}
+
+.navbar-brand span { filter: drop-shadow(0 0 5px var(--neon-rosa)); }
+
+/* --- 4. LAYOUT PRINCIPAL (La clave del ajuste) --- */
+.main-layout {
+    display: flex;
+    height: 100vh; 
+    padding-top: 70px; 
+    box-sizing: border-box;
+}
+
+/* --- 5. SIDEBAR (Menú Lateral) --- */
+.sidebar-area {
+    width: 280px;
+    flex-shrink: 0; 
+    background: rgba(0, 0, 0, 0.2);
+    border-right: 1px solid var(--borde-tenue);
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-menu {
+    color: var(--neon-azul) !important;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
+    margin-top: 1.5rem;
+}
+
+/* Botones del Menú */
+.list-group-item {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    color: var(--texto-gris) !important;
+    margin-bottom: 5px;
+    border-radius: 8px !important;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background: var(--cristal) !important;
+    color: #fff !important;
+    transform: translateX(5px);
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Botón Activo */
+.list-group-item.active {
+    background: linear-gradient(90deg, rgba(0, 243, 255, 0.1) 0%, transparent 100%) !important;
+    border-left: 3px solid var(--neon-azul) !important;
+    color: #fff !important;
+    text-shadow: 0 0 5px var(--neon-azul);
+}
+
+.list-group-item span.fs-3 {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+/* --- 6. ZONA DE JUEGO (Derecha) --- */
+.game-area {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Alerta de Invitado */
+.alert-invitado {
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid #ffc107;
+    color: #ffca2c;
+    font-size: 0.9rem;
+}
+.alert-invitado a { color: #fff; text-decoration: underline; }
+
+/* Tarjeta Negra del Juego */
+.game-card-container {
+    flex-grow: 1; /* ESTO HACE QUE SE ESTIRE HASTA EL FONDO */
+    display: flex;
+    flex-direction: column;
+    background: #000;
+    border-radius: 12px;
+    border: 1px solid var(--borde-tenue);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+/* Cabecera del juego */
+.game-header {
+    height: 50px;
+    flex-shrink: 0;
+    background: #111;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* Contenedor del Iframe */
+.iframe-wrapper {
+    flex-grow: 1;
+    position: relative;
+    background: #fff; /* IMPORTANTE: El fondo blanco para que el juego se vea bien */
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* Footer */
+.pie-pagina {
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.3);
+    padding-top: 5px;
+    flex-shrink: 0;
+}
+
+/* --- 7. RESPONSIVE (Móviles) --- */
+@media (max-width: 768px) {
+    body { height: auto; overflow: auto; } /* Permitir scroll en móvil */
+    .main-layout { display: block; height: auto; padding-top: 70px; }
+    .sidebar-area { width: 100%; height: auto; border-right: none; margin-bottom: 20px; }
+    .game-area { height: auto; padding: 15px; }
+    .game-card-container { height: 500px; } /* Altura fija en móvil */
+}

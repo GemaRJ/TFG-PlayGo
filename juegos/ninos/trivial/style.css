@@ -1,0 +1,254 @@
+/* --- RESET & FUENTES --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+   
+    font-family: 'Nunito', sans-serif;
+    background-image: url('fondo.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+}
+
+.contenedor-principal {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Tarjeta estilo "Nube" */
+.tarjeta-juego {
+    background: rgba(255, 255, 255, 0.95); /* Un pelín transparente para que se integre con el fondo */
+    border-radius: 30px;
+    padding: 30px;
+    width: 100%;
+    max-width: 650px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border: 4px solid #fff;
+}
+
+.oculto { display: none !important; }
+
+/* --- ENCABEZADO --- */
+.encabezado h1 {
+    font-family: 'Titan One', cursive; /* Fuente gordita para el título */
+    color: #ff6b6b;
+    text-align: center;
+    font-size: 3rem; /* Más grande */
+    margin-bottom: 5px;
+    text-shadow: 3px 3px 0px #feca57;
+    letter-spacing: 2px;
+}
+
+.encabezado p { 
+    text-align: center; 
+    color: #54a0ff; 
+    font-size: 1.3rem; 
+    margin-bottom: 25px; 
+    font-weight: 700;
+}
+
+/* --- INPUTS Y SELECTS --- */
+.config-zona label {
+    display: block;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #5f27cd;
+}
+
+.select-bonito {
+    padding: 12px 25px;
+    border-radius: 50px;
+    border: 3px solid #feca57;
+    background: #fff;
+    color: #333;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+.input-nombre {
+    background: #f7f1e3;
+    border: 2px solid #ddd;
+    padding: 12px;
+    border-radius: 15px;
+    color: #333;
+    text-align: center;
+    width: 100%;
+    font-size: 1.1rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.input-nombre:focus {
+    border-color: #54a0ff;
+    outline: none;
+}
+
+.btn-start {
+    background: #ff9ff3;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 50px;
+    font-size: 1.6rem;
+    font-family: 'Titan One', cursive; /* Fuente gordita también en el botón */
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 6px 0 #f368e0;
+    transition: transform 0.1s;
+    letter-spacing: 1px;
+}
+
+.btn-start:active {
+    transform: translateY(6px);
+    box-shadow: none;
+}
+
+/* --- HUD DEL JUEGO --- */
+.panel-estado {
+    display: flex;
+    justify-content: space-between;
+    background: #dff9fb;
+    padding: 15px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    border: 2px solid #c7ecee;
+}
+
+.jugador-activo {
+    color: #ee5253;
+    font-weight: 800;
+    font-size: 1.3rem;
+}
+
+.caja-timer {
+    font-size: 1.3rem;
+    color: #2e86de;
+    font-weight: 800;
+    font-family: 'Titan One', cursive; /* Números estilo cartoon */
+}
+
+.timer-peligro { color: #ff4757; animation: palpitar 0.5s infinite; }
+
+@keyframes palpitar {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* --- BARRA PROGRESO --- */
+.barra-progreso-fondo {
+    width: 100%;
+    height: 18px;
+    background: #eee;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    border: 2px solid #ddd;
+}
+
+.barra-progreso-relleno {
+    height: 100%;
+    width: 0%;
+    background: repeating-linear-gradient(
+        45deg,
+        #feca57,
+        #feca57 10px,
+        #ff9f43 10px,
+        #ff9f43 20px
+    );
+    transition: width 0.4s ease;
+}
+
+/* --- PREGUNTA --- */
+h2 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1.7rem;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #222f3e;
+    line-height: 1.4;
+}
+
+/* --- BOTONES RESPUESTA --- */
+.grid-respuestas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.btn-respuesta {
+    background: #fff;
+    border: 3px solid #54a0ff;
+    border-radius: 20px;
+    padding: 15px;
+    color: #54a0ff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    transition: all 0.2s;
+    box-shadow: 0 5px 0 #2e86de;
+}
+
+.btn-respuesta:hover:not(:disabled) {
+    background: #54a0ff;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-respuesta:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: none;
+}
+
+.btn-respuesta.correcto {
+    background: #1dd1a1 !important;
+    border-color: #10ac84 !important;
+    color: white !important;
+    box-shadow: 0 5px 0 #10ac84 !important;
+}
+
+.btn-respuesta.incorrecto {
+    background: #ff6b6b !important;
+    border-color: #ee5253 !important;
+    color: white !important;
+    box-shadow: 0 5px 0 #ee5253 !important;
+}
+
+.btn-siguiente {
+    background: #feca57;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    font-family: 'Titan One', cursive;
+    box-shadow: 0 5px 0 #ff9f43;
+    margin-top: 20px;
+    float: right;
+}
+
+@media (max-width: 600px) {
+    .grid-respuestas { grid-template-columns: 1fr; }
+    .encabezado h1 { font-size: 2rem; }
+}
