@@ -1,5 +1,5 @@
 ﻿<?php
-// UBICACIÓN: /playgo/index.php
+
 
 // --- 1. ACTIVAR CHIVATOS DE ERROR ---
 ini_set('display_errors', 1);
@@ -13,7 +13,7 @@ if (file_exists("configuracion/conexion.php")) {
     require_once "configuracion/conexion.php";
 } else {
     // Si no existe, no matamos la página, solo avisamos (para desarrollo)
-    // die("❌ Error Crítico: No encuentro el archivo 'configuracion/conexion.php'.");
+    // die(" Error Crítico: No encuentro el archivo 'configuracion/conexion.php'.");
 }
 
 // Redirección si ya está logueado
@@ -35,7 +35,7 @@ if (isset($_SESSION['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayGo | Tu Portal de Juegos</title>
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/index.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="chatbot/bot.css">
@@ -61,7 +61,7 @@ if (isset($_SESSION['id'])) {
         <div class="hero-contenido">
             <h1>Encuentra tu próximo reto</h1>
             <p>Diversión educativa para niños y desafíos mentales para adultos.</p>
-            
+
             <div class="buscador">
                 <input type="text" placeholder="¿Qué quieres jugar hoy?">
                 <a href="autenticacion/login.php" class="boton-buscar">BUSCAR</a>
@@ -70,15 +70,15 @@ if (isset($_SESSION['id'])) {
     </header>
 
     <main id="catalogo" class="seccion-principal portal-galactico">
-        
+
         <?php if (isset($error_sql)): ?>
             <div class="alert error">Error SQL: <?php echo $error_sql; ?></div>
         <?php endif; ?>
 
         <div class="contenedor-opciones">
-            
+
             <a href="/playgo/autenticacion/login.php" class="tarjeta-portal kids">
-                
+
                 <div class="game-bubble b-kids-1" style="top: 15%; left: 10%;">
                     <img src="assets/img/icon-numeros.png" alt="Números">
                 </div>
@@ -91,7 +91,8 @@ if (isset($_SESSION['id'])) {
 
                 <div class="contenido-portal">
                     <div class="icono-flotante">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 2a7 7 0 0 1 7 8H5a7 7 0 0 1 7-8z" />
                             <path d="M2 12h20" />
                             <path d="M5 12v4a3 3 0 0 0 6 0v-4" />
@@ -106,7 +107,7 @@ if (isset($_SESSION['id'])) {
             </a>
 
             <a href="/playgo/autenticacion/login.php" class="tarjeta-portal adults">
-                
+
                 <div class="game-bubble b-adults-1" style="top: 20%; right: 10%;">
                     <img src="assets/img/icon-trivial.png" alt="Trivial">
                 </div>
@@ -119,9 +120,11 @@ if (isset($_SESSION['id'])) {
 
                 <div class="contenido-portal">
                     <div class="icono-flotante">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="3"/>
-                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3" />
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
                         </svg>
                     </div>
                     <h2>SECTOR ADULTOS</h2>
@@ -150,4 +153,5 @@ if (isset($_SESSION['id'])) {
 
     <script src="chatbot/bot.js"></script>
 </body>
+
 </html>

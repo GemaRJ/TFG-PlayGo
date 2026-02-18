@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SOPORTE TÉCNICO PLAYGO - VERSIÓN FINAL CORREGIDA
+ * SOPORTE TÉCNICO PLAYGO - VERSIÓN FINAL
  */
 require_once "configuracion/conexion.php";
 require_once "configuracion/sesiones.php";
@@ -14,7 +14,7 @@ $correo_remitente = isset($_SESSION['correo']) ? $_SESSION['correo'] : 'invitado
 $tipo_pre = isset($_GET['tipo']) ? htmlspecialchars($_GET['tipo']) : '';
 $asunto_auto = "";
 
-// Unificamos el switch con los nuevos valores del formulario
+// Unificamos el switch con valores del formulario
 switch ($tipo_pre) {
     case 'solicitud_baja':
         $asunto_auto = "Solicitud de baja de cuenta";
