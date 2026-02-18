@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Impostor - Juego de Palabras</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Selector de Idioma -->
+        <div class="language-selector">
+            <button onclick="Game.changeLanguage('es')" id="langES" class="lang-btn active">🇪🇸 ES</button>
+            <button onclick="Game.changeLanguage('en')" id="langEN" class="lang-btn">🇬🇧 EN</button>
+        </div>
+
+        <!-- Selector de Tema Visual -->
+        <div class="theme-selector">
+            <button onclick="Game.changeTheme('dark')" id="themeDark" class="theme-btn active" title="Dark Mode">🌙</button>
+            <button onclick="Game.changeTheme('light')" id="themeLight" class="theme-btn" title="Light Mode">☀️</button>
+            <button onclick="Game.changeTheme('retro')" id="themeRetro" class="theme-btn" title="Retro 8-bit">🎮</button>
+            <button onclick="Game.changeTheme('neon')" id="themeNeon" class="theme-btn" title="Neón Intenso">🔥</button>
+        </div>
+        
+        <!-- Logo -->
+        <div class="logo-container">
+            <img src="img/impostor.png" alt="Impostor Logo" class="logo">
+        </div>
+        
+        <!-- Título -->
+        <h1 data-i18n="title">El Impostor</h1>
+        <p class="subtitle" data-i18n="subtitle">Juego de Detección</p>
+        
+        <!-- Botón de Tutorial -->
+        <button class="tutorial-btn" onclick="UI.showTutorial()" data-i18n="tutorialButton">❓ ¿Cómo se juega?</button>
+
+        <!-- Pantalla de Configuración -->
+        <div id="setupScreen" class="card">
+            <div class="advanced-settings">
+                <!-- Dificultad -->
+                <div class="form-group">
+                    <label for="difficulty" data-i18n="difficultyLabel">Dificultad</label>
+                    <select id="difficulty" class="game-select">
+                        <option value="easy" data-i18n="difficultyEasy">🟢 Fácil</option>
+                        <option value="normal" selected data-i18n="difficultyNormal">🟡 Normal</option>
+                        <option value="hard" data-i18n="difficultyHard">🟠 Difícil</option>
+                        <option value="extreme" data-i18n="difficultyExtreme">🔴 Extremo</option>
+                    </select>
+                </div>
+
+                <!-- Categoría -->
+                <div class="form-group">
+                    <label for="category" data-i18n="categoryLabel">Categoría</label>
+                    <select id="category" class="game-select">
+                        <option value="food" selected data-i18n="categoryFood">🍕 Comida y Bebidas</option>
+                        <option value="animals" data-i18n="categoryAnimals">🐶 Animales</option>
+                        <option value="entertainment" data-i18n="categoryEntertainment">🎬 Cine y TV</option>
+                        <option value="sports" data-i18n="categorySports">⚽ Deportes</option>
+                        <option value="geography" data-i18n="categoryGeography">🌍 Geografía</option>
+                        <option value="music" data-i18n="categoryMusic">🎵 Música</option>
+                        <option value="professions" data-i18n="categoryProfessions">💼 Profesiones</option>
+                        <option value="transport" data-i18n="categoryTransport">🚗 Transporte</option>
+                        <option value="history" data-i18n="categoryHistory">🏛️ Historia</option>
+                        <option value="science" data-i18n="categoryScience">🔬 Ciencia</option>
+                    </select>
+                </div>
+
+                <!-- Modo Palabras Relacionadas -->
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="relatedWords" class="game-checkbox">
+                        <span data-i18n="relatedWordsLabel">🎭 Modo Palabras Relacionadas</span>
+                        <span class="tooltip" data-i18n="relatedWordsTooltip" title="El impostor recibe una palabra relacionada en lugar de 'impostor'">ℹ️</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Número de Jugadores -->
+            <div class="form-group">
+                <label for="numPlayers" data-i18n="numPlayersLabel">Número de jugadores</label>
+                <input type="number" id="numPlayers" min="3" max="20" 
+                       data-i18n-placeholder="numPlayersPlaceholder" 
+                       placeholder="Mínimo 3 jugadores" 
+                       onchange="UI.generatePlayerNames()">
+            </div>
+            
+            <!-- Número de Impostores -->
+            <div class="form-group">
+                <label for="numImpostors" data-i18n="numImpostorsLabel">Número de impostores</label>
+                <input type="number" id="numImpostors" min="1" max="10" value="1" 
+                       data-i18n-placeholder="numImpostorsPlaceholder" 
+                       placeholder="Mínimo 1 impostor">
+            </div>
+            
+            <!-- Nombres de Jugadores -->
+            <div id="playerNamesContainer" class="form-group">
+                <label data-i18n="playerNamesLabel">Nombres de los jugadores</label>
+                <div id="playerNamesList"></div>
+            </div>
+            
+            <!-- Botones de Acción -->
+            <button onclick="Game.start()" id="startButton" data-i18n="startButton">
+                Generar Palabra y Empezar
+            </button>
+            <button class="secondary reset-btn" onclick="Game.resetAll()" data-i18n="resetButton">
+                Empezar de 0
+            </button>
+            
+            <!-- Mensaje de Carga -->
+            <div id="loadingMessage" class="loading-message hidden">
+                <div class="loading-animation" data-i18n="loadingMessage">
+                    ⚡ Generando palabra y tema...
+                </div>
+            </div>
+            
+            <!-- Texto Informativo -->
+            <p class="info-text" data-i18n="infoText">
+                Se generará automáticamente una palabra aleatoria y un tema. Los impostores recibirán una palabra diferente.
+            </p>
+        </div>
+
+        <!-- Pantalla de Jugador -->
+        <div id="playerScreen" class="card hidden">
+            <div class="blur-warning" data-i18n="warningMessage">
+                ⚠️ Pasa el dispositivo al siguiente jugador. Asegúrate de que nadie más esté mirando.
+            </div>
+            
+            <div class="player-number">
+                <span id="currentPlayerNum"></span>
+            </div>
+
+            <div class="theme-display">
+                <div class="theme-label" data-i18n="themeLabel">Tema</div>
+                <div class="theme-text" id="displayTheme"></div>
+            </div>
+
+            <div class="word-reveal">
+                <button onclick="Game.revealWord()" id="revealBtn" data-i18n="revealButton">
+                    Ver mi palabra
+                </button>
+                
+                <div id="wordContainer" class="hidden">
+                    <div class="word-display">
+                        <div class="word-label" data-i18n="yourWordLabel">Tu palabra es:</div>
+                        <div class="word" id="displayWord"></div>
+                        <div class="scan-effect"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="secondary" onclick="Game.nextPlayer()" data-i18n="nextPlayerButton">
+                    Siguiente Jugador
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal Tutorial -->
+        <div id="tutorialModal" class="modal hidden">
+            <div class="modal-content">
+                <button class="modal-close" onclick="UI.closeTutorial()">✕</button>
+                <h2 data-i18n="tutorialTitle">📖 Cómo Jugar</h2>
+                <div class="tutorial-content">
+                    <div class="tutorial-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3 data-i18n="tutorialStep1Title">Configura el Juego</h3>
+                            <p data-i18n="tutorialStep1Text">
+                                Selecciona la dificultad, categoría y número de jugadores e impostores.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3 data-i18n="tutorialStep2Title">Ingresa los Nombres</h3>
+                            <p data-i18n="tutorialStep2Text">
+                                Escribe el nombre de cada jugador que participará.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3 data-i18n="tutorialStep3Title">Genera y Revela</h3>
+                            <p data-i18n="tutorialStep3Text">
+                                Cada jugador verá su palabra en privado. Los impostores recibirán una palabra diferente.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="tutorial-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3 data-i18n="tutorialStep4Title">Discute y Descubre</h3>
+                            <p data-i18n="tutorialStep4Text">
+                                Hagan preguntas para descubrir quién es el impostor. ¡El impostor debe ocultarse!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="UI.closeTutorial()" class="tutorial-close-btn" data-i18n="tutorialCloseBtn">
+                    ¡Entendido!
+                </button>
+            </div>
+        </div>
+
+        <!-- Partículas de Fondo -->
+        <div class="particles" id="particles"></div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabú Kids | PlayGo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="utils/style.css">
+</head>
+<body>
+
+    <div id="start-screen" class="pantalla">
+        <div class="panel-central">
+            <div style="font-size: 5rem; margin-bottom: 10px;">🤫</div>
+            <h1 class="titulo-menu" style="color: var(--card-azul);">TABÚ KIDS</h1>
+            <p>Añade a los jugadores:</p>
+            
+            <div style="display: flex; gap: 10px; width: 100%; align-items: center; justify-content: center;">
+                <input type="text" id="new-team-name" class="input-nombre" placeholder="Nombre..." style="width: 70%;">
+                <button class="btn-add" onclick="agregarEquipo()" style="background: var(--card-verde); color: white; border-radius: 50%; width: 50px; height: 50px; border: none; font-size: 1.5rem; cursor: pointer;">+</button>
+            </div>
+            
+            <ul id="team-list" class="lista-nombres" style="margin-top: 20px;"></ul>
+
+            <div id="msg-minimo" style="background: var(--card-azul); color: white; padding: 15px; border-radius: 50px; width: 100%; font-weight: bold; margin-top: 20px;">
+                MÍNIMO 2 JUGADORES
+            </div>
+
+            <button id="btn-start-game" class="btn-grande btn-azul hidden" onclick="iniciarPartidaMultijugador()">
+                ¡A JUGAR! 🚀
+            </button>
+        </div>
+    </div>
+
+    <div id="turn-screen" class="pantalla hidden">
+        <div class="panel-central">
+            <h1 class="titulo-menu">¡PREPARADOS!</h1>
+            <p>Es el turno de:</p>
+            <h1 id="next-team-name" style="font-size: 3rem; color: var(--card-azul); text-transform: uppercase;">---</h1>
+            <button class="btn-grande btn-verde" onclick="comenzarRonda()">EMPEZAR TURNO</button>
+        </div>
+    </div>
+
+    <div id="game-screen" class="pantalla hidden">
+        <div class="panel-central">
+            <div class="header-juego">
+                <span id="playing-team" class="turno-badge">EQUIPO: ???</span>
+                <span id="timer-text" class="puntos-badge">60s</span>
+            </div>
+            <div class="timer-bar-container">
+                <div id="timer-bar" class="timer-bar-fill"></div>
+            </div>
+
+            <div class="foto-contenedor">
+                <img id="word-image" src="" alt="Foto Tabú">
+            </div>
+
+            <div class="word-box">
+                <h2 id="target-word" class="target-word">CARGANDO...</h2>
+                <div id="forbidden-list" class="forbidden-list"></div>
+            </div>
+
+            <button class="btn-grande btn-verde" onclick="nextCard(true)">¡ACERTADA! 🌟</button>
+            <button class="btn-grande btn-rojo" onclick="nextCard(false)">PASAR / TABÚ ❌</button>
+            
+            <p style="margin-top: 5px; font-size: 0.9rem;">Puntos ronda: <span id="round-score">0</span></p>
+        </div>
+    </div>
+
+    <script src="utils/logica.js"></script>
+</body>
+</html>
