@@ -177,3 +177,113 @@ CREATE TABLE IF NOT EXISTS incidencias (
     fecha_reporte TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_usuario_incidencia FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+
+
+-- 1. CREACIÓN DE LA BASE DE DATOS
+CREATE DATABASE IF NOT EXISTS playgo CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
+USE playgo;
+
+
+-- 2. TABLA DE USUARIOS
+CREATE TABLE IF NOT EXISTS usuario (
+    usuario_id INT AUTO_INCREMENT PRIMARY KEY,
+    nombres VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) NOT NULL UNIQUE,
+    clave VARCHAR(255) NOT NULL,
+    tipo_usuario ENUM('niño', 'adulto', 'administrador') NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+
+
+-- 3. TABLA DE JUEGOS
+CREATE TABLE IF NOT EXISTS juegos (
+    id_juego INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    ruta VARCHAR(100) NOT NULL,
+    archivo_entrada VARCHAR(50) NOT NULL,
+    categoria ENUM('niños', 'adultos') NOT NULL,
+    descripcion TEXT,
+    activo BOOLEAN DEFAULT TRUE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+
+
+-- 4. DATOS INICIALES (USUARIOS Y CATÁLOGO)
+
+-- Administrador del sistema
+INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES
+('Equipo PlayGo', 'admin@playgo.com', '$2a$10$vY37nLRiKR7X30hzsOhi7.ce75hyMIL54KVo4mBVff9W8epa4Gn9K', 'administrador');
+
+-- Usuarios de prueba
+INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES
+('Enzo Niño', 'nino@playgo.com', '$2a$10$vY37nLRiKR7X30hzsOhi7.ce75hyMIL54KVo4mBVff9W8epa4Gn9K', 'niño'),
+('Gema Adulto', 'adulto@playgo.com', '$2a$10$vY37nLRiKR7X30hzsOhi7.ce75hyMIL54KVo4mBVff9W8epa4Gn9K', 'adulto');
+
+-- Juegos
+INSERT INTO juegos (nombre, ruta, archivo_entrada, categoria) VALUES
+('Blackjack', 'blackjack', 'index.html', 'adultos'),
+('Impostor', 'impostor', 'index.html', 'adultos'),
+('Tabú', 'tabu', 'index.html', 'adultos'),
+('Trivial', 'trivial', 'index.html', 'adultos'),
+('Cuenta Letras', 'cuenta_letras', 'index.html', 'niños'),
+('Cuenta Números', 'cuenta_numeros', 'index.html', 'niños'),
+('Memory', 'memory', 'index.html', 'niños'),
+('Tres en Raya', 'tres_raya', 'juego.html', 'niños');
+
+
+
+-- 5. TABLA DE RANKINGS Y PARTIDAS
+CREATE TABLE IF NOT EXISTS ranking (
+    id_ranking INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    id_juego INT NOT NULL,
+    puntuacion INT NOT NULL,
+    fecha_partida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_usuario_ranking FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) ON DELETE CASCADE,
+    CONSTRAINT fk_juego_ranking FOREIGN KEY (id_juego) REFERENCES juegos(id_juego) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+-- 6. TABLA DE HISTORIAL DEL CHATBOT
+CREATE TABLE IF NOT EXISTS chatbot_logs (
+    id_log INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NULL,
+    mensaje_usuario TEXT NOT NULL,
+    respuesta_bot TEXT NOT NULL,
+    fecha_consulta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_usuario_chatbot FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+-- 7. TABLA DE GESTIÓN DE INCIDENCIAS (SOPORTE TÉCNICO)
+CREATE TABLE IF NOT EXISTS incidencias (
+    id_incidencia INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NULL,
+    tipo ENUM(
+        'sugerencia',
+        'queja',
+        'error_alta_usuario',
+        'solicitud_baja_usuario',
+        'solicitud_modificacion_usuario',
+        'incidencia_juego',
+        'fallo_seguridad',
+        'error_ranking'
+    ) NOT NULL,
+    asunto VARCHAR(150) NOT NULL,
+    mensaje TEXT NOT NULL,
+    estado ENUM('pendiente', 'resuelta') DEFAULT 'pendiente',
+    fecha_reporte TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_usuario_incidencia FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+
+
+-- 8. CONSULTA DE AUDITORÍA
+-- Resumen de incidencias
+SELECT tipo, COUNT(*) as total 
+FROM incidencias 
+GROUP BY tipo;
