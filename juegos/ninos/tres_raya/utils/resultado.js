@@ -1,64 +1,89 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const history = JSON.parse(localStorage.getItem("matchHistory")) || [];
-  const container = document.getElementById("summary-box");
-  const btnHome = document.getElementById("btn-home");
-  const btnClear = document.getElementById("btn-clear");
+  // 1. ZONA DE SELECTORES (DOM)
+  // Utilizamos querySelector para el contenedor y querySelectorAll para los botones
+  const contenedorResumen = document.querySelector("#summary-box");
+  const botonesAccion = document.querySelectorAll(".btn-custom");
 
-  renderHistory();
+  // 2. ZONA DE ESTADO (VARIABLES GLOBALES)
+  // Obtenemos el historial de partidas guardado en el navegador
+  const historialPartidas =
+    JSON.parse(localStorage.getItem("matchHistory")) || [];
 
-  // Botones
-  btnHome.addEventListener("click", () => (window.location.href = "menu.html"));
-
-  btnClear.addEventListener("click", () => {
-    localStorage.removeItem("matchHistory");
-    window.location.reload();
+  // 3. ZONA DE ESCUCHADORES (LISTENERS)
+  // Gestionamos los eventos de los botones mediante un bucle forEach
+  botonesAccion.forEach((boton) => {
+    boton.addEventListener("click", (evento) => {
+      // Identificamos la acción según el ID del botón pulsado
+      if (evento.target.id === "btn-home") window.location.href = "menu.html";
+      if (evento.target.id === "btn-clear") borrarHistorial();
+    });
   });
 
-  function renderHistory() {
-    if (history.length === 0) {
-      container.innerHTML =
+  // Ejecución inicial para dibujar los datos en pantalla
+  dibujarHistorial();
+
+  // 4. ZONA DE FUNCIONES (LÓGICA)
+
+  /**
+   * Genera el HTML para mostrar la última partida y los resultados recientes
+   */
+  function dibujarHistorial() {
+    // Si no hay partidas registradas, mostramos un mensaje informativo
+    if (historialPartidas.length === 0) {
+      contenedorResumen.innerHTML =
         "<p class='text-muted'>¡Aún no hay partidas jugadas!</p>";
       return;
     }
 
-    // 1. Mostrar última partida destacada
-    const lastGame = history[history.length - 1];
-    let htmlContent = `
-            <div class="podio-box">
-                <h3>Última Partida</h3>
-                <div style="font-size: 4rem;">${lastGame.icon}</div>
-                <p class="mb-0 fs-5">${lastGame.winner === "Empate" ? "¡Tablas!" : "¡Victoria!"}</p>
-            </div>
-            <h5 class="mt-4 text-start border-bottom pb-2">Historial Reciente:</h5>
-        `;
+    // A. Destacamos la última partida (la más reciente)
+    const ultimaPartida = historialPartidas[historialPartidas.length - 1];
+    let contenidoHTML = `
+        <div class="podio-box">
+            <h3>Última Partida</h3>
+            <div style="font-size: 4rem;">${ultimaPartida.icon}</div>
+            <p class="mb-0 fs-5">${ultimaPartida.winner === "Empate" ? "¡Tablas!" : "¡Victoria!"}</p>
+        </div>
+        <h5 class="mt-4 text-start border-bottom pb-2">Historial Reciente:</h5>
+    `;
 
-    // 2. Lista de partidas anteriores (máximo 5)
-    // Invertimos el array para ver lo más reciente primero
-    const recentGames = history.slice().reverse();
+    // B. Listamos las partidas anteriores (limitado a las últimas 5)
+    // Usamos slice().reverse() para no alterar el array original
+    const partidasRecientes = historialPartidas.slice().reverse();
 
-    recentGames.forEach((game, index) => {
-      if (index > 4) return; // Limite visual
-      htmlContent += `
-                <div class="history-item shadow-sm">
-                    <span>Partida #${history.length - index}</span>
-                    <span>${game.icon} ${game.winner}</span>
-                </div>
-            `;
+    partidasRecientes.forEach((partida, indice) => {
+      if (indice > 4) return; // Límite visual del historial
+      contenidoHTML += `
+        <div class="history-item shadow-sm">
+            <span>Partida #${historialPartidas.length - indice}</span>
+            <span>${partida.icon} ${partida.winner}</span>
+        </div>
+      `;
     });
 
-    container.innerHTML = htmlContent;
+    contenedorResumen.innerHTML = contenidoHTML;
 
-    // 3. Lanzar confeti si la última no fue empate
-    if (lastGame.winner !== "Empate") {
-      lanzarConfeti();
+    // C. Si alguien ganó, lanzamos la celebración
+    if (ultimaPartida.winner !== "Empate") {
+      lanzarCelebracion();
     }
   }
 
-  function lanzarConfeti() {
-    const duration = 2000;
-    const end = Date.now() + duration;
+  /**
+   * Elimina los datos del LocalStorage y refresca la página
+   */
+  function borrarHistorial() {
+    localStorage.removeItem("matchHistory");
+    window.location.reload();
+  }
 
-    (function frame() {
+  /**
+   * Genera el efecto visual de confeti usando una librería externa
+   */
+  function lanzarCelebracion() {
+    const duracion = 2000;
+    const fin = Date.now() + duracion;
+
+    (function animar() {
       confetti({
         particleCount: 5,
         angle: 60,
@@ -72,8 +97,8 @@ document.addEventListener("DOMContentLoaded", () => {
         origin: { x: 1 },
       });
 
-      if (Date.now() < end) {
-        requestAnimationFrame(frame);
+      if (Date.now() < fin) {
+        requestAnimationFrame(animar);
       }
     })();
   }

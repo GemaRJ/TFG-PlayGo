@@ -159,13 +159,15 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
             botonesMenu = document.querySelectorAll('.list-group-item');
         });
 
-        function cargarJuego(ruta, btn) {
-            if (iframeJuego) iframeJuego.src = ruta;
-            if (botonesMenu) {
-                botonesMenu.forEach(el => el.classList.remove('active'));
-            }
-            btn.classList.add('active');
-        }
+       function cargarJuego(ruta, btn) {
+    if (iframeJuego) {
+        iframeJuego.src = ruta + '?t=' + new Date().getTime();
+    }
+    if (botonesMenu) {
+        botonesMenu.forEach(el => el.classList.remove('active'));
+    }
+    btn.classList.add('active');
+}
 
         function pantallaCompleta() {
             if (!iframeJuego) return;

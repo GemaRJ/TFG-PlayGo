@@ -1,92 +1,99 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const cells = document.querySelectorAll(".cell");
-  const statusText = document.getElementById("status-text");
-  const btnRestart = document.getElementById("btn-restart");
-  const btnExit = document.getElementById("btn-exit");
+  // 1. ZONA DE SELECTORES (DOM)
+  const celdas = document.querySelectorAll(".cell");
+  const textoEstado = document.querySelector("#status-text");
+  const btnReiniciar = document.querySelector("#btn-restart");
+  const btnSalir = document.querySelector("#btn-exit");
+  const tableroJuego = document.querySelector("#game-board");
 
-  // Cargar config
-  const config = JSON.parse(localStorage.getItem("gameConfig"));
-  if (!config) {
+  // 2. ZONA DE ESTADO (VARIABLES GLOBALES)
+  const configuracion = JSON.parse(localStorage.getItem("gameConfig"));
+
+  if (!configuracion) {
     window.location.href = "menu.html";
     return;
   }
 
-  let board = Array(9).fill(null);
-  let currentPlayer = 1;
-  let gameActive = true;
+  let tableroVirtual = Array(9).fill(null);
+  let jugadorActual = 1;
+  let juegoActivo = true;
 
-  // Iniciar
-  updateStatus();
-
-  // Event Listeners
-  cells.forEach((cell) => cell.addEventListener("click", onCellClick));
-  btnRestart.addEventListener("click", () => window.location.reload());
-  btnExit.addEventListener(
-    "click",
-    () => (window.location.href = "resultado.html"),
+  // 3. ZONA DE ESCUCHADORES (LISTENERS)
+  celdas.forEach((celda) =>
+    celda.addEventListener("click", alHacerClicEnCelda),
   );
 
-  function updateStatus() {
-    if (!gameActive) return;
-    const avatar = currentPlayer === 1 ? config.p1 : config.p2;
-    statusText.innerText = `Turno de: ${avatar}`;
-    statusText.style.color =
-      currentPlayer === 1 ? "var(--primary)" : "var(--secondary)";
+  btnReiniciar.addEventListener("click", () => {
+    window.location.reload();
+  });
+
+  btnSalir.addEventListener("click", () => {
+    window.location.href = "resultado.html";
+  });
+
+  // Mostramos el turno inicial
+  actualizarEstadoUI();
+
+  // 4. ZONA DE FUNCIONES (LÓGICA)
+
+  function actualizarEstadoUI() {
+    if (!juegoActivo) return;
+    const avatar = jugadorActual === 1 ? configuracion.p1 : configuracion.p2;
+    textoEstado.innerText = `Turno de: ${avatar}`;
+    textoEstado.style.color =
+      jugadorActual === 1 ? "var(--primary)" : "var(--secondary)";
   }
 
-  function onCellClick(e) {
-    const index = e.target.dataset.i;
+  function alHacerClicEnCelda(e) {
+    const indice = e.target.dataset.i;
 
-    // Validaciones
-    if (!gameActive || board[index]) return;
+    if (!juegoActivo || tableroVirtual[indice]) return;
 
-    // Movimiento Jugador
-    makeMove(index, currentPlayer);
+    ejecutarMovimiento(indice, jugadorActual);
 
-    // Si juega contra la máquina y el juego sigue activo...
-    if (gameActive && config.mod === "1" && currentPlayer === 2) {
-      // Bloquear tablero mientras piensa la IA
-      document.getElementById("game-board").style.pointerEvents = "none";
-      statusText.innerText = "Pensando... 🤖";
+    // Lógica para modo VS Robot
+    if (juegoActivo && configuracion.mod === "1" && jugadorActual === 2) {
+      tableroJuego.style.pointerEvents = "none";
+      textoEstado.innerText = "Pensando... 🤖";
 
       setTimeout(() => {
-        aiMove();
-        document.getElementById("game-board").style.pointerEvents = "auto";
+        movimientoRobot();
+        tableroJuego.style.pointerEvents = "auto";
       }, 700);
     }
   }
 
-  function makeMove(index, player) {
-    board[index] = player;
-    cells[index].innerText = player === 1 ? config.p1 : config.p2;
-    cells[index].style.color =
-      player === 1 ? "var(--primary)" : "var(--secondary)";
+  function ejecutarMovimiento(indice, jugador) {
+    tableroVirtual[indice] = jugador;
+    celdas[indice].innerText =
+      jugador === 1 ? configuracion.p1 : configuracion.p2;
+    celdas[indice].style.color =
+      jugador === 1 ? "var(--primary)" : "var(--secondary)";
 
-    if (checkWin(player)) {
-      endGame(player);
-    } else if (board.every((cell) => cell)) {
-      endGame(0); // Empate
+    if (verificarGanador(jugador)) {
+      finalizarPartida(jugador);
+    } else if (tableroVirtual.every((celda) => celda)) {
+      finalizarPartida(0); // Caso: Empate
     } else {
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
-      updateStatus();
+      jugadorActual = jugadorActual === 1 ? 2 : 1;
+      actualizarEstadoUI();
     }
   }
 
-  function aiMove() {
-    // IA muy básica: busca un hueco libre al azar
-    const emptyIndices = board
-      .map((v, i) => (v === null ? i : null))
-      .filter((v) => v !== null);
+  function movimientoRobot() {
+    const indicesVacios = tableroVirtual
+      .map((valor, indice) => (valor === null ? indice : null))
+      .filter((valor) => valor !== null);
 
-    if (emptyIndices.length > 0) {
-      const rand =
-        emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
-      makeMove(rand, 2);
+    if (indicesVacios.length > 0) {
+      const aleatorio =
+        indicesVacios[Math.floor(Math.random() * indicesVacios.length)];
+      ejecutarMovimiento(aleatorio, 2);
     }
   }
 
-  function checkWin(player) {
-    const wins = [
+  function verificarGanador(jugador) {
+    const combinacionesGanadoras = [
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8], // Horizontales
@@ -96,37 +103,41 @@ document.addEventListener("DOMContentLoaded", () => {
       [0, 4, 8],
       [2, 4, 6], // Diagonales
     ];
-    return wins.find((combo) => combo.every((i) => board[i] === player));
+    return combinacionesGanadoras.find((combo) =>
+      combo.every((indice) => tableroVirtual[indice] === jugador),
+    );
   }
 
-  function endGame(winner) {
-    gameActive = false;
-    let history = JSON.parse(localStorage.getItem("matchHistory")) || [];
+  function finalizarPartida(ganador) {
+    juegoActivo = false;
+    let historial = JSON.parse(localStorage.getItem("matchHistory")) || [];
+    let datosResultado = {};
 
-    let resultData = {};
-
-    if (winner === 0) {
-      statusText.innerText = "¡Es un Empate! 🤝";
-      resultData = { winner: "Empate", icon: "🤝" };
+    if (ganador === 0) {
+      textoEstado.innerText = "¡Es un Empate! 🤝";
+      datosResultado = { winner: "Empate", icon: "🤝" };
     } else {
-      const icon = winner === 1 ? config.p1 : config.p2;
-      const name =
-        winner === 1 ? "Jugador 1" : config.mod === "1" ? "Robot" : "Jugador 2";
-      statusText.innerText = `¡Ganador: ${icon}!`;
+      const icono = ganador === 1 ? configuracion.p1 : configuracion.p2;
+      const nombre =
+        ganador === 1
+          ? "Jugador 1"
+          : configuracion.mod === "1"
+            ? "Robot"
+            : "Jugador 2";
+      textoEstado.innerText = `¡Ganador: ${icono}!`;
 
-      // Iluminar ganadores
-      const winCombo = checkWin(winner);
-      if (winCombo) winCombo.forEach((i) => cells[i].classList.add("winner"));
+      const comboGanador = verificarGanador(ganador);
+      if (comboGanador)
+        comboGanador.forEach((i) => celdas[i].classList.add("winner"));
 
-      resultData = { winner: name, icon: icon };
+      datosResultado = { winner: nombre, icon: icono };
     }
 
-    history.push(resultData);
-    localStorage.setItem("matchHistory", JSON.stringify(history));
+    historial.push(datosResultado);
+    localStorage.setItem("matchHistory", JSON.stringify(historial));
 
-    btnRestart.style.display = "inline-block";
-    btnExit.innerText = "🏆 Ver Resultados";
-    btnExit.classList.remove("btn-secondary");
-    btnExit.classList.add("btn-primary");
+    btnReiniciar.style.display = "inline-block";
+    btnSalir.innerText = "🏆 Ver Resultados";
+    btnSalir.classList.replace("btn-secondary", "btn-primary");
   }
 });

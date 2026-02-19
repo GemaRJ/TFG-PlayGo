@@ -4,7 +4,7 @@ require_once "../../configuracion/sesiones.php";
 require_once "../../configuracion/conexion.php";
 comprobarAdmin();
 
-// Consulta de juegos (Lógica similar a la inmobiliaria)
+// Consulta de juegos
 $sql = "SELECT * FROM juegos ORDER BY id_juego DESC";
 $res = mysqli_query($conn, $sql);
 $juegos = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -17,62 +17,143 @@ mysqli_free_result($res);
 
 <head>
     <meta charset="UTF-8">
-    <title>Gestión de Catálogo | PlayGo Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario Galáctico | PlayGo Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/menu.css">
+    <style>
+        /* Estilos específicos para la Tabla Espacial */
+        .tabla-contenedor {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        .table-space {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 12px; /* Separación entre filas */
+            color: white;
+        }
+
+        .table-space thead th {
+            color: #00d2ff;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            padding: 15px;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.3);
+            text-align: left;
+        }
+
+        .table-space tbody tr {
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .table-space tbody tr:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.005);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .table-space td {
+            padding: 15px;
+            vertical-align: middle;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Redondear esquinas de las filas */
+        .table-space td:first-child { border-radius: 15px 0 0 15px; border-left: 1px solid rgba(255, 255, 255, 0.05); }
+        .table-space td:last-child { border-radius: 0 15px 15px 0; border-right: 1px solid rgba(255, 255, 255, 0.05); }
+
+        /* Estilo para las imágenes miniatura */
+        .img-radar {
+            width: 60px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+        }
+
+        /* Badges Galácticos */
+        .badge-sector {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .bg-ninos { background: rgba(0, 210, 255, 0.2); color: #00d2ff; border: 1px solid #00d2ff; }
+        .bg-adultos { background: rgba(168, 85, 247, 0.2); color: #a855f7; border: 1px solid #a855f7; }
+
+        .btn-accion {
+            padding: 6px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: 0.3s;
+            margin-left: 5px;
+        }
+        .btn-edit { border: 1px solid #00d2ff; color: #00d2ff; }
+        .btn-edit:hover { background: #00d2ff; color: #0f172a; }
+        .btn-delete { border: 1px solid #ff4444; color: #ff4444; }
+        .btn-delete:hover { background: #ff4444; color: white; }
+    </style>
 </head>
 
-<body class="bg-light">
+<body class="portal-galactico">
 
-    <div class="container my-5">
-        <div class="admin-header mb-4">
-            <h1 class="fw-bold text-playgo">Gestión de Catálogo</h1>
-            <p class="text-muted">ADMINISTRADOR: <?php echo strtoupper($_SESSION['nombre'] ?? 'ADMIN'); ?></p>
+    <main class="admin-main">
+        <div class="header-panel">
+            <div class="logo">PLAY<span>GO</span> ADMIN</div>
+            <h1>Inventario de Misiones</h1>
+            <p>Monitoreo y gestión de los juegos desplegados en el sistema.</p>
         </div>
 
-        <div class="card shadow-sm border-0 rounded-4">
-            <div class="card-body p-0">
-                <table class="table table-hover align-middle table-juegos mb-0">
-                    <thead class="table-light">
+        <div style="text-align: right; width: 100%; max-width: 1100px; margin-bottom: 15px;">
+            <a href="alta.php" class="btn-admin" style="display: inline-block; width: auto; padding: 10px 25px;">
+                + Inyectar Nueva Misión
+            </a>
+        </div>
+
+        <div class="card-comando" style="width: 100%; max-width: 1100px;">
+            <div class="tabla-contenedor">
+                <table class="table-space">
+                    <thead>
                         <tr>
-                            <th class="ps-4">Imagen</th>
-                            <th>ID</th>
-                            <th>Nombre del Juego</th>
-                            <th>Ruta</th>
-                            <th class="text-center">Categoría</th>
-                            <th class="text-end pe-4">Acciones</th>
+                            <th>Vista</th>
+                            <th>Código</th>
+                            <th>Nombre de Misión</th>
+                            <th>Sector</th>
+                            <th style="text-align: right;">Operaciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach($juegos as $j): ?>
                         <tr>
-                            <td class="ps-4">
+                            <td>
                                 <?php 
-                                    // Buscamos el .jpg en la carpeta de imágenes
                                     $foto = "../../assets/img/" . $j['ruta'] . ".jpg"; 
                                 ?>
-                                <img src="<?php echo $foto; ?>" class="img-miniatura"
-                                    onerror="this.src='../../assets/img/default.jpg'">
+                                <img src="<?php echo $foto; ?>" class="img-radar"
+                                     onerror="this.src='../../assets/img/default.jpg'">
                             </td>
-                            <td class="text-muted">#<?php echo $j['id_juego']; ?></td>
-                            <td class="fw-bold text-dark"><?php echo htmlspecialchars($j['nombre']); ?></td>
+                            <td style="color: #00d2ff; font-family: monospace;">#<?php echo $j['id_juego']; ?></td>
+                            <td style="font-weight: 600;"><?php echo htmlspecialchars($j['nombre']); ?></td>
                             <td>
-                                <code class="ruta-tecnica">/<?php echo $j['ruta']; ?>/</code>
-                            </td>
-                            <td class="text-center">
-                                <span
-                                    class="badge rounded-pill <?php echo ($j['categoria'] == 'adultos' ? 'bg-success' : 'bg-info text-dark'); ?>">
-                                    <?php echo strtoupper($j['categoria']); ?>
+                                <span class="badge-sector <?php echo ($j['categoria'] == 'adultos' ? 'bg-adultos' : 'bg-ninos'); ?>">
+                                    <?php echo ($j['categoria'] == 'adultos' ? '🧠 ADULTOS' : '🧸 NIÑOS'); ?>
                                 </span>
                             </td>
-                            <td class="text-end pe-4">
-                                <a href="editar.php?id=<?php echo $j['id_juego']; ?>"
-                                    class="btn btn-sm btn-outline-primary">Editar</a>
-                                <span class="text-muted mx-1">|</span>
-                                <a href="baja.php?id=<?php echo $j['id_juego']; ?>"
-                                    class="btn btn-sm btn-outline-danger"
-                                    onclick="return confirm('¿Seguro que quieres eliminar este juego y su imagen?')">Borrar</a>
+                            <td style="text-align: right;">
+                                <a href="editar.php?id=<?php echo $j['id_juego']; ?>" class="btn-accion btn-edit">EDITAR</a>
+                                <a href="baja.php?id=<?php echo $j['id_juego']; ?>" 
+                                   class="btn-accion btn-delete"
+                                   onclick="return confirm('¿Confirmar desinstalación de la misión?')">BORRAR</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -81,10 +162,14 @@ mysqli_free_result($res);
             </div>
         </div>
 
-        <div class="text-center mt-4">
-            <a href="../menu.php" class="text-decoration-none text-muted small">🏠 Volver al Panel</a>
+        <div style="margin-top: 30px;">
+            <a href="../menu.php" class="btn-logout" style="border-color: #00d2ff; color: #00d2ff;">
+                ← Volver al Panel de Control
+            </a>
         </div>
-    </div>
+    </main>
+
+    <script src="../../chatbot/bot.js"></script>
 </body>
 
 </html>

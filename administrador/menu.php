@@ -2,21 +2,17 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-/**
- * MENU PRINCIPAL DEL ADMINISTRADOR (DASHBOARD)
- * Gestión centralizada: Usuarios, Juegos y Soporte.
- */
+
 require_once "../configuracion/conexion.php";
 require_once "../configuracion/sesiones.php";
-comprobarSesion(); // [TICKET SEGURIDAD] Verifica sesión
+comprobarSesion(); 
 
-// Seguridad adicional: Solo admin
 if ($_SESSION['tipo_usuario'] !== 'administrador') {
     header("Location: ../index.php");
     exit;
 }
 
-// LÓGICA DE DATOS: Contar incidencias pendientes para el aviso
+// LÓGICA DE DATOS
 $sql_pendientes = "SELECT COUNT(*) as total FROM incidencias WHERE estado = 'pendiente'";
 $res_pendientes = mysqli_query($conn, $sql_pendientes);
 $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
@@ -24,107 +20,193 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración | PlayGo</title>
+    <title>PlayGo Admin | Central de Mando</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/index.css"> 
+    <style>
+        /* Estilos específicos para el Dashboard Admin */
+        .admin-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 20px 60px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
-    </script>
+        .header-panel {
+            text-align: center;
+            margin-bottom: 60px;
+        }
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/menu.css">
+        .header-panel h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, #00d2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .grid-comandos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            width: 100%;
+        }
+
+        /* Tarjetas Estilo Glassmorphism */
+        .card-comando {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .card-comando:hover {
+            transform: translateY(-15px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #00d2ff;
+            box-shadow: 0 20px 40px rgba(0, 210, 255, 0.2);
+        }
+
+        .icono-vibrante {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.4));
+        }
+
+        .card-comando h3 {
+            color: #fff;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .card-comando p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        /* Botones Estilo Espacial */
+        .grupo-botones {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-admin {
+            padding: 12px 20px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-primary-space {
+            background: rgba(0, 210, 255, 0.1);
+            color: #00d2ff;
+            border: 1px solid #00d2ff;
+        }
+
+        .btn-primary-space:hover {
+            background: #00d2ff;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+        }
+
+        /* Badge de Notificación */
+        .alerta-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff4444;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
+        }
+
+        .btn-logout {
+            margin-top: 60px;
+            color: #ff4444;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid #ff4444;
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: #ff4444;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
+        }
+    </style>
 </head>
+<body class="portal-galactico">
 
-<body class="bg-light">
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#">
-                <span>🎮</span> Panel PlayGo
-            </a>
-            <div class="d-flex align-items-center text-white">
-                <span class="me-3 d-none d-md-block">Hola, <?php echo htmlspecialchars($_SESSION['nombre']); ?></span>
-                <a href="../autenticacion/logout.php" class="btn btn-danger btn-sm rounded-pill fw-bold">
-                    Cerrar Sesión
-                </a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container my-5">
-
-        <div class="text-center mb-5 animate-fade-in">
-            <h1 class="display-5 fw-bold text-dark">Centro de Comando</h1>
-            <p class="text-muted">Gestiona usuarios, juegos y soporte técnico.</p>
+    <main class="admin-main">
+        <div class="header-panel">
+            <div class="logo">PLAY<span>GO</span> ADMIN</div>
+            <h1>Centro de Comando</h1>
+            <p style="color: #94a3b8;">Bienvenido, Comandante <?php echo htmlspecialchars($_SESSION['nombre']); ?>. El sistema está operativo.</p>
         </div>
 
-        <div class="row g-4 justify-content-center">
-
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm border-0 card-hover">
-                    <div class="card-body text-center p-4">
-                        <div class="fs-1 mb-3">👥</div>
-                        <h3 class="h4 fw-bold">Usuarios</h3>
-                        <p class="text-muted small">Administra los jugadores registrados.</p>
-                        <div class="d-grid gap-2 mt-4">
-                            <a href="usuarios/listar.php" class="btn btn-outline-primary btn-sm">Listar Todos</a>
-                            <a href="usuarios/alta.php" class="btn btn-outline-primary btn-sm">Crear Nuevo</a>
-                        </div>
-                    </div>
+        <div class="grid-comandos">
+            <div class="card-comando">
+                <span class="icono-vibrante">👥</span>
+                <h3>Tripulación</h3>
+                <p>Gestiona los expedientes de todos los jugadores de la nave.</p>
+                <div class="grupo-botones">
+                    <a href="usuarios/listar.php" class="btn-admin btn-primary-space">Listar Usuarios</a>
+                    <a href="usuarios/alta.php" class="btn-admin btn-primary-space">Nuevo Recluta</a>
                 </div>
             </div>
 
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm border-0 card-hover">
-                    <div class="card-body text-center p-4">
-                        <div class="fs-1 mb-3">🕹️</div>
-                        <h3 class="h4 fw-bold">Catálogo</h3>
-                        <p class="text-muted small">Añade o edita los minijuegos.</p>
-                        <div class="d-grid gap-2 mt-4">
-                            <a href="juegos/listar.php" class="btn btn-outline-success btn-sm">Gestionar Catálogo</a>
-                            <a href="juegos/alta.php" class="btn btn-success btn-sm text-white">+ Nuevo Juego</a>
-                        </div>
-                    </div>
+            <div class="card-comando">
+                <span class="icono-vibrante">🕹️</span>
+                <h3>Catálogo</h3>
+                <p>Configura las misiones disponibles en el sistema.</p>
+                <div class="grupo-botones">
+                    <a href="juegos/listar.php" class="btn-admin btn-primary-space">Gestionar Juegos</a>
+                    <a href="juegos/alta.php" class="btn-admin btn-primary-space">Inyectar Misión</a>
                 </div>
             </div>
 
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm border-0 card-hover">
-                    <div class="card-body text-center p-4">
-                        <div class="fs-1 mb-3">✉️</div>
-                        <h3 class="h4 fw-bold">Soporte</h3>
-                        <p class="text-muted small">Tickets, reportes y estadísticas.</p>
-                        <div class="d-grid gap-2 mt-4">
-                            <a href="soporte/listar.php" class="btn btn-outline-danger btn-sm position-relative">
-                                Gestionar Tickets
-                                <?php if($cont_pendientes > 0): ?>
-                                <span
-                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
-                                    <?php echo $cont_pendientes; ?>
-                                </span>
-                                <?php endif; ?>
-                            </a>
-                            <a href="soporte/estadisticas.php" class="btn btn-outline-danger btn-sm">Ver Resumen</a>
-
-
-                        </div>
-                    </div>
+            <div class="card-comando">
+                <?php if($cont_pendientes > 0): ?>
+                    <span class="alerta-badge"><?php echo $cont_pendientes; ?> ALERTAS</span>
+                <?php endif; ?>
+                <span class="icono-vibrante">📡</span>
+                <h3>Comunicaciones</h3>
+                <p>Resuelve las incidencias recibidas por los exploradores.</p>
+                <div class="grupo-botones">
+                    <a href="soporte/listar.php" class="btn-admin btn-primary-space">Ver Mensajes</a>
+                    <a href="soporte/estadisticas.php" class="btn-admin btn-primary-space">Telemetría</a>
                 </div>
             </div>
-
         </div>
-    </div>
 
-    <footer class="bg-white text-center py-4 mt-5 border-top">
-        <p class="mb-0 fw-bold text-secondary">🎮 PLAYGO ADMIN</p>
-        <small class="text-muted">&copy; <?php echo date('Y'); ?> - Panel de Control Interno</small>
-    </footer>
+        <a href="../autenticacion/logout.php" class="btn-logout">FINALIZAR MISIÓN (LOGOUT)</a>
+    </main>
 
+    <script src="../chatbot/bot.js"></script>
 </body>
-
 </html>

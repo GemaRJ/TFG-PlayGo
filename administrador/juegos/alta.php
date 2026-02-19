@@ -13,127 +13,149 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $ruta = mysqli_real_escape_string($conn, $_POST['ruta']);
     $categoria = $_POST['categoria']; 
 
-    // Insertar en la base de datos
     $sql = "INSERT INTO juegos (nombre, ruta, categoria, activo) VALUES ('$nombre', '$ruta', '$categoria', 1)";
     
     if(mysqli_query($conn, $sql)){
-        $mensaje = "¡Juego registrado con éxito en el catálogo!";
+        $mensaje = "¡Misión inyectada con éxito en el catálogo!";
     } else {
-        $error = "Error al registrar: " . mysqli_error($conn);
+        $error = "Fallo en la telemetría: " . mysqli_error($conn);
     }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alta Juego | PlayGo Admin</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Inyectar Juego | PlayGo Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/menu.css">
+    <style>
+        /* Ajustes específicos para que el formulario se vea increíble */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .msg-alerta {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+            animation: fadeIn 0.5s ease;
+        }
+        .success-space { background: rgba(0, 210, 255, 0.2); border: 1px solid #00d2ff; color: #00d2ff; }
+        .error-space { background: rgba(255, 68, 68, 0.2); border: 1px solid #ff4444; color: #ff4444; }
+
+        .form-group { margin-bottom: 25px; }
+        
+        .form-label-space {
+            display: block;
+            color: #00d2ff;
+            font-size: 0.8rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .input-space {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Poppins';
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .input-space:focus {
+            outline: none;
+            border-color: #00d2ff;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+        }
+
+        select.input-space option {
+            background: #0f172a;
+            color: white;
+        }
+
+        .btn-submit-space {
+            width: 100%;
+            padding: 16px;
+            background: #00d2ff;
+            color: #0f172a;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4);
+        }
+
+        .btn-submit-space:hover {
+            transform: translateY(-3px);
+            background: #fff;
+            box-shadow: 0 8px 25px rgba(0, 210, 255, 0.6);
+        }
+    </style>
 </head>
+<body class="portal-galactico">
 
-<body class="bg-light">
+    <main class="admin-main">
+        <div class="header-panel">
+            <div class="logo">PLAY<span>GO</span> ADMIN</div>
+            <h1>Nueva Misión</h1>
+            <p>Registra un nuevo juego en los sectores de la plataforma.</p>
+        </div>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-playgo shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="../menu.php">
-                <span>🎮</span> Admin PlayGo
+        <div class="card-comando form-container">
+            <?php if($mensaje): ?>
+                <div class="msg-alerta success-space">✅ <?php echo $mensaje; ?></div>
+            <?php endif; ?>
+
+            <?php if($error): ?>
+                <div class="msg-alerta error-space">⚠️ <?php echo $error; ?></div>
+            <?php endif; ?>
+
+            <form method="POST">
+                <div class="form-group">
+                    <label class="form-label-space">Título del Juego</label>
+                    <input type="text" name="nombre" class="input-space" placeholder="Ej: Rompecabezas Lunar" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label-space">Nombre de Carpeta (Ruta)</label>
+                    <input type="text" name="ruta" class="input-space" placeholder="Ej: puzzle-lunar" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label-space">Público Objetivo</label>
+                    <select name="categoria" class="input-space" required>
+                        <option value="" selected disabled>Seleccionar sector...</option>
+                        <option value="ninos">🧸 Sector Infantil (Niños)</option>
+                        <option value="adultos">🧠 Sector Entrenamiento (Adultos)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-submit-space">Confirmar Inyección</button>
+            </form>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <a href="listar.php" class="btn-logout" style="border-color: #00d2ff; color: #00d2ff;">
+                ← Volver al Catálogo
             </a>
-            <div class="text-white small">
-                Gestión de Contenido
-            </div>
         </div>
-    </nav>
+    </main>
 
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6">
-
-                <div class="card shadow-sm border-0 rounded-4 animate-fade-in">
-                    <div class="card-body p-5">
-
-                        <div class="text-center mb-4">
-                            <div class="icon-circle bg-light-green mb-3"
-                                style="width: 65px; height: 65px; font-size: 1.8rem;">
-                                🕹️
-                            </div>
-                            <h2 class="fw-bold text-playgo">Nuevo Juego</h2>
-                            <p class="text-muted small">Añadir contenido al catálogo</p>
-                        </div>
-
-                        <?php if($mensaje): ?>
-                        <div class="alert alert-success d-flex align-items-center" role="alert">
-                            <span class="me-2">✅</span>
-                            <div><?php echo $mensaje; ?></div>
-                        </div>
-                        <?php endif; ?>
-
-                        <?php if($error): ?>
-                        <div class="alert alert-danger d-flex align-items-center" role="alert">
-                            <span class="me-2">⚠️</span>
-                            <div><?php echo $error; ?></div>
-                        </div>
-                        <?php endif; ?>
-
-                        <form method="POST">
-
-                            <div class="mb-3">
-                                <label class="form-label fw-bold small text-muted">TÍTULO DEL JUEGO</label>
-                                <input type="text" name="nombre" class="form-control form-control-lg"
-                                    placeholder="Ej: Memory Infantil" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-bold small text-muted">NOMBRE DE LA CARPETA (RUTA)</label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light">📂</span>
-                                    <input type="text" name="ruta" class="form-control form-control-lg"
-                                        placeholder="Ej: memory" required>
-                                </div>
-                                <div class="form-text small">
-                                    Nombre exacto de la carpeta en <em>/juegos/</em>
-                                </div>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label fw-bold small text-muted">PÚBLICO OBJETIVO</label>
-                                <select name="categoria" class="form-select form-select-lg" required>
-                                    <option value="" selected disabled>Selecciona categoría...</option>
-                                    <option value="ninos">🧸 Niños (Infantil)</option>
-                                    <option value="adultos">🧠 Adultos (Mayores)</option>
-                                </select>
-                            </div>
-
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-success btn-lg fw-bold"
-                                    style="background-color: #27ae60; border: none;">
-                                    Registrar Juego
-                                </button>
-                                <a href="listar.php" class="btn btn-outline-secondary">
-                                    Cancelar
-                                </a>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-
-                <div class="text-center mt-4">
-                    <a href="listar.php" class="text-decoration-none text-muted small">
-                        ← Volver al Catálogo de Juegos
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../chatbot/bot.js"></script>
 </body>
-
 </html>

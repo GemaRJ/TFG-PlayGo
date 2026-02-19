@@ -2,7 +2,6 @@
 require_once "../../configuracion/conexion.php";
 require_once "../../configuracion/sesiones.php";
 
-// [SEGURIDAD] Comprobación de sesión y rol de administrador
 comprobarSesion(); 
 
 if (!isset($_SESSION['tipo_usuario']) || $_SESSION['tipo_usuario'] !== 'administrador') {
@@ -10,10 +9,8 @@ if (!isset($_SESSION['tipo_usuario']) || $_SESSION['tipo_usuario'] !== 'administ
     exit;
 }
 
-// Filtro de búsqueda
 $filtro = isset($_GET['tipo']) ? mysqli_real_escape_string($conn, $_GET['tipo']) : '';
 
-// Consulta SQL con JOIN para obtener el nombre del usuario real
 $sql = "SELECT i.*, u.nombres as usuario_nombre 
         FROM incidencias i 
         LEFT JOIN usuario u ON i.usuario_id = u.usuario_id";
@@ -28,150 +25,129 @@ $res = mysqli_query($conn, $sql);
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión Integral de Tickets | PlayGo</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Radar de Soporte | PlayGo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/menu.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <style>
-    body {
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .table thead {
-        background-color: #2d3436;
-        color: white;
-    }
-
-    .badge-tipo {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        font-weight: bold;
-    }
-
-    .table-hover tbody tr:hover {
-        background-color: #f1f2f6;
-        transition: 0.3s;
-    }
+        .filtro-consola {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+        .input-space-select {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            outline: none;
+        }
+        .btn-filtro {
+            background: #00d2ff;
+            color: #0f172a;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .table-radar {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
+        .table-radar tr { background: rgba(255, 255, 255, 0.03); transition: 0.3s; }
+        .table-radar tr:hover { background: rgba(255, 255, 255, 0.08); }
+        .table-radar td, .table-radar th { padding: 15px; text-align: left; }
+        .badge-status { padding: 5px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; }
+        .pend { background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid #ffc107; }
+        .res { background: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid #28a745; }
     </style>
 </head>
-
-<body class="bg-light">
-    <div class="container my-5">
-
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="fw-bold mb-0">📩 Panel de Soporte Técnico</h2>
-                <p class="text-muted">Gestión de todas las solicitudes recibidas vía Chatbot.</p>
-            </div>
-            <a href="../menu.php" class="btn btn-dark btn-sm rounded-pill px-3">Volver al Panel</a>
+<body class="portal-galactico">
+    <main class="admin-main">
+        <div class="header-panel">
+            <div class="logo">PLAY<span>GO</span> SUPPORT</div>
+            <h1>Radar de Incidencias</h1>
+            <p>Comunicaciones recibidas desde los sectores de exploración.</p>
         </div>
 
-        <form method="GET" class="row g-3 mb-4 bg-white p-4 shadow-sm rounded-4 border">
-            <div class="col-md-8">
-                <label class="form-label fw-bold small text-muted">Filtrar por categoría de ticket:</label>
-                <select name="tipo" class="form-select border-2">
-                    <option value="">-- Ver todas las incidencias --</option>
+        <form method="GET" class="filtro-consola">
+            <div style="flex: 1;">
+                <label class="form-label-space">Filtrar Señales por Categoría</label>
+                <select name="tipo" class="input-space-select">
+                    <option value="">-- Ver todas las señales --</option>
                     <option value="queja" <?php if($filtro=='queja') echo 'selected'; ?>>😡 Queja General</option>
-                    <option value="sugerencia" <?php if($filtro=='sugerencia') echo 'selected'; ?>>💡 Sugerencia
-                    </option>
-                    <option value="error_alta_usuario" <?php if($filtro=='error_alta_usuario') echo 'selected'; ?>>👤
-                        Error Alta Usuario</option>
-                    <option value="solicitud_baja_usuario"
-                        <?php if($filtro=='solicitud_baja_usuario') echo 'selected'; ?>>📉 Solicitud de Baja</option>
-                    <option value="incidencia_juego" <?php if($filtro=='incidencia_juego') echo 'selected'; ?>>🕹️
-                        Incidencia en Juego</option>
-                    <option value="fallo_seguridad" <?php if($filtro=='fallo_seguridad') echo 'selected'; ?>>🛡️ Fallo
-                        de Seguridad</option>
-                    <option value="error_ranking" <?php if($filtro=='error_ranking') echo 'selected'; ?>>🏆 Error en
-                        Ranking</option>
+                    <option value="sugerencia" <?php if($filtro=='sugerencia') echo 'selected'; ?>>💡 Sugerencia</option>
+                    <option value="error_alta_usuario" <?php if($filtro=='error_alta_usuario') echo 'selected'; ?>>👤 Error Alta</option>
+                    <option value="incidencia_juego" <?php if($filtro=='incidencia_juego') echo 'selected'; ?>>🕹️ Juego</option>
                 </select>
             </div>
-            <div class="col-md-4 d-flex align-items-end gap-2">
-                <button type="submit" class="btn btn-primary w-100 fw-bold">Aplicar Filtro</button>
-                <a href="listar.php" class="btn btn-outline-secondary">Limpiar</a>
-            </div>
+            <button type="submit" class="btn-filtro">Sincronizar</button>
+            <a href="listar.php" class="btn-admin" style="width: auto; padding: 12px 20px;">Limpiar</a>
         </form>
 
-        <div class="table-responsive bg-white shadow-sm rounded-4 border overflow-hidden">
-            <table class="table table-hover align-middle mb-0">
+        <div class="card-comando" style="width: 100%; padding: 20px;">
+            <table class="table-radar">
                 <thead>
-                    <tr>
-                        <th class="ps-4">Fecha</th>
-                        <th>Categoría</th>
-                        <th>Usuario</th>
-                        <th>Asunto</th>
-                        <th>Estado</th>
-                        <th class="text-center">Acciones</th>
+                    <tr style="background: transparent; color: #00d2ff; font-size: 0.8rem;">
+                        <th>FECHA</th>
+                        <th>USUARIO</th>
+                        <th>ASUNTO</th>
+                        <th>ESTADO</th>
+                        <th style="text-align: center;">ACCIÓN</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if(mysqli_num_rows($res) > 0): ?>
                     <?php while($f = mysqli_fetch_assoc($res)): ?>
                     <tr>
-                        <td class="ps-4 small fw-bold">
-                            <?php echo date('d/m/Y', strtotime($f['fecha_reporte'])); ?>
-                        </td>
+                        <td style="font-size: 0.8rem; opacity: 0.7;"><?php echo date('d/m/Y', strtotime($f['fecha_reporte'])); ?></td>
+                        <td style="font-weight: 600;"><?php echo $f['usuario_nombre'] ? htmlspecialchars($f['usuario_nombre']) : 'Invitado'; ?></td>
+                        <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><?php echo htmlspecialchars($f['asunto']); ?></td>
                         <td>
-                            <span class="badge bg-light text-dark border badge-tipo">
-                                <?php echo str_replace('_', ' ', $f['tipo']); ?>
-                            </span>
-                        </td>
-                        <td>
-                            <span class="fw-bold text-dark">
-                                <?php echo $f['usuario_nombre'] ? htmlspecialchars($f['usuario_nombre']) : '<span class="text-muted opacity-50">Invitado</span>'; ?>
-                            </span>
-                        </td>
-                        <td class="text-truncate" style="max-width: 250px;">
-                            <?php echo htmlspecialchars($f['asunto']); ?>
-                        </td>
-                        <td>
-                            <span
-                                class="badge <?php echo $f['estado'] == 'pendiente' ? 'bg-warning text-dark' : 'bg-success'; ?> rounded-pill">
+                            <span class="badge-status <?php echo $f['estado'] == 'pendiente' ? 'pend' : 'res'; ?>">
                                 <?php echo strtoupper($f['estado']); ?>
                             </span>
                         </td>
-                        <td class="text-center pe-3">
-                            <div class="btn-group">
-                                <a href="gestion.php?id=<?php echo $f['id_incidencia']; ?>"
-                                    class="btn btn-sm btn-outline-dark px-3 fw-bold">
-                                    Gestionar
-                                </a>
-                                <button onclick="confirmarEliminar(<?php echo $f['id_incidencia']; ?>)"
-                                    class="btn btn-sm btn-danger">
-                                    🗑️
-                                </button>
-                            </div>
+                        <td style="text-align: center;">
+                            <a href="gestion.php?id=<?php echo $f['id_incidencia']; ?>" class="btn-admin" style="padding: 5px 15px; font-size: 0.7rem;">Gestionar</a>
+                            <button onclick="confirmarEliminar(<?php echo $f['id_incidencia']; ?>)" class="btn-admin" style="padding: 5px 10px; border-color: #ff4444; color: #ff4444;">🗑️</button>
                         </td>
                     </tr>
                     <?php endwhile; ?>
-                    <?php else: ?>
-                    <tr>
-                        <td colspan="6" class="text-center py-5 text-muted">
-                            <p class="mb-0 fs-5">No hay tickets registrados con estos criterios.</p>
-                        </td>
-                    </tr>
-                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
-    </div>
+
+        <div style="margin-top: 30px;">
+            <a href="../menu.php" class="btn-logout">← Volver al Panel</a>
+        </div>
+    </main>
 
     <script>
     function confirmarEliminar(id) {
         Swal.fire({
-            title: '¿Eliminar definitivamente?',
-            text: "Esta acción borrará el ticket de la base de datos.",
+            title: '¿Eliminar señal?',
+            text: "Esta acción borrará el ticket definitivamente.",
             icon: 'warning',
+            background: '#0f172a',
+            color: '#fff',
             showCancelButton: true,
-            confirmButtonColor: '#d33',
-            confirmButtonText: 'Sí, borrarlo',
-            cancelButtonText: 'Cancelar'
+            confirmButtonColor: '#ff4444',
+            confirmButtonText: 'Sí, borrarlo'
         }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = `procesar_incidencia.php?id=${id}&accion=eliminar`;
@@ -180,5 +156,4 @@ $res = mysqli_query($conn, $sql);
     }
     </script>
 </body>
-
 </html>

@@ -1,7 +1,6 @@
 <?php
 // UBICACIÓN: /playgo/administrador/usuarios/alta.php
 
-// 1. Configuración y Seguridad
 require_once "../../configuracion/sesiones.php";
 require_once "../../configuracion/conexion.php";
 comprobarAdmin(); 
@@ -15,17 +14,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $clave = password_hash($_POST['clave'], PASSWORD_DEFAULT);
     $tipo_usuario = $_POST['tipo_usuario']; 
 
-    // Comprobar duplicados
     $check = mysqli_query($conn, "SELECT * FROM usuario WHERE correo='$correo'");
     if(mysqli_num_rows($check) > 0){
-        $error = "Ese correo electrónico ya está registrado.";
+        $error = "Esa identidad ya existe en la base de datos.";
     } else {
-        // Insertar nuevo usuario
         $sql = "INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES ('$nombres','$correo','$clave','$tipo_usuario')";
         if(mysqli_query($conn, $sql)){
-            $mensaje = "Usuario registrado correctamente.";
+            $mensaje = "Nuevo recluta registrado en la tripulación.";
         } else {
-            $error = "Error técnico: " . mysqli_error($conn);
+            $error = "Fallo en la conexión: " . mysqli_error($conn);
         }
     }
 }
@@ -33,115 +30,139 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alta Usuario | PlayGo Admin</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Reclutamiento | PlayGo Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/menu.css">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .msg-alerta {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .success-space { background: rgba(0, 210, 255, 0.15); border: 1px solid #00d2ff; color: #00d2ff; }
+        .error-space { background: rgba(255, 68, 68, 0.15); border: 1px solid #ff4444; color: #ff4444; }
+
+        .form-group { margin-bottom: 20px; }
+        
+        .form-label-space {
+            display: block;
+            color: #00d2ff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-space {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Poppins';
+            transition: 0.3s;
+        }
+
+        .input-space:focus {
+            outline: none;
+            border-color: #00d2ff;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+        }
+
+        select.input-space option {
+            background: #0f172a;
+            color: white;
+        }
+
+        .btn-submit-space {
+            width: 100%;
+            padding: 15px;
+            background: #00d2ff;
+            color: #0f172a;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-submit-space:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 210, 255, 0.4);
+            background: #fff;
+        }
+    </style>
 </head>
+<body class="portal-galactico">
 
-<body class="bg-light">
+    <main class="admin-main">
+        <div class="header-panel">
+            <div class="logo">PLAY<span>GO</span> ADMIN</div>
+            <h1>Alta de Tripulación</h1>
+            <p>Registra manualmente nuevos accesos a la nave.</p>
+        </div>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-playgo shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="../menu.php">
-                <span>🎮</span> Admin PlayGo
+        <div class="card-comando form-container">
+            <?php if($mensaje): ?>
+                <div class="msg-alerta success-space">✔ <?php echo $mensaje; ?></div>
+            <?php endif; ?>
+
+            <?php if($error): ?>
+                <div class="msg-alerta error-space">⚠ <?php echo $error; ?></div>
+            <?php endif; ?>
+
+            <form method="POST">
+                <div class="form-group">
+                    <label class="form-label-space">Nombre del Recluta</label>
+                    <input type="text" name="nombres" class="input-space" placeholder="Nombre completo" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label-space">Identificador (Correo)</label>
+                    <input type="email" name="correo" class="input-space" placeholder="usuario@playgo.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label-space">Clave de Acceso</label>
+                    <input type="password" name="clave" class="input-space" placeholder="••••••••" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label-space">Rango de Usuario</label>
+                    <select name="tipo_usuario" class="input-space" required>
+                        <option value="" selected disabled>Selecciona rango...</option>
+                        <option value="nino">🧸 Explorador Infantil (Niño)</option>
+                        <option value="adulto">🧠 Explorador Senior (Adulto)</option>
+                        <option value="administrador">🛡️ Comandante (Admin)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-submit-space">Confirmar Registro</button>
+            </form>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <a href="listar.php" class="btn-logout" style="border-color: #00d2ff; color: #00d2ff;">
+                ← Volver al Listado
             </a>
-            <div class="text-white small">
-                Gestión de Usuarios
-            </div>
         </div>
-    </nav>
-
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6">
-
-                <div class="card shadow-sm border-0 rounded-4 animate-fade-in">
-                    <div class="card-body p-5">
-
-                        <div class="text-center mb-4">
-                            <div class="icon-circle bg-light-blue mb-3"
-                                style="width: 60px; height: 60px; font-size: 1.5rem;">
-                                👤
-                            </div>
-                            <h2 class="fw-bold text-playgo">Nuevo Usuario</h2>
-                            <p class="text-muted small">Registra un jugador o administrador manualmente</p>
-                        </div>
-
-                        <?php if($mensaje): ?>
-                        <div class="alert alert-success d-flex align-items-center" role="alert">
-                            <span class="me-2">✅</span>
-                            <div><?php echo $mensaje; ?></div>
-                        </div>
-                        <?php endif; ?>
-
-                        <?php if($error): ?>
-                        <div class="alert alert-danger d-flex align-items-center" role="alert">
-                            <span class="me-2">⚠️</span>
-                            <div><?php echo $error; ?></div>
-                        </div>
-                        <?php endif; ?>
-
-                        <form method="POST">
-
-                            <div class="mb-3">
-                                <label class="form-label fw-bold small text-muted">NOMBRE COMPLETO</label>
-                                <input type="text" name="nombres" class="form-control form-control-lg"
-                                    placeholder="Ej: Gema Rodríguez" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-bold small text-muted">CORREO ELECTRÓNICO</label>
-                                <input type="email" name="correo" class="form-control form-control-lg"
-                                    placeholder="usuario@playgo.com" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-bold small text-muted">CONTRASEÑA TEMPORAL</label>
-                                <input type="password" name="clave" class="form-control form-control-lg"
-                                    placeholder="••••••••" required>
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="form-label fw-bold small text-muted">TIPO DE PERFIL</label>
-                                <select name="tipo_usuario" class="form-select form-select-lg" required>
-                                    <option value="" selected disabled>Selecciona el rol...</option>
-                                    <option value="nino">🧸 Niño (Acceso Infantil)</option>
-                                    <option value="adulto">🧠 Adulto (Acceso General)</option>
-                                    <option value="administrador">🛡️ Administrador (Gestión)</option>
-                                </select>
-                            </div>
-
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary btn-lg fw-bold"
-                                    style="background-color: var(--playgo-blue); border: none;">
-                                    Guardar Usuario
-                                </button>
-                                <a href="listar.php" class="btn btn-outline-secondary">
-                                    Cancelar y Volver
-                                </a>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-
-                <div class="text-center mt-4">
-                    <a href="../menu.php" class="text-decoration-none text-muted small">
-                        ← Volver al Panel Principal
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
+    </main>
 
 </body>
-
 </html>

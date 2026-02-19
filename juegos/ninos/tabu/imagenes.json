@@ -1,0 +1,52 @@
+[
+    {
+        "palabra": "COCHE",
+        "prohibidas": ["Ruedas", "Carretera", "Volante", "Garaje"],
+        "imagen": "img/coche.jpg"
+    },
+    {
+        "palabra": "ELEFANTE",
+        "prohibidas": ["Trompa", "Orejas", "Grande", "Gris"],
+        "imagen": "img/elefante.jpg"
+    },
+    {
+        "palabra": "MANZANA",
+        "prohibidas": ["Roja", "Fruta", "Árbol", "Dulce"],
+        "imagen": "img/manzana.jpg"
+    },
+    {
+        "palabra": "PERRO",
+        "prohibidas": ["Ladrar", "Guau", "Mascota", "Hueso"],
+        "imagen": "img/perro.jpg"
+    },
+    {
+        "palabra": "BICICLETA",
+        "prohibidas": ["Pedales", "Casco", "Ruedas", "Montar"],
+        "imagen": "img/bicicleta.jpg"
+    },
+    {
+        "palabra": "PARQUE",
+        "prohibidas": ["Tobogán", "Columpio", "Jugar", "Calle"],
+        "imagen": "img/parque.jpg"
+    },
+    {
+        "palabra": "BARCO",
+        "prohibidas": ["Mar", "Agua", "Navegar", "Barca"],
+        "imagen": "img/barco.jpg"
+    },
+    {
+        "palabra": "PLÁTANO",
+        "prohibidas": ["Fruta", "Amarillo", "Mono", "Comida"],
+        "imagen": "img/platano.jpg"
+    },
+    {
+        "palabra": "CEPILLO DE DIENTES",
+        "prohibidas": ["Boca", "Lavar", "Pasta", "Limpiar"],
+        "imagen": "img/cepilloDientes.jpg"
+    },
+    {
+        "palabra": "PIZZA",
+        "prohibidas": ["Cena", "Queso", "Masa", "Caja"],
+        "imagen": "img/pizza.jpg"
+    }
+]
