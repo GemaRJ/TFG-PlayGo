@@ -21,6 +21,9 @@
   </head>
   <body>
     <div class="game-card text-center">
+      <button class="btn-tutorial-esquina" onclick="mostrarTutorialTresEnRaya()">
+        ❓ Instrucciones
+    </button>
       <h1 class="mb-4">3 en Raya con Emoji</h1>
 
       <div class="mb-4 text-start">
@@ -57,6 +60,39 @@
         ¡A Jugar! ▶
       </button>
     </div>
+
+    <div id="modalTutorialTresEnRaya" class="modal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="cerrarTutorialTresEnRaya()">✕</button>
+        <h2>📖 Cómo Jugar 3 en Raya</h2>
+        <div class="tutorial-content text-start">
+            <div class="tutorial-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Elige tu equipo</h3>
+                    <p>Selecciona si juegas solo contra el robot 🤖 o contra un amigo 👫.</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Escoge tu Emoji</h3>
+                    <p>Cada jugador elige su animal favorito. ¡Será tu ficha en el tablero!</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Tres en línea</h3>
+                    <p>Coloca tu emoji en los cuadros. ¡Gana quien consiga poner tres en raya antes!</p>
+                </div>
+            </div>
+        </div>
+        <button onclick="cerrarTutorialTresEnRaya()" class="tutorial-close-btn">
+            ¡ENTENDIDO! 🚀
+        </button>
+    </div>
+</div>
 
     <script src="./utils/menu.js"></script>
   </body>

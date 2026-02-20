@@ -7,7 +7,8 @@ $es_invitado = false;
 if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado') {
     // CASO 1: ES UN INVITADO
     $es_invitado = true;
-    if (!isset($_SESSION['nombre'])) $_SESSION['nombre'] = 'Explorador';
+    if (!isset($_SESSION['nombre']))
+        $_SESSION['nombre'] = 'Explorador';
 } else {
     // CASO 2: ES UN USUARIO REGISTRADO
     include_once "configuracion/sesiones.php";
@@ -22,11 +23,13 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zona de Juegos | PlayGo</title>
+    <title>🎮 Zona de Juegos | PlayGo</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/panel.css?v=<?php echo time(); ?>">
+    <link rel="icon" href="ruta-de-tu-icono.png" type="image/png">
 </head>
 
 <body>
@@ -66,62 +69,92 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
 
             <div class="list-group list-group-flush px-3">
                 <?php if ($_SESSION['tipo_usuario'] === 'adulto'): ?>
-                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center active" onclick="cargarJuego('juegos/adultos/trivial/index.html', this)">
+                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center active"
+                        onclick="cargarJuego('juegos/adultos/trivial/index.html', this)">
                         <span class="fs-3 p-2">🧠</span>
-                        <div><div class="fw-bold fs-6">Trivial</div><small>Conocimiento</small></div>
+                        <div>
+                            <div class="fw-bold fs-6">Trivial</div><small>Conocimiento</small>
+                        </div>
                     </button>
-                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center" onclick="cargarJuego('juegos/adultos/blackjack/index.html', this)">
+                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
+                        onclick="cargarJuego('juegos/adultos/blackjack/index.html', this)">
                         <span class="fs-3 p-2">♠️</span>
-                        <div><div class="fw-bold fs-6">Blackjack</div><small>Cartas</small></div>
+                        <div>
+                            <div class="fw-bold fs-6">Blackjack</div><small>Cartas</small>
+                        </div>
                     </button>
-                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center" onclick="cargarJuego('juegos/adultos/impostor/index.html', this)">
+                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
+                        onclick="cargarJuego('juegos/adultos/impostor/index.html', this)">
                         <span class="fs-3 p-2">🕵️</span>
-                        <div><div class="fw-bold fs-6">Impostor</div><small>Estrategia</small></div>
+                        <div>
+                            <div class="fw-bold fs-6">Impostor</div><small>Estrategia</small>
+                        </div>
                     </button>
-                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center" onclick="cargarJuego('juegos/adultos/tabu/index.html', this)">
+                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
+                        onclick="cargarJuego('juegos/adultos/tabu/index.html', this)">
                         <span class="fs-3 p-2">🚫</span>
-                        <div><div class="fw-bold fs-6">Tabú</div><small>Palabras</small></div>
+                        <div>
+                            <div class="fw-bold fs-6">Tabú</div><small>Palabras</small>
+                        </div>
                     </button>
 
                 <?php else: ?>
-                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center active" onclick="cargarJuego('juegos/ninos/cuenta_numeros/index.html', this)">
+                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center active"
+                        onclick="cargarJuego('juegos/ninos/cuenta_numeros/index.html', this)">
                         <span class="fs-3 p-2">🔢</span>
-                        <div><div class="fw-bold fs-6">Cuenta Números</div><small>Matemáticas</small></div>
+                        <div>
+                            <div class="fw-bold fs-6">Cuenta Números</div><small>Matemáticas</small>
+                        </div>
                     </button>
-                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center" onclick="cargarJuego('juegos/ninos/cuenta_letras/index.html', this)">
+                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
+                        onclick="cargarJuego('juegos/ninos/cuenta_letras/index.html', this)">
                         <span class="fs-3 p-2">🔤</span>
-                        <div><div class="fw-bold fs-6">Cuenta Letras</div><small>Vocabulario</small></div>
+                        <div>
+                            <div class="fw-bold fs-6">Cuenta Letras</div><small>Vocabulario</small>
+                        </div>
                     </button>
-                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center" onclick="cargarJuego('juegos/ninos/memory/index.html', this)">
+                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
+                        onclick="cargarJuego('juegos/ninos/memory/index.html', this)">
                         <span class="fs-3 p-2">🃏</span>
-                        <div><div class="fw-bold fs-6">Memory</div><small>Memoria</small></div>
+                        <div>
+                            <div class="fw-bold fs-6">Memory</div><small>Memoria</small>
+                        </div>
                     </button>
-                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center" onclick="cargarJuego('juegos/ninos/tres_raya/menu.html', this)">
+                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
+                        onclick="cargarJuego('juegos/ninos/tres_raya/menu.html', this)">
                         <span class="fs-3 p-2">❌</span>
-                        <div><div class="fw-bold fs-6">Tres en Raya</div><small>Clásico</small></div>
+                        <div>
+                            <div class="fw-bold fs-6">Tres en Raya</div><small>Clásico</small>
+                        </div>
                     </button>
-                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center" onclick="cargarJuego('juegos/ninos/trivial/index.html', this)">
+                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
+                        onclick="cargarJuego('juegos/ninos/trivial/index.html', this)">
                         <span class="fs-3 p-2">🎓</span>
-                        <div><div class="fw-bold fs-6">Trivial Kids</div><small>Preguntas</small></div>
+                        <div>
+                            <div class="fw-bold fs-6">Trivial Kids</div><small>Preguntas</small>
+                        </div>
                     </button>
-                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center" onclick="cargarJuego('juegos/ninos/tabu/index.html', this)">
+                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
+                        onclick="cargarJuego('juegos/ninos/tabu/index.html', this)">
                         <span class="fs-3 p-2">🙊</span>
-                        <div><div class="fw-bold fs-6">Tabú Kids</div><small>Adivina</small></div>
+                        <div>
+                            <div class="fw-bold fs-6">Tabú Kids</div><small>Adivina</small>
+                        </div>
                     </button>
                 <?php endif; ?>
             </div>
         </div>
 
         <div class="game-area">
-            
+
             <?php if ($es_invitado): ?>
-            <div class="alert alert-invitado d-flex align-items-center shadow-sm mb-3 rounded-3 py-2" role="alert">
-                <span class="fs-5 me-2">⚠️</span>
-                <div>
-                    <strong>Modo Invitado:</strong> Juegas sin guardar progreso. 
-                    <a href="autenticacion/registro.php" class="fw-bold">Regístrate aquí</a>.
+                <div class="alert alert-invitado d-flex align-items-center shadow-sm mb-3 rounded-3 py-2" role="alert">
+                    <span class="fs-5 me-2">⚠️</span>
+                    <div>
+                        <strong>Modo Invitado:</strong> Juegas sin guardar progreso.
+                        <a href="autenticacion/registro.php" class="fw-bold">Regístrate aquí</a>.
+                    </div>
                 </div>
-            </div>
             <?php endif; ?>
 
             <div class="game-card-container">
@@ -147,7 +180,9 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
 
     <script>
         /* LÓGICA JAVASCRIPT */
@@ -159,15 +194,15 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
             botonesMenu = document.querySelectorAll('.list-group-item');
         });
 
-       function cargarJuego(ruta, btn) {
-    if (iframeJuego) {
-        iframeJuego.src = ruta + '?t=' + new Date().getTime();
-    }
-    if (botonesMenu) {
-        botonesMenu.forEach(el => el.classList.remove('active'));
-    }
-    btn.classList.add('active');
-}
+        function cargarJuego(ruta, btn) {
+            if (iframeJuego) {
+                iframeJuego.src = ruta + '?t=' + new Date().getTime();
+            }
+            if (botonesMenu) {
+                botonesMenu.forEach(el => el.classList.remove('active'));
+            }
+            btn.classList.add('active');
+        }
 
         function pantallaCompleta() {
             if (!iframeJuego) return;
@@ -178,4 +213,5 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
     </script>
     <script src="chatbot/bot.js"></script>
 </body>
+
 </html>

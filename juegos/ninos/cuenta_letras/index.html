@@ -44,6 +44,9 @@
     <div class="glass-container">
       <!-- VISTA REGISTRO -->
       <div id="view-registro" class="game-view">
+        <button class="btn-tutorial-esquina" onclick="mostrarTutorialCompleta()">
+        ❓ Instrucciones
+    </button>
         <h1 class="main-title">
           APRENDE-COMPLETA <span class="badge-pro">PRO</span>
         </h1>
@@ -108,6 +111,47 @@
         </button>
       </div>
     </div>
+
+    <div id="modalTutorialCompleta" class="modal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="cerrarTutorialCompleta()">✕</button>
+        <h2 class="titulo-tutorial">📖 Cómo Jugar</h2>
+        <div class="tutorial-content">
+            <div class="tutorial-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Elige tu modo</h3>
+                    <p>Puedes jugar solo o con amigos. ¡Tú decides quién es el más rápido!</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Selecciona Categoría</h3>
+                    <p>Elige entre Imágenes, Series, Letras o Inglés para empezar tu ronda.</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Completa el hueco</h3>
+                    <p>Mira la pista y elige la letra o el número que falta para ganar puntos.</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>¡Cuidado con el fallo!</h3>
+                    <p>Si fallas, la pregunta valdrá menos puntos. ¡Acierta a la primera para el 10!</p>
+                </div>
+            </div>
+        </div>
+        <button onclick="cerrarTutorialCompleta()" class="tutorial-close-btn">
+            ¡A JUGAR! 🚀
+        </button>
+    </div>
+</div>
+
     <img
       src="./utils/imagenes/logo15.png"
       alt="Logo PlayGo"

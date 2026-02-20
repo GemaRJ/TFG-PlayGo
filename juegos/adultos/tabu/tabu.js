@@ -188,3 +188,12 @@ function shuffleArray(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
+
+// --- LÓGICA TUTORIAL ---
+function mostrarTutorialTabu() {
+    document.getElementById('modalTutorialTabu').classList.remove('hidden');
+}
+
+function cerrarTutorialTabu() {
+    document.getElementById('modalTutorialTabu').classList.add('hidden');
+}

@@ -303,4 +303,21 @@ function mostrarResultadoFinal() {
     });
 }
 
+    // FUNCIONES DEL TUTORIAL/INSTRUCCIONES
+function mostrarTutorialTrivialKids() {
+    const modal = document.getElementById('modalTutorialTrivialKids');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; 
+    }
+}
+
+function cerrarTutorialTrivialKids() {
+    const modal = document.getElementById('modalTutorialTrivialKids');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
 generarInputsNombres();

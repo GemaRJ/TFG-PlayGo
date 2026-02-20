@@ -188,3 +188,22 @@ function shuffleArray(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
+
+// --- FUNCIONES DEL TUTORIAL ---
+// --- FUNCIONES DEL TUTORIAL (ESPECÍFICO KIDS) ---
+function mostrarTutorialTabuKids() {
+    const modal = document.getElementById('modalTutorialTabuKids');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; 
+    }
+}
+
+function cerrarTutorialTabuKids() {
+    const modal = document.getElementById('modalTutorialTabuKids');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+

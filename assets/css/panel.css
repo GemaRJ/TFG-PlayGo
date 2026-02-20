@@ -166,11 +166,32 @@ iframe {
     flex-shrink: 0;
 }
 
-/* --- 7. RESPONSIVE (Móviles) --- */
+/* --- 7. RESPONSIVE (Móviles y Tablets) --- */
+
+/* Tablets - Ipads */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebar-area { width: 220px; }
+    .title-menu { font-size: 0.75rem; letter-spacing: 1px; }
+    .list-group-item .fw-bold { font-size: 0.85rem; }
+    .list-group-item small { font-size: 0.7rem; }
+}
+
+/* Pantallas Grandes (TV / Monitores 27"+) */
+@media (min-width: 1600px) {
+    .sidebar-area { width: 350px; }
+    .title-menu { font-size: 1.1rem; margin-top: 2.5rem; }
+    .list-group-item { padding: 15px 25px !important; margin-bottom: 10px; }
+    .list-group-item .fw-bold { font-size: 1.1rem; }
+    .list-group-item small { font-size: 0.9rem; }
+    .list-group-item span.fs-3 { font-size: 2.5rem !important; }
+    .game-area { padding: 40px; }
+}
+
+/* Móviles */
 @media (max-width: 768px) {
     body { height: auto; overflow: auto; } /* Permitir scroll en móvil */
     .main-layout { display: block; height: auto; padding-top: 70px; }
     .sidebar-area { width: 100%; height: auto; border-right: none; margin-bottom: 20px; }
     .game-area { height: auto; padding: 15px; }
-    .game-card-container { height: 500px; } /* Altura fija en móvil */
+    .game-card-container { height: 550px; } /* Altura fija en móvil un poco más generosa */
 }

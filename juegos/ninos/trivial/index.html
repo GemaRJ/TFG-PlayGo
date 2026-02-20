@@ -15,6 +15,9 @@
     <div class="contenedor-principal">
         
         <div id="pantalla-inicio" class="tarjeta-juego bounce-in">
+    <button class="btn-tutorial-esquina" onclick="mostrarTutorialTrivialKids()">
+        ❓ Instrucciones
+    </button>
             <header class="encabezado">
                 <h1>🦄 Trivial Kids 🍭</h1>
                 <p>¡Vamos a jugar!</p>
@@ -76,6 +79,46 @@
 
         </div>
     </div>
+
+    <div id="modalTutorialTrivialKids" class="modal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="cerrarTutorialTrivialKids()">✕</button>
+        <h2>📖 Cómo Jugar Trivial Kids</h2>
+        <div class="tutorial-content">
+            <div class="tutorial-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>¡Reúne a tus amigos!</h3>
+                    <p>Elige cuántos vais a jugar y escribe vuestros nombres mágicos.</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Atento al turno</h3>
+                    <p>Mira arriba para saber a quién le toca responder. ¡Cada uno tiene su turno!</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>¡Cuidado con el tiempo!</h3>
+                    <p>Tienes 20 segundos para elegir la respuesta correcta. ¡No te despistes!</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Gana Estrellas</h3>
+                    <p>Acierta preguntas para ganar estrellas ⭐. ¡Quien tenga más al final gana el trofeo!</p>
+                </div>
+            </div>
+        </div>
+        <button onclick="cerrarTutorialTrivialKids()" class="tutorial-close-btn">
+            ¡ENTENDIDO! 🚀
+        </button>
+    </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script.js"></script>

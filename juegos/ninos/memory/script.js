@@ -190,5 +190,22 @@ function volverAlInicio() {
     pantallaInicio.style.display = 'block';
 }
 
+// --- FUNCIONES DEL TUTORIAL (ESPECÍFICO MEMORY KIDS) ---
+function mostrarTutorialMemoryKids() {
+    const modal = document.getElementById('modalTutorialMemoryKids');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; 
+    }
+}
+
+function cerrarTutorialMemoryKids() {
+    const modal = document.getElementById('modalTutorialMemoryKids');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
 // Inicializar la primera vez
 generarInputsNombres();
