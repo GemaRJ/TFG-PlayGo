@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,49 +8,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css?v=MULTI_1">
 </head>
+
 <body>
 
     <div class="container">
-        
-        <div id="start-screen" class="pantalla activa">
+
+        <div id="start-screen" class="panel-central">
+            <button class="btn-tutorial-esquina" onclick="mostrarTutorialTabu()">
+                ❓ Instrucciones
+            </button>
             <h1>TABÚ 🤫</h1>
+
             <p>Añade los equipos que van a jugar</p>
-            
+
             <div class="team-setup">
                 <div class="input-group">
                     <input type="text" id="new-team-name" placeholder="Nombre del equipo..." autocomplete="off">
                     <button class="btn-add" onclick="agregarEquipo()">➕</button>
                 </div>
-                
+
                 <ul id="team-list" class="team-list">
-                    </ul>
+                </ul>
             </div>
 
             <button id="btn-start-game" class="btn-jugar disabled" onclick="iniciarPartidaMultijugador()">
                 👥 MÍNIMO 2 EQUIPOS
             </button>
-            
+
             <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.6;">Edición Multijugador</p>
         </div>
 
         <div id="turn-screen" class="card hidden" style="text-align: center;">
             <h2>TURNO DE:</h2>
-            <h1 id="next-team-name" style="font-size: 2.5rem; color: var(--neon-blue); margin: 20px 0; text-shadow: 0 0 15px var(--neon-blue);">EQUIPO 1</h1>
-            
+            <h1 id="next-team-name"
+                style="font-size: 2.5rem; color: var(--neon-blue); margin: 20px 0; text-shadow: 0 0 15px var(--neon-blue);">
+                EQUIPO 1</h1>
+
             <div class="score-summary">
                 <p>Puntuación total:</p>
-                <div id="current-team-score" style="font-size: 2rem; font-weight: bold; color: var(--neon-green);">0</div>
+                <div id="current-team-score" style="font-size: 2rem; font-weight: bold; color: var(--neon-green);">0
+                </div>
             </div>
 
             <p style="margin-top: 20px; color: #aaa;">Pásale el móvil al equipo...</p>
-            
+
             <button class="btn-jugar" onclick="comenzarRonda()">
                 🚀 EMPEZAR TIEMPO
             </button>
         </div>
 
         <div id="game-screen" class="card hidden">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: #aaa;">
+            <div
+                style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: #aaa;">
                 <span id="playing-team" style="color: var(--neon-blue); font-weight: bold;">Jugando: ???</span>
                 <span id="timer-text">60s</span>
             </div>
@@ -63,21 +73,67 @@
 
             <button class="btn-action btn-success" onclick="nextCard(true)">✅ ACERTADA</button>
             <button class="btn-action btn-skip" onclick="nextCard(false)">❌ TABÚ / PASO</button>
-            
+
             <div class="score-display">Puntos ronda: <span id="round-score">0</span></div>
         </div>
 
         <div id="end-screen" class="card hidden">
             <h1>🏆 CLASIFICACIÓN</h1>
-            
+
             <ul id="ranking-list" class="team-list">
-                </ul>
-            
+            </ul>
+
             <button class="btn-action btn-reset" onclick="location.reload()">🔄 Nueva Partida</button>
         </div>
 
     </div>
 
+    <!-- Modal de Instrucciones -->
+    <div id="modalTutorialTabu" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" onclick="cerrarTutorialTabu()">✕</button>
+            <h2>📖 Cómo Jugar Tabú</h2>
+            <div class="tutorial-content">
+                <div class="tutorial-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Organiza los Equipos</h3>
+                        <p>Añade los nombres de los equipos que van a competir. Se necesitan al menos 2 equipos.</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Describe la Palabra</h3>
+                        <p>Un miembro del equipo debe describir la palabra principal (azul) sin usar las palabras
+                            prohibidas (rojas).</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>¡Nada de Trampas!</h3>
+                        <p>Si dices una palabra prohibida o haces gestos no permitidos, el equipo contrario debe pulsar
+                            "TABÚ".</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Gana el Mejor</h3>
+                        <p>Cada acierto suma 1 punto. El equipo con más aciertos al final de todas las rondas será el
+                            ganador.</p>
+                    </div>
+                </div>
+            </div>
+            <button onclick="cerrarTutorialTabu()" class="tutorial-close-btn">
+                ¡ENTENDIDO! 🚀
+            </button>
+        </div>
+    </div>
+
+
     <script src="tabu.js"></script>
 </body>
+
 </html>

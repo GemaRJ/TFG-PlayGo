@@ -317,4 +317,22 @@ document.addEventListener("DOMContentLoaded", () => {
     Object.values(views).forEach((v) => v.classList.add("hidden"));
     views[vista].classList.remove("hidden");
   }
+
+  // --- FUNCIONES DEL TUTORIAL/INSTRUCCIONES---
+
+  window.mostrarTutorialCompleta = function() {
+    const modal = document.getElementById('modalTutorialCompleta');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; 
+    }
+  };
+
+  window.cerrarTutorialCompleta = function() {
+    const modal = document.getElementById('modalTutorialCompleta');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+  };
 });

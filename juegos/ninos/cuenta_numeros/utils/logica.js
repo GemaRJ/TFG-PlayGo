@@ -317,3 +317,23 @@ function confirmarSalida() {
     }
   });
 }
+
+// --- FUNCIONES DEL TUTORIAL (AÑADIDAS AL FINAL) ---
+
+function mostrarTutorialCuentaNumeros() {
+    const modal = document.getElementById('modalTutorialCuentaNumeros');
+    if (modal) {
+        modal.style.display = 'flex';
+        // Bloqueamos el scroll del fondo para que sea más profesional
+        document.body.style.overflow = 'hidden'; 
+    }
+}
+
+function cerrarTutorialCuentaNumeros() {
+    const modal = document.getElementById('modalTutorialCuentaNumeros');
+    if (modal) {
+        modal.style.display = 'none';
+        // Devolvemos el scroll
+        document.body.style.overflow = 'auto';
+    }
+}

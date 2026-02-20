@@ -10,7 +10,11 @@
     --text-color: #fff;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -33,19 +37,42 @@ body {
 }
 
 /* --- TARJETA CON EFECTO CRISTAL --- */
-.card, .pantalla {
+.panel-central {
     background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border);
     border-radius: 20px;
-    padding: 2rem; /* Ajustado ligeramente */
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-    position: relative;
-    overflow: visible; /* IMPORTANTE: Visible para que nada se corte */
-    animation: fadeIn 0.5s ease-out;
+    text-align: center;
     width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 85vh !important;
+    overflow-y: hidden !important;
+    /* Quitamos el scroll de la caja blanca */
+    /* Cambios clave aquí: */
+    position: relative;
+    padding-top: 70px;
+    /* Más espacio para que el botón no pise nada */
 }
+
+.pantalla {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
 
 h1 {
     font-family: 'Fira Code', monospace;
@@ -60,9 +87,9 @@ h2 {
     color: white;
 }
 
-p { 
-    font-size: 1rem; 
-    margin-bottom: 20px; 
+p {
+    font-size: 1rem;
+    margin-bottom: 20px;
     color: #ddd;
     line-height: 1.5;
 }
@@ -101,15 +128,16 @@ p {
 }
 
 .forbidden-item::before {
-    content: "⛔"; 
+    content: "⛔";
     margin-right: 10px;
     font-size: 1rem;
     filter: opacity(0.8);
 }
 
 /* --- BOTONES --- */
-.btn-action, .btn-jugar {
-    width: 100%;
+.btn-action,
+.btn-jugar {
+    width: max-content;
     padding: 15px;
     margin-bottom: 12px;
     border-radius: 50px;
@@ -135,7 +163,7 @@ p {
     box-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
 }
 
-.btn-success { 
+.btn-success {
     background: rgba(0, 255, 136, 0.15);
     color: var(--neon-green);
     border: 2px solid var(--neon-green);
@@ -146,9 +174,9 @@ p {
     color: #000;
 }
 
-.btn-skip { 
-    background: rgba(255, 71, 87, 0.15); 
-    color: var(--neon-red); 
+.btn-skip {
+    background: rgba(255, 71, 87, 0.15);
+    color: var(--neon-red);
     border: 2px solid var(--neon-red);
 }
 
@@ -157,10 +185,10 @@ p {
     color: white;
 }
 
-.btn-reset { 
+.btn-reset {
     background: transparent;
-    border: 1px solid rgba(255,255,255,0.3);
-    color: white; 
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
     margin-top: 20px;
 }
 
@@ -181,14 +209,16 @@ p {
     transition: width 1s linear;
 }
 
-.score-display { 
+.score-display {
     font-family: 'Fira Code', monospace;
-    font-size: 1.2rem; 
-    margin-top: 15px; 
+    font-size: 1.2rem;
+    margin-top: 15px;
     color: #ccc;
 }
 
-.hidden { display: none !important; }
+.hidden {
+    display: none !important;
+}
 
 /* =========================================
    NUEVOS ESTILOS MULTIJUGADOR
@@ -206,7 +236,7 @@ p {
     padding: 12px;
     border-radius: 50px;
     border: 2px solid var(--neon-green);
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.3);
     color: white;
     outline: none;
     font-family: 'Poppins', sans-serif;
@@ -218,7 +248,8 @@ p {
     border: none;
     border-radius: 50%;
     width: 46px;
-    height: 46px; /* Hacemos que sea un círculo perfecto */
+    height: 46px;
+    /* Hacemos que sea un círculo perfecto */
     font-size: 1.5rem;
     cursor: pointer;
     color: #004d2c;
@@ -240,7 +271,8 @@ p {
     padding: 0;
     margin-bottom: 20px;
     max-height: 250px;
-    overflow-y: auto; /* Scroll si hay muchos equipos */
+    overflow-y: auto;
+    /* Scroll si hay muchos equipos */
 }
 
 .team-item {
@@ -284,11 +316,131 @@ p {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 @media (max-width: 400px) {
-    h1 { font-size: 2rem; }
-    .card { padding: 1.5rem; }
+    h1 {
+        font-size: 2rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+}
+
+/* --- ESTILOS TUTORIAL / MODAL --- */
+.btn-tutorial-esquina {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 100;
+}
+
+.btn-tutorial-esquina:hover {
+    background: var(--neon-blue);
+    color: #000;
+    box-shadow: 0 0 10px var(--neon-blue);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    background: #1a1a2e;
+    border: 2px solid var(--neon-blue);
+    padding: 30px;
+    border-radius: 25px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 0 30px rgba(0, 184, 255, 0.2);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.tutorial-content {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.tutorial-step {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.step-number {
+    background: var(--neon-blue);
+    color: #000;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.step-content h3 {
+    font-size: 1rem;
+    color: var(--neon-green);
+    margin-bottom: 5px;
+}
+
+.step-content p {
+    font-size: 0.85rem;
+    margin: 0;
+    color: #ccc;
+}
+
+.tutorial-close-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 50px;
+    background: var(--neon-green);
+    border: none;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
 }

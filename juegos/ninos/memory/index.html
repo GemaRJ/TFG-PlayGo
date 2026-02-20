@@ -9,6 +9,9 @@
 <body>
 
     <div class="contenedor-juego" id="pantalla-inicio">
+        <button class="btn-tutorial-esquina" onclick="mostrarTutorialMemoryKids()">
+        ❓ Instrucciones
+    </button>
         <h1>🦄 MEMORY KIDS</h1>
         <h3>¿Quién va a jugar hoy?</h3>
 
@@ -42,6 +45,46 @@
             <button id="reiniciar-btn" onclick="volverAlInicio()">🏠 Volver al Inicio</button>
         </div>
     </div> 
+
+    <div id="modalTutorialMemoryKids" class="modal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="cerrarTutorialMemoryKids()">✕</button>
+        <h2>📖 Cómo Jugar Memory Kids</h2>
+        <div class="tutorial-content">
+            <div class="tutorial-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>¡Elige a tus amigos!</h3>
+                    <p>Selecciona cuántos amigos vais a jugar y escribe vuestros nombres.</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Busca la pareja</h3>
+                    <p>Pulsa una carta para ver qué animal tiene. ¡Luego busca su pareja igual!</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Sigue jugando</h3>
+                    <p>Si encuentras una pareja, ¡vuelves a jugar! Si fallas, le toca al siguiente amigo.</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>¡Gana el mejor!</h3>
+                    <p>Quien encuentre más parejas al final del juego será el ganador ⭐.</p>
+                </div>
+            </div>
+        </div>
+        <button onclick="cerrarTutorialMemoryKids()" class="tutorial-close-btn">
+            ¡ENTENDIDO! 🚀
+        </button>
+    </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script.js"></script>

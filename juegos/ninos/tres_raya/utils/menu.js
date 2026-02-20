@@ -55,3 +55,28 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "juego.html";
   }
 });
+
+// --- FUNCIONES DEL TUTORIAL/INSTRUCCIONES---
+function mostrarTutorialTresEnRaya() {
+    const modal = document.getElementById('modalTutorialTresEnRaya');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; 
+    }
+}
+
+function cerrarTutorialTresEnRaya() {
+    const modal = document.getElementById('modalTutorialTresEnRaya');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Salto automático la primera vez
+window.addEventListener('load', () => {
+    if (!localStorage.getItem('vistoTutorialTresEnRaya')) {
+        setTimeout(mostrarTutorialTresEnRaya, 500);
+        localStorage.setItem('vistoTutorialTresEnRaya', 'true');
+    }
+});

@@ -1,14 +1,18 @@
 /* UBICACIÓN: assets/css/index.css */
 
 /* --- 1. RESET Y BASE --- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-    background-color: #0f172a; 
+    background-color: #0f172a;
     background: radial-gradient(circle at center, #1e3a8a 0%, #0f172a 100%);
     font-family: 'Poppins', sans-serif;
     color: white;
-    min-height: 100vh; 
+    min-height: 100vh;
     position: relative;
     overflow-x: hidden;
 }
@@ -16,13 +20,15 @@ body {
 /* --- 2. FONDO DE ESTRELLAS --- */
 body::before {
     content: "";
-    position: fixed; 
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0));
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0, 0, 0, 0));
     background-repeat: repeat;
     background-size: 200px 200px;
     animation: stars-move 100s linear infinite;
@@ -32,16 +38,26 @@ body::before {
 }
 
 @keyframes stars-move {
-    from { transform: translateY(0); }
-    to { transform: translateY(-50%); }
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-50%);
+    }
 }
 
 /* --- 3. NAVEGACIÓN --- */
 .barra-navegacion {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 80px;
-    z-index: 1000; padding: 0 5%;
-    display: flex; align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 1000;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
     background: rgba(15, 23, 42, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -49,202 +65,617 @@ body::before {
 }
 
 .contenido-nav {
-    display: flex; justify-content: space-between; align-items: center; 
-    width: 100%; max-width: 1200px; margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.logo { font-size: 1.8rem; font-weight: 900; color: #fff; text-decoration: none; letter-spacing: 1px; }
-.logo span { color: #00d2ff; text-shadow: 0 0 10px #00d2ff; }
+.logo {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
 
-.menu-derecha { display: flex; align-items: center; gap: 20px; }
-.enlace-texto { color: #ccc; text-decoration: none; font-weight: 500; transition: 0.3s; }
-.enlace-texto:hover { color: #00d2ff; }
+.logo span {
+    color: #00d2ff;
+    text-shadow: 0 0 10px #00d2ff;
+}
+
+.menu-derecha {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.enlace-texto {
+    color: #ccc;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.enlace-texto:hover {
+    color: #00d2ff;
+}
 
 .boton-principal {
-    background: #00d2ff; color: #0f172a; padding: 8px 20px; border-radius: 20px;
-    text-decoration: none; font-weight: 700; box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
-    transition: 0.3s; white-space: nowrap;
+    background: #00d2ff;
+    color: #0f172a;
+    padding: 8px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 700;
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+    transition: 0.3s;
+    white-space: nowrap;
 }
-.boton-principal:hover { transform: scale(1.05); background: #33ddff; box-shadow: 0 0 25px rgba(0, 210, 255, 0.6); }
+
+.boton-principal:hover {
+    transform: scale(1.05);
+    background: #33ddff;
+    box-shadow: 0 0 25px rgba(0, 210, 255, 0.6);
+}
 
 /* --- 4. HERO SECTION --- */
 .hero-banner {
-    width: 100%; min-height: 60vh; 
-    display: flex; align-items: center; justify-content: center;
-    text-align: center; padding: 20px; padding-top: 120px; 
+    width: 100%;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    padding-top: 120px;
 }
 
-.hero-contenido { max-width: 800px; animation: fadeIn 1s ease-out; position: relative; z-index: 1; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.hero-contenido {
+    max-width: 800px;
+    animation: fadeIn 1s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 .hero-contenido h1 {
-    font-size: 3.5rem; margin-bottom: 15px; font-weight: 800; line-height: 1.2;
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    font-weight: 800;
+    line-height: 1.2;
     background: linear-gradient(to right, #fff, #00d2ff);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: white;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: white;
 }
-.hero-contenido p { font-size: 1.2rem; color: #aaa; margin-bottom: 30px; }
 
-.buscador { display: flex; justify-content: center; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-.buscador input {
-    padding: 15px 25px; width: 350px; border-radius: 50px;
-    background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white; outline: none; font-family: 'Poppins'; font-size: 1rem; transition: 0.3s;
+.hero-contenido p {
+    font-size: 1.2rem;
+    color: #aaa;
+    margin-bottom: 30px;
 }
-.buscador input::placeholder { color: #888; }
-.buscador input:focus { border-color: #00d2ff; box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
+
+.buscador {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.buscador input {
+    padding: 15px 25px;
+    width: 350px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    outline: none;
+    font-family: 'Poppins';
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.buscador input::placeholder {
+    color: #888;
+}
+
+.buscador input:focus {
+    border-color: #00d2ff;
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+}
 
 .boton-buscar {
-    padding: 15px 30px; border-radius: 50px; background: transparent; border: 2px solid #00d2ff;
-    color: #00d2ff; font-weight: 700; text-decoration: none; transition: 0.3s;
+    padding: 15px 30px;
+    border-radius: 50px;
+    background: transparent;
+    border: 2px solid #00d2ff;
+    color: #00d2ff;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.3s;
 }
-.boton-buscar:hover { background: #00d2ff; color: #000; box-shadow: 0 0 20px rgba(0, 210, 255, 0.4); }
+
+.boton-buscar:hover {
+    background: #00d2ff;
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+}
 
 /* --- 5. SECCIÓN PRINCIPAL --- */
-.seccion-principal { max-width: 1200px; margin: 0 auto; padding: 50px 20px; position: relative; z-index: 1; }
-
-.titulo-seccion { text-align: center; font-size: 2rem; margin-bottom: 40px; color: white; position: relative; }
-.titulo-seccion::after {
-    content: ''; display: block; width: 50px; height: 3px; 
-    background: #00d2ff; margin: 10px auto 0; border-radius: 2px;
+.seccion-principal {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px;
+    position: relative;
+    z-index: 1;
 }
 
-.alert { padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center; }
-.alert.error { background: rgba(255, 0, 0, 0.2); border: 1px solid #ff4444; color: #ffcccc; }
-.mensaje-vacio { text-align: center; color: #888; grid-column: 1 / -1; }
+.titulo-seccion {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: white;
+    position: relative;
+}
+
+.titulo-seccion::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: #00d2ff;
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.alert.error {
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid #ff4444;
+    color: #ffcccc;
+}
+
+.mensaje-vacio {
+    text-align: center;
+    color: #888;
+    grid-column: 1 / -1;
+}
 
 /* --- 6. CONTENEDOR DE OPCIONES (SPLIT PORTALS) --- */
 .contenedor-opciones {
     display: flex;
     gap: 30px;
-    height: 450px; 
+    height: 450px;
     margin-bottom: 40px;
 }
 
 .tarjeta-portal {
-    flex: 1; 
+    flex: 1;
     position: relative;
     border-radius: 30px;
-    overflow: hidden; 
-    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     text-decoration: none;
     transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Animación Hover Tarjetas */
-.contenedor-opciones:hover .tarjeta-portal { flex: 0.8; opacity: 0.7; filter: blur(2px); }
-.contenedor-opciones .tarjeta-portal:hover { flex: 1.5; opacity: 1; filter: blur(0); transform: scale(1.02); z-index: 10; border-color: white; }
+.contenedor-opciones:hover .tarjeta-portal {
+    flex: 0.8;
+    opacity: 0.7;
+    filter: blur(2px);
+}
+
+.contenedor-opciones .tarjeta-portal:hover {
+    flex: 1.5;
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1.02);
+    z-index: 10;
+    border-color: white;
+}
 
 /* Estilos Kids/Adults */
-.kids { background: linear-gradient(135deg, rgba(255, 170, 0, 0.1), rgba(0,0,0,0.8)); }
-.adults { background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(0,0,0,0.8)); }
+.kids {
+    background: linear-gradient(135deg, rgba(255, 170, 0, 0.1), rgba(0, 0, 0, 0.8));
+}
 
-.kids:hover { box-shadow: 0 0 50px rgba(255, 170, 0, 0.3); border-color: #ffaa00; }
-.adults:hover { box-shadow: 0 0 50px rgba(0, 210, 255, 0.3); border-color: #00d2ff; }
+.adults {
+    background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(0, 0, 0, 0.8));
+}
+
+.kids:hover {
+    box-shadow: 0 0 50px rgba(255, 170, 0, 0.3);
+    border-color: #ffaa00;
+}
+
+.adults:hover {
+    box-shadow: 0 0 50px rgba(0, 210, 255, 0.3);
+    border-color: #00d2ff;
+}
 
 /* Contenido Interno */
-.contenido-portal { position: relative; z-index: 2; padding: 20px; color: white; pointer-events: none; /* Para que el clic vaya a la tarjeta */ }
-.icono-flotante svg { width: 80px; height: 80px; margin-bottom: 20px; transition: 0.5s; }
+.contenido-portal {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    color: white;
+    pointer-events: none;
+    /* Para que el clic vaya a la tarjeta */
+}
 
-.kids .icono-flotante svg { color: #ffaa00; }
-.adults .icono-flotante svg { color: #00d2ff; }
+.icono-flotante svg {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    transition: 0.5s;
+}
 
-.tarjeta-portal:hover .icono-flotante svg { transform: scale(1.2) rotate(-10deg); filter: drop-shadow(0 0 15px currentColor); }
+.kids .icono-flotante svg {
+    color: #ffaa00;
+}
 
-.tarjeta-portal h2 { font-size: 2rem; font-weight: 900; margin-bottom: 10px; letter-spacing: 2px; }
-.tarjeta-portal p { font-size: 1rem; color: #ddd; margin-bottom: 30px; max-width: 300px; margin-left: auto; margin-right: auto; }
+.adults .icono-flotante svg {
+    color: #00d2ff;
+}
+
+.tarjeta-portal:hover .icono-flotante svg {
+    transform: scale(1.2) rotate(-10deg);
+    filter: drop-shadow(0 0 15px currentColor);
+}
+
+.tarjeta-portal h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.tarjeta-portal p {
+    font-size: 1rem;
+    color: #ddd;
+    margin-bottom: 30px;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .btn-accion {
-    display: inline-block; padding: 12px 30px; border-radius: 50px;
-    font-weight: 700; background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,0.3); transition: 0.3s; pointer-events: auto;
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: 0.3s;
+    pointer-events: auto;
 }
-.tarjeta-portal:hover .btn-accion { background: white; color: black; transform: translateY(-5px); }
+
+.tarjeta-portal:hover .btn-accion {
+    background: white;
+    color: black;
+    transform: translateY(-5px);
+}
 
 /* --- 7. BURBUJAS FLOTANTES (TAMAÑOS MEJORADOS) --- */
 .game-bubble {
     position: absolute;
-    width: 100px; height: 100px; 
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     overflow: hidden;
     background: #000;
-    border: 3px solid rgba(255, 255, 255, 0.4); 
-    box-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 15px rgba(255, 255, 255, 0.1);
+    border: 3px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 255, 255, 0.1);
     z-index: 5;
     animation: flotar 6s ease-in-out infinite;
-    display: flex; justify-content: center; align-items: center;
-    transition: all 0.4s ease; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s ease;
 }
 
 /* Efecto lupa al pasar el ratón por la tarjeta */
 .tarjeta-portal:hover .game-bubble {
-    transform: scale(1.2); 
+    transform: scale(1.2);
     border-color: #fff;
     box-shadow: 0 0 30px currentColor;
 }
 
 .game-bubble img {
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     opacity: 0.9;
     transition: 0.3s;
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
 
 /* --- TAMAÑOS PERSONALIZADOS (Aún más grandes) --- */
 /* Sector Niños */
-.b-kids-1 { width: 120px; height: 120px; animation-delay: 0s; }
-.b-kids-2 { width: 100px; height: 100px; animation-delay: 1s; }
-.b-kids-3 { width: 110px; height: 110px; animation-delay: 2s; }
+.b-kids-1 {
+    width: 120px;
+    height: 120px;
+    animation-delay: 0s;
+}
+
+.b-kids-2 {
+    width: 100px;
+    height: 100px;
+    animation-delay: 1s;
+}
+
+.b-kids-3 {
+    width: 110px;
+    height: 110px;
+    animation-delay: 2s;
+}
 
 /* Sector Adultos */
-.b-adults-1 { width: 130px; height: 130px; animation-delay: 0.5s; }
-.b-adults-2 { width: 115px; height: 115px; animation-delay: 1.5s; }
-.b-adults-3 { width: 125px; height: 125px; animation-delay: 2.5s; }
+.b-adults-1 {
+    width: 130px;
+    height: 130px;
+    animation-delay: 0.5s;
+}
+
+.b-adults-2 {
+    width: 115px;
+    height: 115px;
+    animation-delay: 1.5s;
+}
+
+.b-adults-3 {
+    width: 125px;
+    height: 125px;
+    animation-delay: 2.5s;
+}
 
 /* Colores Específicos Burbujas */
-.kids .game-bubble { border-color: rgba(255, 170, 0, 0.3); box-shadow: 0 0 15px rgba(255, 170, 0, 0.2); }
-.adults .game-bubble { border-color: rgba(0, 210, 255, 0.3); box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
+.kids .game-bubble {
+    border-color: rgba(255, 170, 0, 0.3);
+    box-shadow: 0 0 15px rgba(255, 170, 0, 0.2);
+}
+
+.adults .game-bubble {
+    border-color: rgba(0, 210, 255, 0.3);
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+}
 
 /* Tamaños variados */
-.b-kids-1 { width: 80px; height: 80px; animation-delay: 0s; }
-.b-kids-2 { width: 60px; height: 60px; animation-delay: 1s; }
-.b-kids-3 { width: 70px; height: 70px; animation-delay: 2s; }
+.b-kids-1 {
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
 
-.b-adults-1 { width: 90px; height: 90px; animation-delay: 0.5s; }
-.b-adults-2 { width: 65px; height: 65px; animation-delay: 1.5s; }
-.b-adults-3 { width: 75px; height: 75px; animation-delay: 2.5s; }
+.b-kids-2 {
+    width: 60px;
+    height: 60px;
+    animation-delay: 1s;
+}
+
+.b-kids-3 {
+    width: 70px;
+    height: 70px;
+    animation-delay: 2s;
+}
+
+.b-adults-1 {
+    width: 90px;
+    height: 90px;
+    animation-delay: 0.5s;
+}
+
+.b-adults-2 {
+    width: 65px;
+    height: 65px;
+    animation-delay: 1.5s;
+}
+
+.b-adults-3 {
+    width: 75px;
+    height: 75px;
+    animation-delay: 2.5s;
+}
 
 /* --- 8. ZONA INVITADO Y FOOTER --- */
-.zona-invitado { text-align: center; margin-top: 50px; animation: fadeIn 2s; }
-.zona-invitado p { color: #888; margin-bottom: 15px; }
+.zona-invitado {
+    text-align: center;
+    margin-top: 50px;
+    animation: fadeIn 2s;
+}
+
+.zona-invitado p {
+    color: #888;
+    margin-bottom: 15px;
+}
 
 .btn-invitado {
-    display: inline-block; padding: 15px 40px;
-    background: transparent; border: 2px dashed #555;
-    color: #aaa; text-decoration: none; border-radius: 15px;
-    font-weight: 600; transition: 0.3s;
+    display: inline-block;
+    padding: 15px 40px;
+    background: transparent;
+    border: 2px dashed #555;
+    color: #aaa;
+    text-decoration: none;
+    border-radius: 15px;
+    font-weight: 600;
+    transition: 0.3s;
 }
+
 .btn-invitado:hover {
-    border-color: #00d2ff; color: #00d2ff; background: rgba(0, 210, 255, 0.05);
+    border-color: #00d2ff;
+    color: #00d2ff;
+    background: rgba(0, 210, 255, 0.05);
 }
 
 .pie-pagina {
-    margin-top: 80px; padding: 40px 20px;
+    margin-top: 80px;
+    padding: 40px 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(0, 0, 0, 0.3); text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    text-align: center;
 }
-.logo-footer { font-weight: 900; font-size: 1.2rem; color: #fff; margin-bottom: 10px; }
-.contenido-footer p { font-size: 0.9rem; color: #666; }
 
-/* Responsive */
+.logo-footer {
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.contenido-footer p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* --- 9. RESPONSIVE EXTRA --- */
+
+/* Pantallas Grandes (TV / Monitores 27"+) */
+@media (min-width: 1600px) {
+
+    .contenido-nav,
+    .hero-contenido,
+    .seccion-principal {
+        max-width: 1600px;
+    }
+
+    .hero-contenido h1 {
+        font-size: 5rem;
+    }
+
+    .hero-contenido p {
+        font-size: 1.8rem;
+    }
+
+    .buscador input {
+        width: 600px;
+        padding: 25px 40px;
+        font-size: 1.2rem;
+    }
+
+    .boton-buscar {
+        padding: 25px 50px;
+        font-size: 1.2rem;
+    }
+
+    .contenedor-opciones {
+        height: 650px;
+        gap: 60px;
+    }
+
+    .tarjeta-portal h2 {
+        font-size: 3rem;
+    }
+
+    .tarjeta-portal p {
+        font-size: 1.4rem;
+        max-width: 500px;
+    }
+
+    .game-bubble {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+/* Tablets e Ipads */
+@media (min-width: 769px) and (max-width: 1200px) {
+    .contenedor-opciones {
+        gap: 15px;
+        height: 380px;
+    }
+
+    .hero-contenido h1 {
+        font-size: 3rem;
+    }
+
+    .tarjeta-portal h2 {
+        font-size: 1.6rem;
+    }
+
+    .game-bubble {
+        width: 60px;
+        height: 60px;
+    }
+
+    .b-kids-1,
+    .b-adults-1 {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* Móviles */
 @media (max-width: 768px) {
-    .contenedor-opciones { flex-direction: column; height: auto; }
-    .tarjeta-portal { height: 250px; width: 100%; margin-bottom: 20px; }
-    .hero-banner { padding-top: 150px; }
-    .hero-contenido h1 { font-size: 2.5rem; }
-    
-    /* En móvil las burbujas pueden molestar, las dejamos ocultass o las hacemos pequeñas? */
-    .game-bubble { display: none; } 
+    .contenedor-opciones {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .tarjeta-portal {
+        height: 280px;
+        width: 100%;
+        margin-bottom: 20px;
+        border-radius: 20px;
+    }
+
+    .hero-banner {
+        padding-top: 150px;
+        min-height: auto;
+    }
+
+    .hero-contenido h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-contenido p {
+        font-size: 1rem;
+    }
+
+    .buscador input {
+        width: 100%;
+        border-radius: 15px;
+    }
+
+    .boton-buscar {
+        width: 100%;
+        border-radius: 15px;
+        text-align: center;
+    }
+
+    .game-bubble {
+        display: none;
+    }
+
+    .icono-flotante svg {
+        width: 60px;
+        height: 60px;
+    }
 }

@@ -17,6 +17,9 @@
   <body>
     <section id="vista-setup" class="pantalla activa">
       <div class="panel-central panel-setup">
+        <button class="btn-tutorial-esquina" onclick="mostrarTutorialCuentaNumeros()">
+            ❓ Instrucciones
+        </button>
         <h1>¡Bienvenidos a Contar y Aprenderás! 👋</h1>
         <p>¿Cuántos van a jugar?</p>
         <div class="control-jugadores">
@@ -117,6 +120,46 @@
         </button>
       </div>
     </section>
+
+    <div id="modalTutorialCuentaNumeros" class="modal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="cerrarTutorialCuentaNumeros()">✕</button>
+        <h2>📖 Cómo Jugar</h2>
+        <div class="tutorial-content">
+            <div class="tutorial-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>¡Elige tu reto!</h3>
+                    <p>Puedes elegir entre contar frutas ricas 🍎, sumar números ➕ o restar ➖.</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Usa el teclado</h3>
+                    <p>Mira bien la pantalla y escribe la respuesta usando los botones de números.</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>¡Dale al check!</h3>
+                    <p>Cuando tengas el número, pulsa el botón verde ✅ para ver si has acertado.</p>
+                </div>
+            </div>
+            <div class="tutorial-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Gana Estrellas</h3>
+                    <p>Cada acierto te da 10 estrellas ⭐. ¡Consigue todas las que puedas en 5 rondas!</p>
+                </div>
+            </div>
+        </div>
+        <button onclick="cerrarTutorialCuentaNumeros()" class="tutorial-close-btn">
+            ¡ENTENDIDO! 🚀
+        </button>
+    </div>
+</div>
 
     <script src="utils/logica.js"></script>
   </body>
