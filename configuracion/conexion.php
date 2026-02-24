@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "", "playgo");
+$conn = mysqli_connect("localhost", "root", "root", "playgo");
 
 if (!$conn) {
     die("Error de conexion: " . mysqli_connect_error());

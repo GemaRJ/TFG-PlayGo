@@ -1,267 +1,4 @@
-/* 
-   1. VARIABLES Y CONFIGURACIÓN BASE
-    */
-:root {
-  --primary: #4a90e2;
-  --success: #43a047;
-  --danger: #e53935;
-  --warning: #ffb300;
-  --text: #2c3e50;
-  --bg-body: #f0f4f8;
-  --shadow-light: #cbd5e0;
-  --shadow-primary: #3182ce;
-  --font-main: 'Fredoka', sans-serif;
-}
-
-/* Reset Global Cartoon */
-* {
-  font-family: var(--font-main) !important;
-  box-sizing: border-box;
-}
-
-body {
-  min-height: 100vh;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  background-color: var(--bg-body);
-  transition: background 1s ease;
-}
-
-/* 
-   2. TIPOGRAFÍA Y ESTILOS "STICKER 3D"
-  */
-
-/* Estilos compartidos de texto (Negrita, Mayúsculas) */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-button,
-label,
-.stat-pill,
-.btn-opc,
-.swal2-title,
-.swal2-confirm {
-  font-weight: 900 !important;
-  text-transform: uppercase;
-  letter-spacing: -0.5px;
-}
-
-/* Efecto Pegatina GRANDE (Títulos y Palabra Juego) */
-h1,
-h2,
-h3,
-.palabra-render {
-  color: var(--primary);
-  margin-bottom: 20px;
-  text-shadow:
-    3px 3px 0 #fff, -3px 3px 0 #fff, 3px -3px 0 #fff, -3px -3px 0 #fff,
-    /* Borde Blanco */
-    5px 5px 0 rgba(0, 0, 0, 0.15);
-  /* Sombra 3D */
-}
-
-/* Efecto Pegatina MEDIANO (Botones y Opciones) */
-.btn-opc,
-.menu-btn,
-label {
-  text-shadow:
-    2px 2px 0 #fff, -2px 2px 0 #fff, 2px -2px 0 #fff, -2px -2px 0 #fff;
-}
-
-/* --- INPUTS Y FORMULARIOS (CORREGIDO) --- */
-
-/* Input Pequeño (Número de jugadores) -> Este SÍ lleva borde */
-input.form-control {
-  font-weight: 800 !important;
-  color: var(--primary) !important;
-  font-size: 1.3rem !important;
-  text-align: center;
-  background: #f8fafc;
-  border: 3px solid #cbd5e0 !important;
-  border-radius: 15px !important;
-  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.05);
-}
-
-/* Input Grande (Nombre Jugador) -> TRANSPARENTE para integrarse en la píldora blanca */
-input.custom-input {
-  border: none !important;
-  background: transparent !important;
-  outline: none !important;
-  width: 100%;
-  font-weight: 800 !important;
-  color: var(--primary) !important;
-  font-size: 1.3rem !important;
-  text-align: center;
-}
-
-input.custom-input::placeholder {
-  color: #cbd5e0;
-}
-
-/* 
-   3. FONDOS ANIMADOS
-  */
-
-@keyframes movimientoInfinito {
-  from {
-    background-position: 0 0;
-  }
-
-  to {
-    background-position: 1000px 1000px;
-  }
-}
-
-@keyframes colorMenu {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-repeat: repeat;
-  transition: opacity 0.5s ease;
-  animation: movimientoInfinito 100s linear infinite;
-}
-
-/*  MENÚ */
-body.fondo-menu {
-  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
-  background-size: 400% 400%;
-  animation: colorMenu 15s ease infinite;
-}
-
-body.fondo-menu::before {
-  background-image: url("imagenes/fondo_pradera.png");
-  background-size: 500px;
-  opacity: 0.6;
-  z-index: 0;
-}
-
-/*  NUBES */
-body.fondo-nubes {
-  background: linear-gradient(to bottom, #89f7fe 0%, #66a6ff 100%);
-}
-
-body.fondo-nubes::before {
-  background-image: url("imagenes/fondo_nubes.png");
-  background-size: 500px;
-  opacity: 0.4;
-  animation-duration: 80s;
-}
-
-/*  ESPACIO */
-body.fondo-espacio {
-  background: radial-gradient(circle at bottom, #1B2735 0%, #090A0F 100%);
-}
-
-body.fondo-espacio::before {
-  background-image: url("imagenes/fondo_espacio.png");
-  background-size: 600px;
-  opacity: 0.5;
-  animation-duration: 120s;
-}
-
-/*  PLAYA */
-body.fondo-playa {
-  background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);
-}
-
-body.fondo-playa::before {
-  background-image: url("imagenes/fondo_playa.png");
-  background-size: 550px;
-  opacity: 0.3;
-  animation-duration: 90s;
-}
-
-/*  INGLÉS */
-body.fondo-ing {
-  background: #e6e2d3;
-}
-
-body.fondo-ing::before {
-  background-image: url("imagenes/fondo_ingles.png");
-  background-size: 500px;
-  opacity: 0.4;
-}
-
-/* 
-   4. UI DEL JUEGO (ADAPTABLE / RESPONSIVE)
- */
-
-.glass-container {
-  background: white;
-  border-radius: 40px;
-  padding: 40px;
-  width: 95%;
-
-  /* ESTÁNDAR: Ancho máximo para tablets y portátiles pequeños */
-  max-width: 1200px;
-
-  box-shadow: 0 20px 0 var(--shadow-light), 0 30px 60px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  position: relative;
-  z-index: 10;
-  transition: max-width 0.3s ease;
-}
-
-/* 🖥️ PANTALLAS GRANDES: Si hay espacio, ampliamos para las SERIES */
-@media (min-width: 1400px) {
-  .glass-container {
-    max-width: 1500px;
-    /* Más espacio horizontal para huecos largos */
-  }
-}
-
-/* Títulos y Badges */
-.main-title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  line-height: 1.2;
-}
-
-.badge-pro {
-  background: var(--warning);
-  padding: 4px 12px;
-  border-radius: 10px;
-  font-size: 0.4em;
-  vertical-align: middle;
-  box-shadow: 0 4px 0 #B7791F;
-  transform: rotate(-10deg) translateY(-5px);
-  display: inline-block;
-}
-
-/* Game Viewport */
-.game-viewport {
-  min-height: 320px;
-  background: #f8fafc;
-  border: 4px dashed #cbd5e0;
-  border-radius: 30px;
-  margin: 25px 0;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+/* --- ESTILOS ESPECÍFICOS DE CUENTA LETRAS --- */
 
 .pista-emoji {
   font-size: 6rem;
@@ -272,10 +9,12 @@ body.fondo-ing::before {
 .palabra-render {
   font-size: 4rem;
   letter-spacing: 12px;
-  color: var(--success);
+  color: var(--primary);
+  font-family: var(--font-title);
+  margin: 20px 0;
+  text-shadow: 2px 2px 0 var(--white), 4px 4px 0 rgba(0, 0, 0, 0.1);
 }
 
-/* Huecos */
 .hueco {
   display: inline-block;
   min-width: 45px;
@@ -286,190 +25,119 @@ body.fondo-ing::before {
 }
 
 .hueco-largo {
-  min-width: 220px;
+  min-width: 200px;
 }
 
-/* Botones Opciones */
 .options-layout {
   display: flex;
   justify-content: center;
   gap: 15px;
   flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .btn-opc {
   min-width: 80px;
   height: 80px;
-  padding: 0 25px;
-  background: white;
+  background: var(--white);
   border: 4px solid var(--primary);
   border-radius: 20px;
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-size: 2.5rem;
+  font-family: var(--font-title);
   color: var(--primary);
-  box-shadow: 0 8px 0 var(--shadow-primary);
+  box-shadow: 0 8px 0 var(--primary-light);
+  cursor: pointer;
   transition: 0.1s;
 }
 
 .btn-opc:active {
   transform: translateY(4px);
-  box-shadow: 0 4px 0 var(--shadow-primary);
+  box-shadow: none;
 }
 
-/* Marcadores */
-.stat-pill {
-  background: white;
-  border: 3px solid #e2e8f0;
-  padding: 10px 20px;
-  border-radius: 20px;
-  box-shadow: 0 6px 0 var(--shadow-light);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 1.1rem;
-}
-
-.stat-pill.highlight {
-  border-color: var(--primary);
-  background: var(--primary);
-  color: white;
-  transform: scale(1.05);
-  box-shadow: 0 6px 0 var(--shadow-primary);
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
-}
-
-/* 
-   5. MENÚS, MODOS Y UTILIDADES
-   */
-
-/* Overlay Menú */
+/* Modos de Juego Overlay */
 .menu-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
+  background: var(--bg-overlay);
+  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 20;
-  border-radius: 36px;
+  border-radius: 25px;
 }
 
-/* Título Menú (Azul para que se vea sobre oscuro) */
-.menu-content h2 {
-  color: var(--primary) !important;
-  font-size: clamp(1.8rem, 4vw, 2.5rem) !important;
-  text-shadow: 3px 3px 0 #fff, -3px 3px 0 #fff, 3px -3px 0 #fff, -3px -3px 0 #fff, 5px 5px 0 rgba(0, 0, 0, 0.2) !important;
+.menu-content {
+  width: 90%;
+  max-width: 500px;
 }
 
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
+  margin-top: 20px;
 }
 
 .menu-btn {
-  padding: 15px;
+  padding: 20px;
   border-radius: 20px;
-  border: 4px solid white;
-  background: white;
-  box-shadow: 0 8px 0 var(--shadow-light);
+  border: none;
+  background: var(--white);
+  font-size: 1.2rem;
+  font-family: var(--font-title);
+  cursor: pointer;
+  box-shadow: 0 6px 0 var(--shadow-soft);
   transition: 0.2s;
-  color: var(--primary);
-  border-color: var(--primary);
 }
 
 .menu-btn:active {
-  transform: translateY(4px);
-  box-shadow: 0 4px 0 var(--shadow-light);
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.btn-img {
+  color: #ff6b6b;
 }
 
 .btn-ser {
-  color: #b7791f;
-  border-color: var(--warning);
+  color: #feca57;
 }
 
 .btn-let {
-  color: var(--success);
-  border-color: var(--success);
+  color: #48dbfb;
 }
 
-.btn-ing {
-  color: #6a1b9a;
-  border-color: #6a1b9a;
+.btn-ingles {
+  color: #1dd1a1;
 }
 
-/* Botones Principales */
-.btn-main {
-  border: none;
-  padding: 15px;
-  border-radius: 25px;
-  width: 100%;
-  color: white;
-  font-size: 1.5rem;
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
-  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.2);
-}
-
-.primary {
-  background: var(--primary);
-}
-
-.success {
-  background: var(--success);
-}
-
-#btn-entrar {
-  width: auto;
-  min-width: 250px;
-  margin-top: 10px;
-}
-
-.btn-salir {
-  background: #FF6B6B;
-  color: white;
-  border: none;
-  border-radius: 15px;
-  padding: 10px 25px;
-  box-shadow: 0 4px 0 #d64545;
-  transition: 0.2s;
-}
-
-.btn-salir:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #d64545;
-}
-
-/* Selectores de Modo */
-.mode-selector {
-  display: inline-flex;
-  background: #edf2f7;
-  padding: 5px;
+/* Marcadores específicos */
+.stat-pill {
+  font-weight: bold;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center;
+  padding: 15px 25px;
   border-radius: 50px;
-  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  font-family: var(--font-main);
 }
 
-.btn-mode {
-  border: none;
-  padding: 10px 30px;
-  border-radius: 50px;
-  background: transparent;
-  transition: 0.3s;
-}
-
-.btn-mode.active {
+.badge {
   background: var(--primary);
   color: white;
-  box-shadow: 0 4px 10px rgba(74, 144, 226, 0.4);
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: 0.9rem;
 }
 
-.hidden {
-  display: none !important;
+.highlight {
+  color: var(--secondary);
 }
 
-.shake {
-  animation: shake 0.4s;
-}
-
+/* Animaciones */
 @keyframes shake {
 
   0%,
@@ -486,226 +154,6 @@ body.fondo-ing::before {
   }
 }
 
-/* 
-   6. SWEETALERT 
-  */
-
-.swal2-popup {
-  border-radius: 30px !important;
-  border: 5px solid var(--primary) !important;
-  padding: 30px !important;
-  background: white !important;
-}
-
-.swal2-title {
-  font-size: 2rem !important;
-  color: var(--primary) !important;
-  margin-bottom: 20px !important;
-  /* Sin borde blanco para que no se vea sucio */
-  text-shadow: none !important;
-  filter: drop-shadow(2px 4px 0px rgba(0, 0, 0, 0.1));
-}
-
-.swal2-confirm,
-.swal2-deny,
-.swal2-cancel {
-  font-weight: 900 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 1px !important;
-  border-radius: 15px !important;
-  /* Sin borde blanco para que se lea bien sobre el rojo/azul */
-  text-shadow: none !important;
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2) !important;
-  transition: transform 0.1s ease;
-}
-
-.swal2-confirm:active,
-.swal2-deny:active,
-.swal2-cancel:active {
-  transform: translateY(2px) !important;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2) !important;
-}
-
-/* 
-   7. LOGO 
-   */
-.logo-corner {
-  position: fixed;
-  bottom: 15px;
-  right: 15px;
-  width: 120px;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0.9;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
-  /* Hemos quitado el clip-path */
-}
-
-@media (max-width: 600px) {
-  .logo-corner {
-    width: 80px;
-    bottom: 10px;
-    right: 10px;
-  }
-}
-
-/* Posicionamiento del botón en el contenedor Glass */
-#view-registro {
-  position: relative;
-  padding-top: 50px;
-}
-
-.btn-tutorial-esquina {
-  position: absolute !important;
-  top: -10px !important;
-  right: 0 !important;
-  background: var(--warning) !important;
-  color: white !important;
-  border: none !important;
-  padding: 8px 15px !important;
-  border-radius: 15px !important;
-  font-weight: 900 !important;
-  font-size: 0.8rem !important;
-  text-transform: uppercase;
-  box-shadow: 0 4px 0 #B7791F !important;
-  cursor: pointer !important;
-  z-index: 100 !important;
-}
-
-.btn-tutorial-esquina:active {
-  transform: translateY(2px) !important;
-  box-shadow: 0 2px 0 #B7791F !important;
-}
-
-/* MODAL UNIFICADO */
-.modal {
-  display: none;
-  position: fixed !important;
-  inset: 0 !important;
-  background: rgba(0, 0, 0, 0.85) !important;
-  z-index: 999999 !important;
-  align-items: center !important;
-  justify-content: center !important;
-  backdrop-filter: blur(10px);
-}
-
-.modal-content {
-  background: white !important;
-  padding: 25px !important;
-  border-radius: 40px !important;
-  width: 90% !important;
-  max-width: 480px !important;
-  max-height: 85vh !important;
-  /* IMPORTANTE: El scroll debe estar DENTRO del contenedor redondeado */
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  display: flex !important;
-  flex-direction: column !important;
-  position: relative !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
-  text-align: left !important;
-}
-
-/* ELIMINACIÓN DEFINITIVA DE DOBLE LETRA Y SOMBRAS */
-.modal-content h2,
-.modal-content h3,
-.modal-content p,
-.tutorial-close-btn {
-  text-shadow: none !important;
-  filter: none !important;
-  letter-spacing: normal !important;
-  /* Evita que las letras se amontonen */
-}
-
-.titulo-tutorial {
-  color: var(--primary) !important;
-  text-align: center !important;
-  margin: 0 0 15px 0 !important;
-  /* Margen superior a cero para subirlo */
-  font-size: 1.8rem !important;
-  /* Tamaño Tabú */
-  font-weight: 900 !important;
-}
-
-/* Estructura lateral idéntica al Tabú */
-.tutorial-step {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: flex-start !important;
-  gap: 12px !important;
-  margin-bottom: 12px !important;
-  /* Espacio comprimido entre pasos */
-}
-
-.tutorial-step p {
-  font-size: 0.85rem !important;
-  /* Letra un pelín más pequeña para el portátil */
-  line-height: 1.2 !important;
-}
-
-.tutorial-step h3 {
-  font-size: 1rem !important;
-  margin-bottom: 2px !important;
-}
-
-.step-number {
-  background: var(--primary);
-  color: white;
-  width: 35px !important;
-  height: 35px !important;
-  font-size: 1.1rem !important;
-  border-radius: 50% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-weight: bold !important;
-  flex-shrink: 0 !important;
-  /* Evita que el círculo se deforme */
-  margin-top: 2px !important;
-}
-
-.step-content {
-  flex: 1 !important;
-}
-
-.step-content h3 {
-  font-size: 1.1rem !important;
-  /* Un poco más pequeño que el título principal */
-  color: var(--primary) !important;
-  margin: 0 0 2px 0 !important;
-}
-
-.step-content p {
-  text-transform: uppercase;
-  font-size: 0.95rem !important;
-  /* Letra legible pero compacta */
-  color: var(--text) !important;
-  line-height: 1.2 !important;
-  margin: 0 !important;
-}
-
-/* Botón compacto para evitar el scroll */
-.tutorial-close-btn {
-  background: var(--success) !important;
-  color: white !important;
-  border: none !important;
-  padding: 10px !important;
-  border-radius: 20px !important;
-  width: 100% !important;
-  font-weight: 900 !important;
-  font-size: 1.2rem !important;
-  cursor: pointer !important;
-  box-shadow: 0 5px 0 #2d6a30 !important;
-  margin-top: 8px !important;
-}
-
-.modal-close {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: #cbd5e0;
-  cursor: pointer;
+.shake {
+  animation: shake 0.4s;
 }

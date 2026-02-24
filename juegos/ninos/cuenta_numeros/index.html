@@ -1,166 +1,164 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mini Genios</title>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aprende Contando! Kids</title>
 
-    <link rel="stylesheet" href="utils/style.css?v=final" />
-  </head>
-  <body>
-    <section id="vista-setup" class="pantalla activa">
-      <div class="panel-central panel-setup">
-        <button class="btn-tutorial-esquina" onclick="mostrarTutorialCuentaNumeros()">
-            ❓ Instrucciones
-        </button>
-        <h1>¡Bienvenidos a Contar y Aprenderás! 👋</h1>
-        <p>¿Cuántos van a jugar?</p>
+  <!-- Estilos base unificados -->
+  <link rel="stylesheet" href="../common/base_kids.css">
+  <link rel="stylesheet" href="utils/style.css">
+
+  <!-- SweetAlert2 y Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+
+  <div class="contenedor-juego">
+
+    <!-- VISTA SETUP (CONFIGURACIÓN) -->
+    <section id="vista-setup">
+      <button class="btn-tutorial-esquina" onclick="mostrarTutorialCuentaNumeros()">
+        ❓ Instrucciones
+      </button>
+      <div style="font-size: 4rem; margin-bottom: 20px;">🔢</div>
+      <h1>CUENTA NÚMEROS</h1>
+
+      <div style="margin: 20px 0;">
+        <label class="font-title">¿Cuántos jugadores?</label>
         <div class="control-jugadores">
           <button onclick="ajustarJugadores(-1)">➖</button>
           <span id="num-jugadores">1</span>
           <button onclick="ajustarJugadores(1)">➕</button>
         </div>
-        <div id="contenedor-nombres" class="lista-nombres"></div>
-        <button class="btn-grande btn-azul" onclick="irAlMenu()">
-          ¡Guardar y Entrar!
-        </button>
+      </div>
+
+      <div id="contenedor-nombres" class="lista-nombres">
+        <!-- Se llenan por JS -->
+      </div>
+
+      <button class="btn-grande" onclick="irAlMenu()">▶️ ¡A JUGAR!</button>
+    </section>
+
+    <!-- VISTA MENÚ (SELECCIÓN DE RETO) -->
+    <section id="vista-menu" style="display:none;">
+      <h2 class="font-title" style="font-size:2.5rem;">Elige tu Reto</h2>
+      <div id="resumen-jugadores" class="marcador" style="margin: 15px 0;"></div>
+
+      <div class="grid-juegos">
+        <div class="card card-roja" onclick="prepararJuego('contar', 'Cuenta las frutas.')">
+          <div class="icono">🍎</div>
+          <span>Contar</span>
+        </div>
+        <div class="card card-azul" onclick="prepararJuego('sumar', 'Suma los números.')">
+          <div class="icono">➕</div>
+          <span>Sumar</span>
+        </div>
+        <div class="card card-verde" onclick="prepararJuego('restar', 'Resta los números.')">
+          <div class="icono">➖</div>
+          <span>Restar</span>
+        </div>
+      </div>
+
+      <button class="tarjeta-jugador" style="cursor:pointer; border:none; margin-top:10px;" onclick="volverInicio()">
+        🏠 Volver al Inicio
+      </button>
+    </section>
+
+    <!-- VISTA JUEGO -->
+    <section id="vista-juego" style="display:none;">
+      <header class="marcador">
+        <div class="tarjeta-jugador">👤 <span id="nombre-jugador-actual">...</span></div>
+        <div class="tarjeta-jugador activo">🎯 <span id="num-ronda">1</span>/5</div>
+        <div class="tarjeta-jugador">⭐ <span id="puntos-actuales">0</span></div>
+      </header>
+
+      <div id="zona-interactiva" class="zona-interactiva">
+        <!-- Frutas u operaciones aquí -->
+      </div>
+
+      <div class="controles-respuesta">
+        <input type="number" id="input-respuesta" placeholder="?" readonly>
+        <button class="btn-check" onclick="verificar()">✅</button>
+      </div>
+
+      <div class="teclado-virtual">
+        <button onclick="teclear(1)">1</button>
+        <button onclick="teclear(2)">2</button>
+        <button onclick="teclear(3)">3</button>
+        <button onclick="teclear(4)">4</button>
+        <button onclick="teclear(5)">5</button>
+        <button onclick="teclear(6)">6</button>
+        <button onclick="teclear(7)">7</button>
+        <button onclick="teclear(8)">8</button>
+        <button onclick="teclear(9)">9</button>
+        <button onclick="teclear(0)">0</button>
+        <button onclick="teclear('C')" class="btn-borrar">BORRAR</button>
+      </div>
+
+      <div style="margin-top:20px;">
+        <button class="tarjeta-jugador" style="cursor:pointer; border:none;" onclick="confirmarSalida()">🏠
+          Salir</button>
       </div>
     </section>
 
-    <section id="vista-menu" class="pantalla oculto">
-      <div class="panel-central panel-menu-reto">
-        <h2 class="titulo-menu">Elige tu Reto</h2>
-        <div id="resumen-jugadores" class="badges-jugadores"></div>
-
-        <div class="grid-juegos">
-          <div
-            class="card card-roja"
-            onclick="prepararJuego('contar', 'Cuenta las frutas.')"
-          >
-            <div class="icono">🍎</div>
-            <span>Contar</span>
-          </div>
-          <div
-            class="card card-azul"
-            onclick="prepararJuego('sumar', 'Suma los números.')"
-          >
-            <div class="icono">➕</div>
-            <span>Sumar</span>
-          </div>
-          <div
-            class="card card-verde"
-            onclick="prepararJuego('restar', 'Resta los números.')"
-          >
-            <div class="icono">➖</div>
-            <span>Restar</span>
-          </div>
-        </div>
-        <!-- NUEVO BOTÓN DE SALIDA AL MENÚ PRINCIPAL -->
-        <button class="btn-grande btn-rojo" onclick="salirMenuPrincipal()">
-          🏠 Salir al Menú Principal
-        </button>
-      </div>
+    <!-- VISTA RANKING -->
+    <section id="vista-ranking" style="display:none;">
+      <h1 class="font-title" style="font-size:3rem;">🏆 GANADORES 🏆</h1>
+      <div id="contenedor-podio"></div>
+      <div id="lista-resto" class="lista-nombres"></div>
+      <button class="btn-grande" onclick="volverInicio()">🏠 MENÚ PRINCIPAL</button>
     </section>
 
-    <section id="vista-juego" class="pantalla oculto">
-      <div class="panel-central panel-juego">
-        <div class="header-juego">
-          <button class="btn-salir" onclick="confirmarSalida()">
-            🏠 Salir
-          </button>
+  </div>
 
-          <div class="info-partida">
-            <div class="turno-badge">
-              Turno: <span id="nombre-jugador-actual">...</span>
-            </div>
-            <div class="ronda-badge">Ronda <span id="num-ronda">1</span>/5</div>
-            <div class="puntos-badge">
-              ⭐ <span id="puntos-actuales">0</span>
-            </div>
-          </div>
-        </div>
-
-        <div id="zona-interactiva" class="zona-interactiva"></div>
-
-        <div class="controles-respuesta">
-          <input type="number" id="input-respuesta" placeholder="?" readonly />
-          <button class="btn-check" onclick="verificar()">✅</button>
-        </div>
-
-        <div class="teclado-virtual">
-          <button onclick="teclear(1)">1</button>
-          <button onclick="teclear(2)">2</button>
-          <button onclick="teclear(3)">3</button>
-          <button onclick="teclear(4)">4</button>
-          <button onclick="teclear(5)">5</button>
-          <button onclick="teclear(6)">6</button>
-          <button onclick="teclear(7)">7</button>
-          <button onclick="teclear(8)">8</button>
-          <button onclick="teclear(9)">9</button>
-          <button onclick="teclear(0)">0</button>
-          <button onclick="teclear('C')" class="btn-borrar">Borrar</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="vista-ranking" class="pantalla oculto">
-      <div class="panel-central panel-ranking-final">
-        <h1 class="titulo-final">🏆 CLASIFICACIÓN 🏆</h1>
-        <div id="contenedor-podio" class="podio-container"></div>
-        <div id="lista-resto" class="lista-resultados"></div>
-        <button class="btn-grande btn-azul" onclick="volverInicio()">
-          🏠 Menú Principal
-        </button>
-      </div>
-    </section>
-
-    <div id="modalTutorialCuentaNumeros" class="modal">
+  <!-- MODAL TUTORIAL -->
+  <div id="modalTutorialCuentaNumeros" class="modal">
     <div class="modal-content">
-        <button class="modal-close" onclick="cerrarTutorialCuentaNumeros()">✕</button>
-        <h2>📖 Cómo Jugar</h2>
-        <div class="tutorial-content">
-            <div class="tutorial-step">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h3>¡Elige tu reto!</h3>
-                    <p>Puedes elegir entre contar frutas ricas 🍎, sumar números ➕ o restar ➖.</p>
-                </div>
-            </div>
-            <div class="tutorial-step">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h3>Usa el teclado</h3>
-                    <p>Mira bien la pantalla y escribe la respuesta usando los botones de números.</p>
-                </div>
-            </div>
-            <div class="tutorial-step">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h3>¡Dale al check!</h3>
-                    <p>Cuando tengas el número, pulsa el botón verde ✅ para ver si has acertado.</p>
-                </div>
-            </div>
-            <div class="tutorial-step">
-                <div class="step-number">4</div>
-                <div class="step-content">
-                    <h3>Gana Estrellas</h3>
-                    <p>Cada acierto te da 10 estrellas ⭐. ¡Consigue todas las que puedas en 5 rondas!</p>
-                </div>
-            </div>
+      <button class="modal-close" onclick="cerrarTutorialCuentaNumeros()">✕</button>
+      <div class="tutorial-step">
+        <h2>📖 ¿Cómo Jugar?</h2>
+      </div>
+      <div class="tutorial-content">
+        <div class="tutorial-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>¡Elige tu reto!</h3>
+            <p>Puedes elegir entre contar frutas ricas 🍎, sumar números ➕ o restar ➖.</p>
+          </div>
         </div>
-        <button onclick="cerrarTutorialCuentaNumeros()" class="tutorial-close-btn">
-            ¡ENTENDIDO! 🚀
-        </button>
+        <div class="tutorial-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Escribe la respuesta</h3>
+            <p>Mira bien la pantalla y escribe la respuesta usando los botones de números.</p>
+          </div>
+        </div>
+        <div class="tutorial-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>¡Comprueba!</h3>
+            <p>Cuando tengas el número, pulsa el botón verde ✅ para ver si has acertado.</p>
+          </div>
+        </div>
+        <div class="tutorial-step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Gana Estrellas</h3>
+            <p>Cada acierto te da estrellas ⭐. ¡Consigue todas las que puedas!</p>
+          </div>
+        </div>
+      </div>
+      <button onclick="cerrarTutorialCuentaNumeros()" class="tutorial-close-btn">
+        ¡ENTENDIDO! 🚀
+      </button>
     </div>
-</div>
+  </div>
 
-    <script src="utils/logica.js"></script>
-  </body>
+  <script src="utils/logica.js"></script>
+</body>
+
 </html>

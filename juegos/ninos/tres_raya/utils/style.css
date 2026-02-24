@@ -1,286 +1,41 @@
-/* style.css - Diseño Candy + Responsivo */
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap');
+/* --- ESTILOS ESPECÍFICOS DE TRES EN RAYA --- */
 
-:root {
-    --primary: #FF6B6B;
-    /* Rojo suave */
-    --secondary: #4ECDC4;
-    /* Turquesa */
-    --accent: #FFE66D;
-    /* Amarillo */
-    --dark: #292f36;
-    --light: #f7fff7;
-    --board-bg: #fff;
-    --font-main: 'Fredoka', sans-serif;
-
-}
-
-body {
-    font-family: var(--font-main) !important;
-    background-color: #8EC5FC;
-    background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    /* RESPONSIVE: Añadido padding para que no toque los bordes en móvil */
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-h1,
-h2,
-h3 {
-    font-family: 'Fredoka One', cursive;
-    color: var(--dark);
-    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);
-    margin-top: 0;
-    /* RESPONSIVE: El texto escala entre 24px y 40px */
-    font-size: clamp(1.5rem, 6vw, 2.5rem);
-}
-
-/* Tarjetas con estilo "Flotante" */
-.game-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 30px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    border: 4px solid white;
-    width: 100%;
-    /* RESPONSIVE: Ocupa todo el ancho disponible... */
-    max-width: 450px;
-    /* ...hasta 450px */
-    text-align: center;
-    box-sizing: border-box;
-    /* Para que el padding no rompa el ancho */
-    position: relative;
-    padding-top: 65px !important;
-    /* Espacio para el botón */
-}
-
-/* Botones estilo "Gominola" */
-.btn-custom {
-    background-color: var(--secondary);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 50px;
-    font-family: 'Fredoka One', cursive;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: transform 0.1s, box-shadow 0.1s;
-    box-shadow: 0 6px 0 #2a9d8f;
-    /* Efecto 3D */
-    width: 100%;
-    margin-top: 1rem;
-    text-decoration: none;
-    /* Asegura que no parezca un enlace */
-    display: inline-block;
-}
-
-.btn-custom:active {
-    transform: translateY(4px);
-    box-shadow: 0 2px 0 #2a9d8f;
-}
-
-.btn-warning {
-    background-color: var(--accent);
-    color: var(--dark);
-    box-shadow: 0 6px 0 #d4c04d;
-}
-
-.btn-warning:active {
-    box-shadow: 0 2px 0 #d4c04d;
-}
-
-.btn-primary {
-    background-color: var(--primary);
-    box-shadow: 0 6px 0 #c94646;
-}
-
-.btn-primary:active {
-    box-shadow: 0 2px 0 #c94646;
-}
-
-/* Selectores bonitos */
-select.form-select {
-    width: 100%;
-    /* RESPONSIVE */
-    border: 3px solid #eee;
-    border-radius: 15px;
-    padding: 10px;
-    font-size: 1.1rem;
-    margin-bottom: 15px;
-    cursor: pointer;
-    font-family: 'Nunito', sans-serif;
-}
-
-
-.btn-tutorial-esquina {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: var(--secondary);
-    /* Usamos el turquesa del juego */
-    color: white;
-    border: none;
-    padding: 8px 18px;
-    border-radius: 50px;
-    font-family: 'Fredoka One', cursive;
-    font-size: 0.9rem;
-    cursor: pointer;
-    box-shadow: 0 4px 0 #2a9d8f;
-    transition: all 0.1s ease;
-    z-index: 10;
-}
-
-.btn-tutorial-esquina:active {
-    transform: translateY(3px);
-    box-shadow: none;
-}
-
-/* ESTILO DEL MODAL (Coherente con PlayGo) */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 9999;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    background: white !important;
-    padding: 25px !important;
-    border-radius: 40px !important;
-    width: 90% !important;
-    max-width: 480px !important;
-    max-height: 85vh !important;
-    /* IMPORTANTE: El scroll debe estar DENTRO del contenedor redondeado */
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    display: flex !important;
-    flex-direction: column !important;
-    position: relative !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
-    text-align: left !important;
-}
-
-.modal-content h2 {
-    font-size: 1.5rem !important;
-    /* Reducimos de 1.8 o 2.5 a 1.5 */
-    margin-bottom: 15px !important;
-}
-
-.step-number {
-    background: var(--primary);
-    color: white;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    margin-right: 15px;
-    flex-shrink: 0;
-}
-
-/* Reducimos el tamaño de los pasos para que quepan en una vista */
-.tutorial-step {
-    display: flex !important;
-    align-items: flex-start !important;
-    gap: 10px !important;
-    margin-bottom: 12px !important;
-    /* Menos margen entre pasos */
-}
-
-.tutorial-step p {
-    font-size: 0.85rem !important;
-    /* Letra un pelín más pequeña para el portátil */
-    line-height: 1.2 !important;
-}
-
-.tutorial-step h3 {
-    font-size: 1rem !important;
-    margin-bottom: 2px !important;
-}
-
-.tutorial-close-btn {
-    background: var(--secondary);
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 50px;
-    width: 100%;
-    font-family: 'Fredoka One', cursive;
-    font-size: 1.2rem;
-    cursor: pointer;
-    box-shadow: 0 5px 0 #2a9d8f;
-    margin-top: 10px;
-}
-
-.modal-close {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: #aaa;
-    cursor: pointer;
-}
-
-/* Tablero de Juego */
 #game-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    /* 3 columnas iguales */
     gap: 15px;
-    background-color: var(--dark);
+    background-color: var(--primary);
     padding: 15px;
     border-radius: 20px;
     margin: 20px auto;
-    /* RESPONSIVE: Quitamos el width: fit-content */
     width: 100%;
-    max-width: 380px;
-    /* Limite para que no se vea gigante en PC */
+    max-width: 400px;
     box-sizing: border-box;
+    box-shadow: 0 10px 0 var(--primary-light);
 }
 
 .cell {
-    /* RESPONSIVE: Medidas flexibles en lugar de 90px fijos */
     width: 100%;
     aspect-ratio: 1 / 1;
-    /* Mantiene siempre la forma cuadrada */
-
-    background-color: var(--light);
+    background-color: var(--white);
     border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    /* RESPONSIVE: El emoji crece/decrece según la pantalla */
     font-size: clamp(2rem, 10vw, 3.5rem);
-
     cursor: pointer;
     transition: all 0.2s;
     user-select: none;
+    box-shadow: inset 0 -5px 0 rgba(0, 0, 0, 0.1);
 }
 
 .cell:hover {
-    background-color: #e9ecef;
-    transform: scale(1.05);
+    background-color: #f0f7ff;
+    transform: scale(1.02);
 }
 
 .cell.winner {
-    background-color: var(--accent);
+    background-color: var(--secondary-light);
     animation: bounce 0.5s infinite alternate;
 }
 
@@ -294,22 +49,21 @@ select.form-select {
     }
 }
 
-/* Podio en Resultados */
-.podio-box {
-    background: #fff9c4;
+/* Podio y Resultados */
+.resultados-area {
+    margin-top: 20px;
     padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 10px;
-    border: 2px dashed var(--accent);
+    background: #fff9c4;
+    border-radius: 20px;
+    border: 3px dashed var(--warning);
 }
 
 .history-item {
     background: white;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 10px;
+    padding: 10px 15px;
+    margin: 8px 0;
+    border-radius: 15px;
     display: flex;
     justify-content: space-between;
     font-weight: bold;
-    color: #555;
 }

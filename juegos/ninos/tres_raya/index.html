@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 en Raya Kids</title>
+
+    <!-- Estilos base unificados -->
+    <link rel="stylesheet" href="../common/base_kids.css">
+    <link rel="stylesheet" href="utils/style.css">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+    <div class="contenedor-juego">
+
+        <!-- PANTALLA INICIO (MENÚ) -->
+        <div id="pantalla-inicio">
+            <button class="btn-tutorial-esquina" onclick="mostrarTutorialTresEnRaya()">
+                ❓ Instrucciones
+            </button>
+            <div style="font-size: 4rem; margin-bottom: 20px;">🐱</div>
+            <h1>TRES EN RAYA</h1>
+
+            <div style="margin: 20px 0;">
+                <div><label class="font-title">¿Cuántos juegan?</label></div>
+                <div class="select-wrapper">
+                    <select id="num-jugadores" class="select-bonito">
+                        <option value="1">1 Jugador (vs Robot 🤖)</option>
+                        <option value="2">2 Jugadores (Amigos 👫)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 15px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 140px;">
+                    <label style="color: var(--primary); font-weight: bold;">Jugador 1</label>
+                    <div class="select-wrapper" style="width: 100%;">
+                        <select id="avatar-j1" class="select-bonito">
+                            <option>😺 Gato</option>
+                            <option>🐶 Perro</option>
+                            <option>🦁 León</option>
+                            <option>🦄 Unicornio</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 140px;">
+                    <label style="color: var(--secondary); font-weight: bold;">Jugador 2 / Robot 🤖</label>
+                    <div class="select-wrapper" style="width: 100%;">
+                        <select id="avatar-j2" class="select-bonito">
+                            <option>🦊 Zorro</option>
+                            <option>🐻 Oso</option>
+                            <option>🐲 Dragón</option>
+                            <option>🐙 Pulpo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button id="btn-comenzar" class="btn-grande">▶️ ¡A JUGAR!</button>
+        </div>
+
+        <!-- PANTALLA JUEGO -->
+        <div id="pantalla-juego" style="display:none;">
+            <header class="marcador" id="marcador-turno">
+                <!-- Se llena por JS -->
+            </header>
+
+            <div id="game-board">
+                <div class="cell" data-index="0"></div>
+                <div class="cell" data-index="1"></div>
+                <div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div>
+                <div class="cell" data-index="4"></div>
+                <div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div>
+                <div class="cell" data-index="7"></div>
+                <div class="cell" data-index="8"></div>
+            </div>
+
+            <div style="margin-top:20px;">
+                <button onclick="confirmarSalida()" class="tarjeta-jugador" style="cursor:pointer; border:none;">🏠
+                    Volver al Inicio</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL TUTORIAL -->
+    <div id="modalTutorialTresEnRaya" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="cerrarTutorialTresEnRaya()">✕</button>
+            <div class="tutorial-step">
+                <h2>📖 ¿Cómo Jugar?</h2>
+            </div>
+            <div class="tutorial-content">
+                <div class="tutorial-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Elige tu equipo</h3>
+                        <p>Selecciona si juegas solo contra el robot 🤖 o contra un amigo 👫.</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Escoge tu Emoji</h3>
+                        <p>Cada jugador elige su animal favorito. ¡Será tu ficha en el tablero!</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Tres en línea</h3>
+                        <p>Coloca tu emoji en los cuadros. ¡Gana quien consiga poner tres en raya antes!</p>
+                    </div>
+                </div>
+            </div>
+            <button onclick="cerrarTutorialTresEnRaya()" class="tutorial-close-btn">
+                ¡ENTENDIDO! 🚀
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts unificados (necesitaremos mezclar menu.js y juego.js o adaptarlos) -->
+    <script src="utils/logica_unificada.js"></script>
+</body>
+
+</html>

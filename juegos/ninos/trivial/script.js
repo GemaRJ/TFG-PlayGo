@@ -115,14 +115,14 @@ const displayTiempo = document.getElementById('tiempo-restante');
 // --- CONFIGURACIÓN ---
 function generarInputsNombres() {
     const cantidad = selectJugadores.value;
-    contenedorNombres.innerHTML = ''; 
+    contenedorNombres.innerHTML = '';
     for (let i = 1; i <= cantidad; i++) {
         const input = document.createElement('input');
         input.type = 'text';
-        input.placeholder = `Nombre Amigo ${i}`;
+        input.placeholder = `Nombre Jugador ${i}`;
         input.classList.add('input-nombre');
         input.id = `jugador-${i}`;
-        input.value = `Amigo ${i}`;
+        input.value = `Jugador ${i}`;
         contenedorNombres.appendChild(input);
     }
 }
@@ -131,13 +131,13 @@ function comenzarPartida() {
     const cantidad = selectJugadores.value;
     jugadores = [];
     for (let i = 1; i <= cantidad; i++) {
-        const nombre = document.getElementById(`jugador-${i}`).value || `Amigo ${i}`;
+        const nombre = document.getElementById(`jugador-${i}`).value || `Jugador ${i}`;
         jugadores.push({ nombre: nombre, puntos: 0 });
     }
     indicePreguntaActual = 0;
     turnoActual = 0;
-    pantallaInicio.classList.add('oculto');
-    pantallaJuego.classList.remove('oculto');
+    pantallaInicio.style.display = 'none';
+    pantallaJuego.style.display = 'block';
     mostrarPregunta();
 }
 
@@ -147,7 +147,7 @@ function iniciarTemporizador() {
     displayTiempo.innerText = tiempoRestante;
     displayTiempo.classList.remove('timer-peligro');
     clearInterval(intervaloTiempo);
-    
+
     intervaloTiempo = setInterval(() => {
         tiempoRestante--;
         displayTiempo.innerText = tiempoRestante;
@@ -167,7 +167,7 @@ function tiempoAgotado() {
         confirmButtonColor: '#feca57'
     });
     bloquearRespuestas();
-    btnSiguiente.classList.remove('oculto');
+    btnSiguiente.style.display = 'block';
 }
 
 function mostrarPregunta() {
@@ -178,7 +178,7 @@ function mostrarPregunta() {
     elementoPregunta.innerText = pregunta.texto;
     nombreJugadorActivo.innerText = jugador.nombre;
     puntuacionElemento.innerText = `Estrellas: ${jugador.puntos} ⭐`;
-    
+
     const porcentaje = ((indicePreguntaActual) / preguntas.length) * 100;
     barraProgreso.style.width = `${porcentaje}%`;
 
@@ -195,7 +195,7 @@ function mostrarPregunta() {
 
 function resetearEstado() {
     clearInterval(intervaloTiempo);
-    btnSiguiente.classList.add('oculto');
+    btnSiguiente.style.display = 'none';
     gridRespuestas.innerHTML = '';
 }
 
@@ -208,7 +208,7 @@ function seleccionarRespuesta(e) {
         btn.classList.add('correcto');
         jugadores[turnoActual].puntos += 1; // 1 Estrella por acierto
         puntuacionElemento.innerText = `Estrellas: ${jugadores[turnoActual].puntos} ⭐`;
-        
+
         Swal.fire({
             title: '¡GENIAL! 🌟',
             icon: 'success',
@@ -229,7 +229,7 @@ function seleccionarRespuesta(e) {
         });
     }
     bloquearRespuestas();
-    btnSiguiente.classList.remove('oculto');
+    btnSiguiente.style.display = 'block';
 }
 
 function bloquearRespuestas() {
@@ -253,20 +253,20 @@ function siguientePregunta() {
 // --- FUNCION CORREGIDA PARA DETECTAR EMPATES ---
 function mostrarResultadoFinal() {
     barraProgreso.style.width = '100%';
-    
+
     // 1. Ordenamos de mayor a menor puntuación
     jugadores.sort((a, b) => b.puntos - a.puntos);
-    
+
     // 2. Buscamos cuál es la puntuación máxima
     const maxPuntos = jugadores[0].puntos;
-    
+
     // 3. Filtramos para ver cuántos tienen esa puntuación máxima (los ganadores)
     const ganadores = jugadores.filter(j => j.puntos === maxPuntos);
-    
+
     // 4. Preparamos el mensaje principal
     let titulo = '';
     let mensajeHtml = '';
-    
+
     if (ganadores.length > 1) {
         // CASO EMPATE
         titulo = '¡Empate Mágico! 🤝✨';
@@ -299,16 +299,16 @@ function mostrarResultadoFinal() {
         confirmButtonColor: '#ff9ff3',
         background: '#fff'
     }).then(() => {
-        location.reload(); 
+        location.reload();
     });
 }
 
-    // FUNCIONES DEL TUTORIAL/INSTRUCCIONES
+// FUNCIONES DEL TUTORIAL/INSTRUCCIONES
 function mostrarTutorialTrivialKids() {
     const modal = document.getElementById('modalTutorialTrivialKids');
     if (modal) {
         modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; 
+        document.body.style.overflow = 'hidden';
     }
 }
 

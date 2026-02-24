@@ -1,126 +1,118 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivial Kids 🎈</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Titan+One&display=swap" rel="stylesheet">
-    
+    <title>Trivial Kids | PlayGo</title>
+
+    <!-- Estilos base unificados -->
+    <link rel="stylesheet" href="../common/base_kids.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <div class="contenedor-principal">
-        
-        <div id="pantalla-inicio" class="tarjeta-juego bounce-in">
-    <button class="btn-tutorial-esquina" onclick="mostrarTutorialTrivialKids()">
-        ❓ Instrucciones
-    </button>
-            <header class="encabezado">
-                <h1>🦄 Trivial Kids 🍭</h1>
-                <p>¡Vamos a jugar!</p>
-            </header>
+    <div class="contenedor-juego">
 
-            <div class="config-zona">
-                <label>¿Cuántos amigos sois?</label>
-                <div class="select-wrapper">
-                    <select id="num-jugadores" class="select-bonito" onchange="generarInputsNombres()">
-                        <option value="1">1 Amigo 🧒</option>
-                        <option value="2">2 Amigos 🧒👧</option>
-                        <option value="3">3 Amigos 🧒👧👦</option>
-                        <option value="4">4 Amigos 🧒👧👦👧</option>
-                    </select>
-                </div>
+        <!-- PANTALLA INICIO -->
+        <div id="pantalla-inicio">
+            <button class="btn-tutorial-esquina" onclick="mostrarTutorialTrivialKids()">
+                ❓ Instrucciones
+            </button>
+            <div style="font-size: 4rem; margin-bottom: 20px;">❓</div>
+            <h1>TRIVIAL KIDS</h1>
+
+            <div style="margin: 20px 0;">
+                <label class="font-title" style="display:block; margin-bottom:10px;">¿Cuántos jugadores sois?</label>
+                <select id="num-jugadores" class="select-bonito" style="width: auto; padding-right: 40px;"
+                    onchange="generarInputsNombres()">
+                    <option value="1">1 Jugador 🧒</option>
+                    <option value="2">2 Jugadores 🧒👧</option>
+                    <option value="3">3 Jugadores 🧒👧👦</option>
+                    <option value="4">4 Jugadores 🧒👧👦👧</option>
+                </select>
             </div>
 
-            <div id="lista-nombres" class="lista-nombres">
-                </div>
+            <div id="lista-nombres" class="marcador"
+                style="background:none; border:none; gap:10px; flex-direction:column; padding:0;">
+                <!-- Dinámico -->
+            </div>
 
-            <button class="btn-start" onclick="comenzarPartida()">🚀 ¡DESPEGAR!</button>
+            <button class="btn-grande" onclick="comenzarPartida()">▶️ ¡A JUGAR!</button>
         </div>
 
-
-        <div id="pantalla-juego" class="tarjeta-juego oculto">
-            
-            <header class="encabezado">
-                <h1>🌟 Preguntas 🌟</h1>
-                
-                <div class="panel-estado">
-                    <div class="caja-turno">
-                        <span class="etiqueta">Le toca a:</span>
-                        <span id="nombre-jugador-activo" class="jugador-activo">Jugador 1</span>
-                    </div>
-                    <div class="caja-timer">
-                        ⏰ <span id="tiempo-restante">20</span>s
-                    </div>
+        <!-- PANTALLA JUEGO -->
+        <div id="pantalla-juego" style="display:none;">
+            <header class="marcador" style="margin-bottom:20px;">
+                <div class="tarjeta-jugador">👤 <span id="nombre-jugador-activo" class="jugador-activo">Jugador 1</span>
                 </div>
-
-                <div class="info-juego">
-                    <span id="puntuacion-actual">Estrellas: 0 ⭐</span>
-                </div>
-                
-                <div class="barra-progreso-fondo">
-                    <div id="barra-progreso" class="barra-progreso-relleno"></div>
-                </div>
+                <div class="tarjeta-jugador activo">⏱️ <span id="tiempo-restante">20</span>s</div>
+                <div class="tarjeta-jugador">⭐ <span id="puntuacion-actual">0</span></div>
             </header>
+
+            <div class="barra-progreso-fondo">
+                <div id="barra-progreso" class="barra-progreso-relleno"></div>
+            </div>
 
             <main class="zona-pregunta">
-                <h2 id="texto-pregunta">Cargando...</h2>
-                
-                <div id="grid-respuestas" class="grid-respuestas">
-                    </div>
+                <h2 id="texto-pregunta" class="font-title">Cargando...</h2>
+                <div id="grid-respuestas" class="grid-respuestas"></div>
             </main>
 
-            <footer class="pie-juego">
-                <button id="btn-siguiente" class="btn-siguiente oculto" onclick="siguientePregunta()">Siguiente ➡️</button>
+            <footer style="margin-top:30px;">
+                <button id="btn-siguiente" class="btn-grande" style="display:none;"
+                    onclick="siguientePregunta()">SIGUIENTE ➡️</button>
             </footer>
-
         </div>
     </div>
 
+    <!-- MODAL TUTORIAL -->
     <div id="modalTutorialTrivialKids" class="modal">
-    <div class="modal-content">
-        <button class="modal-close" onclick="cerrarTutorialTrivialKids()">✕</button>
-        <h2>📖 Cómo Jugar Trivial Kids</h2>
-        <div class="tutorial-content">
+        <div class="modal-content">
+            <button class="modal-close" onclick="cerrarTutorialTrivialKids()">✕</button>
             <div class="tutorial-step">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h3>¡Reúne a tus amigos!</h3>
-                    <p>Elige cuántos vais a jugar y escribe vuestros nombres mágicos.</p>
+                <h2>📖 ¿Cómo Jugar?</h2>
+            </div>
+            <div class="tutorial-content">
+                <div class="tutorial-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>¡Reúne a tus amigos!</h3>
+                        <p>Elige cuántos vais a jugar y escribe vuestros nombres mágicos.</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Atento al turno</h3>
+                        <p>Mira arriba para saber a quién le toca responder. ¡Fíjate bien!</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>¡Cuidado con el tiempo!</h3>
+                        <p>Tienes 20 segundos para elegir la respuesta correcta. ¡No te despistes!</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Gana Estrellas</h3>
+                        <p>Acierta preguntas para ganar estrellas ⭐. ¡Quien tenga más gana!</p>
+                    </div>
                 </div>
             </div>
-            <div class="tutorial-step">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h3>Atento al turno</h3>
-                    <p>Mira arriba para saber a quién le toca responder. ¡Cada uno tiene su turno!</p>
-                </div>
-            </div>
-            <div class="tutorial-step">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h3>¡Cuidado con el tiempo!</h3>
-                    <p>Tienes 20 segundos para elegir la respuesta correcta. ¡No te despistes!</p>
-                </div>
-            </div>
-            <div class="tutorial-step">
-                <div class="step-number">4</div>
-                <div class="step-content">
-                    <h3>Gana Estrellas</h3>
-                    <p>Acierta preguntas para ganar estrellas ⭐. ¡Quien tenga más al final gana el trofeo!</p>
-                </div>
-            </div>
+            <button onclick="cerrarTutorialTrivialKids()" class="tutorial-close-btn">
+                ¡ENTENDIDO! 🚀
+            </button>
         </div>
-        <button onclick="cerrarTutorialTrivialKids()" class="tutorial-close-btn">
-            ¡ENTENDIDO! 🚀
-        </button>
     </div>
-</div>
 
+    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
