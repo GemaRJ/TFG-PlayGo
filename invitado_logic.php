@@ -14,4 +14,3 @@ $_SESSION['tipo_usuario'] = 'invitado';
 // Enviar al panel
 header("Location: panel.php");
 exit();
-?>

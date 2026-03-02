@@ -1,5 +1,5 @@
 /**
- * UBICACIÓN: chatbot/bot.js
+
  * ASISTENTE INTERACTIVO PLAYGO - AUTO-INYECTABLE
  */
 "use strict";
@@ -165,15 +165,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     contenedor.appendChild(
       crearBoton("🔑 Ya tengo cuenta", () => {
-        // Redirige al login para identificarse antes de jugar
-        window.location.href = RUTAS.login;
+        // Redirige al login para identificarse antes de jugar, indicando destino
+        window.location.href = RUTAS.login + "?destino=juegos";
       }),
     );
 
     contenedor.appendChild(
       crearBoton("🚀 Crear cuenta", () => {
-        // Redirige al registro
-        window.location.href = RUTAS.registro;
+        // Redirige al registro para crear cuenta, indicando destino
+        window.location.href = RUTAS.registro + "?destino=juegos";
       }),
     );
 
