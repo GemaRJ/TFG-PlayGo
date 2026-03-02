@@ -84,14 +84,14 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // --- Eventos de Selección de Categoría ---
-  btnModoImg.onclick = () => setModo("imagenes");
-  btnModoSer.onclick = () => setModo("series");
-  btnModoLet.onclick = () => setModo("letras");
-  btnModoIng.onclick = () => setModo("ingles");
+  if (btnModoImg) btnModoImg.onclick = () => setModo("imagenes");
+  if (btnModoSer) btnModoSer.onclick = () => setModo("series");
+  if (btnModoLet) btnModoLet.onclick = () => setModo("letras");
+  if (btnModoIng) btnModoIng.onclick = () => setModo("ingles");
 
   // --- Eventos de Navegación ---
-  btnVolverMenu.onclick = () => confirmarSalida();
-  btnResetTotal.onclick = () => reiniciarTodo();
+  if (btnVolverMenu) btnVolverMenu.onclick = () => confirmarSalida();
+  if (btnResetTotal) btnResetTotal.onclick = () => reiniciarTodo();
 
   // 5. ZONA DE FUNCIONES (LÓGICA)
   // Aquí está el "cerebro" que hace que todo funcione.
@@ -131,10 +131,13 @@ document.addEventListener("DOMContentLoaded", () => {
   function actualizarInputsNombres(cantidad) {
     contenedorNombres.innerHTML = "";
     for (let i = 1; i <= cantidad; i++) {
-      contenedorNombres.innerHTML += `
-        <div class="stat-pill mx-auto mb-2" style="max-width:300px;">
-            <input type="text" class="custom-input input-nombre" placeholder="Nombre Jugador ${i}">
-        </div>`;
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'input-nombre';
+      input.placeholder = `Nombre Jugador ${i}`;
+      input.id = `nombre-j${i}`;
+      input.value = `Jugador ${i}`;
+      contenedorNombres.appendChild(input);
     }
   }
 
@@ -314,25 +317,27 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function switchView(vista) {
-    Object.values(views).forEach((v) => v.classList.add("hidden"));
-    views[vista].classList.remove("hidden");
+    // Usamos la clase .hidden para gestionar vistas
+    views.reg.classList.toggle("hidden", vista !== 'reg');
+    views.game.classList.toggle("hidden", vista !== 'game');
+    views.rank.classList.toggle("hidden", vista !== 'rank');
   }
 
   // --- FUNCIONES DEL TUTORIAL/INSTRUCCIONES---
 
-  window.mostrarTutorialCompleta = function() {
+  window.mostrarTutorialCompleta = function () {
     const modal = document.getElementById('modalTutorialCompleta');
     if (modal) {
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; 
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     }
   };
 
-  window.cerrarTutorialCompleta = function() {
+  window.cerrarTutorialCompleta = function () {
     const modal = document.getElementById('modalTutorialCompleta');
     if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
     }
   };
 });

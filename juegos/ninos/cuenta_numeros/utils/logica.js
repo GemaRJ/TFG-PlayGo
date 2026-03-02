@@ -62,9 +62,14 @@ function generarInputsNombres() {
 
   contenedor.innerHTML = "";
   for (let i = 0; i < config.numJugadores; i++) {
-    const div = document.createElement("div");
-    div.innerHTML = `<input type="text" class="input-nombre" id="nombre-${i}" placeholder="Jugador ${i + 1}" autocomplete="off">`;
-    contenedor.appendChild(div);
+    const input = document.createElement("input");
+    input.type = "text";
+    input.className = "input-nombre";
+    input.id = `nombre-${i}`;
+    input.placeholder = `Jugador ${i + 1}`;
+    input.value = `Jugador ${i + 1}`;
+    input.autocomplete = "off";
+    contenedor.appendChild(input);
   }
 }
 
@@ -83,9 +88,9 @@ function irAlMenu() {
 
 function cambiarVista(nombre) {
   Object.values(vistas).forEach((v) => {
-    if (v) v.classList.add("oculto");
+    if (v) v.style.display = "none";
   });
-  if (vistas[nombre]) vistas[nombre].classList.remove("oculto");
+  if (vistas[nombre]) vistas[nombre].style.display = "block";
 }
 
 // FUNCIONES DE JUEGO
@@ -321,19 +326,19 @@ function confirmarSalida() {
 // --- FUNCIONES DEL TUTORIAL (AÑADIDAS AL FINAL) ---
 
 function mostrarTutorialCuentaNumeros() {
-    const modal = document.getElementById('modalTutorialCuentaNumeros');
-    if (modal) {
-        modal.style.display = 'flex';
-        // Bloqueamos el scroll del fondo para que sea más profesional
-        document.body.style.overflow = 'hidden'; 
-    }
+  const modal = document.getElementById('modalTutorialCuentaNumeros');
+  if (modal) {
+    modal.style.display = 'flex';
+    // Bloqueamos el scroll del fondo para que sea más profesional
+    document.body.style.overflow = 'hidden';
+  }
 }
 
 function cerrarTutorialCuentaNumeros() {
-    const modal = document.getElementById('modalTutorialCuentaNumeros');
-    if (modal) {
-        modal.style.display = 'none';
-        // Devolvemos el scroll
-        document.body.style.overflow = 'auto';
-    }
+  const modal = document.getElementById('modalTutorialCuentaNumeros');
+  if (modal) {
+    modal.style.display = 'none';
+    // Devolvemos el scroll
+    document.body.style.overflow = 'auto';
+  }
 }

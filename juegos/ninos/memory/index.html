@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Game Kids</title>
+    <link rel="stylesheet" href="../common/base_kids.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <div class="contenedor-juego" id="pantalla-inicio">
         <button class="btn-tutorial-esquina" onclick="mostrarTutorialMemoryKids()">
-        ❓ Instrucciones
-    </button>
-        <h1>🦄 MEMORY KIDS</h1>
-        <h3>¿Quién va a jugar hoy?</h3>
+            ❓ Instrucciones
+        </button>
+        <div style="font-size: 4rem; margin-bottom: 20px;">🦄</div>
+        <h1>MEMORY KIDS</h1>
 
-<div class="config-zona">
-    <label class="titulo-opcion">👥 Jugadores:</label>
-    
-    <div class="select-wrapper">
-        <select id="num-jugadores" class="select-bonito" onchange="generarInputsNombres()">
-            <option value="1">1 Jugador 👤</option>
-            <option value="2">2 Jugadores 👥</option>
-            <option value="3">3 Jugadores 👨‍👩‍👧</option>
-            <option value="4">4 Jugadores 👨‍👩‍👧‍👦</option>
-        </select>
-    </div>
-</div>
+        <div class="config-zona">
+            <label class="titulo-opcion">👥 Jugadores:</label>
+
+            <div class="select-wrapper">
+                <select id="num-jugadores" class="select-bonito" onchange="generarInputsNombres()">
+                    <option value="1">1 Jugador 👤</option>
+                    <option value="2">2 Jugadores 👥</option>
+                    <option value="3">3 Jugadores 👨‍👩‍👧</option>
+                    <option value="4">4 Jugadores 👨‍👩‍👧‍👦</option>
+                </select>
+            </div>
+        </div>
 
         <div id="lista-nombres" class="lista-nombres">
-            </div>
+        </div>
 
-        <button class="btn-grande" onclick="comenzarPartida()">▶️ ¡EMPEZAR!</button>
+        <button class="btn-grande" onclick="comenzarPartida()">▶️ ¡A JUGAR!</button>
     </div>
 
 
     <div class="contenedor-juego" id="pantalla-juego" style="display: none;">
-        
+
         <div class="marcador" id="marcador"></div>
 
         <div class="tablero" id="tablero"></div>
@@ -44,49 +47,52 @@
         <div class="controles-abajo">
             <button id="reiniciar-btn" onclick="volverAlInicio()">🏠 Volver al Inicio</button>
         </div>
-    </div> 
+    </div>
 
     <div id="modalTutorialMemoryKids" class="modal">
-    <div class="modal-content">
-        <button class="modal-close" onclick="cerrarTutorialMemoryKids()">✕</button>
-        <h2>📖 Cómo Jugar Memory Kids</h2>
-        <div class="tutorial-content">
+        <div class="modal-content">
+            <button class="modal-close" onclick="cerrarTutorialMemoryKids()">✕</button>
             <div class="tutorial-step">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h3>¡Elige a tus amigos!</h3>
-                    <p>Selecciona cuántos amigos vais a jugar y escribe vuestros nombres.</p>
+                <h2>📖 ¿Cómo Jugar?</h2>
+            </div>
+            <div class="tutorial-content">
+                <div class="tutorial-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>¡Elige a tus amigos!</h3>
+                        <p>Selecciona cuántos amigos vais a jugar y escribe vuestros nombres.</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Busca la pareja</h3>
+                        <p>Pulsa una carta para ver qué animal tiene. ¡Luego busca su pareja igual!</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Sigue jugando</h3>
+                        <p>Si encuentras una pareja, ¡vuelves a jugar! Si fallas, le toca al siguiente amigo.</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>¡Gana el mejor!</h3>
+                        <p>Quien encuentre más parejas al final del juego será el ganador ⭐.</p>
+                    </div>
                 </div>
             </div>
-            <div class="tutorial-step">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h3>Busca la pareja</h3>
-                    <p>Pulsa una carta para ver qué animal tiene. ¡Luego busca su pareja igual!</p>
-                </div>
-            </div>
-            <div class="tutorial-step">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h3>Sigue jugando</h3>
-                    <p>Si encuentras una pareja, ¡vuelves a jugar! Si fallas, le toca al siguiente amigo.</p>
-                </div>
-            </div>
-            <div class="tutorial-step">
-                <div class="step-number">4</div>
-                <div class="step-content">
-                    <h3>¡Gana el mejor!</h3>
-                    <p>Quien encuentre más parejas al final del juego será el ganador ⭐.</p>
-                </div>
-            </div>
+            <button onclick="cerrarTutorialMemoryKids()" class="tutorial-close-btn">
+                ¡ENTENDIDO! 🚀
+            </button>
         </div>
-        <button onclick="cerrarTutorialMemoryKids()" class="tutorial-close-btn">
-            ¡ENTENDIDO! 🚀
-        </button>
     </div>
-</div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

@@ -121,7 +121,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
-                        onclick="cargarJuego('juegos/ninos/tres_raya/menu.html', this)">
+                        onclick="cargarJuego('juegos/ninos/tres_raya/index.html', this)">
                         <span class="fs-3 p-2">❌</span>
                         <div>
                             <div class="fw-bold fs-6">Tres en Raya</div><small>Clásico</small>

@@ -1,332 +1,32 @@
-/* --- RESET & FUENTES --- */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+/* --- ESTILOS ESPECÍFICOS DE TRIVIAL KIDS --- */
 
-:root {
-    --bg-gradient: linear-gradient(135deg, #FFDEE9 0%, #B5FFFC 100%);
-    --card-roja: #ff6b6b;
-    --card-azul: #48dbfb;
-    --card-verde: #1dd1a1;
-    --text-dark: #2c3e50;
-    --font-main: 'Fredoka', sans-serif;
-}
-
-body {
-
-    font-family: var(--font-main);
-    background-image: url('fondo.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-
-    min-height: 100vh;
+.panel-estado {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #333;
-}
-
-.contenedor-principal {
-    width: 100%;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-}
-
-/* Tarjeta estilo "Nube" */
-.tarjeta-juego {
-    background: rgba(255, 255, 255, 0.95);
-    /* Un pelín transparente para que se integre con el fondo */
-    border-radius: 30px;
-    padding: 30px;
-    width: 100%;
-    max-width: 650px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    border: 4px solid #fff;
-    position: relative;
-    padding-top: 60px;
-    /* Espacio para el botón de instrucciones */
-}
-
-.oculto {
-    display: none !important;
-}
-
-/* --- ENCABEZADO --- */
-.encabezado h1 {
-    font-family: 'Titan One', cursive;
-    /* Fuente gordita para el título */
-    color: #ff6b6b;
-    text-align: center;
-    font-size: 3rem;
-    /* Más grande */
-    margin-bottom: 5px;
-    text-shadow: 3px 3px 0px #feca57;
-    letter-spacing: 2px;
-}
-
-.encabezado p {
-    text-align: center;
-    color: #54a0ff;
-    font-size: 1.3rem;
-    margin-bottom: 25px;
-    font-weight: 700;
-}
-
-/* --- INPUTS Y SELECTS --- */
-.config-zona label {
-    display: block;
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #5f27cd;
-}
-
-.select-bonito {
-    padding: 12px 25px;
-    border-radius: 50px;
-    border: 3px solid #feca57;
-    background: #fff;
-    color: #333;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    outline: none;
-    cursor: pointer;
-    width: 100%;
-    text-align: center;
-}
-
-.input-nombre {
-    background: #f7f1e3;
-    border: 2px solid #ddd;
-    padding: 12px;
-    border-radius: 15px;
-    color: #333;
-    text-align: center;
-    width: 100%;
-    font-size: 1.1rem;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.input-nombre:focus {
-    border-color: #54a0ff;
-    outline: none;
-}
-
-/* Botón Instrucciones */
-.btn-tutorial-esquina {
-    position: absolute !important;
-    top: 20px !important;
-    right: 20px !important;
-    /* Posición desde la derecha */
-    left: auto !important;
-    /* Forzamos que ignore la izquierda */
-    margin: 0 !important;
-    /* Quitamos márgenes que puedan centrarlo */
-
-    background: #feca57 !important;
-    color: white !important;
-    border: none !important;
-    padding: 8px 15px !important;
-    border-radius: 50px !important;
-    font-family: 'Nunito', sans-serif !important;
-    font-weight: 700 !important;
-    cursor: pointer !important;
-    box-shadow: 0 4px 0 #ff9f43 !important;
-    z-index: 100 !important;
-
-    /* Esto ayuda si el contenedor padre es Flex */
-    align-self: flex-end;
-}
-
-.btn-tutorial-esquina:active {
-    transform: translateY(3px) !important;
-    box-shadow: none !important;
-}
-
-.btn-start {
-    background: #ff9ff3;
-    color: white;
-    border: none;
-    width: 100%;
-    padding: 15px;
-    border-radius: 50px;
-    font-size: 1.6rem;
-    font-family: 'Titan One', cursive;
-    /* Fuente gordita también en el botón */
-    cursor: pointer;
-    margin-top: 20px;
-    box-shadow: 0 6px 0 #f368e0;
-    transition: transform 0.1s;
-    letter-spacing: 1px;
-}
-
-.btn-start:active {
-    transform: translateY(6px);
-    box-shadow: none;
-}
-
-/* ESTILOS DEL MODAL (Cópialos del Tabú Kids para que sean iguales) */
-/* --- ESTILOS UNIFICADOS DEL MODAL --- */
-.modal {
-    display: none;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background-color: rgba(0, 0, 0, 0.85) !important;
-    z-index: 99999 !important;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px);
-}
-
-.modal-content {
-    background: white !important;
-    padding: 25px !important;
-    border-radius: 40px !important;
-    width: 90% !important;
-    max-width: 480px !important;
-    max-height: 85vh !important;
-    /* IMPORTANTE: El scroll debe estar DENTRO del contenedor redondeado */
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    display: flex !important;
-    flex-direction: column !important;
-    position: relative !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
-    text-align: left !important;
-}
-
-.modal-content h2 {
-    font-family: 'Titan One', cursive;
-    color: #ff6b6b;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.tutorial-step {
-    display: flex;
-    align-items: flex-start;
+    justify-content: space-between;
     gap: 15px;
     margin-bottom: 20px;
 }
 
-.step-number {
-    background: #feca57;
-    /* Amarillo Trivial */
-    color: white;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-family: 'Titan One', cursive;
-    flex-shrink: 0;
-}
-
-.step-content h3 {
-    font-size: 1.1rem;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-.step-content p {
-    font-size: 0.9rem;
-    color: #666;
-    margin: 0;
-}
-
-.tutorial-close-btn {
-    background: #ff9ff3;
-    /* Rosa Trivial */
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 50px;
-    width: 100%;
-    font-family: 'Titan One', cursive;
-    font-size: 1.2rem;
-    cursor: pointer;
-    box-shadow: 0 5px 0 #f368e0;
-}
-
-.modal-close {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.step-number {
-    background: #ff6b6b;
-    /* Color coral del título del Trivial */
-    color: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    flex-shrink: 0;
-}
-
-.tutorial-close-btn {
-    background: #1dd1a1;
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 50px;
-    width: 100%;
-    font-family: 'Titan One', cursive;
-    font-size: 1.2rem;
-    margin-top: 15px;
-    cursor: pointer;
-    box-shadow: 0 5px 0 #10ac84;
-}
-
-/* --- HUD DEL JUEGO --- */
-.panel-estado {
-    display: flex;
-    justify-content: space-between;
-    background: #dff9fb;
-    padding: 15px;
-    border-radius: 20px;
-    margin-bottom: 15px;
-    border: 2px solid #c7ecee;
-}
-
-.jugador-activo {
-    color: #ee5253;
-    font-weight: 800;
-    font-size: 1.3rem;
+.caja-turno {
+    background: var(--primary-light);
+    border-radius: 15px;
+    padding: 10px 15px;
+    border: 2px solid var(--primary);
+    flex: 1;
 }
 
 .caja-timer {
-    font-size: 1.3rem;
-    color: #2e86de;
-    font-weight: 800;
-    font-family: 'Titan One', cursive;
-    /* Números estilo cartoon */
+    background: var(--white);
+    border-radius: 15px;
+    padding: 10px 20px;
+    border: 2px solid var(--secondary);
+    font-family: var(--font-title);
+    font-size: 1.5rem;
+    color: var(--secondary);
 }
 
 .timer-peligro {
-    color: #ff4757;
+    color: var(--secondary);
     animation: palpitar 0.5s infinite;
 }
 
@@ -336,7 +36,7 @@ body {
     }
 
     50% {
-        transform: scale(1.2);
+        transform: scale(1.1);
     }
 
     100% {
@@ -344,40 +44,30 @@ body {
     }
 }
 
-/* --- BARRA PROGRESO --- */
+/* Barra de Progreso */
 .barra-progreso-fondo {
     width: 100%;
-    height: 18px;
+    height: 15px;
     background: #eee;
-    border-radius: 15px;
+    border-radius: 10px;
+    margin-bottom: 25px;
     overflow: hidden;
-    margin-bottom: 30px;
-    border: 2px solid #ddd;
 }
 
 .barra-progreso-relleno {
     height: 100%;
     width: 0%;
-    background: repeating-linear-gradient(45deg,
-            #feca57,
-            #feca57 10px,
-            #ff9f43 10px,
-            #ff9f43 20px);
+    background: var(--success);
     transition: width 0.4s ease;
 }
 
-/* --- PREGUNTA --- */
-h2 {
-    font-family: 'Nunito', sans-serif;
-    font-weight: 800;
-    font-size: 1.7rem;
-    margin-bottom: 25px;
-    text-align: center;
-    color: #222f3e;
-    line-height: 1.4;
+/* Pregunta y Respuestas */
+.zona-pregunta h2 {
+    font-size: 2rem;
+    color: var(--text);
+    margin-bottom: 30px;
 }
 
-/* --- BOTONES RESPUESTA --- */
 .grid-respuestas {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -385,64 +75,61 @@ h2 {
 }
 
 .btn-respuesta {
-    background: #fff;
-    border: 3px solid #54a0ff;
+    background: var(--white);
+    border: 3px solid var(--primary);
     border-radius: 20px;
-    padding: 15px;
-    color: #54a0ff;
+    padding: 20px;
+    color: var(--primary);
+    font-family: var(--font-title);
     font-size: 1.2rem;
     cursor: pointer;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    transition: all 0.2s;
-    box-shadow: 0 5px 0 #2e86de;
+    box-shadow: 0 6px 0 var(--primary);
+    transition: 0.2s;
 }
 
 .btn-respuesta:hover:not(:disabled) {
-    background: #54a0ff;
-    color: white;
-    transform: translateY(-2px);
+    background: var(--primary-light);
 }
 
 .btn-respuesta:active:not(:disabled) {
-    transform: translateY(3px);
+    transform: translateY(4px);
     box-shadow: none;
 }
 
 .btn-respuesta.correcto {
-    background: #1dd1a1 !important;
-    border-color: #10ac84 !important;
+    background: var(--success) !important;
+    border-color: #2d6a30 !important;
     color: white !important;
-    box-shadow: 0 5px 0 #10ac84 !important;
+    box-shadow: 0 6px 0 #2d6a30 !important;
 }
 
 .btn-respuesta.incorrecto {
-    background: #ff6b6b !important;
-    border-color: #ee5253 !important;
+    background: var(--secondary) !important;
+    border-color: #d64545 !important;
     color: white !important;
-    box-shadow: 0 5px 0 #ee5253 !important;
+    box-shadow: 0 6px 0 #d64545 !important;
 }
 
 .btn-siguiente {
-    background: #feca57;
+    margin-top: 25px;
+    background: var(--primary);
     color: white;
     border: none;
-    padding: 12px 30px;
+    padding: 15px 40px;
     border-radius: 50px;
-    font-size: 1.3rem;
+    font-family: var(--font-title);
+    font-size: 1.5rem;
     cursor: pointer;
-    font-family: 'Titan One', cursive;
-    box-shadow: 0 5px 0 #ff9f43;
-    margin-top: 20px;
-    float: right;
+    box-shadow: 0 6px 0 #357abd;
+}
+
+.btn-siguiente:active {
+    transform: translateY(4px);
+    box-shadow: none;
 }
 
 @media (max-width: 600px) {
     .grid-respuestas {
         grid-template-columns: 1fr;
-    }
-
-    .encabezado h1 {
-        font-size: 2rem;
     }
 }
