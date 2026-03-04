@@ -95,7 +95,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label>Tipo de Perfil</label>
                 </div>
                 <button type="submit" class="btn-space">¡CREAR CUENTA!</button>
-                <div class="links">¿Ya eres parte de la nave? <a href="login.php">Entrar aquí</a></div>
+                <div class="links">¿Ya eres parte de la nave? <a href="login.php">Entrar aquí</a>
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
+    
+    <a href="../index.php" style="font-size: 0.8rem; opacity: 0.7; display: block; margin-top: 10px;">
+        Volver al inicio
+    </a>
+            </div>
             </form>
         </div>
         <div class="visual-side"><div id="canvas-container"></div></div>

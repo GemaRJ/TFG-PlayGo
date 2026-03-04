@@ -182,6 +182,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="links">
                     ¿Nuevo en la nave? <br>
                     <a href="registro.php">Crea tu cuenta aquí</a>
+                    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+    
+    <a href="../index.php" style="font-size: 0.8rem; opacity: 0.7;">
+        <i class="bi bi-arrow-left"></i> Volver al inicio
+    </a>
                 </div>
             </form>
         </div>

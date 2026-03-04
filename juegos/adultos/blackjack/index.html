@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Blackjack - Juego de Cartas</title>
+
+    <link rel="stylesheet" href="css/estilos.css" />
+  </head>
+  <body>
+    <!-- Contenedor principal que agrupa todos los elementos -->
+    <div class="container">
+      <h1>BLACKJACK</h1>
+
+      <!-- Elemento para el nombre del jugador -->
+      <div class="nombre_jugador" id="nombreJugador"></div>
+
+      <!-- Elemento para el estado del juego -->
+      <div class="estado_juego" id="estadoJuego">Iniciando juego...</div>
+
+      <!-- Zona de juego para mostrar las cartas de ambos jugadores -->
+      <div class="zona_juego">
+        <!-- Zona de la Banca -->
+        <div class="seccion_jugador banca">
+          <!-- Encabezado para mostrar el nombre y puntos de la banca -->
+          <div class="header_jugador">
+            <h2>BANCA</h2>
+            <!-- Puntos de la banca -->
+            <div class="puntos" id="puntosBanca">0</div>
+          </div>
+          <!-- Contenedor donde se muestran las cartas de la banca -->
+          <div class="cartas" id="cartasBanca"></div>
+        </div>
+
+        <!-- Zona del jugador -->
+        <div class="seccion_jugador jugador">
+          <!-- Encabezado para el nombre y puntos del jugador -->
+          <div class="header_jugador">
+            <h2><span id="nombreJugadorHeader"></span></h2>
+            <!-- Puntos actuales del jugador -->
+            <div class="puntos" id="puntosJugador">0</div>
+          </div>
+          <!-- Contenedor para mostrar las cartas del jugador -->
+          <div class="cartas" id="cartasJugador"></div>
+        </div>
+      </div>
+
+      <!-- Controles del juego: botones para interactuar -->
+      <div class="controles">
+        <!-- Botón para pedir nueva carta -->
+        <button id="btnPedirCarta" disabled>Pedir Carta</button>
+
+        <!-- Botón para plantarse -->
+        <button id="btnPlantarse" disabled>Plantarse</button>
+
+        <!-- Botón para iniciar una nueva partida -->
+        <button id="btnReiniciar">Nueva Partida</button>
+      </div>
+
+      <!-- Contenedor para mostrar el mensaje de resultado -->
+      <div class="mensaje" id="mensaje"></div>
+    </div>
+
+    <!-- Enlace al archivo JavaScript que contiene toda la lÃ³gica del juego -->
+   <script src="js/blackjack.js"></script>
+  </body>
+</html>

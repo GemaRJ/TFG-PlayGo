@@ -1,0 +1,209 @@
+/* --- RESET & FUENTES --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0f0c29;
+    background-image: linear-gradient(315deg, #0f0c29 0%, #302b63 74%, #24243e 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.contenedor-principal {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.tarjeta-juego {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.oculto { display: none !important; }
+
+/* --- ENCABEZADO Y TEXTOS --- */
+.encabezado h1 {
+    font-family: 'Fira Code', monospace;
+    color: #00ff88;
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.encabezado p { text-align: center; color: #ccc; margin-bottom: 20px; }
+
+/* --- PANTALLA INICIO --- */
+.config-zona {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.select-bonito {
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 2px solid #00ff88;
+    background: #1a1a2e;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.lista-nombres {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.input-nombre {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid #444;
+    padding: 12px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* --- PANEL DE ESTADO (TURNO Y TIMER) --- */
+.panel-estado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,0.3);
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.jugador-activo {
+    color: #00ff88;
+    font-weight: bold;
+    font-family: 'Fira Code', monospace;
+    font-size: 1.1rem;
+}
+
+.caja-timer {
+    font-family: 'Fira Code', monospace;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.timer-peligro {
+    color: #ff4757;
+    animation: palpitar 0.5s infinite;
+}
+
+@keyframes palpitar {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* --- INFO Y BARRA --- */
+.info-juego {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 0.85rem;
+    color: #bbb;
+}
+
+.barra-progreso-fondo {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.barra-progreso-relleno {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00ff88, #00b8ff);
+    transition: width 0.4s ease;
+}
+
+/* --- PREGUNTA --- */
+h2 {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    text-align: center;
+    min-height: 50px;
+}
+
+/* --- BOTONES RESPUESTA --- */
+.grid-respuestas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.btn-respuesta {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-respuesta:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #00b8ff;
+}
+
+.btn-respuesta.correcto {
+    background: rgba(46, 204, 113, 0.2) !important;
+    border-color: #2ecc71 !important;
+    color: #2ecc71 !important;
+}
+
+.btn-respuesta.incorrecto {
+    background: rgba(231, 76, 60, 0.2) !important;
+    border-color: #e74c3c !important;
+    color: #e74c3c !important;
+}
+
+.pie-juego { margin-top: 30px; text-align: right; }
+
+.btn-siguiente {
+    background: linear-gradient(90deg, #00b8ff, #0051ff);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0, 184, 255, 0.4);
+    display: inline-block;
+    width: 100%; /* Botón grande al principio */
+}
+.pie-juego .btn-siguiente { width: auto; } /* Botón normal en juego */
+
+@media (max-width: 600px) {
+    .grid-respuestas { grid-template-columns: 1fr; }
+}

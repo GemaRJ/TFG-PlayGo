@@ -134,9 +134,9 @@ if (isset($_SESSION['id'])) {
         </div>
 
         <div class="zona-invitado">
-            <p>¿Solo de paso? Prueba nuestros sistemas sin registrarte.</p>
+            <p>¿Tienes menos de 18 años? Prueba nuestros sistemas sin registrarte y accede a juegos infantiles.</p>
             <a href="invitado_logic.php" class="btn-invitado">
-                🕵️ Jugar como Explorador Anónimo
+                🛡️ Acceso Seguro: Modo Cadete (Sin Registro)
             </a>
         </div>
 
