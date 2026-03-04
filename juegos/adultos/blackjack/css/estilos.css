@@ -1,0 +1,217 @@
+/* Reseteo global de estilos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(135deg, #000000 0%, #1a3f7f 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Contenedor principal del juego */
+.container {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.3);
+  max-width: 900px;
+  width: 100%;
+}
+
+/* Título */
+h1 {
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 10px;
+  font-size: 2.5em;
+}
+
+/* Nombre del jugador */
+.nombre_jugador {
+  text-align: center;
+  color: #919191;
+  margin-bottom: 30px;
+  font-size: 1.5em;
+}
+
+/* Zona de juego */
+.zona_juego {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Sección de cada jugador */
+.seccion_jugador {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 20px;
+  border: 3px solid #dee2e6;
+}
+
+/* Borde para la sección de la banca */
+.seccion_jugador.banca {
+  border-color: #dc3545;
+}
+
+/* Borde para la sección del jugador */
+.seccion_jugador.jugador {
+  border-color: #28a745;
+}
+
+/* Encabezado de cada jugador */
+.header_jugador {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Estilo del nombre del jugador (h2) */
+.header_jugador h2 {
+  font-size: 1.5em;
+  color: #333;
+}
+
+/* Puntuación */
+.puntos {
+  font-size: 1.8em;
+  font-weight: bold;
+  padding: 5px 15px;
+  border-radius: 10px;
+  background: #dbdbdb;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Puntos de la banca */
+.banca .puntos {
+  color: #dc3545;
+}
+
+/* Puntos del jugador */
+.jugador .puntos {
+  color: #28a745;
+}
+
+/* Contenedor de las cartas */
+.cartas {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  min-height: 140px;
+  align-items: center;
+}
+
+/* Imágenes de las cartas */
+.carta {
+  /* Tamaño */
+  width: 100px;
+  height: auto;
+
+  /* Bordes redondeados */
+  border-radius: 8px;
+
+  /* Sombra */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Botones */
+.controles {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Estilos de los botones */
+button {
+  padding: 15px 30px;
+  font-size: 1.1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para botones deshabilitados */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Botón pedir carta */
+#btnPedirCarta {
+  background: #28a745;
+  color: white;
+}
+
+/* Botón plantarse */
+#btnPlantarse {
+  background: #ffc107;
+  color: #333;
+}
+
+/* Botón reiniciar */
+#btnReiniciar {
+  background: #007bff;
+  color: white;
+  display: none;
+}
+
+/* Mensaje del resultado */
+.mensaje {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  display: none;
+}
+
+/* Mensaje al ganar */
+.mensaje.ganaste {
+  background: #d4edda;
+  color: #155724;
+  border: 2px solid #c3e6cb;
+  display: block;
+}
+
+/* Mensaje al perder*/
+.mensaje.perdiste {
+  background: #f8d7da;
+  color: #721c24;
+  border: 2px solid #f5c6cb;
+  display: block;
+}
+
+/* Mensaje de empate */
+.mensaje.empate {
+  background: #fff3cd;
+  color: #856404;
+  border: 2px solid #ffeaa7;
+  display: block;
+}
+
+/* Estado del juego */
+.estado_juego {
+  text-align: center;
+  font-size: 1.2em;
+  color: #969696;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+/* Clase para mostrar mensajes */
+.mostrar {
+  display: block !important;
+}
