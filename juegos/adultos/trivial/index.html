@@ -1,79 +1,92 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DAW Quiz Master</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
     <div class="contenedor-principal">
-        
-        <div id="pantalla-inicio" class="tarjeta-juego">
-            <header class="encabezado">
-                <h1>&lt;DevQuiz /&gt;</h1>
-                <p>Configuración de la Partida</p>
-            </header>
+      <div id="pantalla-inicio" class="tarjeta-juego">
+        <header class="encabezado">
+          <h1>&lt;DevQuiz /&gt;</h1>
+          <p>Configuración de la Partida</p>
+        </header>
 
-            <div class="config-zona">
-                <label>Nº de Jugadores:</label>
-                <div class="select-wrapper">
-                    <select id="num-jugadores" class="select-bonito" onchange="generarInputsNombres()">
-                        <option value="1">1 Jugador 👤</option>
-                        <option value="2">2 Jugadores 👥</option>
-                        <option value="3">3 Jugadores 👨‍👩‍👧</option>
-                        <option value="4">4 Jugadores 👨‍👩‍👧‍👦</option>
-                    </select>
-                </div>
+        <div class="config-zona">
+          <label>Nº de Jugadores:</label>
+          <div class="select-wrapper">
+            <select
+              id="num-jugadores"
+              class="select-bonito"
+              onchange="generarInputsNombres()"
+            >
+              <option value="1">1 Jugador 👤</option>
+              <option value="2">2 Jugadores 👥</option>
+              <option value="3">3 Jugadores 👨‍👩‍👧</option>
+              <option value="4">4 Jugadores 👨‍👩‍👧‍👦</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="lista-nombres" class="lista-nombres"></div>
+
+        <button class="btn-siguiente" onclick="comenzarPartida()">
+          ▶️ INICIAR JUEGO
+        </button>
+      </div>
+
+      <div id="pantalla-juego" class="tarjeta-juego oculto">
+        <header class="encabezado">
+          <h1>&lt;DevQuiz /&gt;</h1>
+
+          <div class="panel-estado">
+            <div class="caja-turno">
+              <span class="etiqueta">Turno de:</span>
+              <span id="nombre-jugador-activo" class="jugador-activo"
+                >Jugador 1</span
+              >
             </div>
+            <div class="caja-timer">
+              ⏳ <span id="tiempo-restante">15</span>s
+            </div>
+          </div>
 
-            <div id="lista-nombres" class="lista-nombres"></div>
+          <div class="info-juego">
+            <span id="contador-preguntas">Pregunta 1/10</span>
+            <span id="puntuacion-actual">Puntos: 0</span>
+          </div>
 
-            <button class="btn-siguiente" onclick="comenzarPartida()">▶️ INICIAR JUEGO</button>
-        </div>
+          <div class="barra-progreso-fondo">
+            <div id="barra-progreso" class="barra-progreso-relleno"></div>
+          </div>
+        </header>
 
+        <main class="zona-pregunta">
+          <h2 id="texto-pregunta">Cargando...</h2>
 
-        <div id="pantalla-juego" class="tarjeta-juego oculto">
-            
-            <header class="encabezado">
-                <h1>&lt;DevQuiz /&gt;</h1>
-                
-                <div class="panel-estado">
-                    <div class="caja-turno">
-                        <span class="etiqueta">Turno de:</span>
-                        <span id="nombre-jugador-activo" class="jugador-activo">Jugador 1</span>
-                    </div>
-                    <div class="caja-timer">
-                        ⏳ <span id="tiempo-restante">15</span>s
-                    </div>
-                </div>
+          <div id="grid-respuestas" class="grid-respuestas"></div>
+        </main>
 
-                <div class="info-juego">
-                    <span id="contador-preguntas">Pregunta 1/10</span>
-                    <span id="puntuacion-actual">Puntos: 0</span>
-                </div>
-                
-                <div class="barra-progreso-fondo">
-                    <div id="barra-progreso" class="barra-progreso-relleno"></div>
-                </div>
-            </header>
-
-            <main class="zona-pregunta">
-                <h2 id="texto-pregunta">Cargando...</h2>
-                
-                <div id="grid-respuestas" class="grid-respuestas"></div>
-            </main>
-
-            <footer class="pie-juego">
-                <button id="btn-siguiente" class="btn-siguiente oculto" onclick="siguientePregunta()">Siguiente >></button>
-            </footer>
-
-        </div>
+        <footer class="pie-juego">
+          <button
+            id="btn-siguiente"
+            class="btn-siguiente oculto"
+            onclick="siguientePregunta()"
+          >
+            Siguiente >>
+          </button>
+        </footer>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="js/app.js"></script>
-</body>
+    <script src="js/app.js"></script>
+    <script src="../ranking.js"></script>
+  </body>
 </html>

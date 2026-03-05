@@ -212,6 +212,14 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
         }
     </script>
     <script src="chatbot/bot.js"></script>
+    <script>
+        // SEGURIDAD: Sincronizamos el ID de sesión con el entorno del navegador
+        window.usuarioId = <?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 'null'; ?>;
+        console.log("🛰️ PlayGo: Conexión establecida para Usuario ID: " + window.usuarioId);
+    </script>
+</body>
+
+</html>
 </body>
 
 </html>

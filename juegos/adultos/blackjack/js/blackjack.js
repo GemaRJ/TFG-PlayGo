@@ -1,3 +1,7 @@
+// Identificación del juego al inicio
+window.juegoId = 1;
+window.puntosJugador = 0;
+
 // Variables
 let cartasBanca = [];
 let cartasJugador = [];
@@ -219,6 +223,18 @@ function mostrarResultado(tipo, texto) {
   divMensaje.textContent = texto;
   divMensaje.className = "mensaje mostrar " + tipo;
   document.getElementById("btnReiniciar").style.display = "inline-block";
+
+  // DISPARAR EL VOLCADO DE DATOS
+  // Usamos window.parent para verificar si hay un usuario logueado en el panel
+  if (window.parent.usuarioId) {
+    // Actualizamos los puntos finales para que el ranking los lea
+    window.puntosJugador = puntosJugador;
+
+    // Lanzamos el aviso al archivo ranking.js
+    const evento = new CustomEvent("resultadoJuego");
+    window.dispatchEvent(evento);
+    console.log("🚀 Iniciando transferencia de puntos al servidor...");
+  }
 }
 
 // Función para deshabilitar botones
