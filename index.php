@@ -49,7 +49,6 @@ if (isset($_SESSION['id'])) {
                 PLAY<span>GO</span>
             </a>
             <div class="menu-derecha">
-                <a href="#catalogo" class="enlace-texto">Catálogo</a>
                 <a href="autenticacion/login.php" class="boton-principal">
                     👤 Iniciar Sesión
                 </a>
