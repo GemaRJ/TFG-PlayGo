@@ -2,7 +2,7 @@
 // ... (mantenemos tu código PHP inicial igual)
 require_once "../configuracion/conexion.php";
 require_once "../configuracion/sesiones.php";
-comprobarSesion(); 
+comprobarSesion();
 
 if ($_SESSION['tipo_usuario'] !== 'administrador') {
     header("Location: ../index.php");
@@ -16,16 +16,18 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayGo Admin | Central de Mando</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/index.css"> 
+    <link rel="stylesheet" href="../assets/css/index.css">
     <style>
         /* CORRECCIÓN PARA EL FONDO SI ES BLANCO */
         body.portal-galactico {
-            background-color: #0f172a !important; /* Forzamos fondo oscuro espacial */
+            background-color: #0f172a !important;
+            /* Forzamos fondo oscuro espacial */
             color: white;
         }
 
@@ -51,7 +53,10 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
             font-size: 1.5rem;
             margin-bottom: 10px;
         }
-        .header-panel .logo span { color: #fff; }
+
+        .header-panel .logo span {
+            color: #fff;
+        }
 
         /* CORRECCIÓN DEL TÍTULO (QUITAMOS EL BLANCO DEL DEGRADADO) */
         .header-panel h1 {
@@ -75,7 +80,8 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
 
         /* TARJETAS MÁS VISIBLES */
         .card-comando {
-            background: rgba(30, 41, 59, 0.7); /* Fondo más sólido */
+            background: rgba(30, 41, 59, 0.7);
+            /* Fondo más sólido */
             backdrop-filter: blur(15px);
             border: 1px solid rgba(0, 210, 255, 0.3);
             border-radius: 30px;
@@ -93,25 +99,93 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
         }
 
         /* ... (el resto de tus estilos btn-admin, etc. están bien) ... */
-        .icono-vibrante { font-size: 4rem; margin-bottom: 20px; display: block; filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.4)); }
-        .card-comando h3 { color: #fff; font-size: 1.6rem; margin-bottom: 15px; font-weight: 700; }
-        .card-comando p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 30px; }
-        .grupo-botones { display: flex; flex-direction: column; gap: 12px; }
-        .btn-admin { padding: 12px 20px; border-radius: 15px; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: 0.3s; text-transform: uppercase; }
-        .btn-primary-space { background: rgba(0, 210, 255, 0.1); color: #00d2ff; border: 1px solid #00d2ff; }
-        .btn-primary-space:hover { background: #00d2ff; color: #000; box-shadow: 0 0 20px rgba(0, 210, 255, 0.5); }
-        .alerta-badge { position: absolute; top: 20px; right: 20px; background: #ff4444; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; }
-        .btn-logout { margin-top: 60px; color: #ff4444; text-decoration: none; font-weight: 600; border: 1px solid #ff4444; padding: 10px 25px; border-radius: 50px; transition: 0.3s; display: inline-block; }
-        .btn-logout:hover { background: #ff4444; color: white; }
+        .icono-vibrante {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.4));
+        }
+
+        .card-comando h3 {
+            color: #fff;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .card-comando p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        .grupo-botones {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-admin {
+            padding: 12px 20px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-primary-space {
+            background: rgba(0, 210, 255, 0.1);
+            color: #00d2ff;
+            border: 1px solid #00d2ff;
+        }
+
+        .btn-primary-space:hover {
+            background: #00d2ff;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+        }
+
+        .alerta-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff4444;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 800;
+        }
+
+        .btn-logout {
+            margin-top: 60px;
+            color: #ff4444;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid #ff4444;
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .btn-logout:hover {
+            background: #ff4444;
+            color: white;
+        }
     </style>
 </head>
+
 <body class="portal-galactico">
 
     <main class="admin-main">
         <div class="header-panel">
             <div class="logo">PLAY<span>GO</span> ADMIN</div>
             <h1>Centro de Comando</h1>
-            <p style="color: #94a3b8;">Bienvenido, Comandante <?php echo htmlspecialchars($_SESSION['nombre']); ?>. El sistema está operativo.</p>
+            <p style="color: #94a3b8;">Bienvenido, Comandante <?php echo htmlspecialchars($_SESSION['nombre']); ?>. El
+                sistema está operativo.</p>
         </div>
 
         <div class="grid-comandos">
@@ -136,7 +210,7 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
             </div>
 
             <div class="card-comando">
-                <?php if($cont_pendientes > 0): ?>
+                <?php if ($cont_pendientes > 0): ?>
                     <span class="alerta-badge"><?php echo $cont_pendientes; ?> ALERTAS</span>
                 <?php endif; ?>
                 <span class="icono-vibrante">📡</span>
@@ -154,4 +228,5 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
 
     <script src="../chatbot/bot.js"></script>
 </body>
+
 </html>
