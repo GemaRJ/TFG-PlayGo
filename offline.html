@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sin Conexión | PlayGo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/playgo/assets/css/index.css">
+    <link rel="icon" href="/playgo/assets/img/jugando-videojuegos.png" type="image/png">
+    <meta name="theme-color" content="#0d1b2a">
+    <style>
+        .offline-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+        .offline-logo {
+            width: 15rem;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+        }
+        .offline-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #ff4757;
+            text-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+        }
+        .offline-text {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body class="portal-galactico">
+    <div class="offline-container">
+        <img src="/playgo/assets/img/logoPlayGo.png" alt="PlayGo logo" class="offline-logo">
+        <h1 class="offline-title">¡Conexión Perdida!</h1>
+        <p class="offline-text">Parece que tu nave se ha desconectado de la red. Por favor, revisa tu conexión a internet para poder seguir jugando en PlayGo.</p>
+        <button onclick="window.location.reload()" class="btn-accion" style="border: none; cursor: pointer; padding: 15px 30px; font-size: 1.1rem;">
+            REINTENTAR CONEXIÓN
+        </button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "name": "PlayGo",
+  "short_name": "PlayGo",
+  "id": "/playgo/index.php",
+  "start_url": "/playgo/index.php",
+  "display": "standalone",
+  "background_color": "#0d1b2a",
+  "theme_color": "#0d1b2a",
+  "description": "La mejor plataforma para jugar y gestionar tus videojuegos.",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/playgo/assets/img/icono192_jugando-videojuegos.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/playgo/assets/img/icono512_jugando-videojuegos.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/playgo/assets/img/logoPlayGo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/playgo/assets/img/capturaPC.png",
+      "sizes": "1899x1079",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ir al Panel",
+      "url": "/playgo/panel.php",
+      "icons": [
+        {
+          "src": "/playgo/assets/img/jugando-videojuegos.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

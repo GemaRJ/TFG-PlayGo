@@ -69,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         rel="stylesheet">
     <link rel="stylesheet" href="assets/css/soporte.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="chatbot/bot.css">
+    <link rel="icon" href="assets/img/jugando-videojuegos.png" type="image/png">
 </head>
 
 <body>
@@ -120,20 +121,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script>
         <?php if ($enviar_email_js): ?>
             fetch("https://formspree.io/f/mkovjpda", {
-                    method: "POST",
-                    body: new FormData(document.getElementById("formSoporte")),
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(function() {
+                method: "POST",
+                body: new FormData(document.getElementById("formSoporte")),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+                .then(function () {
                     Swal.fire({
                         title: '¡Recibido!',
                         text: 'Ticket guardado y alerta enviada al administrador.',
                         icon: 'success',
                         timer: 2500,
                         showConfirmButton: false
-                    }).then(function() {
+                    }).then(function () {
                         window.location.href = 'index.php';
                     });
                 });

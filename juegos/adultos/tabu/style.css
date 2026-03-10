@@ -1,13 +1,24 @@
 /* Importamos las fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Fira+Code:wght@500;700&display=swap');
 
-:root {
-    --neon-green: #00ff88;
+:root,
+[data-theme="dark"] {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e3a8a;
+    --accent-primary: rgb(0, 242, 255);
+    --accent-secondary: rgba(70, 9, 108, 0.9);
+    --text-primary: #e0e6ff;
+    --text-muted: #7a82a8;
+    --card-bg: rgba(26, 31, 58, 0.8);
+    --glow: rgba(0, 242, 255, 0.4);
+    --shadow: rgba(0, 0, 0, 0.5);
+
+    --neon-green: var(--accent-primary);
     --neon-blue: #00b8ff;
     --neon-red: #ff4757;
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --text-color: #fff;
+    --glass-bg: var(--card-bg);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-color: var(--text-primary);
 }
 
 * {
@@ -18,15 +29,79 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #0f0c29;
-    background-image: linear-gradient(315deg, #0f0c29 0%, #302b63 74%, #24243e 100%);
+    background-color: var(--bg-primary);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--text-color);
+    color: var(--text-primary);
     padding: 20px;
-    overflow: hidden;
+}
+
+/* Clases Comunes compartidas */
+.contenedor-principal {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.tarjeta-juego {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 15px 35px var(--shadow);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.oculto {
+    display: none !important;
+}
+
+/* Botones principales */
+.btn-siguiente {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: var(--bg-primary);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 5px 15px var(--glow);
+    display: inline-block;
+    width: 100%;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+}
+
+.btn-siguiente:hover:not(.disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px var(--glow);
+}
+
+.btn-siguiente.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(1);
+    background: #444 !important;
+    color: #888 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.encabezado h1 {
+    font-family: 'Fira Code', monospace;
+    color: var(--accent-primary);
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px var(--glow);
 }
 
 .container {
@@ -235,9 +310,9 @@ p {
     flex-grow: 1;
     padding: 12px;
     border-radius: 50px;
-    border: 2px solid var(--neon-green);
+    border: 2px solid var(--accent-primary);
     background: rgba(0, 0, 0, 0.3);
-    color: white;
+    color: var(--text-primary);
     outline: none;
     font-family: 'Poppins', sans-serif;
     text-align: center;
@@ -340,8 +415,8 @@ p {
 /* --- ESTILOS TUTORIAL / MODAL --- */
 .btn-tutorial-esquina {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 20px;
+    right: 20px;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid var(--glass-border);
     color: white;
@@ -440,7 +515,133 @@ p {
     background: var(--neon-green);
     border: none;
     color: #000;
-    font-weight: bold;
     cursor: pointer;
     margin-top: 10px;
+}
+
+.config-zona {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ========================================
+   LOGO
+======================================== */
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    animation: slideDown 0.8s ease-out, float 3s ease-in-out infinite;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.logo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: drop-shadow(0 0 20px var(--glow));
+    border: 3px solid var(--accent-primary);
+    box-shadow: 0 0 30px var(--glow),
+        0 0 50px var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05) rotate(5deg);
+    filter: drop-shadow(0 0 30px var(--accent-primary));
+}
+
+/* ========================================
+   FONDO Y PARTÍCULAS (HEREDADO DE IMPOSTOR)
+======================================== */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at 20% 30%, var(--glow) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, var(--shadow) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: bgPulse 10s ease-in-out infinite;
+}
+
+@keyframes bgPulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    animation: particleFloat 10s linear infinite;
+    opacity: 0.3;
+    box-shadow: 0 0 10px var(--glow);
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.3;
+    }
+
+    90% {
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(-100px) translateX(100px) rotate(360deg);
+        opacity: 0;
+    }
 }

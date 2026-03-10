@@ -243,15 +243,13 @@ function deshabilitarBotones() {
   document.getElementById("btnPlantarse").disabled = true;
 }
 
-// Función para iniciar el juego
-function iniciarJuego() {
-  // Pedir nombre del jugador
-  nombreJugador = prompt("Introduce tu nombre:");
+// Función para iniciar el juego desde la UI
+function iniciarJuegoUI() {
+  const input = document.getElementById("inputNombre");
+  nombreJugador = input.value.trim() || "Jugador";
 
-  // Si no pone nombre o cancela
-  if (!nombreJugador || nombreJugador.trim() === "") {
-    nombreJugador = "Jugador";
-  }
+  document.getElementById("pantalla-inicio").classList.add("oculto");
+  document.getElementById("pantalla-juego").classList.remove("oculto");
 
   // Mostrar nombre
   document.getElementById("nombreJugador").innerHTML =
@@ -312,5 +310,33 @@ document
   .getElementById("btnReiniciar")
   .addEventListener("click", reiniciarJuego);
 
-// Iniciar cuando carga la página
-window.addEventListener("load", iniciarJuego);
+// --- LÓGICA TUTORIAL ---
+function mostrarTutorial() {
+  document.getElementById('modalTutorial').classList.remove('hidden');
+}
+
+function cerrarTutorial() {
+  document.getElementById('modalTutorial').classList.add('hidden');
+}
+
+// --- PARTÍCULAS BACKGROUND ---
+function createParticles() {
+  const particlesContainer = document.getElementById("particles");
+  if (!particlesContainer) return;
+
+  particlesContainer.innerHTML = "";
+  const particlesCount = 30; // CONFIG.PARTICLES_COUNT
+
+  for (let i = 0; i < particlesCount; i++) {
+      const particle = document.createElement("div");
+      particle.className = "particle";
+      particle.style.left = Math.random() * 100 + "%";
+      particle.style.animationDuration = Math.random() * 10 + 5 + "s";
+      particle.style.animationDelay = Math.random() * 5 + "s";
+      particlesContainer.appendChild(particle);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  createParticles();
+});

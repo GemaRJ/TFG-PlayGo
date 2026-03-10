@@ -19,15 +19,27 @@ body {
     color: var(--texto-principal);
     margin: 0;
     padding: 0;
-    height: 100vh; 
+    height: 100vh;
     overflow: hidden;
 }
 
 /* Scrollbar personalizada */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #3f3f6e; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: var(--neon-azul); }
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3f3f6e;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-azul);
+}
 
 /* --- 3. NAVBAR (Barra Superior) --- */
 .main-navbar {
@@ -39,20 +51,35 @@ body {
     z-index: 1050;
 }
 
-.navbar-brand span { filter: drop-shadow(0 0 5px var(--neon-rosa)); }
+.navbar-brand span {
+    filter: drop-shadow(0 0 5px var(--neon-rosa));
+}
+
+.brand {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #00d2ff;
+    margin-bottom: 0;
+}
+
+.brand span {
+    color: #fff;
+    text-shadow: 0 0 10px #00d2ff;
+    filter: none;
+}
 
 /* --- 4. LAYOUT PRINCIPAL (La clave del ajuste) --- */
 .main-layout {
     display: flex;
-    height: 100vh; 
-    padding-top: 70px; 
+    height: 100vh;
+    padding-top: 70px;
     box-sizing: border-box;
 }
 
 /* --- 5. SIDEBAR (Menú Lateral) --- */
 .sidebar-area {
     width: 280px;
-    flex-shrink: 0; 
+    flex-shrink: 0;
     background: rgba(0, 0, 0, 0.2);
     border-right: 1px solid var(--borde-tenue);
     height: 100%;
@@ -101,7 +128,7 @@ body {
 
 /* --- 6. ZONA DE JUEGO (Derecha) --- */
 .game-area {
-    flex-grow: 1; 
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     padding: 20px;
@@ -116,11 +143,16 @@ body {
     color: #ffca2c;
     font-size: 0.9rem;
 }
-.alert-invitado a { color: #fff; text-decoration: underline; }
+
+.alert-invitado a {
+    color: #fff;
+    text-decoration: underline;
+}
 
 /* Tarjeta Negra del Juego */
 .game-card-container {
-    flex-grow: 1; /* ESTO HACE QUE SE ESTIRE HASTA EL FONDO */
+    flex-grow: 1;
+    /* ESTO HACE QUE SE ESTIRE HASTA EL FONDO */
     display: flex;
     flex-direction: column;
     background: #000;
@@ -147,7 +179,8 @@ body {
 .iframe-wrapper {
     flex-grow: 1;
     position: relative;
-    background: #fff; /* IMPORTANTE: El fondo blanco para que el juego se vea bien */
+    background: #fff;
+    /* IMPORTANTE: El fondo blanco para que el juego se vea bien */
 }
 
 iframe {
@@ -170,28 +203,150 @@ iframe {
 
 /* Tablets - Ipads */
 @media (min-width: 769px) and (max-width: 1024px) {
-    .sidebar-area { width: 220px; }
-    .title-menu { font-size: 0.75rem; letter-spacing: 1px; }
-    .list-group-item .fw-bold { font-size: 0.85rem; }
-    .list-group-item small { font-size: 0.7rem; }
+    .sidebar-area {
+        width: 220px;
+    }
+
+    .title-menu {
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+    }
+
+    .list-group-item .fw-bold {
+        font-size: 0.85rem;
+    }
+
+    .list-group-item small {
+        font-size: 0.7rem;
+    }
 }
 
 /* Pantallas Grandes (TV / Monitores 27"+) */
 @media (min-width: 1600px) {
-    .sidebar-area { width: 350px; }
-    .title-menu { font-size: 1.1rem; margin-top: 2.5rem; }
-    .list-group-item { padding: 15px 25px !important; margin-bottom: 10px; }
-    .list-group-item .fw-bold { font-size: 1.1rem; }
-    .list-group-item small { font-size: 0.9rem; }
-    .list-group-item span.fs-3 { font-size: 2.5rem !important; }
-    .game-area { padding: 40px; }
+    .sidebar-area {
+        width: 350px;
+    }
+
+    .title-menu {
+        font-size: 1.1rem;
+        margin-top: 2.5rem;
+    }
+
+    .list-group-item {
+        padding: 15px 25px !important;
+        margin-bottom: 10px;
+    }
+
+    .list-group-item .fw-bold {
+        font-size: 1.1rem;
+    }
+
+    .list-group-item small {
+        font-size: 0.9rem;
+    }
+
+    .list-group-item span.fs-3 {
+        font-size: 2.5rem !important;
+    }
+
+    .game-area {
+        padding: 40px;
+    }
 }
 
 /* Móviles */
 @media (max-width: 768px) {
-    body { height: auto; overflow: auto; } /* Permitir scroll en móvil */
-    .main-layout { display: block; height: auto; padding-top: 70px; }
-    .sidebar-area { width: 100%; height: auto; border-right: none; margin-bottom: 20px; }
-    .game-area { height: auto; padding: 15px; }
-    .game-card-container { height: 550px; } /* Altura fija en móvil un poco más generosa */
+    body {
+        height: auto;
+        overflow: auto;
+    }
+
+    /* Permitir scroll en móvil */
+    .main-layout {
+        display: block;
+        height: auto;
+        padding-top: 70px;
+    }
+
+    .sidebar-area {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        margin-bottom: 20px;
+    }
+
+    .game-area {
+        height: auto;
+        padding: 15px;
+    }
+
+    .game-card-container {
+        height: 550px;
+    }
+
+    /* Altura fija en móvil un poco más generosa */
+}
+
+/* ========================================
+   LOGO
+======================================== */
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    animation: slideDown 0.8s ease-out, float 3s ease-in-out infinite;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: drop-shadow(0 0 20px var(--glow));
+    border: 3px solid var(--accent-primary);
+    box-shadow: 0 0 30px var(--glow),
+        0 0 50px var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05) rotate(5deg);
+    filter: drop-shadow(0 0 30px var(--accent-primary));
+}
+
+.logoPlayGo {
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.6));
+    border: 2px solid #00d2ff;
+    box-shadow: 0 0 12px rgba(0, 210, 255, 0.5);
+    transition: all 0.3s ease;
 }

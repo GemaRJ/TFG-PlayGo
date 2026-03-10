@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juegos Adultos</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Varela+Round&display=swap');
+
+        :root {
+            --primary: #4a90e2;
+            --secondary: #d38dff;
+            --text: #ffffff;
+            --font-main: 'Varela Round', sans-serif;
+            --font-title: 'Fredoka One', cursive;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: #0f172a;
+            /* Fondo adulto diferenciado pero con estilo fondo-menu */
+            background: radial-gradient(circle at center, #261633 0%, #0f172a 100%);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+            justify-content: flex-start;
+        }
+
+        /* Estrellas fondo-menu */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0, 0, 0, 0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0, 0, 0, 0)),
+                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0, 0, 0, 0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: stars-move 30s linear infinite;
+            opacity: 0.2;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes stars-move {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-50%);
+            }
+        }
+
+        h1 {
+            font-family: var(--font-title);
+            color: var(--secondary);
+            font-size: 3rem;
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .games-panel {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            width: 100%;
+            max-width: 800px;
+            padding-bottom: 4rem;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            min-height: 260px;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: 0 15px 40px rgba(211, 141, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .game-card img {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: drop-shadow(0 0 20px var(--glow));
+            border: 3px solid var(--accent-primary);
+            box-shadow: 0 0 30px var(--glow),
+                0 0 50px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .game-card h3 {
+            font-size: 1.5rem;
+            margin: 0;
+            font-family: var(--font-title);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .games-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .game-card {
+                min-height: 220px;
+                padding: 20px;
+            }
+
+            .game-card img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        /* ========================================
+   LOGO
+======================================== */
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            animation: slideDown 0.8s ease-out, float 3s ease-in-out infinite;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .logo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: drop-shadow(0 0 20px var(--glow));
+            border: 3px solid var(--accent-primary);
+            box-shadow: 0 0 30px var(--glow),
+                0 0 50px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05) rotate(5deg);
+            filter: drop-shadow(0 0 30px var(--accent-primary));
+        }
+    </style>
+</head>
+
+<body class="fondo-menu">
+
+    <h1>Juegos para Adultos</h1>
+
+    <div class="games-panel">
+        <a href="trivial/index.html" class="game-card">
+            <div class="logo-container">
+                <img src="trivial/img/trivial.png" alt="Trivial" class="logo">
+            </div>
+            <h3>Trivial</h3>
+        </a>
+        <a href="blackjack/index.html" class="game-card">
+            <div class="logo-container">
+                <img src="blackjack/images/blackjack.png" alt="Blackjack" class="logo">
+            </div>
+            <h3>Blackjack</h3>
+        </a>
+        <a href="impostor/index.html" class="game-card">
+            <div class="logo-container">
+                <img src="impostor/img/impostor.png" alt="El Impostor" class="logo">
+            </div>
+            <h3>El Impostor</h3>
+        </a>
+        <a href="tabu/index.html" class="game-card">
+            <div class="logo-container">
+                <img src="tabu/img/tabu.png" alt="Tabú" class="logo">
+            </div>
+            <h3>Tabú</h3>
+        </a>
+
+    </div>
+
+</body>
+
+</html>

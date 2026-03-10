@@ -10,20 +10,30 @@
 </head>
 
 <body>
+    <!-- Partículas de Fondo -->
+    <div class="particles" id="particles"></div>
 
-    <div class="container">
+    <div class="contenedor-principal">
 
-        <div id="start-screen" class="panel-central">
+        <div id="pantalla-inicio" class="tarjeta-juego">
             <button class="btn-tutorial-esquina" onclick="mostrarTutorialTabu()">
                 ❓ Instrucciones
             </button>
-            <h1>TABÚ 🤫</h1>
+            <header class="encabezado">
+                <div class="logo-container">
+                    <img src="img/tabu.png" alt="Impostor Logo" class="logo">
+                </div>
+                <h1>TABÚ</h1>
+            </header>
 
-            <p>Añade los equipos que van a jugar</p>
-
-            <div class="team-setup">
-                <div class="input-group">
-                    <input type="text" id="new-team-name" placeholder="Nombre del equipo..." autocomplete="off">
+            <div class="config-zona">
+                <label
+                    style="color: var(--accent-primary); display: block; margin-bottom: 10px; font-weight: bold;">Nombre
+                    del
+                    Equipo:</label>
+                <div class="input-group" style="justify-content: center;">
+                    <input type="text" id="new-team-name" class="input-nombre" style="width: 70%;"
+                        placeholder="Nombre del equipo..." autocomplete="off">
                     <button class="btn-add" onclick="agregarEquipo()">➕</button>
                 </div>
 
@@ -31,11 +41,11 @@
                 </ul>
             </div>
 
-            <button id="btn-start-game" class="btn-jugar disabled" onclick="iniciarPartidaMultijugador()">
+            <button id="btn-start-game" class="btn-siguiente disabled" onclick="iniciarPartidaMultijugador()">
                 👥 MÍNIMO 2 EQUIPOS
             </button>
 
-            <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.6;">Edición Multijugador</p>
+            <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.6; text-align: center;">Edición Multijugador</p>
         </div>
 
         <div id="turn-screen" class="card hidden" style="text-align: center;">
