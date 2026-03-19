@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // UBICACIÓN: /playgo/index.php
 
 // --- 1. ACTIVAR CHIVATOS DE ERROR ---
@@ -41,6 +41,7 @@ if (isset($_SESSION['id'])) {
     <link rel="stylesheet" href="chatbot/bot.css">
     <link rel="icon" href="assets/img/jugando-videojuegos.png" type="image/png">
     <link rel="manifest" href="/playgo/manifest.json">
+    <link rel="stylesheet" href="assets/css/footer.css?v=<?php echo time(); ?>">
     <meta name="theme-color" content="#0d1b2a">
 </head>
 
@@ -147,12 +148,7 @@ if (isset($_SESSION['id'])) {
         </div>
 
     </main>
-    <footer class="pie-pagina">
-        <div class="contenido-footer">
-            <p class="logo-footer">🎮 PLAYGO</p>
-            <p>&copy; <?php echo date('Y'); ?> PlayGo Team - Misión Espacial de GEMA, PATRICIA Y SOFIA.</p>
-        </div>
-    </footer>
+    <?php include 'footer.php'; ?>
 
     <script src="chatbot/bot.js"></script>
     <script>
