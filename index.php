@@ -81,7 +81,7 @@ if (isset($_SESSION['id'])) {
 
         <div class="contenedor-opciones">
 
-            <a href="/playgo/autenticacion/login.php" class="tarjeta-portal kids">
+            <a href="/playgo/invitado_logic.php" class="tarjeta-portal kids">
 
                 <div class="game-bubble b-kids-1" style="top: 15%; left: 10%;">
                     <img src="juegos/ninos/cuenta_numeros/imagenes/logoCuentaNumeros.png" alt="Números">
