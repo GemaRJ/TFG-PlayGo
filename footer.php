@@ -23,9 +23,9 @@
         <nav class="footer-links" aria-label="Enlaces legales y de información">
             <h3 class="footer-nav-title">Información</h3>
             <ul>
-                <li><a href="./paginas/quienes_somos.php">Quiénes somos</a></li>
-                <li><a href="./paginas/politica_privacidad.php">Política de privacidad</a></li>
-                <li><a href="./paginas/politica_cookies.php">Política de cookies</a></li>
+                <li><a href="/playgo/paginas/quienes_somos.php">Quiénes somos</a></li>
+                <li><a href="/playgo/paginas/politica_privacidad.php">Política de privacidad</a></li>
+                <li><a href="/playgo/paginas/politica_cookies.php">Política de cookies</a></li>
             </ul>
         </nav>
 
