@@ -210,3 +210,34 @@ function mostrarResultadoFinal() {
 
 // Esta línea hace que al cargar la página ya aparezca el input del Jugador 1
 generarInputsNombres();
+
+// --- LÓGICA TUTORIAL ---
+function mostrarTutorial() {
+  document.getElementById('modalTutorial').classList.remove('hidden');
+}
+
+function cerrarTutorial() {
+  document.getElementById('modalTutorial').classList.add('hidden');
+}
+
+// --- PARTÍCULAS BACKGROUND ---
+function createParticles() {
+  const particlesContainer = document.getElementById("particles");
+  if (!particlesContainer) return;
+
+  particlesContainer.innerHTML = "";
+  const particlesCount = 30; // CONFIG.PARTICLES_COUNT
+
+  for (let i = 0; i < particlesCount; i++) {
+      const particle = document.createElement("div");
+      particle.className = "particle";
+      particle.style.left = Math.random() * 100 + "%";
+      particle.style.animationDuration = Math.random() * 10 + 5 + "s";
+      particle.style.animationDelay = Math.random() * 5 + "s";
+      particlesContainer.appendChild(particle);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  createParticles();
+});

@@ -4046,7 +4046,7 @@ const DOM = {
     this.playerNamesList = document.getElementById("playerNamesList");
     this.startButton = document.getElementById("startButton");
     this.loadingMessage = document.getElementById("loadingMessage");
-    this.setupScreen = document.getElementById("setupScreen");
+    this.setupScreen = document.getElementById("pantalla-inicio");
 
     // Player screen
     this.playerScreen = document.getElementById("playerScreen");
@@ -4385,7 +4385,7 @@ const UI = {
     const language = gameState.currentLanguage;
 
     if (!numPlayers || numPlayers < CONFIG.MIN_PLAYERS) {
-      DOM.playerNamesList.innerHTML = `<p style="color: var(--accent-secondary); text-align: center;">
+      DOM.playerNamesList.innerHTML = `<p style="color: var(--accent-primary); text-align: center;">
         ${TRANSLATIONS[language].minPlayersMessage}
       </p>`;
       return;
@@ -4615,7 +4615,7 @@ const Game = {
     DOM.relatedWords.checked = false;
 
     const lang = gameState.currentLanguage;
-    DOM.playerNamesList.innerHTML = `<p style="color: var(--accent-secondary); text-align: center;">
+    DOM.playerNamesList.innerHTML = `<p style="color: var(--accent-primary); text-align: center;">
       ${TRANSLATIONS[lang].minPlayersMessage}
     </p>`;
   },
@@ -4658,7 +4658,7 @@ window.onload = function () {
 
   // Initialize UI
   const lang = gameState.currentLanguage;
-  DOM.playerNamesList.innerHTML = `<p style="color: var(--accent-secondary); text-align: center;">
+  DOM.playerNamesList.innerHTML = `<p style="color: var(--accent-primary); text-align: center;">
     ${TRANSLATIONS[lang].minPlayersMessage}
   </p>`;
 

@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php if ($registro_exitoso): ?>
         <meta http-equiv="refresh" content="2;url=login.php"><?php endif; ?>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/img/jugando-videojuegos.png" type="image/png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * {
@@ -209,6 +210,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-weight: bold;
         }
 
+        .logoPlayGo {
+            margin-right: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.6));
+            border: 2px solid #00d2ff;
+            box-shadow: 0 0 12px rgba(0, 210, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
         .btn-space:hover {
             transform: scale(1.02);
         }
@@ -269,12 +282,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="glass-card">
         <div class="login-side">
-            <div class="brand">PLAY<span>GO</span></div>
+            <div class="brand" style="display: flex; align-items: center;">
+                <img src="../assets/img/logoPlayGo.png" alt="PlayGo logo" class="logoPlayGo">
+                <div>PLAY<span>GO</span></div>
+            </div>
             <h2>Registro de Adultos</h2>
             <p>Crea una cuenta para gestionar tus desafíos.</p>
 
-            <?php if ($error) echo "<div class='msg error'>$error</div>"; ?>
-            <?php if ($mensaje) echo "<div class='msg success'>$mensaje</div>"; ?>
+            <?php if ($error)
+                echo "<div class='msg error'>$error</div>"; ?>
+            <?php if ($mensaje)
+                echo "<div class='msg success'>$mensaje</div>"; ?>
 
             <form method="POST">
                 <input type="hidden" name="tipo_usuario" value="adulto">

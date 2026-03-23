@@ -1,0 +1,268 @@
+/* ================================================
+   footer.css — PlayGo · Estética Espacial/Cyberpunk
+   Fuente: Poppins (ya incluida en tu proyecto)
+   ================================================ */
+
+/* ---- Variables (ajusta si ya tienes las tuyas) ---- */
+:root {
+  --pg-bg-deep:    #080c1a;
+  --pg-bg-footer:  #0b1022;
+  --pg-accent:     #00f0ff;   /* cian neón principal   */
+  --pg-accent2:    #a855f7;   /* violeta secundario    */
+  --pg-text:       #c8d6f0;
+  --pg-text-muted: #5a6a90;
+  --pg-border:     rgba(0, 240, 255, 0.12);
+  --pg-glow:       0 0 14px rgba(0, 240, 255, 0.35);
+}
+
+/* ---- Contenedor principal ---- */
+.playgo-footer {
+  position: relative;
+  background-color: var(--pg-bg-footer);
+  border-top: 1px solid var(--pg-border);
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  color: var(--pg-text);
+  margin-top: auto; /* empuja el footer al fondo en layouts flex/grid */
+}
+
+/* ---- Fondo decorativo ---- */
+.footer-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.footer-grid-line {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--pg-accent) 40%,
+    var(--pg-accent2) 60%,
+    transparent 100%
+  );
+  opacity: 0.5;
+}
+
+/* Partículas flotantes */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.18;
+  animation: floatParticle 8s ease-in-out infinite alternate;
+}
+.p1 { width: 180px; height: 180px; background: var(--pg-accent);  top: -60px;  left: -40px;  animation-delay: 0s; }
+.p2 { width: 120px; height: 120px; background: var(--pg-accent2); top: 10px;   right: 80px;  animation-delay: 2s; }
+.p3 { width:  80px; height:  80px; background: var(--pg-accent);  bottom: 0;   left: 45%;    animation-delay: 4s; }
+.p4 { width:  60px; height:  60px; background: var(--pg-accent2); bottom: 20px; right: 10%;  animation-delay: 1s; }
+
+@keyframes floatParticle {
+  from { transform: translateY(0)   scale(1);    filter: blur(28px); }
+  to   { transform: translateY(-20px) scale(1.1); filter: blur(36px); }
+}
+
+/* ---- Inner layout (3 columnas) ---- */
+.footer-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 2.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 2rem 2rem;
+  align-items: start;
+}
+
+/* ---- Branding ---- */
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.logo-icon {
+  font-size: 1.6rem;
+  color: var(--pg-accent);
+  filter: drop-shadow(var(--pg-glow));
+  animation: pulse-icon 3s ease-in-out infinite;
+}
+
+@keyframes pulse-icon {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(0,240,255,0.5)); }
+  50%       { filter: drop-shadow(0 0 18px rgba(0,240,255,0.9)); }
+}
+
+.logo-text {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+.logo-accent {
+  color: var(--pg-accent);
+}
+
+.footer-tagline {
+  font-size: 0.82rem;
+  color: var(--pg-text-muted);
+  line-height: 1.5;
+  max-width: 220px;
+}
+
+/* ---- Nav titles ---- */
+.footer-nav-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pg-accent);
+  margin-bottom: 1rem;
+}
+
+/* ---- Links legales ---- */
+.footer-links ul,
+.footer-team-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.footer-links a {
+  font-size: 0.85rem;
+  color: var(--pg-text-muted);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.25s ease;
+  padding-left: 0.75rem;
+}
+
+.footer-links a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--pg-accent2);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.footer-links a:hover {
+  color: var(--pg-accent);
+}
+
+.footer-links a:hover::before {
+  opacity: 1;
+}
+
+/* ---- Equipo ---- */
+.footer-team-list li {
+  font-size: 0.85rem;
+  color: var(--pg-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.team-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pg-accent2);
+  flex-shrink: 0;
+  box-shadow: 0 0 6px var(--pg-accent2);
+}
+
+.footer-school {
+  margin-top: 0.9rem;
+  font-size: 0.72rem;
+  color: var(--pg-text-muted);
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+/* ---- Barra inferior ---- */
+.footer-bottom {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--pg-border);
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.footer-bottom p {
+  font-size: 0.75rem;
+  color: var(--pg-text-muted);
+  opacity: 0.65;
+  margin: 0;
+}
+
+.footer-bottom-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.footer-bottom-dots span {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--pg-accent);
+  opacity: 0.4;
+  animation: blink-dot 2.4s ease-in-out infinite;
+}
+.footer-bottom-dots span:nth-child(2) { animation-delay: 0.4s; background: var(--pg-accent2); }
+.footer-bottom-dots span:nth-child(3) { animation-delay: 0.8s; }
+
+@keyframes blink-dot {
+  0%, 100% { opacity: 0.2; transform: scale(1);   }
+  50%       { opacity: 0.9; transform: scale(1.4); }
+}
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+@media (max-width: 768px) {
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 2.5rem 1.25rem 1.5rem;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1; /* ocupa toda la fila */
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+}

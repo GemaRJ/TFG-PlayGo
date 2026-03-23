@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-02-2026 a las 12:22:12
+-- Tiempo de generación: 05-03-2026 a las 17:05:52
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,20 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `playgo`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `chatbot_logs`
---
-
-CREATE TABLE `chatbot_logs` (
-  `id_log` int(11) NOT NULL,
-  `usuario_id` int(11) DEFAULT NULL,
-  `mensaje_usuario` text NOT NULL,
-  `respuesta_bot` text NOT NULL,
-  `fecha_consulta` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -56,13 +42,18 @@ CREATE TABLE `incidencias` (
 --
 
 INSERT INTO `incidencias` (`id_incidencia`, `usuario_id`, `tipo`, `asunto`, `mensaje`, `estado`, `fecha_reporte`) VALUES
-(1, NULL, 'sugerencia', 'zxczxcz', 'cxzczxc', 'pendiente', '2026-02-12 21:10:17'),
-(4, 2, 'incidencia_juego', 'Problema técnico en juego', 'no carga el juego correctamente', 'pendiente', '2026-02-12 22:24:48'),
 (5, NULL, 'queja', 'no me gusta la web', 'no me gusta', 'resuelta', '2026-02-12 22:28:44'),
 (6, 2, 'solicitud_baja_usuario', 'Solicitud de baja de cuenta', 'quiero dar de baja mi cuenta', 'pendiente', '2026-02-12 22:29:20'),
 (7, NULL, 'error_alta_usuario', 'Error en el proceso de registro', 'no puede acceder', 'pendiente', '2026-02-13 09:42:39'),
 (8, NULL, 'queja', 'no me gusta la web', 'no me gusta la web', 'pendiente', '2026-02-13 09:44:44'),
-(9, 2, 'solicitud_baja_usuario', 'Solicitud de baja de cuenta', 'no quiero estar registrado', 'pendiente', '2026-02-13 09:50:41');
+(12, 3, 'solicitud_baja_usuario', 'Solicitud de baja de cuenta', 'quiero darme de baja', 'pendiente', '2026-02-13 12:59:18'),
+(13, 1, 'solicitud_baja_usuario', 'Solicitud de baja de cuenta', 'Solicitud de baja de cuenta', 'pendiente', '2026-02-13 13:30:14'),
+(14, 3, 'error_alta_usuario', 'Error en el proceso de registro', 'Error en el proceso de registro', 'resuelta', '2026-02-13 13:32:02'),
+(15, NULL, 'queja', 'QUEJA', 'NO ME GUSTA LA WEB', 'pendiente', '2026-02-13 13:37:30'),
+(16, NULL, 'queja', 'no me gusta la web', 'no me gusta la web', 'pendiente', '2026-02-14 16:21:24'),
+(17, NULL, 'queja', 'no me gusta la web', 'no', 'pendiente', '2026-02-14 18:16:57'),
+(18, NULL, 'queja', 'Reclamación de usuario', 'No me gusta la web', 'pendiente', '2026-02-17 12:56:58'),
+(19, NULL, 'sugerencia', 'Nueva idea de mejora', 'NO ME GUSTA LA WEB', 'pendiente', '2026-02-18 13:23:08');
 
 -- --------------------------------------------------------
 
@@ -110,6 +101,19 @@ CREATE TABLE `ranking` (
   `fecha_partida` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `ranking`
+--
+
+INSERT INTO `ranking` (`id_ranking`, `usuario_id`, `id_juego`, `puntuacion`, `fecha_partida`) VALUES
+(1, 3, 1, 23, '2026-03-05 13:16:38'),
+(2, 3, 1, 20, '2026-03-05 13:17:52'),
+(3, 3, 1, 0, '2026-03-05 13:39:09'),
+(4, 3, 1, 0, '2026-03-05 13:45:55'),
+(5, 3, 1, 0, '2026-03-05 13:46:05'),
+(6, 3, 1, 20, '2026-03-05 13:46:20'),
+(7, 3, 4, 20, '2026-03-05 14:39:03');
+
 -- --------------------------------------------------------
 
 --
@@ -125,165 +129,94 @@ CREATE TABLE `usuario` (
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Juegos NIÑOS
-INSERT INTO juegos (nombre, ruta, archivo_entrada, categoria) VALUES 
-('Cuenta Letras', 'cuenta_letras', 'index.html', 'niños'),
-('Cuenta Números', 'cuenta_numeros', 'index.html', 'niños'),
-('Memory', 'memory', 'index.html', 'niños'),
-('Tabú Kids', 'tabu', 'index.html', 'niños'),
-('Tres en Raya', 'tres_raya', 'juego.html', 'niños'), 
-('Trivial Kids', 'trivial', 'index.html', 'niños');
+--
+-- Volcado de datos para la tabla `usuario`
+--
 
--- 5. TABLA DE RANKINGS Y PARTIDAS
--- Registra la puntuación de los usuarios en cada juego
-CREATE TABLE IF NOT EXISTS ranking (
-    id_ranking INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,
-    id_juego INT NOT NULL,
-    puntuacion INT NOT NULL,
-    fecha_partida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_usuario_ranking FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) ON DELETE CASCADE,
-    CONSTRAINT fk_juego_ranking FOREIGN KEY (id_juego) REFERENCES juegos(id_juego) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `usuario` (`usuario_id`, `nombres`, `correo`, `clave`, `tipo_usuario`, `fecha_registro`) VALUES
+(1, 'Equipo PlayGo', 'admin@playgo.com', '$2a$10$vY37nlRiKR7X30hzsOhi7.ce75hyMIL54KVo4mBVfF9W8epa4Gn9K', 'administrador', '2026-02-09 18:49:25'),
+(2, 'Enzo Niño', 'enzo@playgo.com', '$2a$10$vY37nlRiKR7X30hzsOhi7.ce75hyMIL54KVo4mBVfF9W8epa4Gn9K', 'nino', '2026-02-09 18:49:26'),
+(3, 'Gema Adulto', 'gema@playgo.com', '$2a$10$vY37nlRiKR7X30hzsOhi7.ce75hyMIL54KVo4mBVfF9W8epa4Gn9K', 'adulto', '2026-02-09 18:49:26'),
+(4, 'Leo', 'leo@playgo.com', '$2y$10$cH2ddbqnH8QivnwfMeRQJe4dN2D8d9bIXC9a8abvi2BeXLmJ1IYUy', 'nino', '2026-02-17 13:29:19');
 
--- --------------------------------------------------------
+--
+-- Índices para tablas volcadas
+--
 
--- 6. TABLA DE HISTORIAL DEL CHATBOT
--- Almacena las consultas para mejorar la asistencia del modelo
-CREATE TABLE IF NOT EXISTS chatbot_logs (
-    id_log INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NULL,
-    mensaje_usuario TEXT NOT NULL,
-    respuesta_bot TEXT NOT NULL,
-    fecha_consulta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_usuario_chatbot FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--
+-- Indices de la tabla `incidencias`
+--
+ALTER TABLE `incidencias`
+  ADD PRIMARY KEY (`id_incidencia`),
+  ADD KEY `fk_usuario_incidencia` (`usuario_id`);
 
--- --------------------------------------------------------
+--
+-- Indices de la tabla `juegos`
+--
+ALTER TABLE `juegos`
+  ADD PRIMARY KEY (`id_juego`);
 
--- 7. TABLA DE GESTIÓN DE INCIDENCIAS Y SOPORTE
--- Centraliza los reportes enviados mediante el sistema híbrido
-CREATE TABLE IF NOT EXISTS incidencias (
-    id_incidencia INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NULL,
-    tipo ENUM(
-        'sugerencia', 'queja', 'error_alta_usuario', 
-        'solicitud_baja_usuario', 'solicitud_modificacion_usuario', 
-        'incidencia_juego', 'fallo_seguridad', 'error_ranking'
-    ) NOT NULL,
-    asunto VARCHAR(150) NOT NULL,
-    mensaje TEXT NOT NULL,
-    estado ENUM('pendiente', 'resuelta') DEFAULT 'pendiente',
-    fecha_reporte TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_usuario_incidencia FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+--
+-- Indices de la tabla `ranking`
+--
+ALTER TABLE `ranking`
+  ADD PRIMARY KEY (`id_ranking`),
+  ADD KEY `fk_usuario_ranking` (`usuario_id`),
+  ADD KEY `fk_juego_ranking` (`id_juego`);
 
+--
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`usuario_id`),
+  ADD UNIQUE KEY `correo` (`correo`);
 
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
 
--- 1. CREACIÓN DE LA BASE DE DATOS
-CREATE DATABASE IF NOT EXISTS playgo CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
-USE playgo;
+--
+-- AUTO_INCREMENT de la tabla `incidencias`
+--
+ALTER TABLE `incidencias`
+  MODIFY `id_incidencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
+--
+-- AUTO_INCREMENT de la tabla `juegos`
+--
+ALTER TABLE `juegos`
+  MODIFY `id_juego` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
--- 2. TABLA DE USUARIOS
-CREATE TABLE IF NOT EXISTS usuario (
-    usuario_id INT AUTO_INCREMENT PRIMARY KEY,
-    nombres VARCHAR(100) NOT NULL,
-    correo VARCHAR(100) NOT NULL UNIQUE,
-    clave VARCHAR(255) NOT NULL,
-    tipo_usuario ENUM('niño', 'adulto', 'administrador') NOT NULL,
-    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+--
+-- AUTO_INCREMENT de la tabla `ranking`
+--
+ALTER TABLE `ranking`
+  MODIFY `id_ranking` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
+--
+-- Restricciones para tablas volcadas
+--
 
--- 3. TABLA DE JUEGOS
-CREATE TABLE IF NOT EXISTS juegos (
-    id_juego INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    ruta VARCHAR(100) NOT NULL,
-    archivo_entrada VARCHAR(50) NOT NULL,
-    categoria ENUM('niños', 'adultos') NOT NULL,
-    descripcion TEXT,
-    activo BOOLEAN DEFAULT TRUE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+--
+-- Filtros para la tabla `incidencias`
+--
+ALTER TABLE `incidencias`
+  ADD CONSTRAINT `fk_usuario_incidencia` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE SET NULL;
 
+--
+-- Filtros para la tabla `ranking`
+--
+ALTER TABLE `ranking`
+  ADD CONSTRAINT `fk_juego_ranking` FOREIGN KEY (`id_juego`) REFERENCES `juegos` (`id_juego`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_usuario_ranking` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE CASCADE;
+COMMIT;
 
-
--- 4. DATOS INICIALES (USUARIOS Y CATÁLOGO)
-
--- Administrador del sistema
-INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES
-('Equipo PlayGo', 'admin@playgo.com', '$2a$10$vY37nLRiKR7X30hzsOhi7.ce75hyMIL54KVo4mBVff9W8epa4Gn9K', 'administrador');
-
--- Usuarios de prueba
-INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES
-('Enzo Niño', 'nino@playgo.com', '$2a$10$vY37nLRiKR7X30hzsOhi7.ce75hyMIL54KVo4mBVff9W8epa4Gn9K', 'niño'),
-('Gema Adulto', 'adulto@playgo.com', '$2a$10$vY37nLRiKR7X30hzsOhi7.ce75hyMIL54KVo4mBVff9W8epa4Gn9K', 'adulto');
-
--- Juegos
-INSERT INTO juegos (nombre, ruta, archivo_entrada, categoria) VALUES
-('Blackjack', 'blackjack', 'index.html', 'adultos'),
-('Impostor', 'impostor', 'index.html', 'adultos'),
-('Tabú', 'tabu', 'index.html', 'adultos'),
-('Trivial', 'trivial', 'index.html', 'adultos'),
-('Cuenta Letras', 'cuenta_letras', 'index.html', 'niños'),
-('Cuenta Números', 'cuenta_numeros', 'index.html', 'niños'),
-('Memory', 'memory', 'index.html', 'niños'),
-('Tres en Raya', 'tres_raya', 'juego.html', 'niños');
-
-
-
--- 5. TABLA DE RANKINGS Y PARTIDAS
-CREATE TABLE IF NOT EXISTS ranking (
-    id_ranking INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,
-    id_juego INT NOT NULL,
-    puntuacion INT NOT NULL,
-    fecha_partida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_usuario_ranking FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) ON DELETE CASCADE,
-    CONSTRAINT fk_juego_ranking FOREIGN KEY (id_juego) REFERENCES juegos(id_juego) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-
--- 6. TABLA DE HISTORIAL DEL CHATBOT
-CREATE TABLE IF NOT EXISTS chatbot_logs (
-    id_log INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NULL,
-    mensaje_usuario TEXT NOT NULL,
-    respuesta_bot TEXT NOT NULL,
-    fecha_consulta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_usuario_chatbot FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-
--- 7. TABLA DE GESTIÓN DE INCIDENCIAS (SOPORTE TÉCNICO)
-CREATE TABLE IF NOT EXISTS incidencias (
-    id_incidencia INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NULL,
-    tipo ENUM(
-        'sugerencia',
-        'queja',
-        'error_alta_usuario',
-        'solicitud_baja_usuario',
-        'solicitud_modificacion_usuario',
-        'incidencia_juego',
-        'fallo_seguridad',
-        'error_ranking'
-    ) NOT NULL,
-    asunto VARCHAR(150) NOT NULL,
-    mensaje TEXT NOT NULL,
-    estado ENUM('pendiente', 'resuelta') DEFAULT 'pendiente',
-    fecha_reporte TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_usuario_incidencia FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
-
-
--- 8. CONSULTA DE AUDITORÍA
--- Resumen de incidencias
-SELECT tipo, COUNT(*) as total 
-FROM incidencias 
-GROUP BY tipo;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

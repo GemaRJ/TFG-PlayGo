@@ -32,11 +32,11 @@
         <h1 data-i18n="title">El Impostor</h1>
         <p class="subtitle" data-i18n="subtitle">Juego de Detección</p>
         
-        <!-- Botón de Tutorial -->
-        <button class="tutorial-btn" onclick="UI.showTutorial()" data-i18n="tutorialButton">❓ ¿Cómo se juega?</button>
-
         <!-- Pantalla de Configuración -->
-        <div id="setupScreen" class="card">
+        <div id="pantalla-inicio" class="tarjeta-juego">
+            <!-- Botón de Tutorial -->
+            <button class="btn-tutorial-esquina" onclick="UI.showTutorial()" data-i18n="tutorialButton">❓ Instrucciones</button>
+            
             <div class="advanced-settings">
                 <!-- Dificultad -->
                 <div class="form-group">
@@ -121,7 +121,7 @@
         </div>
 
         <!-- Pantalla de Jugador -->
-        <div id="playerScreen" class="card hidden">
+        <div id="playerScreen" class="tarjeta-juego hidden">
             <div class="blur-warning" data-i18n="warningMessage">
                 ⚠️ Pasa el dispositivo al siguiente jugador. Asegúrate de que nadie más esté mirando.
             </div>

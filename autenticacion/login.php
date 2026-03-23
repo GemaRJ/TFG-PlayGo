@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="../assets/css/login_registro.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
+    <link rel="icon" href="../assets/img/jugando-videojuegos.png" type="image/png">
     <style>
         /* ESTILOS SPACE - LOGIN AZUL */
         * {
@@ -225,6 +225,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             text-shadow: 0 0 10px #00d2ff;
         }
 
+        .logoPlayGo {
+            margin-right: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.6));
+            border: 2px solid #00d2ff;
+            box-shadow: 0 0 12px rgba(0, 210, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
         .visual-side {
             flex: 1.2;
             position: relative;
@@ -241,7 +253,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <div class="glass-card">
         <div class="login-side">
-            <div class="brand">PLAY<span>GO</span></div>
+            <div class="brand" style="display: flex; align-items: center;">
+                <img src="../assets/img/logoPlayGo.png" alt="PlayGo logo" class="logoPlayGo">
+                <div>PLAY<span>GO</span></div>
+            </div>
             <h2>Bienvenido</h2>
             <p>Tu aventura espacial de juegos comienza aquí.</p>
 
@@ -269,10 +284,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     ¿Nuevo en la nave? <br>
                     <a href="registro.php">Crea tu cuenta aquí</a>
                     <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
-    
-    <a href="../index.php" style="font-size: 0.8rem; opacity: 0.7;">
-        <i class="bi bi-arrow-left"></i> Volver al inicio
-    </a>
+
+                    <a href="../index.php" style="font-size: 0.8rem; opacity: 0.7;">
+                        <i class="bi bi-arrow-left"></i> Volver al inicio
+                    </a>
                 </div>
             </form>
         </div>

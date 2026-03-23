@@ -1,17 +1,49 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Blackjack - Juego de Cartas</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="css/estilos.css" />
-  </head>
-  <body>
-    <!-- Contenedor principal que agrupa todos los elementos -->
-    <div class="container">
-      <h1>BLACKJACK</h1>
+  <title>Blackjack - Juego de Cartas</title>
+
+  <link rel="stylesheet" href="css/estilos.css" />
+</head>
+
+<body>
+  <!-- Partículas de Fondo -->
+  <div class="particles" id="particles"></div>
+
+  <div class="contenedor-principal">
+
+    <!-- PANTALLA DE INICIO -->
+    <div id="pantalla-inicio" class="tarjeta-juego">
+      <button class="btn-tutorial-esquina" onclick="mostrarTutorial()">
+        ❓ Instrucciones
+      </button>
+      <header class="encabezado">
+        <div class="logo-container">
+          <img src="images/blackjack.png" alt="blackJack Logo" class="logo">
+        </div>
+        <h1>BLACKJACK</h1>
+      </header>
+
+      <div class="config-zona">
+        <label style="color: var(--accent-primary); display: block; margin-bottom: 10px; font-weight: bold;">Nombre del
+          Jugador:</label>
+        <input type="text" id="inputNombre" class="input-nombre" placeholder="Tu nombre..." autocomplete="off">
+      </div>
+
+      <button class="btn-siguiente" onclick="iniciarJuegoUI()">
+        ▶️ INICIAR JUEGO
+      </button>
+    </div>
+
+    <!-- PANTALLA DE JUEGO -->
+    <div id="pantalla-juego" class="tarjeta-juego oculto">
+      <header class="encabezado">
+        <h1>BLACKJACK</h1>
+      </header>
 
       <!-- Elemento para el nombre del jugador -->
       <div class="nombre_jugador" id="nombreJugador"></div>
@@ -23,47 +55,80 @@
       <div class="zona_juego">
         <!-- Zona de la Banca -->
         <div class="seccion_jugador banca">
-          <!-- Encabezado para mostrar el nombre y puntos de la banca -->
           <div class="header_jugador">
             <h2>BANCA</h2>
-            <!-- Puntos de la banca -->
             <div class="puntos" id="puntosBanca">0</div>
           </div>
-          <!-- Contenedor donde se muestran las cartas de la banca -->
           <div class="cartas" id="cartasBanca"></div>
         </div>
 
         <!-- Zona del jugador -->
         <div class="seccion_jugador jugador">
-          <!-- Encabezado para el nombre y puntos del jugador -->
           <div class="header_jugador">
             <h2><span id="nombreJugadorHeader"></span></h2>
-            <!-- Puntos actuales del jugador -->
             <div class="puntos" id="puntosJugador">0</div>
           </div>
-          <!-- Contenedor para mostrar las cartas del jugador -->
           <div class="cartas" id="cartasJugador"></div>
         </div>
       </div>
 
-      <!-- Controles del juego: botones para interactuar -->
+      <!-- Controles del juego -->
       <div class="controles">
-        <!-- Botón para pedir nueva carta -->
-        <button id="btnPedirCarta" disabled>Pedir Carta</button>
-
-        <!-- Botón para plantarse -->
-        <button id="btnPlantarse" disabled>Plantarse</button>
-
-        <!-- Botón para iniciar una nueva partida -->
-        <button id="btnReiniciar">Nueva Partida</button>
+        <button id="btnPedirCarta" disabled class="btn-siguiente" style="margin-bottom: 10px;">Pedir Carta</button>
+        <button id="btnPlantarse" disabled class="btn-siguiente" style="margin-bottom: 10px;">Plantarse</button>
+        <button id="btnReiniciar" class="btn-siguiente">Nueva Partida</button>
       </div>
 
       <!-- Contenedor para mostrar el mensaje de resultado -->
       <div class="mensaje" id="mensaje"></div>
     </div>
 
-    <!-- Enlace al archivo JavaScript que contiene toda la lÃ³gica del juego -->
-    <script src="js/blackjack.js"></script>
-    <script src="../ranking.js"></script>
-  </body>
+  </div>
+
+  <!-- Modal de Instrucciones -->
+  <div id="modalTutorial" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" onclick="cerrarTutorial()">✕</button>
+      <h2>📖 Cómo Jugar Blackjack</h2>
+      <div class="tutorial-content">
+        <div class="tutorial-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Objetivo del Juego</h3>
+            <p>Suma 21 puntos o acércate lo máximo posible sin pasarte. ¡Si te pasas, pierdes!</p>
+          </div>
+        </div>
+        <div class="tutorial-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Valor de las Cartas</h3>
+            <p>Las figuras valen 10. Las cartas numéricas valen su número.</p>
+          </div>
+        </div>
+        <div class="tutorial-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Tu Turno</h3>
+            <p>Puedes "Pedir Carta" para acercarte a 21, o "Plantarte" si crees que tu puntuación es buena.</p>
+          </div>
+        </div>
+        <div class="tutorial-step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>La Banca</h3>
+            <p>La banca jugará primero. Luego jugarás tú, ¡intenta superar su puntuación!</p>
+          </div>
+        </div>
+      </div>
+      <button onclick="cerrarTutorial()" class="tutorial-close-btn">
+        ¡ENTENDIDO! 🚀
+      </button>
+    </div>
+  </div>
+
+  <!-- Enlace al archivo JavaScript que contiene toda la lÃ³gica del juego -->
+  <script src="js/blackjack.js"></script>
+  <script src="../ranking.js"></script>
+</body>
+
 </html>

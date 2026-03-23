@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // --- LÓGICA DE INICIO ---
 session_start();
 
@@ -23,23 +23,25 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎮 Zona de Juegos | PlayGo</title>
+    <title>Zona de Juegos | PlayGo</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/panel.css?v=<?php echo time(); ?>">
-    <link rel="icon" href="ruta-de-tu-icono.png" type="image/png">
+    <link rel="icon" href="assets/img/jugando-videojuegos.png" type="image/png">
+    <link rel="manifest" href="/playgo/manifest.json">
+    <meta name="theme-color" content="#0d1b2a">
 </head>
 
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark main-navbar px-3 fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold d-flex align-items-center" href="index.php">
-                <span class="fs-3 me-2">🎮</span> PLAYGO
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="index.php" style="text-decoration: none;">
+                <img src="assets/img/logoPlayGo.png" alt="PlayGo logo" class="logoPlayGo me-2">
+                <div class="brand" style="margin-bottom: 0;">PLAY<span>GO</span></div>
             </a>
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContenido">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -71,28 +73,32 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
                 <?php if ($_SESSION['tipo_usuario'] === 'adulto'): ?>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center active"
                         onclick="cargarJuego('juegos/adultos/trivial/index.html', this)">
-                        <span class="fs-3 p-2">🧠</span>
+                        <img src="juegos/adultos/trivial/img/trivial.png" alt="Trivial Logo" class="logo">
+
                         <div>
                             <div class="fw-bold fs-6">Trivial</div><small>Conocimiento</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/adultos/blackjack/index.html', this)">
-                        <span class="fs-3 p-2">♠️</span>
+                        <img src="juegos/adultos/blackjack/images/blackjack.png" alt="Blackjack Logo" class="logo">
+
                         <div>
                             <div class="fw-bold fs-6">Blackjack</div><small>Cartas</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/adultos/impostor/index.html', this)">
-                        <span class="fs-3 p-2">🕵️</span>
+                        <img src="juegos/adultos/impostor/img/impostor.png" alt="Impostor Logo" class="logo">
+
                         <div>
                             <div class="fw-bold fs-6">Impostor</div><small>Estrategia</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/adultos/tabu/index.html', this)">
-                        <span class="fs-3 p-2">🚫</span>
+                        <img src="juegos/adultos/tabu/img/tabu.png" alt="Tabú Logo" class="logo">
+
                         <div>
                             <div class="fw-bold fs-6">Tabú</div><small>Palabras</small>
                         </div>
@@ -101,42 +107,44 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
                 <?php else: ?>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center active"
                         onclick="cargarJuego('juegos/ninos/cuenta_numeros/index.html', this)">
-                        <span class="fs-3 p-2">🔢</span>
+                        <img src="juegos/ninos/cuenta_numeros/imagenes/logoCuentaNumeros.png" alt="cuentaNumeros Logo"
+                            class="logo">
                         <div>
                             <div class="fw-bold fs-6">Cuenta Números</div><small>Matemáticas</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/cuenta_letras/index.html', this)">
-                        <span class="fs-3 p-2">🔤</span>
+                        <img src="juegos/ninos/cuenta_letras/utils/imagenes/logoCuentaLetras.png" alt="cuentaLetras Logo"
+                            class="logo">
                         <div>
                             <div class="fw-bold fs-6">Cuenta Letras</div><small>Vocabulario</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/memory/index.html', this)">
-                        <span class="fs-3 p-2">🃏</span>
+                        <img src="juegos/ninos/memory/img/logoMemory.png" alt="memory Logo" class="logo">
                         <div>
                             <div class="fw-bold fs-6">Memory</div><small>Memoria</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/tres_raya/index.html', this)">
-                        <span class="fs-3 p-2">❌</span>
+                        <img src="juegos/ninos/tres_raya/utils/img/logoTresRaya.png" alt="tresRaya Logo" class="logo">
                         <div>
                             <div class="fw-bold fs-6">Tres en Raya</div><small>Clásico</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/trivial/index.html', this)">
-                        <span class="fs-3 p-2">🎓</span>
+                        <img src="juegos/ninos/trivial/img/logoTrivial.png" alt="trivial Logo" class="logo">
                         <div>
                             <div class="fw-bold fs-6">Trivial Kids</div><small>Preguntas</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/tabu/index.html', this)">
-                        <span class="fs-3 p-2">🙊</span>
+                        <img src="juegos/ninos/tabu/img/logoTabu.jpg" alt="tabu Logo" class="logo">
                         <div>
                             <div class="fw-bold fs-6">Tabú Kids</div><small>Adivina</small>
                         </div>
@@ -160,6 +168,10 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
             <div class="game-card-container">
                 <div class="game-header">
                     <span class="badge bg-danger bg-opacity-75 animate-pulse">🔴 EN JUEGO</span>
+                    <button class="btn btn-sm btn-outline-light rounded-pill px-3"><a href="panel.php"
+                            style="text-decoration: none; color: inherit;">Panel de
+                            Inicio</a>
+                    </button>
                     <button class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="pantallaCompleta()">
                         ⛶ Pantalla Completa
                     </button>
@@ -167,7 +179,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
 
                 <div class="iframe-wrapper">
                     <iframe id="pantalla-juego"
-                        src="<?php echo ($_SESSION['tipo_usuario'] === 'adulto') ? 'juegos/adultos/trivial/index.html' : 'juegos/ninos/cuenta_numeros/index.html'; ?>"
+                        src="<?php echo ($_SESSION['tipo_usuario'] === 'adulto') ? 'juegos/adultos/portadaAdulto.html' : 'juegos/ninos/portadaNinos.html'; ?>"
                         allowfullscreen>
                     </iframe>
                 </div>
@@ -182,7 +194,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
-    </script>
+        </script>
 
     <script>
         /* LÓGICA JAVASCRIPT */
@@ -216,10 +228,17 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
         // SEGURIDAD: Sincronizamos el ID de sesión con el entorno del navegador
         window.usuarioId = <?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 'null'; ?>;
         console.log("🛰️ PlayGo: Conexión establecida para Usuario ID: " + window.usuarioId);
-    </script>
-</body>
 
-</html>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/playgo/service-worker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>

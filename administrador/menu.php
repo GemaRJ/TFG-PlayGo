@@ -23,6 +23,7 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
     <title>PlayGo Admin | Central de Mando</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/index.css">
+    <link rel="icon" href="../assets/img/jugando-videojuegos.png" type="image/png">
     <style>
         /* CORRECCIÓN PARA EL FONDO SI ES BLANCO */
         body.portal-galactico {
