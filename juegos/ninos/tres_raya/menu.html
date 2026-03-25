@@ -21,22 +21,22 @@
   </head>
   <body>
     <div class="game-card text-center">
-      <button class="btn-tutorial-esquina" onclick="mostrarTutorialTresEnRaya()">
+      <button class="btn-tutorial-esquina" onclick="mostrarTutorialTresEnRaya()" data-key="tr_tut_btn">
         ❓ Instrucciones
     </button>
-      <h1 class="mb-4">3 en Raya con Emoji</h1>
+      <h1 class="mb-4" data-key="tr_title">3 en Raya con Emoji</h1>
 
       <div class="mb-4 text-start">
-        <label class="fw-bold text-muted">¿Cuántos juegan?</label>
+        <label class="fw-bold text-muted" data-key="tr_how_many">¿Cuántos juegan?</label>
         <select id="num-jugadores" class="form-select shadow-sm">
-          <option value="1">1 Jugador (vs Máquina 🤖)</option>
-          <option value="2">2 Jugadores (Amigos 👫)</option>
+          <option value="1" data-key="tr_1p">1 Jugador (vs Máquina 🤖)</option>
+          <option value="2" data-key="tr_2p">2 Jugadores (Amigos 👫)</option>
         </select>
       </div>
 
       <div class="row text-start mb-4">
         <div class="col-6">
-          <label class="fw-bold text-primary">Jugador 1</label>
+          <label class="fw-bold text-primary" data-key="tr_p1">Jugador 1</label>
           <select id="avatar-j1" class="form-select shadow-sm">
             <option>😺 Gato</option>
             <option>🐶 Perro</option>
@@ -44,7 +44,7 @@
           </select>
         </div>
         <div class="col-6">
-          <label class="fw-bold text-info">Jugador 2 / IA</label>
+          <label class="fw-bold text-info" data-key="tr_p2">Jugador 2 / IA</label>
           <select id="avatar-j2" class="form-select shadow-sm">
             <option>🦊 Zorro</option>
             <option>🐻 Oso</option>
@@ -55,7 +55,7 @@
 
       <button
         id="btn-comenzar"
-        class="btn-custom btn-primary w-100 py-3 shadow"
+        class="btn-custom btn-primary w-100 py-3 shadow" data-key="tr_play_btn"
       >
         ¡A Jugar! ▶
       </button>
@@ -64,36 +64,38 @@
     <div id="modalTutorialTresEnRaya" class="modal">
     <div class="modal-content">
         <button class="modal-close" onclick="cerrarTutorialTresEnRaya()">✕</button>
-        <h2>📖 Cómo Jugar 3 en Raya</h2>
+        <h2 data-key="tr_tut_title">📖 Cómo Jugar 3 en Raya</h2>
         <div class="tutorial-content text-start">
             <div class="tutorial-step">
                 <div class="step-number">1</div>
                 <div class="step-content">
-                    <h3>Elige tu equipo</h3>
-                    <p>Selecciona si juegas solo contra el robot 🤖 o contra un amigo 👫.</p>
+                    <h3 data-key="tr_tut_step1_t">Elige tu equipo</h3>
+                    <p data-key="tr_tut_step1_d">Selecciona si juegas solo contra el robot 🤖 o contra un amigo 👫.</p>
                 </div>
             </div>
             <div class="tutorial-step">
                 <div class="step-number">2</div>
                 <div class="step-content">
-                    <h3>Escoge tu Emoji</h3>
-                    <p>Cada jugador elige su animal favorito. ¡Será tu ficha en el tablero!</p>
+                    <h3 data-key="tr_tut_step2_t">Escoge tu Emoji</h3>
+                    <p data-key="tr_tut_step2_d">Cada jugador elige su animal favorito. ¡Será tu ficha en el tablero!</p>
                 </div>
             </div>
             <div class="tutorial-step">
                 <div class="step-number">3</div>
                 <div class="step-content">
-                    <h3>Tres en línea</h3>
-                    <p>Coloca tu emoji en los cuadros. ¡Gana quien consiga poner tres en raya antes!</p>
+                    <h3 data-key="tr_tut_step3_t">Tres en línea</h3>
+                    <p data-key="tr_tut_step3_d">Coloca tu emoji en los cuadros. ¡Gana quien consiga poner tres en raya antes!</p>
                 </div>
             </div>
         </div>
-        <button onclick="cerrarTutorialTresEnRaya()" class="tutorial-close-btn">
+        <button onclick="cerrarTutorialTresEnRaya()" class="tutorial-close-btn" data-key="tr_tut_close">
             ¡ENTENDIDO! 🚀
         </button>
     </div>
 </div>
 
     <script src="./utils/menu.js"></script>
+    <script src="idiomas.js"></script>
+    <script src="../../../utils/traductor.js"></script>
   </body>
 </html>

@@ -92,6 +92,17 @@ const preguntas = [
     }
 ];
 
+document.addEventListener("DOMContentLoaded", () => {
+    if (window.getText) {
+       let translatedQs = window.getText('tk_preguntas');
+       if (translatedQs && Array.isArray(translatedQs) && translatedQs.length > 0) {
+           // Replace entirely, maintaining reference by modifying array
+           preguntas.length = 0;
+           translatedQs.forEach(q => preguntas.push(q));
+       }
+    }
+});
+
 // --- VARIABLES ---
 let indicePreguntaActual = 0;
 let jugadores = [];
@@ -119,10 +130,11 @@ function generarInputsNombres() {
     for (let i = 1; i <= cantidad; i++) {
         const input = document.createElement('input');
         input.type = 'text';
-        input.placeholder = `Nombre Jugador ${i}`;
+        const defName = window.getText ? window.getText('tk_player_def') : 'Jugador';
+        input.placeholder = `${defName} ${i}`;
         input.classList.add('input-nombre');
         input.id = `jugador-${i}`;
-        input.value = `Jugador ${i}`;
+        input.value = `${defName} ${i}`;
         contenedorNombres.appendChild(input);
     }
 }
@@ -130,8 +142,9 @@ function generarInputsNombres() {
 function comenzarPartida() {
     const cantidad = selectJugadores.value;
     jugadores = [];
+    const defName = window.getText ? window.getText('tk_player_def') : 'Jugador';
     for (let i = 1; i <= cantidad; i++) {
-        const nombre = document.getElementById(`jugador-${i}`).value || `Jugador ${i}`;
+        const nombre = document.getElementById(`jugador-${i}`).value || `${defName} ${i}`;
         jugadores.push({ nombre: nombre, puntos: 0 });
     }
     indicePreguntaActual = 0;
@@ -162,8 +175,8 @@ function iniciarTemporizador() {
 function tiempoAgotado() {
     Swal.fire({
         icon: 'warning',
-        title: '¡Oh no! ⏰',
-        text: 'Se acabó el tiempo.',
+        title: window.getText ? window.getText('tk_time_out_title') : '¡Oh no! ⏰',
+        text: window.getText ? window.getText('tk_time_out_text') : 'Se acabó el tiempo.',
         confirmButtonColor: '#feca57'
     });
     bloquearRespuestas();
@@ -177,7 +190,8 @@ function mostrarPregunta() {
 
     elementoPregunta.innerText = pregunta.texto;
     nombreJugadorActivo.innerText = jugador.nombre;
-    puntuacionElemento.innerText = `Estrellas: ${jugador.puntos} ⭐`;
+    const ptsFmt = window.getText ? window.getText('tk_stars') : "Estrellas: {pts} ⭐";
+    puntuacionElemento.innerText = ptsFmt.replace('{pts}', jugador.puntos);
 
     const porcentaje = ((indicePreguntaActual) / preguntas.length) * 100;
     barraProgreso.style.width = `${porcentaje}%`;
@@ -207,10 +221,11 @@ function seleccionarRespuesta(e) {
     if (acierto) {
         btn.classList.add('correcto');
         jugadores[turnoActual].puntos += 1; // 1 Estrella por acierto
-        puntuacionElemento.innerText = `Estrellas: ${jugadores[turnoActual].puntos} ⭐`;
+        const ptsFmt = window.getText ? window.getText('tk_stars') : "Estrellas: {pts} ⭐";
+        puntuacionElemento.innerText = ptsFmt.replace('{pts}', jugadores[turnoActual].puntos);
 
         Swal.fire({
-            title: '¡GENIAL! 🌟',
+            title: window.getText ? window.getText('tk_correct_title') : '¡GENIAL! 🌟',
             icon: 'success',
             timer: 1000,
             showConfirmButton: false,
@@ -220,7 +235,7 @@ function seleccionarRespuesta(e) {
     } else {
         btn.classList.add('incorrecto');
         Swal.fire({
-            title: '¡Ups! 😅',
+            title: window.getText ? window.getText('tk_wrong_title') : '¡Ups! 😅',
             icon: 'error',
             timer: 1000,
             showConfirmButton: false,
@@ -269,22 +284,23 @@ function mostrarResultadoFinal() {
 
     if (ganadores.length > 1) {
         // CASO EMPATE
-        titulo = '¡Empate Mágico! 🤝✨';
+        titulo = window.getText ? window.getText('tk_tie_title') : '¡Empate Mágico! 🤝✨';
         // Unimos los nombres con comas y "y" (ej: Pepe y Ana)
         const nombres = ganadores.map(g => g.nombre).join(' y ');
-        mensajeHtml = `¡Ha habido un empate entre <b>${nombres}</b>!`;
+        mensajeHtml = window.getText ? window.getText('tk_tie_text').replace('{names}', nombres) : `¡Ha habido un empate entre <b>${nombres}</b>!`;
     } else {
         // CASO UN SOLO GANADOR
-        titulo = '¡Fin del juego! 🎉';
-        mensajeHtml = `¡El ganador es <b>${jugadores[0].nombre}</b>!`;
+        titulo = window.getText ? window.getText('tk_win_title') : '¡Fin del juego! 🎉';
+        mensajeHtml = window.getText ? window.getText('tk_win_text').replace('{name}', jugadores[0].nombre) : `¡El ganador es <b>${jugadores[0].nombre}</b>!`;
     }
 
     // 5. Generamos la lista del ranking (con trofeos para todos los que tengan maxPuntos)
     let ranking = '<br><br>';
+    const wordsStars = window.getText ? window.getText('tk_stars_word') : 'estrellas';
     jugadores.forEach((jug) => {
         // Si tiene los puntos máximos lleva trofeo, si no globo
         let icono = (jug.puntos === maxPuntos) ? '🏆' : '🎈';
-        ranking += `<p>${icono} <b>${jug.nombre}</b>: ${jug.puntos} estrellas</p>`;
+        ranking += `<p>${icono} <b>${jug.nombre}</b>: ${jug.puntos} ${wordsStars}</p>`;
     });
 
     // Añadimos el ranking al mensaje
@@ -295,7 +311,7 @@ function mostrarResultadoFinal() {
         title: titulo,
         html: mensajeHtml,
         icon: 'success',
-        confirmButtonText: '¡Jugar otra vez!',
+        confirmButtonText: window.getText ? window.getText('tk_play_again') : '¡Jugar otra vez!',
         confirmButtonColor: '#ff9ff3',
         background: '#fff'
     }).then(() => {

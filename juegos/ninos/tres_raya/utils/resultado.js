@@ -30,20 +30,26 @@ document.addEventListener("DOMContentLoaded", () => {
   function dibujarHistorial() {
     // Si no hay partidas registradas, mostramos un mensaje informativo
     if (historialPartidas.length === 0) {
+      const msg = window.getText ? window.getText("tr_no_games") : "¡Aún no hay partidas jugadas!";
       contenedorResumen.innerHTML =
-        "<p class='text-muted'>¡Aún no hay partidas jugadas!</p>";
+        `<p class='text-muted'>${msg}</p>`;
       return;
     }
 
     // A. Destacamos la última partida (la más reciente)
     const ultimaPartida = historialPartidas[historialPartidas.length - 1];
+    const lgMsg = window.getText ? window.getText("tr_last_game") : "Última Partida";
+    const rhMsg = window.getText ? window.getText("tr_recent_hist") : "Historial Reciente:";
+    const tieWord = window.getText ? window.getText("tr_tie_word") : "Empate";
+    const tieEx = window.getText ? window.getText("tr_tie_excl") : "¡Tablas!";
+    const vicEx = window.getText ? window.getText("tr_victory") : "¡Victoria!";
     let contenidoHTML = `
         <div class="podio-box">
-            <h3>Última Partida</h3>
+            <h3>${lgMsg}</h3>
             <div style="font-size: 4rem;">${ultimaPartida.icon}</div>
-            <p class="mb-0 fs-5">${ultimaPartida.winner === "Empate" ? "¡Tablas!" : "¡Victoria!"}</p>
+            <p class="mb-0 fs-5">${ultimaPartida.winner === "Empate" || ultimaPartida.winner === tieWord ? tieEx : vicEx}</p>
         </div>
-        <h5 class="mt-4 text-start border-bottom pb-2">Historial Reciente:</h5>
+        <h5 class="mt-4 text-start border-bottom pb-2">${rhMsg}</h5>
     `;
 
     // B. Listamos las partidas anteriores (limitado a las últimas 5)
@@ -52,9 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     partidasRecientes.forEach((partida, indice) => {
       if (indice > 4) return; // Límite visual del historial
+      const pNum = window.getText ? window.getText("tr_match_num").replace("{num}", historialPartidas.length - indice) : `Partida #${historialPartidas.length - indice}`;
       contenidoHTML += `
         <div class="history-item shadow-sm">
-            <span>Partida #${historialPartidas.length - indice}</span>
+            <span>${pNum}</span>
             <span>${partida.icon} ${partida.winner}</span>
         </div>
       `;
@@ -63,7 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
     contenedorResumen.innerHTML = contenidoHTML;
 
     // C. Si alguien ganó, lanzamos la celebración
-    if (ultimaPartida.winner !== "Empate") {
+    const tieWord2 = window.getText ? window.getText("tr_tie_word") : "Empate";
+    if (ultimaPartida.winner !== "Empate" && ultimaPartida.winner !== tieWord2) {
       lanzarCelebracion();
     }
   }

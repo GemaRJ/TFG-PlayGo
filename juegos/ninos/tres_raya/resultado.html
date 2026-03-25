@@ -21,14 +21,14 @@
   </head>
   <body>
     <div class="game-card text-center">
-      <h1 class="mb-4">🏆 Clasificación 🏆</h1>
+      <h1 class="mb-4" data-key="tr_ranking">🏆 Clasificación 🏆</h1>
 
       <div id="summary-box" class="my-4">
-        <p class="text-muted">Cargando resultados...</p>
+        <p class="text-muted" data-key="tr_loading_res">Cargando resultados...</p>
       </div>
 
       <div class="d-flex flex-column gap-2">
-        <button id="btn-home" class="btn-custom btn-primary">
+        <button id="btn-home" class="btn-custom btn-primary" data-key="tr_home_btn">
           🏠 Menú Principal
         </button>
 
@@ -36,6 +36,7 @@
           id="btn-clear"
           class="btn-custom btn-warning py-2"
           style="font-size: 0.9rem"
+          data-key="tr_clear_btn"
         >
           🗑️ Borrar Historial
         </button>
@@ -43,5 +44,7 @@
     </div>
 
     <script src="./utils/resultado.js"></script>
+    <script src="idiomas.js"></script>
+    <script src="../../../utils/traductor.js"></script>
   </body>
 </html>

@@ -18,20 +18,21 @@
 
     <!-- PANTALLA DE INICIO -->
     <div id="pantalla-inicio" class="tarjeta-juego">
-      <button class="btn-tutorial-esquina" onclick="mostrarTutorial()">
+      <button class="btn-tutorial-esquina" onclick="mostrarTutorial()" data-key="bj_tut_btn">
         ❓ Instrucciones
       </button>
       <header class="encabezado">
         <div class="logo-container">
           <img src="images/blackjack.png" alt="blackJack Logo" class="logo">
         </div>
-        <h1>BLACKJACK</h1>
+        <h1 data-key="bj_title">BLACKJACK</h1>
       </header>
 
       <div class="config-zona">
-        <label style="color: var(--accent-primary); display: block; margin-bottom: 10px; font-weight: bold;">Nombre del
-          Jugador:</label>
-        <input type="text" id="inputNombre" class="input-nombre" placeholder="Tu nombre..." autocomplete="off">
+        <label style="color: var(--accent-primary); display: block; margin-bottom: 10px; font-weight: bold;"
+          data-key="bj_player_name">Nombre del Jugador:</label>
+        <input type="text" id="inputNombre" class="input-nombre" placeholder="Tu nombre..." autocomplete="off"
+          data-key="bj_placeholder_name">
       </div>
 
       <button class="btn-siguiente" onclick="iniciarJuegoUI()">
@@ -42,7 +43,7 @@
     <!-- PANTALLA DE JUEGO -->
     <div id="pantalla-juego" class="tarjeta-juego oculto">
       <header class="encabezado">
-        <h1>BLACKJACK</h1>
+        <h1 data-key="bj_title">BLACKJACK</h1>
       </header>
 
       <!-- Elemento para el nombre del jugador -->
@@ -56,7 +57,7 @@
         <!-- Zona de la Banca -->
         <div class="seccion_jugador banca">
           <div class="header_jugador">
-            <h2>BANCA</h2>
+            <h2 data-key="bj_bank">BANCA</h2>
             <div class="puntos" id="puntosBanca">0</div>
           </div>
           <div class="cartas" id="cartasBanca"></div>
@@ -74,9 +75,11 @@
 
       <!-- Controles del juego -->
       <div class="controles">
-        <button id="btnPedirCarta" disabled class="btn-siguiente" style="margin-bottom: 10px;">Pedir Carta</button>
-        <button id="btnPlantarse" disabled class="btn-siguiente" style="margin-bottom: 10px;">Plantarse</button>
-        <button id="btnReiniciar" class="btn-siguiente">Nueva Partida</button>
+        <button id="btnPedirCarta" disabled class="btn-siguiente" style="margin-bottom: 10px;"
+          data-key="bj_hit_btn">Pedir Carta</button>
+        <button id="btnPlantarse" disabled class="btn-siguiente" style="margin-bottom: 10px;"
+          data-key="bj_stand_btn">Plantarse</button>
+        <button id="btnReiniciar" class="btn-siguiente" data-key="bj_restart_btn">Nueva Partida</button>
       </div>
 
       <!-- Contenedor para mostrar el mensaje de resultado -->
@@ -89,46 +92,50 @@
   <div id="modalTutorial" class="modal hidden">
     <div class="modal-content">
       <button class="modal-close" onclick="cerrarTutorial()">✕</button>
-      <h2>📖 Cómo Jugar Blackjack</h2>
+      <h2 data-key="bj_tut_title">📖 Cómo Jugar Blackjack</h2>
       <div class="tutorial-content">
         <div class="tutorial-step">
           <div class="step-number">1</div>
           <div class="step-content">
-            <h3>Objetivo del Juego</h3>
-            <p>Suma 21 puntos o acércate lo máximo posible sin pasarte. ¡Si te pasas, pierdes!</p>
+            <h3 data-key="bj_tut_step1_t">Objetivo del Juego</h3>
+            <p data-key="bj_tut_step1_d">Suma 21 puntos o acércate lo máximo posible sin pasarte. ¡Si te pasas, pierdes!
+            </p>
           </div>
         </div>
         <div class="tutorial-step">
           <div class="step-number">2</div>
           <div class="step-content">
-            <h3>Valor de las Cartas</h3>
-            <p>Las figuras valen 10. Las cartas numéricas valen su número.</p>
+            <h3 data-key="bj_tut_step2_t">Valor de las Cartas</h3>
+            <p data-key="bj_tut_step2_d">Las figuras valen 10. Las cartas numéricas valen su número.</p>
           </div>
         </div>
         <div class="tutorial-step">
           <div class="step-number">3</div>
           <div class="step-content">
-            <h3>Tu Turno</h3>
-            <p>Puedes "Pedir Carta" para acercarte a 21, o "Plantarte" si crees que tu puntuación es buena.</p>
+            <h3 data-key="bj_tut_step3_t">Tu Turno</h3>
+            <p data-key="bj_tut_step3_d">Puedes "Pedir Carta" para acercarte a 21, o "Plantarte" si crees que tu
+              puntuación es buena.</p>
           </div>
         </div>
         <div class="tutorial-step">
           <div class="step-number">4</div>
           <div class="step-content">
-            <h3>La Banca</h3>
-            <p>La banca jugará primero. Luego jugarás tú, ¡intenta superar su puntuación!</p>
+            <h3 data-key="bj_tut_step4_t">La Banca</h3>
+            <p data-key="bj_tut_step4_d">La banca jugará primero. Luego jugarás tú, ¡intenta superar su puntuación!</p>
           </div>
         </div>
       </div>
-      <button onclick="cerrarTutorial()" class="tutorial-close-btn">
+      <button onclick="cerrarTutorial()" class="tutorial-close-btn" data-key="bj_tut_close">
         ¡ENTENDIDO! 🚀
       </button>
     </div>
   </div>
 
-  <!-- Enlace al archivo JavaScript que contiene toda la lÃ³gica del juego -->
+  <!-- Enlace al archivo JavaScript que contiene toda la lógica del juego -->
   <script src="js/blackjack.js"></script>
   <script src="../ranking.js"></script>
+  <script src="idiomas.js"></script>
+  <script src="../../../utils/traductor.js"></script>
 </body>
 
 </html>

@@ -50,8 +50,19 @@ const preguntas = [
       { texto: "500", correct: false },
       { texto: "403", correct: false },
     ],
-  },
+  }
 ];
+
+// Reemplazar preguntas con la versión traducida al iniciar si es posible
+document.addEventListener("DOMContentLoaded", () => {
+    if (window.getText) {
+       let translatedQs = window.getText('tr_questions');
+       if (Array.isArray(translatedQs) && translatedQs.length > 0 && typeof translatedQs !== 'string') {
+          preguntas.length = 0; // vaciar array original
+          translatedQs.forEach(q => preguntas.push(q));
+       }
+    }
+});
 
 // 2. VARIABLES DE ESTADO
 
@@ -84,10 +95,10 @@ function generarInputsNombres() {
   for (let i = 1; i <= cantidad; i++) {
     const input = document.createElement("input");
     input.type = "text";
-    input.placeholder = `Nombre Jugador ${i}`;
+    input.placeholder = window.getText ? `${window.getText('tr_player_name')} ${i}` : `Nombre Jugador ${i}`;
     input.classList.add("input-nombre");
     input.id = `jugador-${i}`;
-    input.value = `Jugador ${i}`;
+    input.value = window.getText ? `${window.getText('tr_player_default')} ${i}` : `Jugador ${i}`;
     contenedorNombres.appendChild(input);
   }
 }
@@ -99,7 +110,8 @@ function comenzarPartida() {
 
   for (let i = 1; i <= cantidad; i++) {
     const input = document.getElementById(`jugador-${i}`);
-    const nombre = input ? input.value : `Jugador ${i}`;
+    const defaultName = window.getText ? `${window.getText('tr_player_default')} ${i}` : `Jugador ${i}`;
+    const nombre = input ? input.value : defaultName;
     jugadores.push({ nombre: nombre, puntos: 0 });
   }
 
@@ -117,7 +129,7 @@ function mostrarPregunta() {
   let preguntaActual = preguntas[indicePreguntaActual];
   elementoPregunta.innerText = preguntaActual.texto;
   nombreJugadorActivo.innerText = jugadores[turnoActual].nombre;
-  puntuacionElemento.innerText = `Puntos: ${jugadores[turnoActual].puntos}`;
+  puntuacionElemento.innerText = (window.getText ? window.getText('tr_points') : 'Puntos: ') + jugadores[turnoActual].puntos;
 
   const porcentaje = (indicePreguntaActual / preguntas.length) * 100;
   barraProgreso.style.width = `${porcentaje}%`;
@@ -198,11 +210,15 @@ function mostrarResultadoFinal() {
     console.log("✅ Señal enviada al servidor.");
   }
 
+  let title = window.getText ? window.getText('tr_tourney_end') : "¡Torneo Finalizado!";
+  let text = window.getText ? window.getText('tr_winner_text').replace('{name}', jugadores[0].nombre).replace('{pts}', jugadores[0].puntos) : `Ganador: ${jugadores[0].nombre} con ${jugadores[0].puntos} puntos.`;
+  let btnTxt = window.getText ? window.getText('tr_great') : "Genial";
+
   Swal.fire({
-    title: "¡Torneo Finalizado!",
-    text: `Ganador: ${jugadores[0].nombre} con ${jugadores[0].puntos} puntos.`,
+    title: title,
+    text: text,
     icon: "success",
-    confirmButtonText: "Genial",
+    confirmButtonText: btnTxt,
   }).then(() => location.reload());
 }
 

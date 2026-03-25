@@ -53,11 +53,11 @@ function actualizarListaEquipos() {
     // Activar botón solo si hay 2 o más equipos
     if (teams.length >= 2) {
         btnJugar.classList.remove('disabled');
-        btnJugar.innerText = "¡A JUGAR!";
+        btnJugar.innerText = window.getText ? window.getText('ta_play_btn') : "¡A JUGAR!";
         btnJugar.onclick = iniciarPartidaMultijugador;
     } else {
         btnJugar.classList.add('disabled');
-        btnJugar.innerText = "👥 MÍNIMO 2 EQUIPOS";
+        btnJugar.innerText = window.getText ? window.getText('ta_min_teams') : "👥 MÍNIMO 2 EQUIPOS";
         btnJugar.onclick = null;
     }
 }
@@ -91,7 +91,8 @@ function comenzarRonda() {
     roundScore = 0;
     timeLeft = 60;
     document.getElementById('round-score').innerText = roundScore;
-    document.getElementById('playing-team').innerText = "Jugando: " + teams[currentTeamIndex].name;
+    const playTxt = window.getText ? window.getText('ta_playing') : "Jugando: ";
+    document.getElementById('playing-team').innerText = playTxt + teams[currentTeamIndex].name;
     
     // Reiniciar barra
     const timerBar = document.getElementById('timer-bar');

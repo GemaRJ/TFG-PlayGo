@@ -1,4 +1,4 @@
-const CACHE_NAME = 'playgo-cache-v3';
+const CACHE_NAME = 'playgo-cache-v6';
 
 const urlsToCache = [
   '/playgo/offline.html',

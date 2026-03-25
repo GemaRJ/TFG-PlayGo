@@ -16,31 +16,31 @@
 
   <div class="contenedor-principal">
     <div id="pantalla-inicio" class="tarjeta-juego">
-      <button class="btn-tutorial-esquina" onclick="mostrarTutorial()">
+      <button class="btn-tutorial-esquina" onclick="mostrarTutorial()" data-key="tr_tut_btn">
         ❓ Instrucciones
       </button>
       <header class="encabezado">
         <div class="logo-container">
           <img src="img/trivial.png" alt="Impostor Logo" class="logo">
         </div>
-        <h1>TRIVIAL</h1>
+        <h1 data-key="tr_title">TRIVIAL</h1>
       </header>
 
       <div class="config-zona">
-        <label>Nº de Jugadores:</label>
+        <label data-key="tr_num_players">Nº de Jugadores:</label>
         <div class="select-wrapper">
           <select id="num-jugadores" class="select-bonito" onchange="generarInputsNombres()">
-            <option value="1">1 Jugador 👤</option>
-            <option value="2">2 Jugadores 👥</option>
-            <option value="3">3 Jugadores 👨‍👩‍👧</option>
-            <option value="4">4 Jugadores 👨‍👩‍👧‍👦</option>
+            <option value="1" data-key="tr_p1">1 Jugador 👤</option>
+            <option value="2" data-key="tr_p2">2 Jugadores 👥</option>
+            <option value="3" data-key="tr_p3">3 Jugadores 👨‍👩‍👧</option>
+            <option value="4" data-key="tr_p4">4 Jugadores 👨‍👩‍👧‍👦</option>
           </select>
         </div>
       </div>
 
       <div id="lista-nombres" class="lista-nombres"></div>
 
-      <button class="btn-siguiente" onclick="comenzarPartida()">
+      <button class="btn-siguiente" onclick="comenzarPartida()" data-key="tr_start_btn">
         ▶️ INICIAR JUEGO
       </button>
     </div>
@@ -51,7 +51,7 @@
 
         <div class="panel-estado">
           <div class="caja-turno">
-            <span class="etiqueta">Turno de:</span>
+            <span class="etiqueta" data-key="tr_turn_of">Turno de:</span>
             <span id="nombre-jugador-activo" class="jugador-activo">Jugador 1</span>
           </div>
           <div class="caja-timer">
@@ -76,7 +76,7 @@
       </main>
 
       <footer class="pie-juego">
-        <button id="btn-siguiente" class="btn-siguiente oculto" onclick="siguientePregunta()">
+        <button id="btn-siguiente" class="btn-siguiente oculto" onclick="siguientePregunta()" data-key="tr_next_btn">
           Siguiente >>
         </button>
       </footer>
@@ -87,37 +87,39 @@
   <div id="modalTutorial" class="modal hidden">
     <div class="modal-content">
       <button class="modal-close" onclick="cerrarTutorial()">✕</button>
-      <h2>📖 Cómo Jugar Trivial</h2>
+      <h2 data-key="tr_tut_title">📖 Cómo Jugar Trivial</h2>
       <div class="tutorial-content">
         <div class="tutorial-step">
           <div class="step-number">1</div>
           <div class="step-content">
-            <h3>Selecciona Jugadores</h3>
-            <p>Elige de 1 a 4 jugadores e introduce sus nombres para empezar a competir.</p>
+            <h3 data-key="tr_tut_step1_t">Selecciona Jugadores</h3>
+            <p data-key="tr_tut_step1_d">Elige de 1 a 4 jugadores e introduce sus nombres para empezar a competir.</p>
           </div>
         </div>
         <div class="tutorial-step">
           <div class="step-number">2</div>
           <div class="step-content">
-            <h3>Responde Rápido</h3>
-            <p>Lee la pregunta y elige la respuesta correcta antes de que se acaben los 15 segundos.</p>
+            <h3 data-key="tr_tut_step2_t">Responde Rápido</h3>
+            <p data-key="tr_tut_step2_d">Lee la pregunta y elige la respuesta correcta antes de que se acaben los 15 segundos.</p>
           </div>
         </div>
         <div class="tutorial-step">
           <div class="step-number">3</div>
           <div class="step-content">
-            <h3>Gana Puntos</h3>
-            <p>Cada respuesta correcta te da 10 puntos. El jugador con más puntos al final gana.</p>
+            <h3 data-key="tr_tut_step3_t">Gana Puntos</h3>
+            <p data-key="tr_tut_step3_d">Cada respuesta correcta te da 10 puntos. El jugador con más puntos al final gana.</p>
           </div>
         </div>
       </div>
-      <button onclick="cerrarTutorial()" class="tutorial-close-btn">
+      <button onclick="cerrarTutorial()" class="tutorial-close-btn" data-key="bj_tut_close">
         ¡ENTENDIDO! 🚀
       </button>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="idiomas.js"></script>
+  <script src="../../../utils/traductor.js"></script>
   <script src="js/app.js"></script>
   <script src="../ranking.js"></script>
 </body>
