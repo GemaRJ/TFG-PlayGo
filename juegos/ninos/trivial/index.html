@@ -17,22 +17,22 @@
 
         <!-- PANTALLA INICIO -->
         <div id="pantalla-inicio">
-            <button class="btn-tutorial-esquina" onclick="mostrarTutorialTrivialKids()">
+            <button class="btn-tutorial-esquina" onclick="mostrarTutorialTrivialKids()" data-key="tk_tut_btn">
                 ❓ Instrucciones
             </button>
            <div class="logo-container">
           <img src="img/logoTrivial.png" alt="trivialKids Logo" class="logo">
         </div>
-            <h1>TRIVIAL KIDS</h1>
+            <h1 data-key="tk_title">TRIVIAL KIDS</h1>
 
             <div style="margin: 20px 0;">
-                <label class="font-title" style="display:block; margin-bottom:10px;">¿Cuántos jugadores sois?</label>
+                <label class="font-title" style="display:block; margin-bottom:10px;" data-key="tk_how_many">¿Cuántos jugadores sois?</label>
                 <select id="num-jugadores" class="select-bonito" style="width: auto; padding-right: 40px;"
                     onchange="generarInputsNombres()">
-                    <option value="1">1 Jugador 🧒</option>
-                    <option value="2">2 Jugadores 🧒👧</option>
-                    <option value="3">3 Jugadores 🧒👧👦</option>
-                    <option value="4">4 Jugadores 🧒👧👦👧</option>
+                    <option value="1" data-key="tk_1p">1 Jugador 🧒</option>
+                    <option value="2" data-key="tk_2p">2 Jugadores 🧒👧</option>
+                    <option value="3" data-key="tk_3p">3 Jugadores 🧒👧👦</option>
+                    <option value="4" data-key="tk_4p">4 Jugadores 🧒👧👦👧</option>
                 </select>
             </div>
 
@@ -41,7 +41,7 @@
                 <!-- Dinámico -->
             </div>
 
-            <button class="btn-grande" onclick="comenzarPartida()">▶️ ¡A JUGAR!</button>
+            <button class="btn-grande" onclick="comenzarPartida()" data-key="tk_play_btn">▶️ ¡A JUGAR!</button>
         </div>
 
         <!-- PANTALLA JUEGO -->
@@ -58,13 +58,13 @@
             </div>
 
             <main class="zona-pregunta">
-                <h2 id="texto-pregunta" class="font-title">Cargando...</h2>
+                <h2 id="texto-pregunta" class="font-title" data-key="tk_loading">Cargando...</h2>
                 <div id="grid-respuestas" class="grid-respuestas"></div>
             </main>
 
             <footer style="margin-top:30px;">
                 <button id="btn-siguiente" class="btn-grande" style="display:none;"
-                    onclick="siguientePregunta()">SIGUIENTE ➡️</button>
+                    onclick="siguientePregunta()" data-key="tk_next_btn">SIGUIENTE ➡️</button>
             </footer>
         </div>
     </div>
@@ -74,39 +74,39 @@
         <div class="modal-content">
             <button class="modal-close" onclick="cerrarTutorialTrivialKids()">✕</button>
             <div class="tutorial-step">
-                <h2>📖 ¿Cómo Jugar?</h2>
+                <h2 data-key="tk_tut_title">📖 ¿Cómo Jugar?</h2>
             </div>
             <div class="tutorial-content">
                 <div class="tutorial-step">
                     <div class="step-number">1</div>
                     <div class="step-content">
-                        <h3>¡Reúne a tus amigos!</h3>
-                        <p>Elige cuántos vais a jugar y escribe vuestros nombres mágicos.</p>
+                        <h3 data-key="tk_tut_step1_t">¡Reúne a tus amigos!</h3>
+                        <p data-key="tk_tut_step1_d">Elige cuántos vais a jugar y escribe vuestros nombres mágicos.</p>
                     </div>
                 </div>
                 <div class="tutorial-step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h3>Atento al turno</h3>
-                        <p>Mira arriba para saber a quién le toca responder. ¡Fíjate bien!</p>
+                        <h3 data-key="tk_tut_step2_t">Atento al turno</h3>
+                        <p data-key="tk_tut_step2_d">Mira arriba para saber a quién le toca responder. ¡Fíjate bien!</p>
                     </div>
                 </div>
                 <div class="tutorial-step">
                     <div class="step-number">3</div>
                     <div class="step-content">
-                        <h3>¡Cuidado con el tiempo!</h3>
-                        <p>Tienes 20 segundos para elegir la respuesta correcta. ¡No te despistes!</p>
+                        <h3 data-key="tk_tut_step3_t">¡Cuidado con el tiempo!</h3>
+                        <p data-key="tk_tut_step3_d">Tienes 20 segundos para elegir la respuesta correcta. ¡No te despistes!</p>
                     </div>
                 </div>
                 <div class="tutorial-step">
                     <div class="step-number">4</div>
                     <div class="step-content">
-                        <h3>Gana Estrellas</h3>
-                        <p>Acierta preguntas para ganar estrellas ⭐. ¡Quien tenga más gana!</p>
+                        <h3 data-key="tk_tut_step4_t">Gana Estrellas</h3>
+                        <p data-key="tk_tut_step4_d">Acierta preguntas para ganar estrellas ⭐. ¡Quien tenga más gana!</p>
                     </div>
                 </div>
             </div>
-            <button onclick="cerrarTutorialTrivialKids()" class="tutorial-close-btn">
+            <button onclick="cerrarTutorialTrivialKids()" class="tutorial-close-btn" data-key="tk_tut_close">
                 ¡ENTENDIDO! 🚀
             </button>
         </div>
@@ -114,6 +114,8 @@
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="idiomas.js"></script>
+    <script src="../../../utils/traductor.js"></script>
     <script src="script.js"></script>
 </body>
 

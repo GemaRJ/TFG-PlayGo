@@ -66,8 +66,9 @@ function generarInputsNombres() {
     input.type = "text";
     input.className = "input-nombre";
     input.id = `nombre-${i}`;
-    input.placeholder = `Jugador ${i + 1}`;
-    input.value = `Jugador ${i + 1}`;
+    const defName = window.getText ? window.getText('cn_player_def') : 'Jugador';
+    input.placeholder = `${defName} ${i + 1}`;
+    input.value = `${defName} ${i + 1}`;
     input.autocomplete = "off";
     contenedor.appendChild(input);
   }
@@ -77,8 +78,9 @@ function irAlMenu() {
   config.jugadores = [];
   for (let i = 0; i < config.numJugadores; i++) {
     const el = document.querySelector(`#nombre-${i}`);
+    const defName = window.getText ? window.getText('cn_player_def') : 'Jugador';
     let nombre =
-      el && el.value.trim() !== "" ? el.value.trim() : `Jugador ${i + 1}`;
+      el && el.value.trim() !== "" ? el.value.trim() : `${defName} ${i + 1}`;
     config.jugadores.push({ nombre, puntos: 0 });
   }
   cambiarVista("menu");
@@ -97,10 +99,10 @@ function cambiarVista(nombre) {
 
 function prepararJuego(tipo, desc) {
   Swal.fire({
-    title: "¿Listos?",
+    title: window.getText ? window.getText('cn_ready') : "¿Listos?",
     text: desc,
     icon: "info",
-    confirmButtonText: "¡Vamos!",
+    confirmButtonText: window.getText ? window.getText('cn_lets_go') : "¡Vamos!",
   }).then((r) => {
     if (r.isConfirmed) iniciarPartida(tipo);
   });
@@ -198,8 +200,8 @@ function verificar() {
     if (txtPuntos) txtPuntos.textContent = jug.puntos;
 
     Swal.fire({
-      title: `¡Bien ${jug.nombre}! 🎉`,
-      text: "+10 Puntos",
+      title: window.getText ? window.getText('cn_good').replace('{name}', jug.nombre) : `¡Bien ${jug.nombre}! 🎉`,
+      text: window.getText ? window.getText('cn_points') : "+10 Puntos",
       icon: "success",
       timer: 1200,
       showConfirmButton: false,
@@ -208,16 +210,16 @@ function verificar() {
     config.intentos++;
     if (config.intentos >= config.maxIntentos) {
       Swal.fire({
-        title: "¡Oh no! 😅",
-        text: `Era ${config.respuestaCorrecta}`,
+        title: window.getText ? window.getText('cn_oh_no') : "¡Oh no! 😅",
+        text: window.getText ? window.getText('cn_it_was').replace('{ans}', config.respuestaCorrecta) : `Era ${config.respuestaCorrecta}`,
         icon: "warning",
       }).then(pasarTurno);
     } else {
       jug.puntos = Math.max(0, jug.puntos - 2);
       if (txtPuntos) txtPuntos.textContent = jug.puntos;
       Swal.fire({
-        title: "¡Casi!",
-        text: "(-2 pts)",
+        title: window.getText ? window.getText('cn_almost') : "¡Casi!",
+        text: window.getText ? window.getText('cn_minus_pts') : "(-2 pts)",
         icon: "error",
         timer: 1000,
         showConfirmButton: false,
@@ -243,10 +245,10 @@ function pasarTurno() {
     if (config.jugadores.length > 1) {
       const sigJug = config.jugadores[config.turnoActual].nombre;
       Swal.fire({
-        title: `Fin de turno: ${jugAnterior}`,
-        html: `<h3>👉 ¡Le toca a ${sigJug}!</h3>`,
+        title: window.getText ? window.getText('cn_turn_end').replace('{name}', jugAnterior) : `Fin de turno: ${jugAnterior}`,
+        html: window.getText ? window.getText('cn_next_turn').replace('{name}', sigJug) : `<h3>👉 ¡Le toca a ${sigJug}!</h3>`,
         icon: "info",
-        confirmButtonText: "¡Estoy listo!",
+        confirmButtonText: window.getText ? window.getText('cn_im_ready') : "¡Estoy listo!",
         allowOutsideClick: false,
       }).then(cargarTurno);
     } else cargarTurno();
@@ -311,8 +313,8 @@ function volverInicio() {
 
 function confirmarSalida() {
   Swal.fire({
-    title: "¿Salir?",
-    text: "Se perderá el progreso",
+    title: window.getText ? window.getText('cn_leave') : "¿Salir?",
+    text: window.getText ? window.getText('cn_lose_prog') : "Se perderá el progreso",
     icon: "warning",
     showCancelButton: true,
   }).then((r) => {

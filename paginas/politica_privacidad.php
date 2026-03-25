@@ -12,7 +12,7 @@ session_start();
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/footer.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../assets/css/info_pagina.css?v=<?php echo time(); ?>">
-    <link rel="icon" href="assets/img/jugando-videojuegos.png" type="image/png">
+    <link rel="icon" href="../assets/img/icono192-jugando-videojuegos.png?v=3" type="image/png">
 
 </head>
 
@@ -21,7 +21,7 @@ session_start();
     <header class="info-topbar">
         <div class="info-container">
             <a href="index.php" class="info-logo">
-                <img src="assets/img/logoPlayGo.png" alt="PlayGo logo" class="info-logo-img">
+                <img src="../assets/img/logoPlayGo.png" alt="PlayGo logo" class="info-logo-img">
                 <span>PLAY<span class="accent">GO</span></span>
             </a>
         </div>

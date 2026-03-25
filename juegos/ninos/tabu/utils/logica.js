@@ -177,17 +177,18 @@ function finalizarMisionTotal() {
     const rankingFinal = [...teams].sort((a, b) => b.score - a.score);
 
     let rankingHtml = '<div style="text-align:left; margin-top:20px;">';
+    const ptsWord = window.getText ? window.getText('ta_k_pts') : 'puntos';
     rankingFinal.forEach((t, i) => {
         const icono = (i === 0) ? '🏆' : '⭐';
-        rankingHtml += `<p>${icono} <b>${t.name}</b>: ${t.score} puntos</p>`;
+        rankingHtml += `<p>${icono} <b>${t.name}</b>: ${t.score} ${ptsWord}</p>`;
     });
     rankingHtml += '</div>';
 
     Swal.fire({
-        title: '¡MISIÓN CUMPLIDA! 🚀',
-        html: `¡El ganador es <b>${rankingFinal[0].name}</b>!<br>${rankingHtml}`,
+        title: window.getText ? window.getText('ta_k_mission_done') : '¡MISIÓN CUMPLIDA! 🚀',
+        html: window.getText ? window.getText('ta_k_winner_is').replace('{name}', rankingFinal[0].name).replace('{ranking}', rankingHtml) : `¡El ganador es <b>${rankingFinal[0].name}</b>!<br>${rankingHtml}`,
         icon: 'success',
-        confirmButtonText: 'Nueva Partida',
+        confirmButtonText: window.getText ? window.getText('ta_k_new_game') : 'Nueva Partida',
         confirmButtonColor: 'var(--primary)'
     }).then(() => {
         location.reload();

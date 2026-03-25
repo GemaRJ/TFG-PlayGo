@@ -21,7 +21,7 @@
   </head>
   <body>
     <div class="game-card text-center">
-      <h2 id="status-text" class="mb-4">Cargando...</h2>
+      <h2 id="status-text" class="mb-4" data-key="tr_loading">Cargando...</h2>
 
       <div id="game-board" class="mx-auto mb-4">
         <div class="cell" data-i="0"></div>
@@ -40,16 +40,19 @@
           id="btn-restart"
           class="btn-custom btn-warning py-3"
           style="display: none"
+          data-key="tr_again_btn"
         >
           🔄 Otra Vez
         </button>
 
-        <button id="btn-exit" class="btn-custom btn-secondary py-3">
+        <button id="btn-exit" class="btn-custom btn-secondary py-3" data-key="tr_exit_btn">
           🏠 Salir / Resultados
         </button>
       </div>
     </div>
 
     <script src="./utils/juego.js"></script>
+    <script src="idiomas.js"></script>
+    <script src="../../../utils/traductor.js"></script>
   </body>
 </html>

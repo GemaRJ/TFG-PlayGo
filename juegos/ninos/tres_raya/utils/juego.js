@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function actualizarEstadoUI() {
     if (!juegoActivo) return;
     const avatar = jugadorActual === 1 ? configuracion.p1 : configuracion.p2;
-    textoEstado.innerText = `Turno de: ${avatar}`;
+    textoEstado.innerText = window.getText ? window.getText("tr_turn_of").replace("{name}", "").replace("{avatar}", avatar) : `Turno de: ${avatar}`;
     textoEstado.style.color =
       jugadorActual === 1 ? "var(--primary)" : "var(--secondary)";
   }
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Lógica para modo VS Robot
     if (juegoActivo && configuracion.mod === "1" && jugadorActual === 2) {
       tableroJuego.style.pointerEvents = "none";
-      textoEstado.innerText = "Pensando... 🤖";
+      textoEstado.innerText = window.getText ? window.getText("tr_thinking") : "Pensando... 🤖";
 
       setTimeout(() => {
         movimientoRobot();
@@ -114,17 +114,20 @@ document.addEventListener("DOMContentLoaded", () => {
     let datosResultado = {};
 
     if (ganador === 0) {
-      textoEstado.innerText = "¡Es un Empate! 🤝";
-      datosResultado = { winner: "Empate", icon: "🤝" };
+      textoEstado.innerText = window.getText ? window.getText("tr_tie") : "¡Es un Empate! 🤝";
+      datosResultado = { winner: window.getText ? window.getText("tr_tie_word") : "Empate", icon: "🤝" };
     } else {
       const icono = ganador === 1 ? configuracion.p1 : configuracion.p2;
+      const tJ1 = window.getText ? window.getText("tr_player1") : "Jugador 1";
+      const tRob = window.getText ? window.getText("tr_robot") : "Robot 🤖";
+      const tJ2 = window.getText ? window.getText("tr_player2") : "Jugador 2";
       const nombre =
         ganador === 1
-          ? "Jugador 1"
+          ? tJ1
           : configuracion.mod === "1"
-            ? "Robot"
-            : "Jugador 2";
-      textoEstado.innerText = `¡Ganador: ${icono}!`;
+            ? tRob
+            : tJ2;
+      textoEstado.innerText = window.getText ? window.getText("tr_winner").replace("{name}", "").replace("{avatar}", icono) : `¡Ganador: ${icono}!`;
 
       const comboGanador = verificarGanador(ganador);
       if (comboGanador)
@@ -137,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("matchHistory", JSON.stringify(historial));
 
     btnReiniciar.style.display = "inline-block";
-    btnSalir.innerText = "🏆 Ver Resultados";
+    btnSalir.innerText = window.getText ? window.getText("tr_exit_btn") : "🏆 Ver Resultados";
     btnSalir.classList.replace("btn-secondary", "btn-primary");
   }
 });

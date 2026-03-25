@@ -21,16 +21,16 @@
 
     <!-- VISTA SETUP (CONFIGURACIÓN) -->
     <section id="vista-setup">
-      <button class="btn-tutorial-esquina" onclick="mostrarTutorialCuentaNumeros()">
+      <button class="btn-tutorial-esquina" onclick="mostrarTutorialCuentaNumeros()" data-key="cn_tut_btn">
         ❓ Instrucciones
       </button>
       <div class="logo-container">
           <img src="imagenes/logoCuentaNumeros.png" alt="cuentaNumeros Logo" class="logo">
         </div>
-      <h1>CUENTA NÚMEROS</h1>
+      <h1 data-key="cn_title">CUENTA NÚMEROS</h1>
 
       <div style="margin: 20px 0;">
-        <label class="font-title">¿Cuántos jugadores?</label>
+        <label class="font-title" data-key="cn_how_many">¿Cuántos jugadores?</label>
         <div class="control-jugadores">
           <button onclick="ajustarJugadores(-1)">➖</button>
           <span id="num-jugadores">1</span>
@@ -42,30 +42,30 @@
         <!-- Se llenan por JS -->
       </div>
 
-      <button class="btn-grande" onclick="irAlMenu()">▶️ ¡A JUGAR!</button>
+      <button class="btn-grande" onclick="irAlMenu()" data-key="cn_play_btn">▶️ ¡A JUGAR!</button>
     </section>
 
     <!-- VISTA MENÚ (SELECCIÓN DE RETO) -->
     <section id="vista-menu" style="display:none;">
-      <h2 class="font-title" style="font-size:2.5rem;">Elige tu Reto</h2>
+      <h2 class="font-title" style="font-size:2.5rem;" data-key="cn_choose_chal">Elige tu Reto</h2>
       <div id="resumen-jugadores" class="marcador" style="margin: 15px 0;"></div>
 
       <div class="grid-juegos">
         <div class="card card-roja" onclick="prepararJuego('contar', 'Cuenta las frutas.')">
           <div class="icono">🍎</div>
-          <span>Contar</span>
+          <span data-key="cn_count_chal">Contar</span>
         </div>
         <div class="card card-azul" onclick="prepararJuego('sumar', 'Suma los números.')">
           <div class="icono">➕</div>
-          <span>Sumar</span>
+          <span data-key="cn_sum_chal">Sumar</span>
         </div>
         <div class="card card-verde" onclick="prepararJuego('restar', 'Resta los números.')">
           <div class="icono">➖</div>
-          <span>Restar</span>
+          <span data-key="cn_sub_chal">Restar</span>
         </div>
       </div>
 
-      <button class="tarjeta-jugador" style="cursor:pointer; border:none; margin-top:10px;" onclick="volverInicio()">
+      <button class="tarjeta-jugador" style="cursor:pointer; border:none; margin-top:10px;" onclick="volverInicio()" data-key="cn_back_home">
         🏠 Volver al Inicio
       </button>
     </section>
@@ -98,21 +98,21 @@
         <button onclick="teclear(8)">8</button>
         <button onclick="teclear(9)">9</button>
         <button onclick="teclear(0)">0</button>
-        <button onclick="teclear('C')" class="btn-borrar">BORRAR</button>
+        <button onclick="teclear('C')" class="btn-borrar" data-key="cn_delete">BORRAR</button>
       </div>
 
       <div style="margin-top:20px;">
-        <button class="tarjeta-jugador" style="cursor:pointer; border:none;" onclick="confirmarSalida()">🏠
+        <button class="tarjeta-jugador" style="cursor:pointer; border:none;" onclick="confirmarSalida()" data-key="cn_exit">🏠
           Salir</button>
       </div>
     </section>
 
     <!-- VISTA RANKING -->
     <section id="vista-ranking" style="display:none;">
-      <h1 class="font-title" style="font-size:3rem;">🏆 GANADORES 🏆</h1>
+      <h1 class="font-title" style="font-size:3rem;" data-key="cn_winners">🏆 GANADORES 🏆</h1>
       <div id="contenedor-podio"></div>
       <div id="lista-resto" class="lista-nombres"></div>
-      <button class="btn-grande" onclick="volverInicio()">🏠 MENÚ PRINCIPAL</button>
+      <button class="btn-grande" onclick="volverInicio()" data-key="cn_main_menu">🏠 MENÚ PRINCIPAL</button>
     </section>
 
   </div>
@@ -122,45 +122,47 @@
     <div class="modal-content">
       <button class="modal-close" onclick="cerrarTutorialCuentaNumeros()">✕</button>
       <div class="tutorial-step">
-        <h2>📖 ¿Cómo Jugar?</h2>
+        <h2 data-key="cn_tut_title">📖 ¿Cómo Jugar?</h2>
       </div>
       <div class="tutorial-content">
         <div class="tutorial-step">
           <div class="step-number">1</div>
           <div class="step-content">
-            <h3>¡Elige tu reto!</h3>
-            <p>Puedes elegir entre contar frutas ricas 🍎, sumar números ➕ o restar ➖.</p>
+            <h3 data-key="cn_tut_step1_t">¡Elige tu reto!</h3>
+            <p data-key="cn_tut_step1_d">Puedes elegir entre contar frutas ricas 🍎, sumar números ➕ o restar ➖.</p>
           </div>
         </div>
         <div class="tutorial-step">
           <div class="step-number">2</div>
           <div class="step-content">
-            <h3>Escribe la respuesta</h3>
-            <p>Mira bien la pantalla y escribe la respuesta usando los botones de números.</p>
+            <h3 data-key="cn_tut_step2_t">Escribe la respuesta</h3>
+            <p data-key="cn_tut_step2_d">Mira bien la pantalla y escribe la respuesta usando los botones de números.</p>
           </div>
         </div>
         <div class="tutorial-step">
           <div class="step-number">3</div>
           <div class="step-content">
-            <h3>¡Comprueba!</h3>
-            <p>Cuando tengas el número, pulsa el botón verde ✅ para ver si has acertado.</p>
+            <h3 data-key="cn_tut_step3_t">¡Comprueba!</h3>
+            <p data-key="cn_tut_step3_d">Cuando tengas el número, pulsa el botón verde ✅ para ver si has acertado.</p>
           </div>
         </div>
         <div class="tutorial-step">
           <div class="step-number">4</div>
           <div class="step-content">
-            <h3>Gana Estrellas</h3>
-            <p>Cada acierto te da estrellas ⭐. ¡Consigue todas las que puedas!</p>
+            <h3 data-key="cn_tut_step4_t">Gana Estrellas</h3>
+            <p data-key="cn_tut_step4_d">Cada acierto te da estrellas ⭐. ¡Consigue todas las que puedas!</p>
           </div>
         </div>
       </div>
-      <button onclick="cerrarTutorialCuentaNumeros()" class="tutorial-close-btn">
+      <button onclick="cerrarTutorialCuentaNumeros()" class="tutorial-close-btn" data-key="bj_tut_close">
         ¡ENTENDIDO! 🚀
       </button>
     </div>
   </div>
 
   <script src="utils/logica.js"></script>
+  <script src="idiomas.js"></script>
+  <script src="../../../utils/traductor.js"></script>
 </body>
 
 </html>

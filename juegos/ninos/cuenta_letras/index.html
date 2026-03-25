@@ -20,35 +20,35 @@
 
     <!-- PANTALLA INICIO -->
     <div id="view-registro">
-      <button class="btn-tutorial-esquina" onclick="mostrarTutorialCompleta()">
+      <button class="btn-tutorial-esquina" onclick="mostrarTutorialCompleta()" data-key="cl_tut_btn">
         ❓ Instrucciones
       </button>
       <div class="logo-container">
           <img src="utils/imagenes/logoCuentaLetras.png" alt="CuentaLetras Logo" class="logo">
         </div>
-      <h1>CUENTA LETRAS</h1>
+      <h1 data-key="cl_title">CUENTA LETRAS</h1>
 
       <div class="mode-selector" style="margin: 20px 0;">
-        <label class="tarjeta-jugador activo" id="btn-solo" style="cursor:pointer; margin-right:10px;">👤 Solo</label>
-        <label class="tarjeta-jugador" id="btn-multi" style="cursor:pointer;">👥 Cooperativo</label>
+        <label class="tarjeta-jugador activo" id="btn-solo" style="cursor:pointer; margin-right:10px;" data-key="cl_mode_solo">👤 Solo</label>
+        <label class="tarjeta-jugador" id="btn-multi" style="cursor:pointer;" data-key="cl_mode_coop">👥 Cooperativo</label>
       </div>
 
       <div id="config-multi" class="hidden" style="margin-bottom: 20px;">
-        <label class="font-title">¿Cuántos jugadores?</label>
+        <label class="font-title" data-key="cl_q_players">¿Cuántos jugadores?</label>
         <div class="select-wrapper">
           <select id="num-jugadores" class="select-bonito">
-            <option value="2">2 Jugadores 👥</option>
-            <option value="3">3 Jugadores 👨‍👩‍👧</option>
-            <option value="4">4 Jugadores 👨‍👩‍👧‍👦</option>
+            <option value="2" data-key="cl_p2">2 Jugadores 👥</option>
+            <option value="3" data-key="cl_p3">3 Jugadores 👨‍👩‍👧</option>
+            <option value="4" data-key="cl_p4">4 Jugadores 👨‍👩‍👧‍👦</option>
           </select>
         </div>
       </div>
 
       <div id="contenedor-nombres" class="lista-nombres">
-        <input type="text" class="input-nombre" placeholder="Nombre Jugador 1" id="nombre-j1" value="Jugador 1">
+        <input type="text" class="input-nombre" placeholder="Nombre Jugador 1" id="nombre-j1" value="Jugador 1" data-key-placeholder="cl_p1_plc" data-key-value="cl_p1_val">
       </div>
 
-      <button id="btn-entrar" class="btn-grande">▶️ ¡A JUGAR!</button>
+      <button id="btn-entrar" class="btn-grande" data-key="cl_play_btn">▶️ ¡A JUGAR!</button>
     </div>
 
     <!-- VISTA JUEGO -->
@@ -69,7 +69,7 @@
       </main>
 
       <div style="margin-top:20px;">
-        <button id="btn-volver-menu" class="tarjeta-jugador" style="cursor:pointer; border:none;">🏠 Salir al
+        <button id="btn-volver-menu" class="tarjeta-jugador" style="cursor:pointer; border:none;" data-key="cl_exit_menu">🏠 Salir al
           Menú</button>
       </div>
     </div>
@@ -77,20 +77,20 @@
     <!-- OVERLAY MODOS -->
     <div id="overlay-menu" class="menu-overlay hidden">
       <div class="menu-content">
-        <h2 style="color:white; text-shadow:none; margin-bottom:20px;">Elige modo para esta ronda</h2>
+        <h2 style="color:white; text-shadow:none; margin-bottom:20px;" data-key="cl_choose_mode">Elige modo para esta ronda</h2>
         <div class="menu-grid">
-          <button id="btn-modo-img" class="menu-btn btn-img">🖼️ Visual</button>
-          <button id="btn-modo-ser" class="menu-btn btn-ser">🔢 Series</button>
-          <button id="btn-modo-let" class="menu-btn btn-let">🔤 Letras</button>
-          <button id="btn-modo-ing" class="menu-btn btn-ingles">🇬🇧 Inglés</button>
+          <button id="btn-modo-img" class="menu-btn btn-img" data-key="cl_mode_img">🖼️ Visual</button>
+          <button id="btn-modo-ser" class="menu-btn btn-ser" data-key="cl_mode_series">🔢 Series</button>
+          <button id="btn-modo-let" class="menu-btn btn-let" data-key="cl_mode_letters">🔤 Letras</button>
+          <button id="btn-modo-ing" class="menu-btn btn-ingles" data-key="cl_mode_en">🇬🇧 Inglés</button>
         </div>
       </div>
     </div>
     <!-- VISTA RANKING -->
     <div id="view-ranking" class="hidden">
-      <h1 class="font-title" style="font-size:3rem;">🏆 GANADORES 🏆</h1>
+      <h1 class="font-title" style="font-size:3rem;" data-key="cl_winners">🏆 GANADORES 🏆</h1>
       <div id="lista-ranking" class="lista-nombres" style="margin: 20px 0;"></div>
-      <button class="btn-grande" onclick="reiniciarTodo()">🏠 MENÚ PRINCIPAL</button>
+      <button class="btn-grande" onclick="reiniciarTodo()" data-key="cl_main_menu">🏠 MENÚ PRINCIPAL</button>
     </div>
   </div>
 
@@ -99,39 +99,39 @@
     <div class="modal-content">
       <button class="modal-close" onclick="cerrarTutorialCompleta()">✕</button>
       <div class="tutorial-step">
-        <h2>📖 ¿Cómo Jugar?</h2>
+        <h2 data-key="cl_tut_title">📖 ¿Cómo Jugar?</h2>
       </div>
       <div class="tutorial-content">
         <div class="tutorial-step">
           <div class="step-number">1</div>
           <div class="step-content">
-            <h3>Elige tu modo</h3>
-            <p>Puedes jugar solo o con amigos. ¡Tú decides quién es el más rápido!</p>
+            <h3 data-key="cl_tut_step1_t">Elige tu modo</h3>
+            <p data-key="cl_tut_step1_d">Puedes jugar solo o con amigos. ¡Tú decides quién es el más rápido!</p>
           </div>
         </div>
         <div class="tutorial-step">
           <div class="step-number">2</div>
           <div class="step-content">
-            <h3>Selecciona Categoría</h3>
-            <p>Elige entre Imágenes, Series, Letras o Inglés para empezar tu ronda.</p>
+            <h3 data-key="cl_tut_step2_t">Selecciona Categoría</h3>
+            <p data-key="cl_tut_step2_d">Elige entre Imágenes, Series, Letras o Inglés para empezar tu ronda.</p>
           </div>
         </div>
         <div class="tutorial-step">
           <div class="step-number">3</div>
           <div class="step-content">
-            <h3>Completa el hueco</h3>
-            <p>Mira la pista y elige la letra o el número que falta para ganar puntos.</p>
+            <h3 data-key="cl_tut_step3_t">Completa el hueco</h3>
+            <p data-key="cl_tut_step3_d">Mira la pista y elige la letra o el número que falta para ganar puntos.</p>
           </div>
         </div>
         <div class="tutorial-step">
           <div class="step-number">4</div>
           <div class="step-content">
-            <h3>¡Acierta pronto!</h3>
-            <p>Si fallas, la pregunta valdrá menos puntos. ¡Acierta a la primera para el 10!</p>
+            <h3 data-key="cl_tut_step4_t">¡Acierta pronto!</h3>
+            <p data-key="cl_tut_step4_d">Si fallas, la pregunta valdrá menos puntos. ¡Acierta a la primera para el 10!</p>
           </div>
         </div>
       </div>
-      <button onclick="cerrarTutorialCompleta()" class="tutorial-close-btn">
+      <button onclick="cerrarTutorialCompleta()" class="tutorial-close-btn" data-key="bj_tut_close">
         ¡ENTENDIDO! 🚀
       </button>
     </div>
@@ -139,6 +139,8 @@
 
   <script src="utils/preguntas.js"></script>
   <script src="utils/logica.js"></script>
+  <script src="idiomas.js"></script>
+  <script src="../../../utils/traductor.js"></script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // UBICACIÓN: /playgo/index.php
 
 // --- 1. ACTIVAR CHIVATOS DE ERROR ---
@@ -39,7 +39,8 @@ if (isset($_SESSION['id'])) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/index.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="chatbot/bot.css">
-    <link rel="icon" href="assets/img/jugando-videojuegos.png" type="image/png">
+    <link rel="stylesheet" href="utils/lang_selector.css">
+    <link rel="icon" href="./assets/img/icono192-jugando-videojuegos.png?v=3" type="image/png">
     <link rel="manifest" href="/playgo/manifest.json">
     <link rel="stylesheet" href="assets/css/footer.css?v=<?php echo time(); ?>">
     <meta name="theme-color" content="#0d1b2a">
@@ -53,8 +54,12 @@ if (isset($_SESSION['id'])) {
                 <img src="assets/img/logoPlayGo.png" alt="PlayGo logo" class="logoPlayGo">
                 <div>PLAY<span>GO</span></div>
             </a>
-            <div class="menu-derecha">
-                <a href="autenticacion/login.php" class="boton-principal">
+            <div class="menu-derecha" style="display: flex; align-items: center; gap: 15px;">
+                <div class="lang-selector-panel">
+                    <button id="lang-es" onclick="aplicarTraduccion('es')"><img src="https://flagcdn.com/w20/es.png" width="20" alt="ES"> ES</button>
+                    <button id="lang-en" onclick="aplicarTraduccion('en')"><img src="https://flagcdn.com/w20/gb.png" width="20" alt="UK"> UK</button>
+                </div>
+                <a href="autenticacion/login.php" class="boton-principal" data-key="index_login">
                     👤 Iniciar Sesión
                 </a>
             </div>
@@ -63,12 +68,12 @@ if (isset($_SESSION['id'])) {
 
     <header class="hero-banner">
         <div class="hero-contenido">
-            <h1>Encuentra tu próximo reto</h1>
-            <p>Diversión educativa para niños y desafíos mentales para adultos.</p>
+            <h1 data-key="index_title">Encuentra tu próximo reto</h1>
+            <p data-key="index_subtitle">Diversión educativa para niños y desafíos mentales para adultos.</p>
 
             <div class="buscador">
-                <input type="text" placeholder="¿Qué quieres jugar hoy?">
-                <a href="autenticacion/login.php" class="boton-buscar">BUSCAR</a>
+                <input type="text" placeholder="¿Qué quieres jugar hoy?" data-key-placeholder="index_search_plc">
+                <a href="autenticacion/login.php" class="boton-buscar" data-key="index_search_btn">BUSCAR</a>
             </div>
         </div>
     </header>
@@ -103,9 +108,9 @@ if (isset($_SESSION['id'])) {
                             <path d="M13 12v4a3 3 0 0 0 6 0v-4" />
                         </svg>
                     </div>
-                    <h2>SECTOR NIÑOS</h2>
-                    <p>Aprende jugando. Matemáticas, lógica y diversión.</p>
-                    <span class="btn-accion">ENTRAR A LA NAVE</span>
+                    <h2 data-key="index_kids_sector">SECTOR NIÑOS</h2>
+                    <p data-key="index_kids_desc">Aprende jugando. Matemáticas, lógica y diversión.</p>
+                    <span class="btn-accion" data-key="index_enter_kids">ENTRAR A LA NAVE</span>
                 </div>
                 <div class="fondo-brillo"></div>
             </a>
@@ -131,9 +136,9 @@ if (isset($_SESSION['id'])) {
                                 d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
                         </svg>
                     </div>
-                    <h2>SECTOR ADULTOS</h2>
-                    <p>Juegos mentales para mentes maestras.</p>
-                    <span class="btn-accion">INICIAR MISIÓN</span>
+                    <h2 data-key="index_adults_sector">SECTOR ADULTOS</h2>
+                    <p data-key="index_adults_desc">Juegos mentales para mentes maestras.</p>
+                    <span class="btn-accion" data-key="index_enter_adults">INICIAR MISIÓN</span>
                 </div>
                 <div class="fondo-brillo"></div>
             </a>
@@ -141,8 +146,8 @@ if (isset($_SESSION['id'])) {
         </div>
 
         <div class="zona-invitado">
-            <p>¿Tienes menos de 18 años? Prueba nuestros sistemas sin registrarte y accede a juegos infantiles.</p>
-            <a href="invitado_logic.php" class="btn-invitado">
+            <p data-key="index_guest_desc">¿Tienes menos de 18 años? Prueba nuestros sistemas sin registrarte y accede a juegos infantiles.</p>
+            <a href="invitado_logic.php" class="btn-invitado" data-key="index_guest_btn">
                 🛡️ Acceso Seguro: Modo Cadete (Sin Registro)
             </a>
         </div>
@@ -150,13 +155,15 @@ if (isset($_SESSION['id'])) {
     </main>
     <?php include 'footer.php'; ?>
 
+    <script src="utils/idiomas.js"></script>
+    <script src="utils/traductor.js"></script>
     <script src="chatbot/bot.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/playgo/service-worker.js').then(function(registration) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/playgo/service-worker.js').then(function (registration) {
                     console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, function(err) {
+                }, function (err) {
                     console.log('ServiceWorker registration failed: ', err);
                 });
             });

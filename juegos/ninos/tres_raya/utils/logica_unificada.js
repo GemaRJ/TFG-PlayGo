@@ -104,18 +104,21 @@ document.addEventListener("DOMContentLoaded", () => {
         let icono = "success";
 
         if (ganador === 0) {
-            titulo = "¡Empate! 🤝";
+            titulo = window.getText ? window.getText("tr_tie") : "¡Empate! 🤝";
             icono = "info";
         } else {
             const avatar = ganador === 1 ? configuracion.p1 : configuracion.p2;
-            const nombre = ganador === 1 ? "Jugador 1" : (configuracion.modo === "1" ? "Robot 🤖" : "Jugador 2");
-            titulo = `¡Ganador: ${nombre} (${avatar})! 🏆`;
+            const tJ1 = window.getText ? window.getText("tr_player1") : "Jugador 1";
+            const tRob = window.getText ? window.getText("tr_robot") : "Robot 🤖";
+            const tJ2 = window.getText ? window.getText("tr_player2") : "Jugador 2";
+            const nombre = ganador === 1 ? tJ1 : (configuracion.modo === "1" ? tRob : tJ2);
+            titulo = window.getText ? window.getText("tr_winner").replace("{name}", nombre).replace("{avatar}", avatar) : `¡Ganador: ${nombre} (${avatar})! 🏆`;
         }
 
         Swal.fire({
             title: titulo,
             icon: icono,
-            confirmButtonText: "Jugar de nuevo",
+            confirmButtonText: window.getText ? window.getText("tr_play_again") : "Jugar de nuevo",
             confirmButtonColor: "var(--primary)"
         }).then(() => {
             volverAlInicio();
@@ -124,19 +127,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function actualizarMarcador() {
         const avatar = jugadorActual === 1 ? configuracion.p1 : configuracion.p2;
-        const nombre = jugadorActual === 1 ? "Jugador 1" : (configuracion.modo === "1" ? "Robot 🤖" : "Jugador 2");
+        const tJ1 = window.getText ? window.getText("tr_player1") : "Jugador 1";
+        const tRob = window.getText ? window.getText("tr_robot") : "Robot 🤖";
+        const tJ2 = window.getText ? window.getText("tr_player2") : "Jugador 2";
+        const nombre = jugadorActual === 1 ? tJ1 : (configuracion.modo === "1" ? tRob : tJ2);
+        
+        let turnoTxt = window.getText ? window.getText("tr_turn_of").replace("{name}", nombre).replace("{avatar}", avatar) : `Turno de: ${nombre} ${avatar}`;
         marcadorTurno.innerHTML = `
-            <div class="tarjeta-jugador activo">Turno de: ${nombre} ${avatar}</div>
+            <div class="tarjeta-jugador activo">${turnoTxt}</div>
         `;
     }
 
     window.confirmarSalida = function () {
         Swal.fire({
-            title: "¿Salir al menú?",
+            title: window.getText ? window.getText("tr_leave_title") : "¿Salir al menú?",
             icon: "question",
             showCancelButton: true,
-            confirmButtonText: "Sí, salir",
-            cancelButtonText: "No, seguir"
+            confirmButtonText: window.getText ? window.getText("tr_leave_yes") : "Sí, salir",
+            cancelButtonText: window.getText ? window.getText("tr_leave_no") : "No, seguir"
         }).then(res => {
             if (res.isConfirmed) volverAlInicio();
         });

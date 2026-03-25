@@ -26,11 +26,12 @@ function generarInputsNombres() {
     for (let i = 1; i <= cantidad; i++) {
         const input = document.createElement('input');
         input.type = 'text';
-        input.placeholder = `Nombre Jugador ${i}`;
+        const defName = window.getText ? window.getText('me_k_player_def') : 'Jugador';
+        input.placeholder = `${defName} ${i}`;
         input.classList.add('input-nombre');
         input.id = `jugador-${i}`;
         // Ponemos nombres por defecto si quieren ir rápido
-        input.value = `Jugador ${i}`;
+        input.value = `${defName} ${i}`;
         contenedorNombres.appendChild(input);
     }
 }
@@ -42,7 +43,8 @@ function comenzarPartida() {
     jugadores = [];
     
     for (let i = 1; i <= cantidad; i++) {
-        const nombre = document.getElementById(`jugador-${i}`).value || `Jugador ${i}`;
+        const defName = window.getText ? window.getText('me_k_player_def') : 'Jugador';
+        const nombre = document.getElementById(`jugador-${i}`).value || `${defName} ${i}`;
         jugadores.push({ nombre: nombre, puntos: 0 });
     }
 
@@ -88,9 +90,10 @@ function actualizarMarcador() {
             div.classList.add('activo');
         }
 
+        const ptsWord = window.getText ? window.getText('me_k_pts') : 'pts';
         div.innerHTML = `
             <div>${jugador.nombre}</div>
-            <div style="font-size: 1.5rem">${jugador.puntos} pts</div>
+            <div style="font-size: 1.5rem">${jugador.puntos} ${ptsWord}</div>
         `;
         divMarcador.appendChild(div);
     });
@@ -169,16 +172,16 @@ function finDelJuego() {
 
     let mensaje = '';
     if (esEmpate) {
-        mensaje = `¡Empate! Ambos sois unos cracks 🦄`;
+        mensaje = window.getText ? window.getText('me_k_tie') : `¡Empate! Ambos sois unos cracks 🦄`;
     } else {
-        mensaje = `¡Ha ganado <b>${ganador.nombre}</b> con ${ganador.puntos} puntos! 🏆`;
+        mensaje = window.getText ? window.getText('me_k_winner').replace('{name}', ganador.nombre).replace('{pts}', ganador.puntos) : `¡Ha ganado <b>${ganador.nombre}</b> con ${ganador.puntos} puntos! 🏆`;
     }
 
     Swal.fire({
-        title: '¡Juego Terminado!',
+        title: window.getText ? window.getText('me_k_game_over') : '¡Juego Terminado!',
         html: mensaje,
         icon: 'success',
-        confirmButtonText: 'Jugar otra vez',
+        confirmButtonText: window.getText ? window.getText('me_k_play_again') : 'Jugar otra vez',
         backdrop: `rgba(0,0,123,0.4) url("https://cdn.pixabay.com/animation/2022/10/16/12/37/12-37-37-299_512.gif") center top no-repeat`
     }).then(() => {
         volverAlInicio();

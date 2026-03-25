@@ -131,7 +131,7 @@ function jugarBanca() {
     if (puntosBanca >= 22) {
       juegoTerminado = true;
       setTimeout(function () {
-        mostrarResultado("ganaste", "¡GANASTE! La banca se pasó de 21");
+        mostrarResultado("ganaste", window.getText('bj_win_banca_bust'));
       }, 1000);
       return;
     }
@@ -143,8 +143,7 @@ function jugarBanca() {
     turnoJugador = true;
     document.getElementById("btnPedirCarta").disabled = false;
     document.getElementById("btnPlantarse").disabled = false;
-    document.getElementById("estadoJuego").textContent =
-      "¡Tu turno! Pide carta o plántate";
+    document.getElementById("estadoJuego").textContent = window.getText('bj_your_turn');
   }
 }
 
@@ -163,7 +162,7 @@ function pedirCartaJugador() {
     juegoTerminado = true;
     deshabilitarBotones();
     setTimeout(function () {
-      mostrarResultado("perdiste", "PERDISTE! Te pasaste de 21");
+      mostrarResultado("perdiste", window.getText('bj_lose_bust'));
     }, 500);
   }
 }
@@ -184,17 +183,17 @@ function determinarGanador() {
 
   // Verificar si ambos tienen 21
   if (puntosBanca === 21 && puntosJugador === 21) {
-    mensaje = "EMPATE! Ambos tienen 21 puntos";
+    mensaje = window.getText('bj_tie_21');
     tipo = "empate";
   }
   // Verificar si el jugador se pasa
   else if (puntosJugador >= 22) {
-    mensaje = "PERDISTE! Te pasaste con " + puntosJugador + " puntos";
+    mensaje = window.getText('bj_lose_bust_pts').replace('{pts}', puntosJugador);
     tipo = "perdiste";
   }
   // Verificar si la banca se pasa
   else if (puntosBanca >= 22) {
-    mensaje = "GANASTE! La banca se pasó con " + puntosBanca + " puntos";
+    mensaje = window.getText('bj_win_banca_bust_pts').replace('{pts}', puntosBanca);
     tipo = "ganaste";
   }
   // Comparar quién está más cerca de 21
@@ -203,13 +202,13 @@ function determinarGanador() {
     let diferenciaJugador = 21 - puntosJugador;
 
     if (diferenciaJugador < diferenciaBanca) {
-      mensaje = "GANASTE! " + puntosJugador + " vs " + puntosBanca;
+      mensaje = window.getText('bj_win_pts').replace('{p}', puntosJugador).replace('{b}', puntosBanca);
       tipo = "ganaste";
     } else if (diferenciaJugador > diferenciaBanca) {
-      mensaje = "PERDISTE! " + puntosJugador + " vs " + puntosBanca;
+      mensaje = window.getText('bj_lose_pts').replace('{p}', puntosJugador).replace('{b}', puntosBanca);
       tipo = "perdiste";
     } else {
-      mensaje = "EMPATE! Ambos con " + puntosJugador + " puntos";
+      mensaje = window.getText('bj_tie_pts').replace('{pts}', puntosJugador);
       tipo = "empate";
     }
   }
@@ -246,14 +245,14 @@ function deshabilitarBotones() {
 // Función para iniciar el juego desde la UI
 function iniciarJuegoUI() {
   const input = document.getElementById("inputNombre");
-  nombreJugador = input.value.trim() || "Jugador";
+  nombreJugador = input.value.trim() || window.getText('bj_player_default');
 
   document.getElementById("pantalla-inicio").classList.add("oculto");
   document.getElementById("pantalla-juego").classList.remove("oculto");
 
   // Mostrar nombre
   document.getElementById("nombreJugador").innerHTML =
-    "<h2>Jugador: " + nombreJugador + "</h2>";
+    "<h2>" + window.getText('bj_player_label') + nombreJugador + "</h2>";
   document.getElementById("nombreJugadorHeader").textContent =
     nombreJugador.toUpperCase();
 
@@ -261,8 +260,7 @@ function iniciarJuegoUI() {
   cartasUsadas = [];
 
   // Actualizar estado del juego
-  document.getElementById("estadoJuego").textContent =
-    "La banca está jugando...";
+  document.getElementById("estadoJuego").textContent = window.getText('bj_bank_playing');
 
   // Empezar el juego de la banca
   setTimeout(jugarBanca, 1000);
@@ -294,8 +292,7 @@ function reiniciarJuego() {
   deshabilitarBotones();
 
   // Actualizar estado del juego
-  document.getElementById("estadoJuego").textContent =
-    "La banca está jugando...";
+  document.getElementById("estadoJuego").textContent = window.getText('bj_bank_playing');
 
   // Empezar de nuevo
   setTimeout(jugarBanca, 1000);

@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php if ($registro_exitoso): ?>
         <meta http-equiv="refresh" content="2;url=login.php"><?php endif; ?>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <link rel="icon" href="../assets/img/jugando-videojuegos.png" type="image/png">
+    <link rel="icon" href="../assets/img/icono192-jugando-videojuegos.png?v=3" type="image/png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * {

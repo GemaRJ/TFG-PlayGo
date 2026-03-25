@@ -110,8 +110,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (jugadoresPartida.length === 0) {
       Swal.fire({
         icon: "warning",
-        title: "¡Falta nombre!",
-        text: "Por favor, escribe quién va a jugar.",
+        title: window.getText ? window.getText('cl_no_name_title') : "¡Falta nombre!",
+        text: window.getText ? window.getText('cl_no_name_text') : "Por favor, escribe quién va a jugar.",
         confirmButtonColor: "#4A90E2",
       });
       return;
@@ -134,9 +134,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const input = document.createElement('input');
       input.type = 'text';
       input.className = 'input-nombre';
-      input.placeholder = `Nombre Jugador ${i}`;
+      const defName = window.getText ? window.getText('cl_player_def') : 'Jugador';
+      input.placeholder = `${defName} ${i}`;
       input.id = `nombre-j${i}`;
-      input.value = `Jugador ${i}`;
+      input.value = `${defName} ${i}`;
       contenedorNombres.appendChild(input);
     }
   }
@@ -266,8 +267,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (indiceTurno < jugadoresPartida.length) {
       Swal.fire({
-        title: "¡Siguiente turno!",
-        text: `Le toca a: ${jugadoresPartida[indiceTurno].nombre}`,
+        title: window.getText ? window.getText('cl_next_turn_title') : "¡Siguiente turno!",
+        text: window.getText ? window.getText('cl_next_turn_text').replace('{name}', jugadoresPartida[indiceTurno].nombre) : `Le toca a: ${jugadoresPartida[indiceTurno].nombre}`,
         icon: "success",
         confirmButtonColor: "#43a047",
       }).then(() => iniciarTurno());
@@ -294,14 +295,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function confirmarSalida() {
     Swal.fire({
-      title: "¿Salir al menú?",
-      text: "Se perderá el progreso actual.",
+      title: window.getText ? window.getText('cl_leave_title') : "¿Salir al menú?",
+      text: window.getText ? window.getText('cl_leave_text') : "Se perderá el progreso actual.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#FF6B6B",
       cancelButtonColor: "#3085d6",
-      confirmButtonText: "SÍ, SALIR",
-      cancelButtonText: "CANCELAR",
+      confirmButtonText: window.getText ? window.getText('cl_yes_leave') : "SÍ, SALIR",
+      cancelButtonText: window.getText ? window.getText('cl_cancel') : "CANCELAR",
     }).then((result) => {
       if (result.isConfirmed) {
         reiniciarTodo();
