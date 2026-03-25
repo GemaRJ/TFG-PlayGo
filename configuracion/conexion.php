@@ -6,7 +6,4 @@ if (!$conn) {
 }
 
 mysqli_set_charset($conn, "utf8");
-<<<<<<< HEAD
 ?>
-=======
->>>>>>> c78e1684cb1c23d849da96308a8047d76abb52c7
