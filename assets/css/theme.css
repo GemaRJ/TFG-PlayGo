@@ -1,0 +1,141 @@
+/* ================================================
+   theme.css — PlayGo · Modo Día / Noche
+   ================================================ */
+
+/* ---- MODO NOCHE ---- */
+:root {
+  --theme-bg:          #080c1a;
+  --theme-bg-nav:      rgba(8, 12, 26, 0.95);
+  --theme-bg-card:     #0f1730;
+  --theme-text:        #c8d6f0;
+  --theme-text-muted:  #5a6a90;
+  --theme-border:      rgba(0, 240, 255, 0.12);
+  --theme-accent:      #00f0ff;
+  --theme-accent2:     #a855f7;
+  --theme-shadow:      0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- MODO DÍA ---- */
+html.modo-dia {
+  --theme-bg:          #eef2fb;
+  --theme-bg-nav:      rgba(255, 255, 255, 0.95);
+  --theme-bg-card:     #ffffff;
+  --theme-text:        #1a2340;
+  --theme-text-muted:  #6b7a9e;
+  --theme-border:      rgba(0, 150, 180, 0.2);
+  --theme-accent:      #0099bb;
+  --theme-accent2:     #7c3aed;
+  --theme-shadow:      0 4px 24px rgba(0, 100, 160, 0.12);
+}
+
+/* ---- Transición suave al cambiar tema ---- */
+body,
+body * {
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+/* ---- Aplicar variables al body ---- */
+body {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+/* ---- Navbar ---- */
+.barra-navegacion {
+  background: var(--theme-bg-nav) !important;
+  border-bottom: 1px solid var(--theme-border);
+  backdrop-filter: blur(12px);
+}
+
+/* ---- Fondo general de secciones ---- */
+.seccion-principal,
+.portal-galactico {
+  background-color: var(--theme-bg);
+}
+
+/* ---- Tarjetas en modo día ---- */
+html.modo-dia .tarjeta-portal {
+  background: var(--theme-bg-card);
+  border: 1px solid var(--theme-border);
+  box-shadow: var(--theme-shadow);
+}
+
+html.modo-dia .tarjeta-portal h2,
+html.modo-dia .tarjeta-portal p {
+  color: var(--theme-text);
+}
+
+/* ---- Hero banner en modo día ---- */
+html.modo-dia .hero-banner {
+  background: linear-gradient(135deg, #dbeafe 0%, #ede9fe 100%);
+}
+
+html.modo-dia .hero-banner h1,
+html.modo-dia .hero-banner p {
+  color: var(--theme-text);
+  text-shadow: none;
+}
+
+/* ---- Footer en modo día ---- */
+html.modo-dia .playgo-footer {
+  background-color: #dde4f5;
+  border-top-color: var(--theme-border);
+}
+
+html.modo-dia .footer-nav-title  { color: var(--theme-accent); }
+html.modo-dia .footer-links a    { color: var(--theme-text-muted); }
+html.modo-dia .footer-links a:hover { color: var(--theme-accent); }
+html.modo-dia .footer-bottom p   { color: var(--theme-text-muted); }
+html.modo-dia .logo-text         { color: var(--theme-text); }
+html.modo-dia .footer-tagline    { color: var(--theme-text-muted); }
+html.modo-dia .footer-school     { color: var(--theme-text-muted); }
+html.modo-dia .footer-team-list li { color: var(--theme-text-muted); }
+
+/* ---- Botón toggle ---- */
+.btn-tema {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--theme-border);
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+  flex-shrink: 0;
+}
+
+.btn-tema:hover {
+  border-color: var(--theme-accent);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+  background: rgba(0, 240, 255, 0.07);
+}
+
+/* Iconos dentro del botón */
+.btn-tema .icon-luna,
+.btn-tema .icon-sol {
+  position: absolute;
+  font-size: 1.15rem;
+  transition: opacity 0.35s ease, transform 0.4s ease;
+}
+
+/* Noche: mostrar luna, ocultar sol */
+.btn-tema .icon-luna { opacity: 1;  transform: rotate(0deg) scale(1); }
+.btn-tema .icon-sol  { opacity: 0;  transform: rotate(90deg) scale(0.6); }
+
+/* Día: mostrar sol, ocultar luna */
+html.modo-dia .btn-tema .icon-luna { opacity: 0;  transform: rotate(-90deg) scale(0.6); }
+html.modo-dia .btn-tema .icon-sol  { opacity: 1;  transform: rotate(0deg) scale(1); }
+
+html.modo-dia .btn-tema:hover {
+  border-color: var(--theme-accent);
+  box-shadow: 0 0 12px rgba(255, 180, 0, 0.35);
+  background: rgba(255, 200, 0, 0.08);
+}

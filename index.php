@@ -12,7 +12,6 @@ session_start();
 if (file_exists("configuracion/conexion.php")) {
     require_once "configuracion/conexion.php";
 } else {
-    // Si no existe, no matamos la página, solo avisamos (para desarrollo)
     // die("❌ Error Crítico: No encuentro el archivo 'configuracion/conexion.php'.");
 }
 
@@ -33,15 +32,24 @@ if (isset($_SESSION['id'])) {
 
 <head>
     <meta charset="UTF-8">
+
+    
+    <script>
+        if (localStorage.getItem('playgo-tema') === 'dia') {
+            document.documentElement.classList.add('modo-dia');
+        }
+    </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayGo | Tu Portal de Juegos</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/theme.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/index.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/footer.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="chatbot/bot.css">
     <link rel="icon" href="assets/img/jugando-videojuegos.png" type="image/png">
     <link rel="manifest" href="/playgo/manifest.json">
-    <link rel="stylesheet" href="assets/css/footer.css?v=<?php echo time(); ?>">
     <meta name="theme-color" content="#0d1b2a">
 </head>
 
@@ -54,6 +62,10 @@ if (isset($_SESSION['id'])) {
                 <div>PLAY<span>GO</span></div>
             </a>
             <div class="menu-derecha">
+                <button id="btn-tema" class="btn-tema" aria-label="Cambiar a modo día">
+                    <span class="icon-luna">🌙</span>
+                    <span class="icon-sol">☀️</span>
+                </button>
                 <a href="autenticacion/login.php" class="boton-principal">
                     👤 Iniciar Sesión
                 </a>
@@ -148,8 +160,10 @@ if (isset($_SESSION['id'])) {
         </div>
 
     </main>
+
     <?php include 'footer.php'; ?>
 
+    <script src="assets/js/theme.js"></script>
     <script src="chatbot/bot.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
