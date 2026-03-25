@@ -16,24 +16,24 @@
     <div class="contenedor-principal">
 
         <div id="pantalla-inicio" class="tarjeta-juego">
-            <button class="btn-tutorial-esquina" onclick="mostrarTutorialTabu()">
+            <button class="btn-tutorial-esquina" onclick="mostrarTutorialTabu()" data-key="ta_tut_btn">
                 ❓ Instrucciones
             </button>
             <header class="encabezado">
                 <div class="logo-container">
                     <img src="img/tabu.png" alt="Impostor Logo" class="logo">
                 </div>
-                <h1>TABÚ</h1>
+                <h1 data-key="ta_title">TABÚ</h1>
             </header>
 
             <div class="config-zona">
                 <label
-                    style="color: var(--accent-primary); display: block; margin-bottom: 10px; font-weight: bold;">Nombre
+                    style="color: var(--accent-primary); display: block; margin-bottom: 10px; font-weight: bold;" data-key="ta_team_name">Nombre
                     del
                     Equipo:</label>
                 <div class="input-group" style="justify-content: center;">
                     <input type="text" id="new-team-name" class="input-nombre" style="width: 70%;"
-                        placeholder="Nombre del equipo..." autocomplete="off">
+                        placeholder="Nombre del equipo..." autocomplete="off" data-key-placeholder="ta_team_placeholder">
                     <button class="btn-add" onclick="agregarEquipo()">➕</button>
                 </div>
 
@@ -41,28 +41,28 @@
                 </ul>
             </div>
 
-            <button id="btn-start-game" class="btn-siguiente disabled" onclick="iniciarPartidaMultijugador()">
+            <button id="btn-start-game" class="btn-siguiente disabled" onclick="iniciarPartidaMultijugador()" data-key="ta_min_teams">
                 👥 MÍNIMO 2 EQUIPOS
             </button>
 
-            <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.6; text-align: center;">Edición Multijugador</p>
+            <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.6; text-align: center;" data-key="ta_multiplayer">Edición Multijugador</p>
         </div>
 
         <div id="turn-screen" class="card hidden" style="text-align: center;">
-            <h2>TURNO DE:</h2>
+            <h2 data-key="ta_turn_of">TURNO DE:</h2>
             <h1 id="next-team-name"
-                style="font-size: 2.5rem; color: var(--neon-blue); margin: 20px 0; text-shadow: 0 0 15px var(--neon-blue);">
+                style="font-size: 2.5rem; color: var(--neon-blue); margin: 20px 0; text-shadow: 0 0 15px var(--neon-blue);" data-key="ta_team_1">
                 EQUIPO 1</h1>
 
             <div class="score-summary">
-                <p>Puntuación total:</p>
+                <p data-key="ta_total_score">Puntuación total:</p>
                 <div id="current-team-score" style="font-size: 2rem; font-weight: bold; color: var(--neon-green);">0
                 </div>
             </div>
 
-            <p style="margin-top: 20px; color: #aaa;">Pásale el móvil al equipo...</p>
+            <p style="margin-top: 20px; color: #aaa;" data-key="ta_pass_phone">Pásale el móvil al equipo...</p>
 
-            <button class="btn-jugar" onclick="comenzarRonda()">
+            <button class="btn-jugar" onclick="comenzarRonda()" data-key="ta_start_time">
                 🚀 EMPEZAR TIEMPO
             </button>
         </div>
@@ -70,7 +70,7 @@
         <div id="game-screen" class="card hidden">
             <div
                 style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; color: #aaa;">
-                <span id="playing-team" style="color: var(--neon-blue); font-weight: bold;">Jugando: ???</span>
+                <span id="playing-team" style="color: var(--neon-blue); font-weight: bold;" data-key="ta_playing_q">Jugando: ???</span>
                 <span id="timer-text">60s</span>
             </div>
 
@@ -78,22 +78,22 @@
                 <div id="timer-bar" class="timer-fill"></div>
             </div>
 
-            <h2 id="target-word" class="target-word">CARGANDO...</h2>
+            <h2 id="target-word" class="target-word" data-key="ta_loading">CARGANDO...</h2>
             <div id="forbidden-list" class="forbidden-list"></div>
 
-            <button class="btn-action btn-success" onclick="nextCard(true)">✅ ACERTADA</button>
-            <button class="btn-action btn-skip" onclick="nextCard(false)">❌ TABÚ / PASO</button>
+            <button class="btn-action btn-success" onclick="nextCard(true)" data-key="ta_correct">✅ ACERTADA</button>
+            <button class="btn-action btn-skip" onclick="nextCard(false)" data-key="ta_pass">❌ TABÚ / PASO</button>
 
-            <div class="score-display">Puntos ronda: <span id="round-score">0</span></div>
+            <div class="score-display"><span data-key="ta_round_points">Puntos ronda: </span><span id="round-score">0</span></div>
         </div>
 
         <div id="end-screen" class="card hidden">
-            <h1>🏆 CLASIFICACIÓN</h1>
+            <h1 data-key="ta_ranking">🏆 CLASIFICACIÓN</h1>
 
             <ul id="ranking-list" class="team-list">
             </ul>
 
-            <button class="btn-action btn-reset" onclick="location.reload()">🔄 Nueva Partida</button>
+            <button class="btn-action btn-reset" onclick="location.reload()" data-key="ta_new_game">🔄 Nueva Partida</button>
         </div>
 
     </div>
@@ -102,41 +102,38 @@
     <div id="modalTutorialTabu" class="modal hidden">
         <div class="modal-content">
             <button class="modal-close" onclick="cerrarTutorialTabu()">✕</button>
-            <h2>📖 Cómo Jugar Tabú</h2>
+            <h2 data-key="ta_tut_title">📖 Cómo Jugar Tabú</h2>
             <div class="tutorial-content">
                 <div class="tutorial-step">
                     <div class="step-number">1</div>
                     <div class="step-content">
-                        <h3>Organiza los Equipos</h3>
-                        <p>Añade los nombres de los equipos que van a competir. Se necesitan al menos 2 equipos.</p>
+                        <h3 data-key="ta_tut_step1_t">Organiza los Equipos</h3>
+                        <p data-key="ta_tut_step1_d">Añade los nombres de los equipos que van a competir. Se necesitan al menos 2 equipos.</p>
                     </div>
                 </div>
                 <div class="tutorial-step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h3>Describe la Palabra</h3>
-                        <p>Un miembro del equipo debe describir la palabra principal (azul) sin usar las palabras
-                            prohibidas (rojas).</p>
+                        <h3 data-key="ta_tut_step2_t">Describe la Palabra</h3>
+                        <p data-key="ta_tut_step2_d">Un miembro del equipo debe describir la palabra principal (azul) sin usar las palabras prohibidas (rojas).</p>
                     </div>
                 </div>
                 <div class="tutorial-step">
                     <div class="step-number">3</div>
                     <div class="step-content">
-                        <h3>¡Nada de Trampas!</h3>
-                        <p>Si dices una palabra prohibida o haces gestos no permitidos, el equipo contrario debe pulsar
-                            "TABÚ".</p>
+                        <h3 data-key="ta_tut_step3_t">¡Nada de Trampas!</h3>
+                        <p data-key="ta_tut_step3_d">Si dices una palabra prohibida o haces gestos no permitidos, el equipo contrario debe pulsar TABÚ.</p>
                     </div>
                 </div>
                 <div class="tutorial-step">
                     <div class="step-number">4</div>
                     <div class="step-content">
-                        <h3>Gana el Mejor</h3>
-                        <p>Cada acierto suma 1 punto. El equipo con más aciertos al final de todas las rondas será el
-                            ganador.</p>
+                        <h3 data-key="ta_tut_step4_t">Gana el Mejor</h3>
+                        <p data-key="ta_tut_step4_d">Cada acierto suma 1 punto. El equipo con más aciertos al final de todas las rondas será el ganador.</p>
                     </div>
                 </div>
             </div>
-            <button onclick="cerrarTutorialTabu()" class="tutorial-close-btn">
+            <button onclick="cerrarTutorialTabu()" class="tutorial-close-btn" data-key="ta_tut_close">
                 ¡ENTENDIDO! 🚀
             </button>
         </div>
@@ -144,6 +141,8 @@
 
 
     <script src="tabu.js"></script>
+    <script src="idiomas.js"></script>
+    <script src="../../../utils/traductor.js"></script>
 </body>
 
 </html>

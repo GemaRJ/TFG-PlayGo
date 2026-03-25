@@ -8,65 +8,21 @@
    TEMAS VISUALES - VARIABLES
 ======================================== */
 
-/* Dark Mode (Por defecto) */
 :root,
 [data-theme="dark"] {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e3a8a;
-  --accent-primary: rgb(0, 242, 255);
-  --accent-secondary: rgba(70, 9, 108, 0.9);
-  --text-primary: #e0e6ff;
-  --text-muted: #7a82a8;
-  --card-bg: rgba(26, 31, 58, 0.8);
-  --glow: rgb(0, 242, 255, 0.4);
-  --shadow: rgba(0, 0, 0, 0.5);
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e3a8a;
+    --accent-primary: rgb(0, 242, 255);
+    --accent-secondary: rgba(70, 9, 108, 0.9);
+    --text-primary: #e0e6ff;
+    --text-muted: #7a82a8;
+    --card-bg: rgba(26, 31, 58, 0.8);
+    --glow: rgba(0, 242, 255, 0.4);
+    --shadow: rgba(0, 0, 0, 0.5);
 }
-
-/* Light Mode */
-[data-theme="light"] {
-  --bg-primary: #f5f7fa;
-  --bg-secondary: #ffffff;
-  --accent-primary: #00c9a7;
-  --accent-secondary: #ff4757;
-  --text-primary: #2c3e50;
-  --text-muted: #7f8c8d;
-  --card-bg: rgba(255, 255, 255, 0.95);
-  --glow: rgba(0, 201, 167, 0.3);
-  --shadow: rgba(0, 0, 0, 0.1);
-}
-
-/* Retro 8-bit */
-[data-theme="retro"] {
-  --bg-primary: #2e1a47;
-  --bg-secondary: #3d2963;
-  --accent-primary: #ff6ec7;
-  --accent-secondary: #39ff14;
-  --text-primary: #ffffff;
-  --text-muted: #b794f6;
-  --card-bg: rgba(61, 41, 99, 0.9);
-  --glow: rgba(255, 110, 199, 0.5);
-  --shadow: rgba(0, 0, 0, 0.6);
-}
-
-/* Neón Intenso */
-[data-theme="neon"] {
-  --bg-primary: #000000;
-  --bg-secondary: #0a0a0a;
-  --accent-primary: #ff00ff;
-  --accent-secondary: #00ffff;
-  --text-primary: #ffffff;
-  --text-muted: #ff00ff;
-  --card-bg: rgba(10, 10, 10, 0.95);
-  --glow: rgba(255, 0, 255, 0.8);
-  --shadow: rgba(0, 255, 255, 0.5);
-}
-
-/* ========================================
-   ESTILOS BASE
-======================================== */
 
 body {
-  font-family: "Space Mono", monospace;
+  font-family: 'Poppins', sans-serif;
   background: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
@@ -75,8 +31,7 @@ body {
   align-items: center;
   position: relative;
   overflow-x: hidden;
-  padding: 20px 0;
-  transition: background 0.5s ease, color 0.5s ease;
+  padding: 20px;
 }
 
 body::before {
@@ -93,84 +48,25 @@ body::before {
       var(--shadow) 0%,
       transparent 50%);
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
   animation: bgPulse 10s ease-in-out infinite;
 }
 
 @keyframes bgPulse {
-
   0%,
   100% {
     opacity: 0.5;
   }
-
   50% {
     opacity: 0.8;
   }
 }
 
-.container {
-  position: relative;
-  z-index: 1;
-  max-width: 600px;
-  width: 90%;
-  padding: 40px;
-}
-
-/* ========================================
-   SELECTORES (IDIOMA Y TEMA)
-======================================== */
-
-.language-selector,
-.theme-selector {
+.contenedor-principal {
+  width: 100%;
+  padding: 20px;
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  animation: slideDown 0.8s ease-out;
-  flex-wrap: wrap;
-}
-
-.lang-btn,
-.theme-btn {
-  width: auto !important;
-  padding: 10px 20px !important;
-  background: var(--card-bg) !important;
-  border: 2px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 8px !important;
-  color: var(--text-primary) !important;
-  font-family: "Space Mono", monospace !important;
-  font-size: 0.85rem !important;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: none !important;
-}
-
-.theme-btn {
-  padding: 10px 15px !important;
-  font-size: 1.2rem !important;
-}
-
-.lang-btn:hover,
-.theme-btn:hover {
-  border-color: var(--accent-primary) !important;
-  background: var(--glow) !important;
-  transform: translateY(-2px) scale(1.05) !important;
-  box-shadow: 0 5px 15px var(--glow) !important;
-}
-
-.lang-btn.active,
-.theme-btn.active {
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)) !important;
-  border-color: var(--accent-primary) !important;
-  color: var(--bg-primary) !important;
-  box-shadow: 0 5px 15px var(--glow) !important;
-  transform: scale(1.1);
-}
-
-.lang-btn:active,
-.theme-btn:active {
-  transform: translateY(0) scale(1) !important;
 }
 
 /* ========================================
@@ -252,19 +148,14 @@ body::before {
    TÍTULOS
 ======================================== */
 
-h1 {
-  font-family: "Orbitron", sans-serif;
-  font-size: 3rem;
-  font-weight: 900;
+/* --- ENCABEZADO Y TEXTOS --- */
+.encabezado h1, h1 {
+  font-family: 'Fira Code', monospace;
+  color: var(--accent-primary);
   text-align: center;
-  margin-bottom: 15px;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  animation: glow 2s ease-in-out infinite alternate, textGlitch 5s infinite;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  text-shadow: 0 0 10px var(--glow);
 }
 
 @keyframes glow {
@@ -321,8 +212,11 @@ h1 {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 20px 60px var(--shadow);
+  padding: 40px;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 15px 35px var(--shadow);
+  transition: all 0.3s ease;
   animation: slideIn 0.6s ease-out;
   position: relative;
   overflow: hidden;
@@ -388,7 +282,7 @@ h1 {
   border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   color: var(--text-primary);
-  font-family: "Space Mono", monospace;
+  font-family: 'Poppins', monospace;
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -480,7 +374,7 @@ input[type="number"] {
   border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   color: var(--text-primary);
-  font-family: "Space Mono", monospace;
+  font-family: 'Poppins', monospace;
   font-size: 1rem;
   transition: all 0.3s ease;
 }
@@ -493,26 +387,25 @@ input[type="number"]:focus {
   transform: scale(1.02);
 }
 
-button {
+.btn-siguiente {
   width: 100%;
-  padding: 18px;
+  padding: 12px 30px;
   background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   border: none;
-  border-radius: 12px;
+  border-radius: 50px;
   color: var(--bg-primary);
-  font-family: "Orbitron", sans-serif;
-  font-weight: 700;
-  font-size: 1.1rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 10px 30px var(--glow);
+  box-shadow: 0 5px 15px var(--glow);
   position: relative;
   overflow: hidden;
 }
 
-button::before {
+.btn-siguiente::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -525,28 +418,28 @@ button::before {
   transition: width 0.6s, height 0.6s;
 }
 
-button:hover::before {
+.btn-siguiente:hover::before {
   width: 300px;
   height: 300px;
 }
 
-button:hover {
+.btn-siguiente:hover {
   transform: translateY(-3px);
   box-shadow: 0 15px 40px var(--accent-primary);
 }
 
-button:active {
+.btn-siguiente:active {
   transform: translateY(-1px);
 }
 
-button.secondary {
+.btn-siguiente.secondary {
   background: transparent;
   border: 2px solid var(--accent-primary);
   color: var(--accent-primary);
   box-shadow: none;
 }
 
-button.secondary:hover {
+.btn-siguiente.secondary:hover {
   background: var(--glow);
   box-shadow: 0 10px 30px var(--glow);
 }
@@ -556,7 +449,7 @@ button.secondary:hover {
 ======================================== */
 
 .player-number {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Fira Code', sans-serif;
   font-size: 2rem;
   margin-bottom: 30px;
   color: var(--accent-primary);
@@ -789,7 +682,7 @@ button.secondary:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Fira Code', sans-serif;
   font-size: 1.3rem;
   font-weight: 700;
   color: var(--accent-primary);
@@ -902,7 +795,7 @@ button.secondary:hover {
 }
 
 .modal-content h2 {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Fira Code', sans-serif;
   font-size: 2rem;
   color: var(--accent-primary);
   margin-bottom: 30px;
@@ -940,7 +833,7 @@ button.secondary:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Fira Code', sans-serif;
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--bg-primary);
@@ -948,7 +841,7 @@ button.secondary:hover {
 }
 
 .step-content h3 {
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Fira Code', sans-serif;
   font-size: 1.1rem;
   color: var(--accent-primary);
   margin-bottom: 10px;
@@ -1339,4 +1232,34 @@ button.secondary:hover {
     opacity: 0.7;
     transform: scale(0.98);
   }
+}
+
+/* --- ENCABEZADO Y TEXTOS --- */
+.encabezado h1, h1 {
+  font-family: 'Fira Code', monospace;
+  color: var(--accent-primary);
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  text-shadow: 0 0 10px var(--glow);
+}
+.encabezado p {
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+/* --- Correcciones Visuales Juego Activo --- */
+.blur-warning {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+.theme-text {
+  color: #ffffff !important;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.theme-label {
+  color: var(--accent-primary);
+  letter-spacing: 1px;
 }

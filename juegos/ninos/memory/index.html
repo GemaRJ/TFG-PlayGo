@@ -12,23 +12,23 @@
 <body>
 
     <div class="contenedor-juego" id="pantalla-inicio">
-        <button class="btn-tutorial-esquina" onclick="mostrarTutorialMemoryKids()">
+        <button class="btn-tutorial-esquina" onclick="mostrarTutorialMemoryKids()" data-key="me_k_tut_btn">
             ❓ Instrucciones
         </button>
         <div class="logo-container">
           <img src="img/logoMemory.png" alt="Impostor Logo" class="logo">
         </div>
-        <h1>MEMORY KIDS</h1>
+        <h1 data-key="me_k_title">MEMORY KIDS</h1>
 
         <div class="config-zona">
-            <label class="titulo-opcion">👥 Jugadores:</label>
+            <label class="titulo-opcion" data-key="me_k_players">👥 Jugadores:</label>
 
             <div class="select-wrapper">
                 <select id="num-jugadores" class="select-bonito" onchange="generarInputsNombres()">
-                    <option value="1">1 Jugador 👤</option>
-                    <option value="2">2 Jugadores 👥</option>
-                    <option value="3">3 Jugadores 👨‍👩‍👧</option>
-                    <option value="4">4 Jugadores 👨‍👩‍👧‍👦</option>
+                    <option value="1" data-key="me_k_1p">1 Jugador 👤</option>
+                    <option value="2" data-key="me_k_2p">2 Jugadores 👥</option>
+                    <option value="3" data-key="me_k_3p">3 Jugadores 👨‍👩‍👧</option>
+                    <option value="4" data-key="me_k_4p">4 Jugadores 👨‍👩‍👧‍👦</option>
                 </select>
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div id="lista-nombres" class="lista-nombres">
         </div>
 
-        <button class="btn-grande" onclick="comenzarPartida()">▶️ ¡A JUGAR!</button>
+        <button class="btn-grande" onclick="comenzarPartida()" data-key="me_k_play_btn">▶️ ¡A JUGAR!</button>
     </div>
 
 
@@ -47,7 +47,7 @@
         <div class="tablero" id="tablero"></div>
 
         <div class="controles-abajo">
-            <button id="reiniciar-btn" onclick="volverAlInicio()">🏠 Volver al Inicio</button>
+            <button id="reiniciar-btn" onclick="volverAlInicio()" data-key="me_k_back_btn">🏠 Volver al Inicio</button>
         </div>
     </div>
 
@@ -55,39 +55,39 @@
         <div class="modal-content">
             <button class="modal-close" onclick="cerrarTutorialMemoryKids()">✕</button>
             <div class="tutorial-step">
-                <h2>📖 ¿Cómo Jugar?</h2>
+                <h2 data-key="me_k_tut_title">📖 ¿Cómo Jugar?</h2>
             </div>
             <div class="tutorial-content">
                 <div class="tutorial-step">
                     <div class="step-number">1</div>
                     <div class="step-content">
-                        <h3>¡Elige a tus amigos!</h3>
-                        <p>Selecciona cuántos amigos vais a jugar y escribe vuestros nombres.</p>
+                        <h3 data-key="me_k_tut_step1_t">¡Elige a tus amigos!</h3>
+                        <p data-key="me_k_tut_step1_d">Selecciona cuántos amigos vais a jugar y escribe vuestros nombres.</p>
                     </div>
                 </div>
                 <div class="tutorial-step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h3>Busca la pareja</h3>
-                        <p>Pulsa una carta para ver qué animal tiene. ¡Luego busca su pareja igual!</p>
+                        <h3 data-key="me_k_tut_step2_t">Busca la pareja</h3>
+                        <p data-key="me_k_tut_step2_d">Pulsa una carta para ver qué animal tiene. ¡Luego busca su pareja igual!</p>
                     </div>
                 </div>
                 <div class="tutorial-step">
                     <div class="step-number">3</div>
                     <div class="step-content">
-                        <h3>Sigue jugando</h3>
-                        <p>Si encuentras una pareja, ¡vuelves a jugar! Si fallas, le toca al siguiente amigo.</p>
+                        <h3 data-key="me_k_tut_step3_t">Sigue jugando</h3>
+                        <p data-key="me_k_tut_step3_d">Si encuentras una pareja, ¡vuelves a jugar! Si fallas, le toca al siguiente amigo.</p>
                     </div>
                 </div>
                 <div class="tutorial-step">
                     <div class="step-number">4</div>
                     <div class="step-content">
-                        <h3>¡Gana el mejor!</h3>
-                        <p>Quien encuentre más parejas al final del juego será el ganador ⭐.</p>
+                        <h3 data-key="me_k_tut_step4_t">¡Gana el mejor!</h3>
+                        <p data-key="me_k_tut_step4_d">Quien encuentre más parejas al final del juego será el ganador ⭐.</p>
                     </div>
                 </div>
             </div>
-            <button onclick="cerrarTutorialMemoryKids()" class="tutorial-close-btn">
+            <button onclick="cerrarTutorialMemoryKids()" class="tutorial-close-btn" data-key="me_k_tut_close">
                 ¡ENTENDIDO! 🚀
             </button>
         </div>
@@ -95,6 +95,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script.js"></script>
+    <script src="idiomas.js"></script>
+    <script src="../../../utils/traductor.js"></script>
 </body>
 
 </html>

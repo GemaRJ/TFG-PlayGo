@@ -3,8 +3,8 @@
 require_once "../configuracion/conexion.php";
 session_start();
 
-// Si ya está logueado, redirigir
-if (isset($_SESSION['id'])) {
+// Si ya está logueado y NO es un invitado, redirigir
+if (isset($_SESSION['id']) && isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] !== 'invitado') {
     header("Location: " . ($_SESSION['tipo_usuario'] == 'administrador' ? "../administrador/menu.php" : "../panel.php"));
     exit;
 }
@@ -57,9 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>PlayGo | Space Login</title>
 
     <link rel="stylesheet" href="../assets/css/login_registro.css">
+    <link rel="stylesheet" href="../utils/lang_selector.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link rel="icon" href="../assets/img/jugando-videojuegos.png" type="image/png">
+    <link rel="icon" href="../assets/img/icono192-jugando-videojuegos.png?v=3" type="image/png">
     <style>
         /* ESTILOS SPACE - LOGIN AZUL */
         * {
@@ -249,16 +250,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 
-<body>
-
     <div class="glass-card">
         <div class="login-side">
             <div class="brand" style="display: flex; align-items: center;">
                 <img src="../assets/img/logoPlayGo.png" alt="PlayGo logo" class="logoPlayGo">
                 <div>PLAY<span>GO</span></div>
             </div>
-            <h2>Bienvenido</h2>
-            <p>Tu aventura espacial de juegos comienza aquí.</p>
+            <h2 data-key="login_title">Bienvenido</h2>
+            <p data-key="login_subtitle">Tu aventura espacial de juegos comienza aquí.</p>
 
             <?php if ($error): ?>
                 <div class='error-msg'>⚠️ <?php echo $error; ?></div>
@@ -270,23 +269,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="input-group">
                     <input type="email" name="correo" id="emailField" required placeholder=" ">
-                    <label>Correo Electrónico</label>
+                    <label data-key="login_email">Correo Electrónico</label>
                 </div>
 
                 <div class="input-group">
                     <input type="password" name="clave" id="passField" required placeholder=" ">
-                    <label>Contraseña</label>
+                    <label data-key="login_password">Contraseña</label>
                 </div>
 
-                <button type="submit" class="btn-space">¡ENTRAR!</button>
+                <button type="submit" class="btn-space" data-key="login_btn">¡ENTRAR!</button>
 
                 <div class="links">
-                    ¿Nuevo en la nave? <br>
-                    <a href="registro.php">Crea tu cuenta aquí</a>
+                    <span data-key="login_new">¿Nuevo en la nave?</span> <br>
+                    <a href="registro.php" data-key="login_create">Crea tu cuenta aquí</a>
                     <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
 
                     <a href="../index.php" style="font-size: 0.8rem; opacity: 0.7;">
-                        <i class="bi bi-arrow-left"></i> Volver al inicio
+                        <i class="bi bi-arrow-left"></i> <span data-key="login_back">Volver al inicio</span>
                     </a>
                 </div>
             </form>
@@ -299,6 +298,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script src="../assets/js/login-animation.js"></script>
     <script src="../chatbot/bot.js"></script>
+    <script src="../utils/idiomas.js"></script>
+    <script src="../utils/traductor.js"></script>
 
 </body>
 

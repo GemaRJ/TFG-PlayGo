@@ -29,7 +29,8 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/panel.css?v=<?php echo time(); ?>">
-    <link rel="icon" href="assets/img/jugando-videojuegos.png" type="image/png">
+    <link rel="stylesheet" href="utils/lang_selector.css">
+    <link rel="icon" href="./assets/img/icono192-jugando-videojuegos.png?v=3" type="image/png">
     <link rel="manifest" href="/playgo/manifest.json">
     <meta name="theme-color" content="#0d1b2a">
 </head>
@@ -54,7 +55,17 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
                             <?php echo strtoupper($_SESSION['tipo_usuario']); ?>
                         </span>
                     </div>
-                    <a href="autenticacion/logout.php" class="btn btn-danger btn-sm rounded-pill fw-bold px-3">
+                    
+                    <!-- Selector de idioma -->
+                    <div class="lang-selector-panel ms-2 me-2">
+                        <button class="lang-btn active" id="lang-es" onclick="aplicarTraduccion('es')">
+                            <img src="https://flagcdn.com/w20/es.png" width="20" alt="ES" class="flag-icon"> ES
+                        </button>
+                        <button class="lang-btn" id="lang-en" onclick="aplicarTraduccion('en')">
+                            <img src="https://flagcdn.com/w20/gb.png" width="20" alt="UK" class="flag-icon"> UK
+                        </button>
+                    </div>
+                    <a href="autenticacion/logout.php" class="btn btn-danger btn-sm rounded-pill fw-bold px-3 ms-2" data-key="panel_logout">
                         Salir de la Nave
                     </a>
                 </div>
@@ -65,18 +76,18 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
     <div class="main-layout">
 
         <div class="sidebar-area shadow-sm">
-            <h6 class="px-4 fw-bold small mb-3 title-menu border-start border-3 border-info ms-3 ps-2">
+            <h6 class="px-4 fw-bold small mb-3 title-menu border-start border-3 border-info ms-3 ps-2" data-key="panel_system">
                 SISTEMA DE JUEGOS
             </h6>
 
             <div class="list-group list-group-flush px-3">
                 <?php if ($_SESSION['tipo_usuario'] === 'adulto'): ?>
-                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center active"
+                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/adultos/trivial/index.html', this)">
                         <img src="juegos/adultos/trivial/img/trivial.png" alt="Trivial Logo" class="logo">
 
                         <div>
-                            <div class="fw-bold fs-6">Trivial</div><small>Conocimiento</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_trivial">Trivial</div><small data-key="game_knowledge">Conocimiento</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
@@ -84,7 +95,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
                         <img src="juegos/adultos/blackjack/images/blackjack.png" alt="Blackjack Logo" class="logo">
 
                         <div>
-                            <div class="fw-bold fs-6">Blackjack</div><small>Cartas</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_blackjack">Blackjack</div><small data-key="game_cards">Cartas</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
@@ -92,7 +103,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
                         <img src="juegos/adultos/impostor/img/impostor.png" alt="Impostor Logo" class="logo">
 
                         <div>
-                            <div class="fw-bold fs-6">Impostor</div><small>Estrategia</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_impostor">Impostor</div><small data-key="game_strategy">Estrategia</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
@@ -100,17 +111,17 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
                         <img src="juegos/adultos/tabu/img/tabu.png" alt="Tabú Logo" class="logo">
 
                         <div>
-                            <div class="fw-bold fs-6">Tabú</div><small>Palabras</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_tabu">Tabú</div><small data-key="game_words">Palabras</small>
                         </div>
                     </button>
 
                 <?php else: ?>
-                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center active"
+                    <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/cuenta_numeros/index.html', this)">
                         <img src="juegos/ninos/cuenta_numeros/imagenes/logoCuentaNumeros.png" alt="cuentaNumeros Logo"
                             class="logo">
                         <div>
-                            <div class="fw-bold fs-6">Cuenta Números</div><small>Matemáticas</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_cn">Cuenta Números</div><small data-key="game_math">Matemáticas</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
@@ -118,35 +129,35 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
                         <img src="juegos/ninos/cuenta_letras/utils/imagenes/logoCuentaLetras.png" alt="cuentaLetras Logo"
                             class="logo">
                         <div>
-                            <div class="fw-bold fs-6">Cuenta Letras</div><small>Vocabulario</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_cl">Cuenta Letras</div><small data-key="game_vocab">Vocabulario</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/memory/index.html', this)">
                         <img src="juegos/ninos/memory/img/logoMemory.png" alt="memory Logo" class="logo">
                         <div>
-                            <div class="fw-bold fs-6">Memory</div><small>Memoria</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_memory">Memory</div><small data-key="game_memory">Memoria</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/tres_raya/index.html', this)">
                         <img src="juegos/ninos/tres_raya/utils/img/logoTresRaya.png" alt="tresRaya Logo" class="logo">
                         <div>
-                            <div class="fw-bold fs-6">Tres en Raya</div><small>Clásico</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_tr">Tres en Raya</div><small data-key="game_classic">Clásico</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/trivial/index.html', this)">
                         <img src="juegos/ninos/trivial/img/logoTrivial.png" alt="trivial Logo" class="logo">
                         <div>
-                            <div class="fw-bold fs-6">Trivial Kids</div><small>Preguntas</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_tk">Trivial Kids</div><small data-key="game_questions">Preguntas</small>
                         </div>
                     </button>
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/tabu/index.html', this)">
                         <img src="juegos/ninos/tabu/img/logoTabu.jpg" alt="tabu Logo" class="logo">
                         <div>
-                            <div class="fw-bold fs-6">Tabú Kids</div><small>Adivina</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_tak">Tabú Kids</div><small data-key="game_guess">Adivina</small>
                         </div>
                     </button>
                 <?php endif; ?>
@@ -159,20 +170,21 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
                 <div class="alert alert-invitado d-flex align-items-center shadow-sm mb-3 rounded-3 py-2" role="alert">
                     <span class="fs-5 me-2">⚠️</span>
                     <div>
-                        <strong>Modo Invitado:</strong> Juegas sin guardar progreso.
-                        <a href="autenticacion/registro.php" class="fw-bold">Regístrate aquí</a>.
+                        <strong data-key="panel_guest_warning">Modo Invitado:</strong>
+                        <span data-key="panel_guest_desc">Juegas sin guardar progreso.</span>
+                        <a href="autenticacion/registro.php" class="fw-bold" data-key="panel_register_here">Regístrate aquí</a>.
                     </div>
                 </div>
             <?php endif; ?>
 
             <div class="game-card-container">
                 <div class="game-header">
-                    <span class="badge bg-danger bg-opacity-75 animate-pulse">🔴 EN JUEGO</span>
+                    <span class="badge bg-danger bg-opacity-75 animate-pulse" data-key="panel_in_game">🔴 EN JUEGO</span>
                     <button class="btn btn-sm btn-outline-light rounded-pill px-3"><a href="panel.php"
-                            style="text-decoration: none; color: inherit;">Panel de
+                            style="text-decoration: none; color: inherit;" data-key="panel_home_btn">Panel de
                             Inicio</a>
                     </button>
-                    <button class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="pantallaCompleta()">
+                    <button class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="pantallaCompleta()" data-key="panel_fullscreen_btn">
                         ⛶ Pantalla Completa
                     </button>
                 </div>
@@ -224,16 +236,18 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
         }
     </script>
     <script src="chatbot/bot.js"></script>
+    <script src="utils/idiomas.js"></script>
+    <script src="utils/traductor.js"></script>
     <script>
         // SEGURIDAD: Sincronizamos el ID de sesión con el entorno del navegador
         window.usuarioId = <?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 'null'; ?>;
         console.log("🛰️ PlayGo: Conexión establecida para Usuario ID: " + window.usuarioId);
 
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/playgo/service-worker.js').then(function(registration) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/playgo/service-worker.js').then(function (registration) {
                     console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, function(err) {
+                }, function (err) {
                     console.log('ServiceWorker registration failed: ', err);
                 });
             });
