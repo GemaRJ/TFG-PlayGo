@@ -15,15 +15,15 @@
     --theme-shadow:     0 4px 24px rgba(0, 0, 0, 0.5);
 }
 
-/* ---- MODO DÍA MEJORADO (Más visible) ---- */
+/* ---- MODO DÍA MEJORADO ---- */
 html.modo-dia {
-    --theme-bg:         #f0f2f5; /* Gris azulado muy claro, no blanco puro */
+    --theme-bg:         #f0f2f5; 
     --theme-bg-nav:     rgba(240, 242, 245, 0.9);
-    --theme-bg-card:    #ffffff; /* La tarjeta sí es blanca para que resalte sobre el fondo */
-    --theme-text:       #111827; /* Casi negro para máximo contraste */
-    --theme-text-muted: #4b5563; /* Gris oscuro para descripciones */
-    --theme-border:     rgba(0, 0, 0, 0.15); /* Bordes más visibles */
-    --theme-accent:     #007791; /* Azul más oscuro para que se vea bien en blanco */
+    --theme-bg-card:    #ffffff; 
+    --theme-text:       #111827; 
+    --theme-text-muted: #4b5563; 
+    --theme-border:     rgba(0, 0, 0, 0.15); 
+    --theme-accent:     #007791; 
     --theme-accent2:    #6d28d9;
     --theme-shadow:     0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
@@ -97,7 +97,7 @@ html.modo-dia .footer-team-list li  { color: var(--theme-text-muted); }
 
 .btn-tema {
     position: fixed;
-    bottom: 100px; /* encima del chatbot que está a bottom: 25px + 65px alto */
+    bottom: 100px; 
     right: 25px;
     z-index: 9999;
     width: 55px;
