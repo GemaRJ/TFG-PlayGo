@@ -1,21 +1,20 @@
-<?php
+﻿<?php
 // UBICACIÓN: /playgo/index.php
-
+ 
 // --- 1. ACTIVAR CHIVATOS DE ERROR ---
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
+ 
 session_start();
-
+ 
 // --- 2. CONEXIÓN SEGURA ---
 if (file_exists("configuracion/conexion.php")) {
     require_once "configuracion/conexion.php";
 } else {
-    // Si no existe, no matamos la página, solo avisamos (para desarrollo)
     // die("❌ Error Crítico: No encuentro el archivo 'configuracion/conexion.php'.");
 }
-
+ 
 // Redirección si ya está logueado
 if (isset($_SESSION['id'])) {
     if ($_SESSION['tipo_usuario'] == 'administrador') {
@@ -27,27 +26,36 @@ if (isset($_SESSION['id'])) {
     }
 }
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="es">
-
+ 
 <head>
     <meta charset="UTF-8">
+ 
+    <!-- TEMA -->
+    <script>
+        if (localStorage.getItem('playgo-tema') === 'dia') {
+            document.documentElement.classList.add('modo-dia');
+        }
+    </script>
+ 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayGo | Tu Portal de Juegos</title>
-
+ 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/playgo/utils/theme.css">
     <link rel="stylesheet" href="assets/css/index.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/footer.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="chatbot/bot.css">
     <link rel="stylesheet" href="utils/lang_selector.css">
     <link rel="icon" href="./assets/img/icono192-jugando-videojuegos.png?v=3" type="image/png">
     <link rel="manifest" href="/playgo/manifest.json">
-    <link rel="stylesheet" href="assets/css/footer.css?v=<?php echo time(); ?>">
     <meta name="theme-color" content="#0d1b2a">
 </head>
-
+ 
 <body>
-
+ 
     <nav class="barra-navegacion">
         <div class="contenido-nav">
             <a href="index.php" class="logo" style="display: flex; align-items: center;">
@@ -65,29 +73,29 @@ if (isset($_SESSION['id'])) {
             </div>
         </div>
     </nav>
-
+ 
     <header class="hero-banner">
         <div class="hero-contenido">
             <h1 data-key="index_title">Encuentra tu próximo reto</h1>
             <p data-key="index_subtitle">Diversión educativa para niños y desafíos mentales para adultos.</p>
-
+ 
             <div class="buscador">
                 <input type="text" placeholder="¿Qué quieres jugar hoy?" data-key-placeholder="index_search_plc">
                 <a href="autenticacion/login.php" class="boton-buscar" data-key="index_search_btn">BUSCAR</a>
             </div>
         </div>
     </header>
-
+ 
     <main id="catalogo" class="seccion-principal portal-galactico">
-
+ 
         <?php if (isset($error_sql)): ?>
             <div class="alert error">Error SQL: <?php echo $error_sql; ?></div>
         <?php endif; ?>
-
+ 
         <div class="contenedor-opciones">
-
+ 
             <a href="/playgo/invitado_logic.php" class="tarjeta-portal kids">
-
+ 
                 <div class="game-bubble b-kids-1" style="top: 15%; left: 10%;">
                     <img src="juegos/ninos/cuenta_numeros/imagenes/logoCuentaNumeros.png" alt="Números">
                 </div>
@@ -97,7 +105,7 @@ if (isset($_SESSION['id'])) {
                 <div class="game-bubble b-kids-3" style="top: 15%; right: 5%;">
                     <img src="juegos/ninos/tres_raya/utils/img/logoTresRaya.png" alt="Raya">
                 </div>
-
+ 
                 <div class="contenido-portal">
                     <div class="icono-flotante">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -114,9 +122,9 @@ if (isset($_SESSION['id'])) {
                 </div>
                 <div class="fondo-brillo"></div>
             </a>
-
+ 
             <a href="/playgo/autenticacion/login.php" class="tarjeta-portal adults">
-
+ 
                 <div class="game-bubble b-adults-1" style="top: 20%; right: 10%;">
                     <img src="juegos/adultos/trivial/img/trivial.png" alt="Trivial">
                 </div>
@@ -126,7 +134,7 @@ if (isset($_SESSION['id'])) {
                 <div class="game-bubble b-adults-3" style="top: 15%; left: 15%;">
                     <img src="juegos/adultos/impostor/img/impostor.png" alt="Impostor">
                 </div>
-
+ 
                 <div class="contenido-portal">
                     <div class="icono-flotante">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -142,21 +150,29 @@ if (isset($_SESSION['id'])) {
                 </div>
                 <div class="fondo-brillo"></div>
             </a>
-
+ 
         </div>
-
+ 
         <div class="zona-invitado">
             <p data-key="index_guest_desc">¿Tienes menos de 18 años? Prueba nuestros sistemas sin registrarte y accede a juegos infantiles.</p>
             <a href="invitado_logic.php" class="btn-invitado" data-key="index_guest_btn">
                 🛡️ Acceso Seguro: Modo Cadete (Sin Registro)
             </a>
         </div>
-
+ 
     </main>
+ 
     <?php include 'footer.php'; ?>
-
+ 
+    <!-- Botón flotante día/noche -->
+    <button id="btn-tema" class="btn-tema" aria-label="Cambiar a modo día">
+        <span class="icon-luna">🌙</span>
+        <span class="icon-sol">☀️</span>
+    </button>
+ 
     <script src="utils/idiomas.js"></script>
     <script src="utils/traductor.js"></script>
+    <script src="/playgo/utils/theme.js"></script>
     <script src="chatbot/bot.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
@@ -169,6 +185,7 @@ if (isset($_SESSION['id'])) {
             });
         }
     </script>
+ 
 </body>
-
+ 
 </html>
