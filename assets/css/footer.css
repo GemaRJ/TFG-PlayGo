@@ -1,9 +1,4 @@
-/* ================================================
-   footer.css — PlayGo · Estética Espacial/Cyberpunk
-   Fuente: Poppins (ya incluida en tu proyecto)
-   ================================================ */
-
-/* ---- Variables (ajusta si ya tienes las tuyas) ---- */
+/* ---- Variables ---- */
 :root {
   --pg-bg-deep:    #080c1a;
   --pg-bg-footer:  #0b1022;
@@ -239,9 +234,7 @@
   50%       { opacity: 0.9; transform: scale(1.4); }
 }
 
-/* ================================================
-   RESPONSIVE
-   ================================================ */
+/* ==== RESPONSIVE ==== */
 @media (max-width: 768px) {
   .footer-inner {
     grid-template-columns: 1fr 1fr;

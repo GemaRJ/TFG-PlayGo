@@ -1,7 +1,4 @@
-/**
- * UBICACIÓN: chatbot/bot.js
- * ASISTENTE INTERACTIVO PLAYGO - SOLO PARA TRIPULACIÓN ADULTA
- */
+/* ASISTENTE INTERACTIVO PLAYGO - SOLO PARA TRIPULACIÓN ADULTA */
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -1,12 +1,9 @@
-// utils/traductor.js
-
 function aplicarTraduccion(lang) {
     if (!translations[lang]) return;
 
     // Guardar el idioma en localStorage
     localStorage.setItem('playgo_lang', lang);
 
-    // Actualizar elementos con data-key
     // Actualizar elementos con data-key (innerHTML)
     const elementos = document.querySelectorAll('[data-key]');
     elementos.forEach(el => {
@@ -43,7 +40,7 @@ function aplicarTraduccion(lang) {
         }
     });
 
-    // Propagar la traducción a posibles iframes incrustados (como en panel.php)
+    // Propagar la traducción a posibles iframes incrustados
     const iframes = document.querySelectorAll('iframe');
     iframes.forEach(iframe => {
         try {

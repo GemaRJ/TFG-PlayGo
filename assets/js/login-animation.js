@@ -1,5 +1,3 @@
-// assets/js/login-animation.js
-
 let scene, camera, renderer;
 let robotGroup; 
 let headGroup, bodyGroup;

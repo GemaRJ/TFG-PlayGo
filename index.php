@@ -1,5 +1,4 @@
 <?php
-// UBICACIÓN: /playgo/index.php
 
 // --- 1. ACTIVAR CHIVATOS DE ERROR ---
 ini_set('display_errors', 1);
