@@ -59,7 +59,7 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
             color: #fff;
         }
 
-        /* CORRECCIÓN DEL TÍTULO (QUITAMOS EL BLANCO DEL DEGRADADO) */
+        /* CORRECCIÓN DEL TÍTULO */
         .header-panel h1 {
             font-size: 3.5rem;
             font-weight: 800;

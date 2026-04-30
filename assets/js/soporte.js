@@ -1,5 +1,3 @@
-// assets/js/soporte.js
-
 const iniciarEspacio = () => {
     console.log("🚀 Sistema espacial PlayGo activado...");
 

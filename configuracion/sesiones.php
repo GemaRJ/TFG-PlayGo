@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-/**
+/*
  * Verifica si hay un usuario logueado.
  * Si no, lo redirige al login usando la RUTA ABSOLUTA.
  * Al poner /playgo/ al principio, funcionará desde cualquier carpeta.
@@ -20,9 +20,7 @@ function comprobarSesion()
     }
 }
 
-/**
- * Verifica si el usuario es ADMINISTRADOR.
- */
+/* Verifica si el usuario es ADMINISTRADOR. */
 function comprobarAdmin()
 {
     comprobarSesion(); // Primero miramos si está logueado
@@ -33,9 +31,7 @@ function comprobarAdmin()
     }
 }
 
-/**
- * Verifica si el usuario es JUGADOR (Niño o Adulto).
- */
+/* Verifica si el usuario es JUGADOR (Niño o Adulto). */
 function comprobarJugador()
 {
     comprobarSesion(); // Primero miramos si está logueado

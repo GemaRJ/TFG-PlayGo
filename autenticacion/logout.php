@@ -1,8 +1,5 @@
 <?php
-
-/**
- * Limpia la sesión en el servidor y la memoria del chatbot en el cliente.
- */
+/* Limpia la sesión en el servidor y la memoria del chatbot en el cliente.*/
 
 // 1. Iniciamos la sesión para poder destruirla
 session_start();

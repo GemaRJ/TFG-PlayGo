@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * CONTROLADOR DE ACCIONES - PLAYGO
  * Maneja: Resolver, Reabrir y Eliminar incidencias.
  */
