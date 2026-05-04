@@ -53,6 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <head>
     <meta charset="UTF-8">
+    <script>
+    if (localStorage.getItem('playgo-tema') === 'dia') {
+        document.documentElement.classList.add('modo-dia');
+    }
+</script>
+<link rel="stylesheet" href="/playgo/utils/theme.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayGo | Space Login</title>
 
@@ -70,31 +76,62 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         body {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle at center, #1e3a8a 0%, #0f172a 100%);
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden;
-            position: relative;
-        }
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Por defecto: El azul espacial original */
+    background: radial-gradient(circle at center, #1e3a8a 0%, #0f172a 100%);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    position: relative;
+    transition: background 0.5s ease;
+}
 
-        /* Estrellas */
-        body::before {
-            content: "";
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background-image:
-                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0, 0, 0, 0)),
-                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0, 0, 0, 0)),
-                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0, 0, 0, 0));
-            background-repeat: repeat;
-            background-size: 200px 200px;
-            animation: stars-move 100s linear infinite;
-            opacity: 0.4;
-        }
+/* --- CUANDO SE ACTIVA EL MODO DÍA (Sincronizado con Registro) --- */
+html.modo-dia body {
+    background: radial-gradient(circle at center, #f0f2f5 0%, #dbeafe 100%);
+}
+
+html.modo-dia body::before {
+    opacity: 0.1; 
+}
+
+/* Tarjeta y textos en modo día */
+html.modo-dia .glass-card {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+html.modo-dia .login-side { color: #1e3a8a; }
+html.modo-dia .login-side h2, 
+html.modo-dia .login-side p,
+html.modo-dia .links span { color: #1e3a8a; }
+
+html.modo-dia .brand span { color: #005bea; text-shadow: none; }
+
+/* Mejora de inputs en modo día */
+html.modo-dia .input-group input {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1.5px solid rgba(0, 0, 0, 0.1);
+    color: #111827;
+}
+
+html.modo-dia .input-group input:focus {
+    border-color: #00d2ff;
+    background: white;
+}
+
+/* Botón y links en modo día */
+html.modo-dia .btn-space {
+    background: #0099bb;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0, 153, 187, 0.3);
+}
+
+html.modo-dia .links a { color: #007791; }
+html.modo-dia hr { border-top: 1px solid rgba(0, 0, 0, 0.1) !important; }
 
         @keyframes stars-move {
             from {
@@ -300,6 +337,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="../chatbot/bot.js"></script>
     <script src="../utils/idiomas.js"></script>
     <script src="../utils/traductor.js"></script>
+    <!-- Botón flotante día/noche -->
+<button id="btn-tema" class="btn-tema" aria-label="Cambiar a modo día">
+    <span class="icon-luna">🌙</span>
+    <span class="icon-sol">☀️</span>
+</button>
+<script src="/playgo/utils/theme.js"></script>
 
 </body>
 

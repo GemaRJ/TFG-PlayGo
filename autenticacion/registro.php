@@ -31,8 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <head>
     <meta charset="UTF-8">
+    <script>
+        // Detector de tema antes de cargar el CSS
+        if (localStorage.getItem('playgo-tema') === 'dia') {
+            document.documentElement.classList.add('modo-dia');
+        }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayGo | Registro Adultos</title>
+    <link rel="stylesheet" href="/playgo/utils/theme.css">
     <?php if ($registro_exitoso): ?>
         <meta http-equiv="refresh" content="2;url=login.php"><?php endif; ?>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
@@ -54,6 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
             position: relative;
+            transition: background 0.5s ease;
+        }
+
+        /* --- AJUSTES MODO DÍA --- */
+        html.modo-dia body {
+            background: radial-gradient(circle at center, #f0f2f5 0%, #dbeafe 100%);
         }
 
         body::before {
@@ -66,7 +79,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background-size: 200px 200px;
             animation: stars-move 100s linear infinite;
             opacity: 0.4;
+            transition: opacity 0.5s ease;
         }
+
+        html.modo-dia body::before { opacity: 0.1; }
 
         @keyframes stars-move {
             from {
@@ -89,6 +105,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 40px;
             box-shadow: 0 0 40px rgba(0, 210, 255, 0.3);
+            transition: background 0.5s ease;
+        }
+
+        html.modo-dia .glass-card {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .login-side {
@@ -99,6 +122,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             flex-direction: column;
             justify-content: center;
         }
+
+        html.modo-dia .login-side { color: #1e3a8a; }
 
         .login-side form {
             margin-top: 20px;
@@ -115,6 +140,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             color: #fff;
             text-shadow: 0 0 10px #00d2ff;
         }
+
+        html.modo-dia .brand span { color: #005bea; text-shadow: none; }
 
         .login-side h2 {
             margin-bottom: 5px;
@@ -142,6 +169,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-family: 'Poppins';
         }
 
+        html.modo-dia .input-group input {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1.5px solid rgba(0, 0, 0, 0.1);
+            color: #111827;
+        }
+
         .input-group label {
             position: absolute;
             left: 12px;
@@ -163,6 +196,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             transition: transform 0.2s;
         }
 
+        html.modo-dia .btn-space {
+            background: #0099bb;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 153, 187, 0.3);
+        }
+
         .btn-space:hover {
             transform: scale(1.02);
         }
@@ -204,11 +243,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             color: #ccc;
         }
 
+        html.modo-dia .links { color: #4b5563; }
+
         .links a {
             color: #00d2ff;
             text-decoration: none;
             font-weight: bold;
         }
+
+        html.modo-dia .links a { color: #007791; }
 
         .logoPlayGo {
             margin-right: 10px;
@@ -222,53 +265,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             transition: all 0.3s ease;
         }
 
-        .btn-space:hover {
-            transform: scale(1.02);
-        }
-
-        .visual-side {
-            flex: 1.2;
-            position: relative;
-        }
-
-        #canvas-container {
-            width: 100%;
-            height: 100%;
-        }
-
-        .msg {
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .error {
-            background: rgba(255, 0, 0, 0.2);
-            border: 1px solid red;
-            color: #ffcccc;
-        }
-
-        .success {
-            background: rgba(0, 255, 0, 0.2);
-            border: 1px solid #00ff00;
-            color: #ccffcc;
-        }
-
-        .links {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 0.85rem;
-            color: #ccc;
-        }
-
-        .links a {
-            color: #00d2ff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
         /* Estilo para el aviso legal */
         .aviso-privacidad {
             font-size: 0.75rem;
@@ -276,6 +272,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin-top: 15px;
             line-height: 1.2;
         }
+
+        html.modo-dia .aviso-privacidad { color: #6b7a9e; }
     </style>
 </head>
 
@@ -297,11 +295,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <form method="POST">
                 <input type="hidden" name="tipo_usuario" value="adulto">
 
-                <div class="input-group"><input type="text" name="nombres" required><label>Nombre Completo</label></div>
-                <div class="input-group"><input type="email" name="correo" id="emailField" required><label>Correo
+                <div class="input-group"><input type="text" name="nombres" required placeholder=" "><label>Nombre Completo</label></div>
+                <div class="input-group"><input type="email" name="correo" id="emailField" required placeholder=" "><label>Correo
                         Electrónico</label></div>
                 <div class="input-group"><input type="password" name="clave" id="passField"
-                        required><label>Contraseña</label></div>
+                        required placeholder=" "><label>Contraseña</label></div>
 
                 <div style="display: flex; align-items: center; margin-bottom: 22px;">
                     <input type="checkbox" name="privacidad" id="privacidad" required style="width: auto; margin-right: 10px; cursor: pointer;">
@@ -328,8 +326,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div id="canvas-container"></div>
         </div>
     </div>
+
+    <button id="btn-tema" class="btn-tema" aria-label="Cambiar tema">
+        <span class="icon-luna">🌙</span>
+        <span class="icon-sol">☀️</span>
+    </button>
+
     <script src="../assets/js/registro-animation.js"></script>
     <script src="../chatbot/bot.js"></script>
+    <script src="/playgo/utils/theme.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,143 @@
+/* ================================================
+   utils/theme.css — PlayGo · Modo Día / Noche
+   ================================================ */
+
+/* ---- MODO NOCHE (por defecto) ---- */
+:root {
+    --theme-bg:         #080c1a;
+    --theme-bg-nav:     rgba(8, 12, 26, 0.95);
+    --theme-bg-card:    #0f1730;
+    --theme-text:       #c8d6f0;
+    --theme-text-muted: #5a6a90;
+    --theme-border:     rgba(0, 240, 255, 0.12);
+    --theme-accent:     #00f0ff;
+    --theme-accent2:    #a855f7;
+    --theme-shadow:     0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- MODO DÍA MEJORADO ---- */
+html.modo-dia {
+    --theme-bg:         #f0f2f5; 
+    --theme-bg-nav:     rgba(240, 242, 245, 0.9);
+    --theme-bg-card:    #ffffff; 
+    --theme-text:       #111827; 
+    --theme-text-muted: #4b5563; 
+    --theme-border:     rgba(0, 0, 0, 0.15); 
+    --theme-accent:     #007791; 
+    --theme-accent2:    #6d28d9;
+    --theme-shadow:     0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* ---- Transición suave ---- */
+body, body * {
+    transition:
+        background-color 0.4s ease,
+        color 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+/* ---- Body base ---- */
+body {
+    background-color: var(--theme-bg);
+    color: var(--theme-text);
+}
+
+/* ---- Navbar ---- */
+.barra-navegacion {
+    background: var(--theme-bg-nav) !important;
+    border-bottom: 1px solid var(--theme-border);
+    backdrop-filter: blur(12px);
+}
+
+/* ---- Secciones ---- */
+.seccion-principal,
+.portal-galactico {
+    background-color: var(--theme-bg);
+}
+
+/* ---- Tarjetas modo día ---- */
+html.modo-dia .tarjeta-portal {
+    background: var(--theme-bg-card);
+    border: 1px solid var(--theme-border);
+    box-shadow: var(--theme-shadow);
+}
+
+html.modo-dia .tarjeta-portal h2,
+html.modo-dia .tarjeta-portal p {
+    color: var(--theme-text);
+}
+
+/* ---- Hero banner modo día ---- */
+html.modo-dia .hero-banner {
+    background: linear-gradient(135deg, #dbeafe 0%, #ede9fe 100%);
+}
+
+html.modo-dia .hero-banner h1,
+html.modo-dia .hero-banner p {
+    color: var(--theme-text);
+    text-shadow: none;
+}
+
+/* ---- Footer modo día ---- */
+html.modo-dia .playgo-footer {
+    background-color: #dde4f5;
+    border-top-color: var(--theme-border);
+}
+
+html.modo-dia .footer-nav-title     { color: var(--theme-accent); }
+html.modo-dia .footer-links a       { color: var(--theme-text-muted); }
+html.modo-dia .footer-links a:hover { color: var(--theme-accent); }
+html.modo-dia .footer-bottom p      { color: var(--theme-text-muted); }
+html.modo-dia .logo-text            { color: var(--theme-text); }
+html.modo-dia .footer-tagline       { color: var(--theme-text-muted); }
+html.modo-dia .footer-school        { color: var(--theme-text-muted); }
+html.modo-dia .footer-team-list li  { color: var(--theme-text-muted); }
+
+
+.btn-tema {
+    position: fixed;
+    bottom: 100px; 
+    right: 25px;
+    z-index: 9999;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #00d2ff, #005bea);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+    transition: all 0.3s ease;
+    animation: float-tema 3s ease-in-out infinite;
+    overflow: hidden;
+}
+
+@keyframes float-tema {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-5px); }
+}
+
+.btn-tema:hover {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 0 30px rgba(0, 210, 255, 0.8);
+}
+
+/* ---- Iconos ---- */
+.btn-tema .icon-luna,
+.btn-tema .icon-sol {
+    position: absolute;
+    font-size: 1.4rem;
+    transition: opacity 0.35s ease, transform 0.4s ease;
+}
+
+/* Noche: luna visible */
+.btn-tema .icon-luna { opacity: 1; transform: rotate(0deg) scale(1); }
+.btn-tema .icon-sol  { opacity: 0; transform: rotate(90deg) scale(0.6); }
+
+/* Día: sol visible */
+html.modo-dia .btn-tema .icon-luna { opacity: 0; transform: rotate(-90deg) scale(0.6); }
+html.modo-dia .btn-tema .icon-sol  { opacity: 1; transform: rotate(0deg) scale(1); }
