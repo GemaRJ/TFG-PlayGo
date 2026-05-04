@@ -1,6 +1,7 @@
 <?php
 // 1. CONEXIÓN Y LÓGICA
 require_once "../configuracion/conexion.php";
+/** @var mysqli $conn */
 session_start();
 
 // Si ya está logueado y NO es un invitado, redirigir
@@ -250,56 +251,56 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 
-    <div class="glass-card">
-        <div class="login-side">
-            <div class="brand" style="display: flex; align-items: center;">
-                <img src="../assets/img/logoPlayGo.png" alt="PlayGo logo" class="logoPlayGo">
-                <div>PLAY<span>GO</span></div>
+<div class="glass-card">
+    <div class="login-side">
+        <div class="brand" style="display: flex; align-items: center;">
+            <img src="../assets/img/logoPlayGo.png" alt="PlayGo logo" class="logoPlayGo">
+            <div>PLAY<span>GO</span></div>
+        </div>
+        <h2 data-key="login_title">Bienvenido</h2>
+        <p data-key="login_subtitle">Tu aventura espacial de juegos comienza aquí.</p>
+
+        <?php if ($error): ?>
+            <div class='error-msg'>⚠️ <?php echo $error; ?></div>
+        <?php endif; ?>
+
+        <form method="POST">
+            <input type="hidden" name="destino" value="<?php echo $destino; ?>">
+            <input type="hidden" name="tipo_ticket" value="<?php echo $tipo_ticket; ?>">
+
+            <div class="input-group">
+                <input type="email" name="correo" id="emailField" required placeholder=" ">
+                <label data-key="login_email">Correo Electrónico</label>
             </div>
-            <h2 data-key="login_title">Bienvenido</h2>
-            <p data-key="login_subtitle">Tu aventura espacial de juegos comienza aquí.</p>
 
-            <?php if ($error): ?>
-                <div class='error-msg'>⚠️ <?php echo $error; ?></div>
-            <?php endif; ?>
+            <div class="input-group">
+                <input type="password" name="clave" id="passField" required placeholder=" ">
+                <label data-key="login_password">Contraseña</label>
+            </div>
 
-            <form method="POST">
-                <input type="hidden" name="destino" value="<?php echo $destino; ?>">
-                <input type="hidden" name="tipo_ticket" value="<?php echo $tipo_ticket; ?>">
+            <button type="submit" class="btn-space" data-key="login_btn">¡ENTRAR!</button>
 
-                <div class="input-group">
-                    <input type="email" name="correo" id="emailField" required placeholder=" ">
-                    <label data-key="login_email">Correo Electrónico</label>
-                </div>
+            <div class="links">
+                <span data-key="login_new">¿Nuevo en la nave?</span> <br>
+                <a href="registro.php" data-key="login_create">Crea tu cuenta aquí</a>
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
 
-                <div class="input-group">
-                    <input type="password" name="clave" id="passField" required placeholder=" ">
-                    <label data-key="login_password">Contraseña</label>
-                </div>
-
-                <button type="submit" class="btn-space" data-key="login_btn">¡ENTRAR!</button>
-
-                <div class="links">
-                    <span data-key="login_new">¿Nuevo en la nave?</span> <br>
-                    <a href="registro.php" data-key="login_create">Crea tu cuenta aquí</a>
-                    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
-
-                    <a href="../index.php" style="font-size: 0.8rem; opacity: 0.7;">
-                        <i class="bi bi-arrow-left"></i> <span data-key="login_back">Volver al inicio</span>
-                    </a>
-                </div>
-            </form>
-        </div>
-
-        <div class="visual-side">
-            <div id="canvas-container"></div>
-        </div>
+                <a href="../index.php" style="font-size: 0.8rem; opacity: 0.7;">
+                    <i class="bi bi-arrow-left"></i> <span data-key="login_back">Volver al inicio</span>
+                </a>
+            </div>
+        </form>
     </div>
 
-    <script src="../assets/js/login-animation.js"></script>
-    <script src="../chatbot/bot.js"></script>
-    <script src="../utils/idiomas.js"></script>
-    <script src="../utils/traductor.js"></script>
+    <div class="visual-side">
+        <div id="canvas-container"></div>
+    </div>
+</div>
+
+<script src="../assets/js/login-animation.js"></script>
+<script src="../chatbot/bot.js"></script>
+<script src="../utils/idiomas.js"></script>
+<script src="../utils/traductor.js"></script>
 
 </body>
 

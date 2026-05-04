@@ -3,7 +3,8 @@
 
 require_once "../../configuracion/sesiones.php";
 require_once "../../configuracion/conexion.php";
-comprobarAdmin(); 
+/** @var mysqli $conn */
+comprobarAdmin();
 
 $mensaje = '';
 $error = '';
@@ -12,14 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombres = mysqli_real_escape_string($conn, $_POST['nombres']);
     $correo = mysqli_real_escape_string($conn, $_POST['correo']);
     $clave = password_hash($_POST['clave'], PASSWORD_DEFAULT);
-    $tipo_usuario = $_POST['tipo_usuario']; 
+    $tipo_usuario = $_POST['tipo_usuario'];
 
     $check = mysqli_query($conn, "SELECT * FROM usuario WHERE correo='$correo'");
-    if(mysqli_num_rows($check) > 0){
+    if (mysqli_num_rows($check) > 0) {
         $error = "Esa identidad ya existe en la base de datos.";
     } else {
         $sql = "INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES ('$nombres','$correo','$clave','$tipo_usuario')";
-        if(mysqli_query($conn, $sql)){
+        if (mysqli_query($conn, $sql)) {
             $mensaje = "Nuevo recluta registrado en la tripulación.";
         } else {
             $error = "Fallo en la conexión: " . mysqli_error($conn);
@@ -30,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin: 0 auto;
             text-align: left;
         }
-        
+
         .msg-alerta {
             padding: 15px;
             border-radius: 12px;
@@ -50,11 +52,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             text-align: center;
             font-weight: 600;
         }
-        .success-space { background: rgba(0, 210, 255, 0.15); border: 1px solid #00d2ff; color: #00d2ff; }
-        .error-space { background: rgba(255, 68, 68, 0.15); border: 1px solid #ff4444; color: #ff4444; }
 
-        .form-group { margin-bottom: 20px; }
-        
+        .success-space {
+            background: rgba(0, 210, 255, 0.15);
+            border: 1px solid #00d2ff;
+            color: #00d2ff;
+        }
+
+        .error-space {
+            background: rgba(255, 68, 68, 0.15);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
         .form-label-space {
             display: block;
             color: #00d2ff;
@@ -109,6 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </style>
 </head>
+
 <body class="portal-galactico">
 
     <main class="admin-main">
@@ -119,11 +134,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
 
         <div class="card-comando form-container">
-            <?php if($mensaje): ?>
+            <?php if ($mensaje): ?>
                 <div class="msg-alerta success-space">✔ <?php echo $mensaje; ?></div>
             <?php endif; ?>
 
-            <?php if($error): ?>
+            <?php if ($error): ?>
                 <div class="msg-alerta error-space">⚠ <?php echo $error; ?></div>
             <?php endif; ?>
 
@@ -165,4 +180,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </main>
 
 </body>
+
 </html>

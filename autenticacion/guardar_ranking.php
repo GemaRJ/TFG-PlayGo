@@ -1,5 +1,6 @@
 <?php
 require_once "../configuracion/conexion.php";
+/** @var mysqli $conn */
 
 // Capturamos el JSON recibido
 $input = file_get_contents('php://input');

@@ -2,6 +2,7 @@
 // ... (mantenemos tu código PHP inicial igual)
 require_once "../configuracion/conexion.php";
 require_once "../configuracion/sesiones.php";
+/** @var mysqli $conn */
 comprobarSesion();
 
 if ($_SESSION['tipo_usuario'] !== 'administrador') {

@@ -2,6 +2,7 @@
 // UBICACIÓN: /playgo/administrador/juegos/listar.php
 require_once "../../configuracion/sesiones.php";
 require_once "../../configuracion/conexion.php";
+/** @var mysqli $conn */
 comprobarAdmin();
 
 // Consulta de juegos
@@ -32,7 +33,8 @@ mysqli_free_result($res);
         .table-space {
             width: 100%;
             border-collapse: separate;
-            border-spacing: 0 12px; /* Separación entre filas */
+            border-spacing: 0 12px;
+            /* Separación entre filas */
             color: white;
         }
 
@@ -65,8 +67,15 @@ mysqli_free_result($res);
         }
 
         /* Redondear esquinas de las filas */
-        .table-space td:first-child { border-radius: 15px 0 0 15px; border-left: 1px solid rgba(255, 255, 255, 0.05); }
-        .table-space td:last-child { border-radius: 0 15px 15px 0; border-right: 1px solid rgba(255, 255, 255, 0.05); }
+        .table-space td:first-child {
+            border-radius: 15px 0 0 15px;
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .table-space td:last-child {
+            border-radius: 0 15px 15px 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
 
         /* Estilo para las imágenes miniatura */
         .img-radar {
@@ -86,8 +95,18 @@ mysqli_free_result($res);
             font-weight: 800;
             text-transform: uppercase;
         }
-        .bg-ninos { background: rgba(0, 210, 255, 0.2); color: #00d2ff; border: 1px solid #00d2ff; }
-        .bg-adultos { background: rgba(168, 85, 247, 0.2); color: #a855f7; border: 1px solid #a855f7; }
+
+        .bg-ninos {
+            background: rgba(0, 210, 255, 0.2);
+            color: #00d2ff;
+            border: 1px solid #00d2ff;
+        }
+
+        .bg-adultos {
+            background: rgba(168, 85, 247, 0.2);
+            color: #a855f7;
+            border: 1px solid #a855f7;
+        }
 
         .btn-accion {
             padding: 6px 12px;
@@ -98,10 +117,26 @@ mysqli_free_result($res);
             transition: 0.3s;
             margin-left: 5px;
         }
-        .btn-edit { border: 1px solid #00d2ff; color: #00d2ff; }
-        .btn-edit:hover { background: #00d2ff; color: #0f172a; }
-        .btn-delete { border: 1px solid #ff4444; color: #ff4444; }
-        .btn-delete:hover { background: #ff4444; color: white; }
+
+        .btn-edit {
+            border: 1px solid #00d2ff;
+            color: #00d2ff;
+        }
+
+        .btn-edit:hover {
+            background: #00d2ff;
+            color: #0f172a;
+        }
+
+        .btn-delete {
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+
+        .btn-delete:hover {
+            background: #ff4444;
+            color: white;
+        }
     </style>
 </head>
 
@@ -133,29 +168,30 @@ mysqli_free_result($res);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($juegos as $j): ?>
-                        <tr>
-                            <td>
-                                <?php 
-                                    $foto = "../../assets/img/" . $j['ruta'] . ".jpg"; 
-                                ?>
-                                <img src="<?php echo $foto; ?>" class="img-radar"
-                                     onerror="this.src='../../assets/img/default.jpg'">
-                            </td>
-                            <td style="color: #00d2ff; font-family: monospace;">#<?php echo $j['id_juego']; ?></td>
-                            <td style="font-weight: 600;"><?php echo htmlspecialchars($j['nombre']); ?></td>
-                            <td>
-                                <span class="badge-sector <?php echo ($j['categoria'] == 'adultos' ? 'bg-adultos' : 'bg-ninos'); ?>">
-                                    <?php echo ($j['categoria'] == 'adultos' ? '🧠 ADULTOS' : '🧸 NIÑOS'); ?>
-                                </span>
-                            </td>
-                            <td style="text-align: right;">
-                                <a href="editar.php?id=<?php echo $j['id_juego']; ?>" class="btn-accion btn-edit">EDITAR</a>
-                                <a href="baja.php?id=<?php echo $j['id_juego']; ?>" 
-                                   class="btn-accion btn-delete"
-                                   onclick="return confirm('¿Confirmar desinstalación de la misión?')">BORRAR</a>
-                            </td>
-                        </tr>
+                        <?php foreach ($juegos as $j): ?>
+                            <tr>
+                                <td>
+                                    <?php
+                                    $foto = "../../assets/img/" . $j['ruta'] . ".jpg";
+                                    ?>
+                                    <img src="<?php echo $foto; ?>" class="img-radar"
+                                        onerror="this.src='../../assets/img/default.jpg'">
+                                </td>
+                                <td style="color: #00d2ff; font-family: monospace;">#<?php echo $j['id_juego']; ?></td>
+                                <td style="font-weight: 600;"><?php echo htmlspecialchars($j['nombre']); ?></td>
+                                <td>
+                                    <span
+                                        class="badge-sector <?php echo ($j['categoria'] == 'adultos' ? 'bg-adultos' : 'bg-ninos'); ?>">
+                                        <?php echo ($j['categoria'] == 'adultos' ? '🧠 ADULTOS' : '🧸 NIÑOS'); ?>
+                                    </span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <a href="editar.php?id=<?php echo $j['id_juego']; ?>"
+                                        class="btn-accion btn-edit">EDITAR</a>
+                                    <a href="baja.php?id=<?php echo $j['id_juego']; ?>" class="btn-accion btn-delete"
+                                        onclick="return confirm('¿Confirmar desinstalación de la misión?')">BORRAR</a>
+                                </td>
+                            </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>

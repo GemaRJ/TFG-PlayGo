@@ -3,6 +3,7 @@
 
 require_once "../../configuracion/sesiones.php";
 require_once "../../configuracion/conexion.php";
+/** @var mysqli $conn */
 comprobarAdmin();
 
 $mensaje = '';
@@ -11,11 +12,11 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
     $ruta = mysqli_real_escape_string($conn, $_POST['ruta']);
-    $categoria = $_POST['categoria']; 
+    $categoria = $_POST['categoria'];
 
     $sql = "INSERT INTO juegos (nombre, ruta, categoria, activo) VALUES ('$nombre', '$ruta', '$categoria', 1)";
-    
-    if(mysqli_query($conn, $sql)){
+
+    if (mysqli_query($conn, $sql)) {
         $mensaje = "¡Misión inyectada con éxito en el catálogo!";
     } else {
         $error = "Fallo en la telemetría: " . mysqli_error($conn);
@@ -25,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin: 0 auto;
             text-align: left;
         }
-        
+
         .msg-alerta {
             padding: 15px;
             border-radius: 12px;
@@ -47,11 +49,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-weight: 600;
             animation: fadeIn 0.5s ease;
         }
-        .success-space { background: rgba(0, 210, 255, 0.2); border: 1px solid #00d2ff; color: #00d2ff; }
-        .error-space { background: rgba(255, 68, 68, 0.2); border: 1px solid #ff4444; color: #ff4444; }
 
-        .form-group { margin-bottom: 25px; }
-        
+        .success-space {
+            background: rgba(0, 210, 255, 0.2);
+            border: 1px solid #00d2ff;
+            color: #00d2ff;
+        }
+
+        .error-space {
+            background: rgba(255, 68, 68, 0.2);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
         .form-label-space {
             display: block;
             color: #00d2ff;
@@ -107,6 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </style>
 </head>
+
 <body class="portal-galactico">
 
     <main class="admin-main">
@@ -117,11 +132,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
 
         <div class="card-comando form-container">
-            <?php if($mensaje): ?>
+            <?php if ($mensaje): ?>
                 <div class="msg-alerta success-space">✅ <?php echo $mensaje; ?></div>
             <?php endif; ?>
 
-            <?php if($error): ?>
+            <?php if ($error): ?>
                 <div class="msg-alerta error-space">⚠️ <?php echo $error; ?></div>
             <?php endif; ?>
 
@@ -158,4 +173,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script src="../../chatbot/bot.js"></script>
 </body>
+
 </html>
