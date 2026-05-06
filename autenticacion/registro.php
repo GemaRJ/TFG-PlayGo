@@ -311,6 +311,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="privacidad" style="font-size: 0.85rem; color: #ccc; cursor: pointer;">Acepto la Política de privacidad</label>
                 </div>
 
+                <div style="display: flex; align-items: center; margin-bottom: 22px;">
+                    <input type="checkbox" name="privacidad" id="privacidad" required style="width: auto; margin-right: 10px; cursor: pointer;">
+                    <label for="privacidad" style="font-size: 0.85rem; color: #ccc; cursor: pointer;">Acepto la Política de privacidad</label>
+                </div>
+
                 <button type="submit" class="btn-space">¡CREAR MI CUENTA!</button>
 
                 <p class="aviso-privacidad">
