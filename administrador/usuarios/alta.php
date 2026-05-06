@@ -11,18 +11,23 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombres = mysqli_real_escape_string($conn, $_POST['nombres']);
     $correo = mysqli_real_escape_string($conn, $_POST['correo']);
-    $clave = password_hash($_POST['clave'], PASSWORD_DEFAULT);
+    $clave_raw = $_POST['clave'];
     $tipo_usuario = $_POST['tipo_usuario']; 
 
-    $check = mysqli_query($conn, "SELECT * FROM usuario WHERE correo='$correo'");
-    if(mysqli_num_rows($check) > 0){
-        $error = "Esa identidad ya existe en la base de datos.";
+    if (strlen(trim($clave_raw)) < 8) {
+        $error = "La contraseña debe tener al menos 8 caracteres.";
     } else {
-        $sql = "INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES ('$nombres','$correo','$clave','$tipo_usuario')";
-        if(mysqli_query($conn, $sql)){
-            $mensaje = "Nuevo recluta registrado en la tripulación.";
+        $clave = password_hash($clave_raw, PASSWORD_DEFAULT);
+        $check = mysqli_query($conn, "SELECT * FROM usuario WHERE correo='$correo'");
+        if(mysqli_num_rows($check) > 0){
+            $error = "Esa identidad ya existe en la base de datos.";
         } else {
-            $error = "Fallo en la conexión: " . mysqli_error($conn);
+            $sql = "INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES ('$nombres','$correo','$clave','$tipo_usuario')";
+            if(mysqli_query($conn, $sql)){
+                $mensaje = "Nuevo recluta registrado en la tripulación.";
+            } else {
+                $error = "Fallo en la conexión: " . mysqli_error($conn);
+            }
         }
     }
 }
@@ -140,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="form-group">
                     <label class="form-label-space">Clave de Acceso</label>
-                    <input type="password" name="clave" class="input-space" placeholder="••••••••" required>
+                    <input type="password" name="clave" class="input-space" placeholder="••••••••" required minlength="8">
                 </div>
 
                 <div class="form-group">
@@ -158,8 +163,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
 
         <div style="margin-top: 30px;">
-            <a href="listar.php" class="btn-logout" style="border-color: #00d2ff; color: #00d2ff;">
-                ← Volver al Listado
+            <a href="../menu.php" class="btn-logout" style="border-color: #00d2ff; color: #00d2ff;">
+                ← Regresar a la Central
             </a>
         </div>
     </main>
