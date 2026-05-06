@@ -95,7 +95,7 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
             <p>Listado de todos los exploradores registrados en el sistema.</p>
         </div>
 
-        <div style="text-align: right; width: 100%; max-width: 1000px; margin-bottom: 20px;">
+        <div style="text-align: right; width: 100%; margin-bottom: 20px;">
             <a href="alta.php" class="btn-admin" style="width: auto; padding: 10px 25px; background: #28a745; border-color: #28a745; color: white;">
                 + Reclutar Nuevo Jugador
             </a>
@@ -104,7 +104,7 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
             </a>
         </div>
 
-        <div class="card-comando" style="width: 100%; max-width: 1000px; padding: 20px;">
+        <div class="card-comando" style="width: 100%; padding: 20px;">
             <table class="table-space">
                 <thead>
                     <tr>
@@ -112,7 +112,7 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
                         <th>Explorador</th>
                         <th>Identificador</th>
                         <th style="text-align: center;">Rango</th>
-                        <th style="text-align: right;">Acciones</th>
+                        <th style="text-align: center;">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -133,12 +133,15 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
                                 <?php echo $icon . ' ' . $u['tipo_usuario']; ?>
                             </span>
                         </td>
-                        <td style="text-align: right;">
-                            <a href="modificar.php?id=<?php echo $u['usuario_id']; ?>" class="btn-accion btn-edit" title="Editar">✏️</a>
-                            <a href="baja.php?id=<?php echo $u['usuario_id']; ?>" 
-                               class="btn-accion btn-delete" 
-                               title="Eliminar"
-                               onclick="return confirm('¿Confirmar desvinculación de <?php echo $u['nombres']; ?>?')">🗑️</a>
+                        <td>
+                            <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
+                                <a href="modificar.php?id=<?php echo $u['usuario_id']; ?>" class="btn-admin" style="width: auto; margin-top: 0; padding: 5px 15px; font-size: 0.7rem;">Editar</a>
+                                <a href="baja.php?id=<?php echo $u['usuario_id']; ?>" 
+                                   class="btn-admin" 
+                                   style="width: auto; margin-top: 0; padding: 5px 10px; border-color: #ff4444; color: #ff4444;"
+                                   title="Eliminar"
+                                   onclick="return confirm('¿Confirmar desvinculación de <?php echo $u['nombres']; ?>?')">🗑️</a>
+                            </div>
                         </td>
                     </tr>
                     <?php endwhile; ?>

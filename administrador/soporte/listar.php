@@ -122,9 +122,11 @@ $res = mysqli_query($conn, $sql);
                                 <?php echo strtoupper($f['estado']); ?>
                             </span>
                         </td>
-                        <td style="text-align: center;">
-                            <a href="gestion.php?id=<?php echo $f['id_incidencia']; ?>" class="btn-admin" style="padding: 5px 15px; font-size: 0.7rem;">Gestionar</a>
-                            <button onclick="confirmarEliminar(<?php echo $f['id_incidencia']; ?>)" class="btn-admin" style="padding: 5px 10px; border-color: #ff4444; color: #ff4444;">🗑️</button>
+                        <td>
+                            <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
+                                <a href="gestion.php?id=<?php echo $f['id_incidencia']; ?>" class="btn-admin" style="width: auto; margin-top: 0; padding: 5px 15px; font-size: 0.7rem;">Gestionar</a>
+                                <button onclick="confirmarEliminar(<?php echo $f['id_incidencia']; ?>)" class="btn-admin" style="width: auto; margin-top: 0; padding: 5px 10px; border-color: #ff4444; color: #ff4444;">🗑️</button>
+                            </div>
                         </td>
                     </tr>
                     <?php endwhile; ?>
