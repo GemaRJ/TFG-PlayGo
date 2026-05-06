@@ -1,5 +1,4 @@
-<?php
-
+﻿<?php
 // --- 1. ACTIVAR CHIVATOS DE ERROR ---
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -70,10 +69,6 @@ if (isset($_SESSION['id'])) {
             <h1 data-key="index_title">Encuentra tu próximo reto</h1>
             <p data-key="index_subtitle">Diversión educativa para niños y desafíos mentales para adultos.</p>
 
-            <div class="buscador">
-                <input type="text" placeholder="¿Qué quieres jugar hoy?" data-key-placeholder="index_search_plc">
-                <a href="autenticacion/login.php" class="boton-buscar" data-key="index_search_btn">BUSCAR</a>
-            </div>
         </div>
     </header>
 

@@ -1,5 +1,4 @@
 <?php
-// ... (mantenemos tu código PHP inicial igual)
 require_once "../configuracion/conexion.php";
 require_once "../configuracion/sesiones.php";
 /** @var mysqli $conn */
@@ -100,7 +99,6 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
             box-shadow: 0 20px 40px rgba(0, 210, 255, 0.3);
         }
 
-        /* ... (el resto de tus estilos btn-admin, etc. están bien) ... */
         .icono-vibrante {
             font-size: 4rem;
             margin-bottom: 20px;

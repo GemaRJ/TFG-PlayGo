@@ -165,8 +165,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
 
         <div style="margin-top: 30px;">
-            <a href="listar.php" class="btn-logout" style="border-color: #00d2ff; color: #00d2ff;">
-                ← Volver al Catálogo
+            <a href="../menu.php" class="btn-logout" style="border-color: #00d2ff; color: #00d2ff;">
+                ← Regresar a la Central
             </a>
         </div>
     </main>

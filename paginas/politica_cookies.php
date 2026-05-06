@@ -12,6 +12,7 @@ session_start();
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/footer.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../assets/css/info_pagina.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../utils/lang_selector.css">
     <link rel="icon" href="../assets/img/icono192-jugando-videojuegos.png?v=3" type="image/png">
 
 </head>
@@ -20,43 +21,47 @@ session_start();
 
     <header class="info-topbar">
         <div class="info-container">
-            <a href="index.php" class="info-logo">
+            <a href="../index.php" class="info-logo">
                 <img src="../assets/img/logoPlayGo.png" alt="PlayGo logo" class="info-logo-img">
                 <span>PLAY<span class="accent">GO</span></span>
             </a>
+            <div class="lang-selector-panel" style="margin-left: 20px;">
+                <button id="lang-es" onclick="aplicarTraduccion('es')"><img src="https://flagcdn.com/w20/es.png" width="20" alt="ES"> ES</button>
+                <button id="lang-en" onclick="aplicarTraduccion('en')"><img src="https://flagcdn.com/w20/gb.png" width="20" alt="UK"> UK</button>
+            </div>
         </div>
     </header>
 
     <main class="info-container info-page">
         <section class="info-hero">
-            <h1>Política de cookies</h1>
-            <p>
+            <h1 data-key="cook_title">Política de cookies</h1>
+            <p data-key="cook_p1">
                 Esta política explica qué son las cookies, qué tipos pueden utilizarse y cuál sería
                 su finalidad dentro de una plataforma web como PlayGo.
             </p>
         </section>
 
         <section class="info-card">
-            <h2>1. ¿Qué son las cookies?</h2>
-            <p>
+            <h2 data-key="cook_h1">1. ¿Qué son las cookies?</h2>
+            <p data-key="cook_p_h1">
                 Las cookies son pequeños archivos de texto que un sitio web puede almacenar en el dispositivo
                 del usuario para recordar información sobre su visita y facilitar futuras interacciones.
             </p>
         </section>
 
         <section class="info-card">
-            <h2>2. Tipos de cookies</h2>
+            <h2 data-key="cook_h2">2. Tipos de cookies</h2>
             <ul>
-                <li><strong>Cookies técnicas:</strong> necesarias para el funcionamiento básico del sitio.</li>
-                <li><strong>Cookies de personalización:</strong> permiten recordar preferencias del usuario.</li>
-                <li><strong>Cookies de análisis:</strong> ayudan a estudiar el uso y rendimiento de la web.</li>
-                <li><strong>Cookies de terceros:</strong> pueden proceder de servicios externos integrados.</li>
+                <li data-key="cook_li1"><strong>Cookies técnicas:</strong> necesarias para el funcionamiento básico del sitio.</li>
+                <li data-key="cook_li2"><strong>Cookies de personalización:</strong> permiten recordar preferencias del usuario.</li>
+                <li data-key="cook_li3"><strong>Cookies de análisis:</strong> ayudan a estudiar el uso y rendimiento de la web.</li>
+                <li data-key="cook_li4"><strong>Cookies de terceros:</strong> pueden proceder de servicios externos integrados.</li>
             </ul>
         </section>
 
         <section class="info-card">
-            <h2>3. Finalidad del uso de cookies</h2>
-            <p>
+            <h2 data-key="cook_h3">3. Finalidad del uso de cookies</h2>
+            <p data-key="cook_p_h3">
                 Las cookies podrían emplearse para facilitar la navegación, mantener la sesión iniciada,
                 recordar configuraciones, recopilar estadísticas de uso y mejorar la experiencia general
                 del usuario dentro de la plataforma.
@@ -64,24 +69,30 @@ session_start();
         </section>
 
         <section class="info-card">
-            <h2>4. Gestión de cookies</h2>
-            <p>
+            <h2 data-key="cook_h4">4. Gestión de cookies</h2>
+            <p data-key="cook_p_h4">
                 El usuario puede configurar su navegador para permitir, bloquear o eliminar las cookies.
                 La desactivación de algunas de ellas podría afectar al funcionamiento correcto del sitio web.
             </p>
         </section>
 
         <section class="info-card">
-            <h2>5. Uso en este proyecto</h2>
-            <p>
+            <h2 data-key="cook_h5">5. Uso en este proyecto</h2>
+            <p data-key="cook_p_h5">
                 Dado que PlayGo forma parte de un proyecto académico, esta política se presenta como ejemplo
                 orientativo y demostrativo dentro del desarrollo del TFG.
             </p>
         </section>
+
+        <div class="btn-volver-container">
+            <a href="../index.php" class="btn-volver" data-key="return_home">← Volver al Inicio</a>
+        </div>
     </main>
 
     <?php include '../footer.php'; ?>
 
+    <script src="../utils/idiomas.js"></script>
+    <script src="../utils/traductor.js"></script>
 </body>
 
 </html>

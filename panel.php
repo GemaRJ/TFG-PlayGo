@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // --- LÓGICA DE INICIO ---
 session_start();
 
@@ -22,6 +22,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
 
 <head>
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zona de Juegos | PlayGo</title>
 
