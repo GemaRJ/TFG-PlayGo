@@ -122,6 +122,11 @@ input:focus, textarea:focus, select:focus {
     box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
 }
 
+select option {
+    background: #0f172a;
+    color: white;
+}
+
 /* Botón de envío potente */
 button {
     width: 100%;

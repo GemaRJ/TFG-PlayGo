@@ -1,14 +1,3 @@
-// ========================================
-// EL IMPOSTOR - VERSIÓN OPTIMIZADA 3.0
-// ========================================
-// Código completamente refactorizado con:
-// - Estructura modular
-// - Banco de palabras expandido (25+ palabras por categoría)
-// - Sistema de palabras relacionadas mejorado (250+ pares)
-// - Mejor manejo de errores
-// - Cacheo de elementos DOM
-// ========================================
-
 "use strict";
 
 // ========================================
@@ -4028,7 +4017,7 @@ Respond ONLY in JSON format with this exact structure, without any additional te
       `Using local bank: lang=${language}, difficulty=${difficulty}, category=${category}`
     );
 
-    // Try specific category
+   
     if (WORD_BANK[language]?.[difficulty]?.[category]) {
       const data = WORD_BANK[language][difficulty][category];
       const randomWord =
@@ -4041,7 +4030,7 @@ Respond ONLY in JSON format with this exact structure, without any additional te
       return { word: randomWord, theme: randomTheme };
     }
 
-    // Fallback to food in same difficulty
+    
     if (WORD_BANK[language]?.[difficulty]?.food) {
       const data = WORD_BANK[language][difficulty].food;
       const randomWord =
@@ -4054,7 +4043,7 @@ Respond ONLY in JSON format with this exact structure, without any additional te
       return { word: randomWord, theme: randomTheme };
     }
 
-    // Fallback to normal difficulty food
+   
     if (WORD_BANK[language]?.normal?.food) {
       const data = WORD_BANK[language].normal.food;
       const randomWord =
@@ -4067,7 +4056,7 @@ Respond ONLY in JSON format with this exact structure, without any additional te
       return { word: randomWord, theme: randomTheme };
     }
 
-    // Ultimate fallback
+  
     const ultimateFallback = {
       es: { word: "guitarra", theme: "música" },
       en: { word: "guitar", theme: "music" },
@@ -4093,7 +4082,7 @@ const RelatedWordsModule = {
       return relatedWord;
     }
 
-    // Try to get another word from same category
+    
     const alternativeWord = this.getAlternativeFromCategory(
       originalWord,
       language,
@@ -4107,14 +4096,14 @@ const RelatedWordsModule = {
       return alternativeWord;
     }
 
-    // Use category fallback
+    
     const categoryFallback = this.getCategoryFallback(language, category);
     if (categoryFallback) {
       console.log(`⚠ Using category fallback: ${categoryFallback}`);
       return categoryFallback;
     }
 
-    // Ultimate fallback
+ 
     const ultimateFallback = {
       es: "cosa diferente",
       en: "different thing",
@@ -4340,7 +4329,7 @@ const UI = {
 };
 
 // ========================================
-// MÓDULO GAME - Lógica principal del juego
+// Lógica principal del juego
 // ========================================
 
 const Game = {
@@ -4528,19 +4517,19 @@ const Game = {
 const gameState = new GameState();
 
 window.onload = function () {
-  // Initialize DOM cache
+ 
   DOM.init();
 
-  // Initialize UI
+  
   const lang = gameState.currentLanguage;
   DOM.playerNamesList.innerHTML = `<p style="color: var(--accent-primary); text-align: center;">
     ${TRANSLATIONS[lang].minPlayersMessage}
   </p>`;
 
-  // Create particles
+ 
   UI.createParticles();
 
-  // Update select options
+
   UI.updateSelectOptions(lang);
 
   // Show tutorial on first visit

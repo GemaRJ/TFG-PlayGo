@@ -268,9 +268,7 @@ h2 {
     }
 }
 
-/* ========================================
-   LOGO
-======================================== */
+/* ==== LOGO ==== */
 
 .logo-container {
     display: flex;
@@ -427,9 +425,7 @@ h2 {
     margin-top: 10px;
 }
 
-/* ========================================
-   FONDO Y PARTÍCULAS (HEREDADO DE IMPOSTOR)
-======================================== */
+/* ==== FONDO Y PARTÍCULAS ==== */
 body::before {
     content: "";
     position: fixed;

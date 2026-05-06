@@ -4,9 +4,7 @@
   box-sizing: border-box;
 }
 
-/* ========================================
-   TEMAS VISUALES - VARIABLES
-======================================== */
+/* ==== TEMAS VISUALES - VARIABLES ==== */
 
 :root,
 [data-theme="dark"] {
@@ -69,9 +67,7 @@ body::before {
   justify-content: center;
 }
 
-/* ========================================
-   BOTÓN TUTORIAL
-======================================== */
+/* ==== BOTÓN TUTORIAL ==== */
 
 .tutorial-btn {
   width: auto !important;
@@ -92,9 +88,7 @@ body::before {
   box-shadow: 0 5px 15px var(--glow) !important;
 }
 
-/* ========================================
-   LOGO
-======================================== */
+/* ==== LOGO ==== */
 
 .logo-container {
   display: flex;
@@ -144,9 +138,7 @@ body::before {
   filter: drop-shadow(0 0 30px var(--accent-primary));
 }
 
-/* ========================================
-   TÍTULOS
-======================================== */
+/* ==== TÍTULOS ==== */
 
 /* --- ENCABEZADO Y TEXTOS --- */
 .encabezado h1, h1 {
@@ -156,6 +148,7 @@ body::before {
   margin-bottom: 20px;
   font-size: 2.5rem;
   text-shadow: 0 0 10px var(--glow);
+  text-transform: uppercase;
 }
 
 @keyframes glow {
@@ -203,9 +196,7 @@ body::before {
   animation: fadeIn 1s ease-out;
 }
 
-/* ========================================
-   TARJETAS
-======================================== */
+/* ==== TARJETAS ==== */
 
 .tarjeta-juego {
   background: var(--card-bg);
@@ -262,9 +253,7 @@ body::before {
   }
 }
 
-/* ========================================
-   CONFIGURACIÓN AVANZADA
-======================================== */
+/* ==== CONFIGURACIÓN AVANZADA ==== */
 
 .advanced-settings {
   background: rgba(0, 0, 0, 0.2);
@@ -348,9 +337,7 @@ body::before {
   opacity: 1;
 }
 
-/* ========================================
-   FORMULARIOS
-======================================== */
+/* ==== FORMULARIOS ==== */
 
 .form-group {
   margin-bottom: 25px;
@@ -444,9 +431,7 @@ input[type="number"]:focus {
   box-shadow: 0 10px 30px var(--glow);
 }
 
-/* ========================================
-   PANTALLA DE JUGADOR
-======================================== */
+/* ==== PANTALLA DE JUGADOR ==== */
 
 .player-number {
   font-family: 'Fira Code', sans-serif;
@@ -621,9 +606,7 @@ input[type="number"]:focus {
   }
 }
 
-/* ========================================
-   TEMPORIZADOR
-======================================== */
+/* ==== TEMPORIZADOR ==== */
 
 .timer-display {
   display: flex;
@@ -706,9 +689,7 @@ input[type="number"]:focus {
   }
 }
 
-/* ========================================
-   MODALES Y ALERTAS
-======================================== */
+/* ==== MODALES Y ALERTAS ==== */
 
 .btn-tutorial-esquina {
   position: absolute;
@@ -858,9 +839,7 @@ input[type="number"]:focus {
   width: 100%;
 }
 
-/* ========================================
-   PARTÍCULAS DE FONDO
-======================================== */
+/* ==== PARTÍCULAS DE FONDO ==== */
 
 .particles {
   position: fixed;
@@ -903,9 +882,7 @@ input[type="number"]:focus {
   }
 }
 
-/* ========================================
-   UTILIDADES
-======================================== */
+/* ==== UTILIDADES ==== */
 
 .hidden {
   display: none !important;
@@ -969,9 +946,7 @@ input[type="number"]:focus {
   border-radius: 10px;
 }
 
-/* ========================================
-   MEDIA QUERIES - RESPONSIVE
-======================================== */
+/* ==== MEDIA QUERIES - RESPONSIVE ==== */
 
 @media (max-width: 768px) {
   .container {
@@ -1199,9 +1174,7 @@ input[type="number"]:focus {
   }
 }
 
-/* ========================================
-   NUEVAS CLASES OPTIMIZADAS
-======================================== */
+/* ==== NUEVAS CLASES OPTIMIZADAS ==== */
 
 /* Loading Message Styles */
 .loading-message {

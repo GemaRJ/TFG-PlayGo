@@ -1,8 +1,6 @@
 <?php
 
-/**
- * SOPORTE TÉCNICO PLAYGO - VERSIÓN FINAL CORREGIDA
- */
+/* SOPORTE TÉCNICO PLAYGO */
 require_once "configuracion/conexion.php";
 require_once "configuracion/sesiones.php";
 

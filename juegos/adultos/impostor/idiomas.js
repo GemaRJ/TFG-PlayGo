@@ -1,4 +1,3 @@
-// utils/idiomas.js for Impostor
 const TRANSLATIONS = {
   es: {
     title: "El Impostor",

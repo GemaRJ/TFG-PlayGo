@@ -7,21 +7,24 @@ $registro_exitoso = false;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombres = mysqli_real_escape_string($conn, $_POST['nombres']);
     $correo = mysqli_real_escape_string($conn, $_POST['correo']);
-    $clave = password_hash($_POST['clave'], PASSWORD_DEFAULT);
-
-
+    $clave_raw = $_POST['clave'];
     $tipo_usuario = 'adulto';
 
-    $check = mysqli_query($conn, "SELECT * FROM usuario WHERE correo='$correo'");
-    if (mysqli_num_rows($check) > 0) {
-        $error = "Este correo ya está registrado.";
+    if (strlen(trim($clave_raw)) < 8) {
+        $error = "La contraseña debe tener al menos 8 caracteres.";
     } else {
-        $sql = "INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES ('$nombres', '$correo', '$clave', '$tipo_usuario')";
-        if (mysqli_query($conn, $sql)) {
-            $mensaje = "¡Cuenta creada con éxito! Redirigiendo...";
-            $registro_exitoso = true;
+        $clave = password_hash($clave_raw, PASSWORD_DEFAULT);
+        $check = mysqli_query($conn, "SELECT * FROM usuario WHERE correo='$correo'");
+        if (mysqli_num_rows($check) > 0) {
+            $error = "Este correo ya está registrado.";
         } else {
-            $error = "Error al crear el perfil.";
+            $sql = "INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES ('$nombres', '$correo', '$clave', '$tipo_usuario')";
+            if (mysqli_query($conn, $sql)) {
+                $mensaje = "¡Cuenta creada con éxito! Redirigiendo...";
+                $registro_exitoso = true;
+            } else {
+                $error = "Error al crear el perfil.";
+            }
         }
     }
 }
@@ -301,7 +304,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="input-group"><input type="email" name="correo" id="emailField" required><label>Correo
                         Electrónico</label></div>
                 <div class="input-group"><input type="password" name="clave" id="passField"
-                        required><label>Contraseña</label></div>
+                        required minlength="8"><label>Contraseña</label></div>
+
+                <div style="display: flex; align-items: center; margin-bottom: 22px;">
+                    <input type="checkbox" name="privacidad" id="privacidad" required style="width: auto; margin-right: 10px; cursor: pointer;">
+                    <label for="privacidad" style="font-size: 0.85rem; color: #ccc; cursor: pointer;">Acepto la Política de privacidad</label>
+                </div>
 
                 <button type="submit" class="btn-space">¡CREAR MI CUENTA!</button>
 

@@ -1,9 +1,7 @@
-// assets/js/login-animation.js
-
 let scene, camera, renderer;
-let robotGroup; 
+let robotGroup;
 let headGroup, bodyGroup;
-let neckMesh; // Referencia para el cuello
+let neckMesh;
 let eyeL, eyeR;
 let armL, armR;
 let antennaPole, antennaBall;
@@ -20,19 +18,19 @@ function init() {
     // 1. ESCENA
     scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0xffffff, 0.02);
-    
+
     // 2. CÁMARA (Un poco más lejos para ver la nueva altura)
     camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.z = 14; 
+    camera.position.z = 14;
     camera.position.y = 0; // Centrada
 
     // 3. RENDERIZADOR
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(window.devicePixelRatio); 
-    renderer.shadowMap.enabled = true; 
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
-    renderer.toneMapping = THREE.ACESFilmicToneMapping; 
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.0;
     container.appendChild(renderer.domElement);
 
@@ -68,7 +66,7 @@ function init() {
         metalness: 0.8,
         roughness: 0.4
     });
-    
+
     // Material cromado para el cuello (para que resalte)
     const matChrome = new THREE.MeshPhysicalMaterial({
         color: 0xaaaaaa,
@@ -92,20 +90,20 @@ function init() {
 
     // --- A. CUERPO (BAJADO MUCHO MÁS: Y = -2.2) ---
     bodyGroup = new THREE.Group();
-    bodyGroup.position.y = -2.2; 
+    bodyGroup.position.y = -2.2;
 
     const cylGeo = new THREE.CylinderGeometry(1.4, 1.4, 1.6, 64);
-    const sphereTopGeo = new THREE.SphereGeometry(1.4, 64, 32, 0, Math.PI * 2, 0, Math.PI/2);
-    
+    const sphereTopGeo = new THREE.SphereGeometry(1.4, 64, 32, 0, Math.PI * 2, 0, Math.PI / 2);
+
     const bodyMain = new THREE.Mesh(cylGeo, matPlasticWhite);
     bodyMain.castShadow = true;
     bodyMain.receiveShadow = true;
-    
+
     const bodyDome = new THREE.Mesh(sphereTopGeo, matPlasticWhite);
     bodyDome.position.y = 0.8;
-    
-    const bodyBottom = new THREE.Mesh(sphereTopGeo, matDarkMetal); 
-    bodyBottom.scale.y = 0.5; 
+
+    const bodyBottom = new THREE.Mesh(sphereTopGeo, matDarkMetal);
+    bodyBottom.scale.y = 0.5;
     bodyBottom.rotation.x = Math.PI;
     bodyBottom.position.y = -0.8;
 
@@ -139,7 +137,7 @@ function init() {
     const headMesh = new THREE.Mesh(headGeo, matPlasticWhite);
     headMesh.castShadow = true;
     headMesh.receiveShadow = true;
-    
+
     const screenGeo = new THREE.BoxGeometry(2.6, 1.7, 0.1);
     const screenMesh = new THREE.Mesh(screenGeo, matScreenGlass);
     screenMesh.position.z = 1.01;
@@ -152,9 +150,9 @@ function init() {
 
     const antBaseGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.8);
     antennaPole = new THREE.Mesh(antBaseGeo, matDarkMetal);
-    antennaPole.position.set(0, 1.55, 0); 
-    antennaPole.geometry.translate(0, 0.4, 0); 
-    
+    antennaPole.position.set(0, 1.55, 0);
+    antennaPole.geometry.translate(0, 0.4, 0);
+
     antennaBall = new THREE.Mesh(new THREE.SphereGeometry(0.25, 32, 32), matGlow);
     antennaBall.position.y = 0.8;
     antennaPole.add(antennaBall);
@@ -168,7 +166,7 @@ function init() {
     const handLMesh = new THREE.Mesh(handGeo, matPlasticWhite);
     handLMesh.castShadow = true;
     armL.add(handLMesh);
-    
+
     armR = new THREE.Group();
     const handRMesh = new THREE.Mesh(handGeo, matPlasticWhite);
     handRMesh.castShadow = true;
@@ -192,7 +190,7 @@ function animate() {
     robotGroup.position.y = floatY;
 
     // FÍSICA ANTENA
-    let targetAngle = (mouseX * 2) * -0.5; 
+    let targetAngle = (mouseX * 2) * -0.5;
     const force = (targetAngle - antennaAngle) * 0.1;
     antennaVelocity += force;
     antennaVelocity *= 0.92;
@@ -202,7 +200,7 @@ function animate() {
     if (isPasswordFocus) {
         // --- PASSWORD MODE ---
         bodyGroup.rotation.y = THREE.MathUtils.lerp(bodyGroup.rotation.y, 0, 0.1);
-        
+
         // Cabeza mira abajo (vergüenza)
         headGroup.rotation.x = THREE.MathUtils.lerp(headGroup.rotation.x, 0.4, 0.1);
         headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, 0, 0.1);
@@ -213,8 +211,8 @@ function animate() {
         eyeR.scale.y = THREE.MathUtils.lerp(eyeR.scale.y, 0.05, 0.2);
 
         // Manos tapan cara (Subidas en Y para alcanzar la cabeza nueva)
-        moveObj(armL, -0.9, 1.4, 2.0); 
-        moveObj(armR, 0.9, 1.4, 2.0); 
+        moveObj(armL, -0.9, 1.4, 2.0);
+        moveObj(armR, 0.9, 1.4, 2.0);
         armL.rotation.z = -0.5;
         armR.rotation.z = 0.5;
 
@@ -232,11 +230,11 @@ function animate() {
         // --- CORRECCIÓN DE MIRADA ---
         // mouseY va de -1 (Arriba) a 1 (Abajo).
         // Rotación X Positiva = Mira Abajo. Rotación X Negativa = Mira Arriba.
-        
+
         // Queremos: Mouse Arriba (-1) -> Robot Mira Arriba (Rotación Negativa)
         // Por tanto: Rotación = mouseY * factor (Sin signo negativo)
-        
-        const targetHeadRotY = mouseX * 0.8; 
+
+        const targetHeadRotY = mouseX * 0.8;
         const targetHeadRotX = mouseY * 0.6; // CORREGIDO: Ratón Arriba = Mira Arriba
 
         headGroup.rotation.y = THREE.MathUtils.lerp(headGroup.rotation.y, targetHeadRotY, 0.1);
@@ -245,7 +243,7 @@ function animate() {
         // Cuerpo y Cuello siguen suavemente
         bodyGroup.rotation.y = THREE.MathUtils.lerp(bodyGroup.rotation.y, mouseX * 0.3, 0.05);
         bodyGroup.rotation.x = THREE.MathUtils.lerp(bodyGroup.rotation.x, mouseY * 0.1, 0.05);
-        
+
         neckMesh.rotation.y = bodyGroup.rotation.y * 1.1;
         neckMesh.rotation.x = bodyGroup.rotation.x + (headGroup.rotation.x * 0.3);
     }
@@ -266,14 +264,14 @@ document.addEventListener('mousemove', (e) => {
 });
 
 const passField = document.getElementById('passField');
-if(passField) {
+if (passField) {
     passField.addEventListener('focus', () => { isPasswordFocus = true; });
     passField.addEventListener('blur', () => { isPasswordFocus = false; });
 }
 
 window.addEventListener('resize', () => {
     const container = document.getElementById('canvas-container');
-    if(container && camera && renderer) {
+    if (container && camera && renderer) {
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);

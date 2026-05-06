@@ -278,12 +278,12 @@ function mostrarRanking() {
     const div = document.createElement("div");
     if (index === 0) {
       div.className = "card-ganador";
-      div.innerHTML = `<div class="corona">👑</div><div class="nombre-ganador">${j.nombre}</div><div class="puntos-ganador">${j.puntos} Pts</div>`;
+      div.innerHTML = `👑 ${j.nombre}: ${j.puntos} puntos.`;
       podio.appendChild(div);
     } else {
-      let medalla = index === 1 ? "🥈" : index === 2 ? "🥉" : `#${index + 1}`;
+      let medalla = index === 1 ? "🥈" : index === 2 ? "🥉" : "🏅";
       div.className = "fila-resultado";
-      div.innerHTML = `<span class="medalla">${medalla}</span><span>${j.nombre}</span><span>${j.puntos} pts</span>`;
+      div.innerHTML = `${medalla} ${j.nombre}: ${j.puntos} puntos.`;
       resto.appendChild(div);
     }
   });
