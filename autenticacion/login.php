@@ -2,6 +2,7 @@
 // 1. CONEXIÓN Y LÓGICA
 require_once "../configuracion/conexion.php";
 session_start();
+/** @var mysqli $conn */
 
 // Si ya está logueado y NO es un invitado, redirigir
 if (isset($_SESSION['id']) && isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] !== 'invitado') {
@@ -54,11 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <script>
-    if (localStorage.getItem('playgo-tema') === 'dia') {
-        document.documentElement.classList.add('modo-dia');
-    }
-</script>
-<link rel="stylesheet" href="/playgo/utils/theme.css">
+        if (localStorage.getItem('playgo-tema') === 'dia') {
+            document.documentElement.classList.add('modo-dia');
+        }
+    </script>
+    <link rel="stylesheet" href="/playgo/utils/theme.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayGo | Space Login</title>
 
@@ -76,62 +77,75 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         body {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* Por defecto: El azul espacial original */
-    background: radial-gradient(circle at center, #1e3a8a 0%, #0f172a 100%);
-    font-family: 'Poppins', sans-serif;
-    overflow: hidden;
-    position: relative;
-    transition: background 0.5s ease;
-}
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Por defecto: El azul espacial original */
+            background: radial-gradient(circle at center, #1e3a8a 0%, #0f172a 100%);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            position: relative;
+            transition: background 0.5s ease;
+        }
 
-/* --- CUANDO SE ACTIVA EL MODO DÍA (Sincronizado con Registro) --- */
-html.modo-dia body {
-    background: radial-gradient(circle at center, #f0f2f5 0%, #dbeafe 100%);
-}
+        /* --- CUANDO SE ACTIVA EL MODO DÍA (Sincronizado con Registro) --- */
+        html.modo-dia body {
+            background: radial-gradient(circle at center, #f0f2f5 0%, #dbeafe 100%);
+        }
 
-html.modo-dia body::before {
-    opacity: 0.1; 
-}
+        html.modo-dia body::before {
+            opacity: 0.1;
+        }
 
-/* Tarjeta y textos en modo día */
-html.modo-dia .glass-card {
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
+        /* Tarjeta y textos en modo día */
+        html.modo-dia .glass-card {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
 
-html.modo-dia .login-side { color: #1e3a8a; }
-html.modo-dia .login-side h2, 
-html.modo-dia .login-side p,
-html.modo-dia .links span { color: #1e3a8a; }
+        html.modo-dia .login-side {
+            color: #1e3a8a;
+        }
 
-html.modo-dia .brand span { color: #005bea; text-shadow: none; }
+        html.modo-dia .login-side h2,
+        html.modo-dia .login-side p,
+        html.modo-dia .links span {
+            color: #1e3a8a;
+        }
 
-/* Mejora de inputs en modo día */
-html.modo-dia .input-group input {
-    background: rgba(0, 0, 0, 0.05);
-    border: 1.5px solid rgba(0, 0, 0, 0.1);
-    color: #111827;
-}
+        html.modo-dia .brand span {
+            color: #005bea;
+            text-shadow: none;
+        }
 
-html.modo-dia .input-group input:focus {
-    border-color: #00d2ff;
-    background: white;
-}
+        /* Mejora de inputs en modo día */
+        html.modo-dia .input-group input {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1.5px solid rgba(0, 0, 0, 0.1);
+            color: #111827;
+        }
 
-/* Botón y links en modo día */
-html.modo-dia .btn-space {
-    background: #0099bb;
-    color: white;
-    box-shadow: 0 5px 15px rgba(0, 153, 187, 0.3);
-}
+        html.modo-dia .input-group input:focus {
+            border-color: #00d2ff;
+            background: white;
+        }
 
-html.modo-dia .links a { color: #007791; }
-html.modo-dia hr { border-top: 1px solid rgba(0, 0, 0, 0.1) !important; }
+        /* Botón y links en modo día */
+        html.modo-dia .btn-space {
+            background: #0099bb;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 153, 187, 0.3);
+        }
+
+        html.modo-dia .links a {
+            color: #007791;
+        }
+
+        html.modo-dia hr {
+            border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+        }
 
         @keyframes stars-move {
             from {
@@ -287,57 +301,57 @@ html.modo-dia hr { border-top: 1px solid rgba(0, 0, 0, 0.1) !important; }
     </style>
 </head>
 
-    <div class="glass-card">
-        <div class="login-side">
-            <div class="brand" style="display: flex; align-items: center;">
-                <img src="../assets/img/logoPlayGo.png" alt="PlayGo logo" class="logoPlayGo">
-                <div>PLAY<span>GO</span></div>
+<div class="glass-card">
+    <div class="login-side">
+        <div class="brand" style="display: flex; align-items: center;">
+            <img src="../assets/img/logoPlayGo.png" alt="PlayGo logo" class="logoPlayGo">
+            <div>PLAY<span>GO</span></div>
+        </div>
+        <h2 data-key="login_title">Bienvenido</h2>
+        <p data-key="login_subtitle">Tu aventura espacial de juegos comienza aquí.</p>
+
+        <?php if ($error): ?>
+            <div class='error-msg'>⚠️ <?php echo $error; ?></div>
+        <?php endif; ?>
+
+        <form method="POST">
+            <input type="hidden" name="destino" value="<?php echo $destino; ?>">
+            <input type="hidden" name="tipo_ticket" value="<?php echo $tipo_ticket; ?>">
+
+            <div class="input-group">
+                <input type="email" name="correo" id="emailField" required placeholder=" ">
+                <label data-key="login_email">Correo Electrónico</label>
             </div>
-            <h2 data-key="login_title">Bienvenido</h2>
-            <p data-key="login_subtitle">Tu aventura espacial de juegos comienza aquí.</p>
 
-            <?php if ($error): ?>
-                <div class='error-msg'>⚠️ <?php echo $error; ?></div>
-            <?php endif; ?>
+            <div class="input-group">
+                <input type="password" name="clave" id="passField" required placeholder=" ">
+                <label data-key="login_password">Contraseña</label>
+            </div>
 
-            <form method="POST">
-                <input type="hidden" name="destino" value="<?php echo $destino; ?>">
-                <input type="hidden" name="tipo_ticket" value="<?php echo $tipo_ticket; ?>">
+            <button type="submit" class="btn-space" data-key="login_btn">¡ENTRAR!</button>
 
-                <div class="input-group">
-                    <input type="email" name="correo" id="emailField" required placeholder=" ">
-                    <label data-key="login_email">Correo Electrónico</label>
-                </div>
+            <div class="links">
+                <span data-key="login_new">¿Nuevo en la nave?</span> <br>
+                <a href="registro.php" data-key="login_create">Crea tu cuenta aquí</a>
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
 
-                <div class="input-group">
-                    <input type="password" name="clave" id="passField" required placeholder=" ">
-                    <label data-key="login_password">Contraseña</label>
-                </div>
-
-                <button type="submit" class="btn-space" data-key="login_btn">¡ENTRAR!</button>
-
-                <div class="links">
-                    <span data-key="login_new">¿Nuevo en la nave?</span> <br>
-                    <a href="registro.php" data-key="login_create">Crea tu cuenta aquí</a>
-                    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
-
-                    <a href="../index.php" style="font-size: 0.8rem; opacity: 0.7;">
-                        <i class="bi bi-arrow-left"></i> <span data-key="login_back">Volver al inicio</span>
-                    </a>
-                </div>
-            </form>
-        </div>
-
-        <div class="visual-side">
-            <div id="canvas-container"></div>
-        </div>
+                <a href="../index.php" style="font-size: 0.8rem; opacity: 0.7;">
+                    <i class="bi bi-arrow-left"></i> <span data-key="login_back">Volver al inicio</span>
+                </a>
+            </div>
+        </form>
     </div>
 
-    <script src="../assets/js/login-animation.js"></script>
-    <script src="../chatbot/bot.js"></script>
-    <script src="../utils/idiomas.js"></script>
-    <script src="../utils/traductor.js"></script>
-    <!-- Botón flotante día/noche -->
+    <div class="visual-side">
+        <div id="canvas-container"></div>
+    </div>
+</div>
+
+<script src="../assets/js/login-animation.js"></script>
+<script src="../chatbot/bot.js"></script>
+<script src="../utils/idiomas.js"></script>
+<script src="../utils/traductor.js"></script>
+<!-- Botón flotante día/noche -->
 <button id="btn-tema" class="btn-tema" aria-label="Cambiar a modo día">
     <span class="icon-luna">🌙</span>
     <span class="icon-sol">☀️</span>
