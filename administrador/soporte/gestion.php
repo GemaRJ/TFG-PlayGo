@@ -1,18 +1,23 @@
 <?php
 require_once "../../configuracion/conexion.php";
 require_once "../../configuracion/sesiones.php";
-/** @var mysqli $conn */
-comprobarSesion();
 
-if ($_SESSION['tipo_usuario'] !== 'administrador' || !isset($_GET['id'])) {
+/** @var mysqli $conn */
+
+// Verifica sesión y rol administrador
+comprobarAdmin();
+
+if (!isset($_GET['id'])) {
     header("Location: listar.php");
     exit;
 }
 
 $id = mysqli_real_escape_string($conn, $_GET['id']);
+
 $sql = "SELECT i.*, u.nombres FROM incidencias i 
         LEFT JOIN usuario u ON i.usuario_id = u.usuario_id 
         WHERE i.id_incidencia = $id";
+
 $res = mysqli_query($conn, $sql);
 $ticket = mysqli_fetch_assoc($res);
 
