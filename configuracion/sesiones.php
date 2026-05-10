@@ -1,43 +1,83 @@
 <?php
 
-
 // 1. Iniciamos la sesión si no está iniciada
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 /*
+ * Detecta automáticamente si estamos:
+ * - En LOCAL (XAMPP → localhost/playgo)
+ * - O en HOSTING (InfinityFree)
+ * 
+ * Si estamos en localhost:
+ * Devuelve /playgo
+ * 
+ * Si estamos en hosting:
+ * Devuelve vacío ""
+ * 
+ * Esto evita tener que cambiar rutas manualmente
+ * al subir el proyecto al hosting.
+ */
+function rutaBase()
+{
+    return (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) ? '/playgo' : '';
+}
+
+/*
  * Verifica si hay un usuario logueado.
- * Si no, lo redirige al login usando la RUTA ABSOLUTA.
- * Al poner /playgo/ al principio, funcionará desde cualquier carpeta.
+ * 
+ * Si NO hay sesión iniciada:
+ * lo redirige automáticamente al login.
  */
 function comprobarSesion()
 {
     if (!isset($_SESSION['id'])) {
-        // CORRECCIÓN CLAVE: Usamos la ruta completa desde la raíz del servidor
-        header("Location: /playgo/autenticacion/login.php");
+
+        // Redirección dinámica compatible
+        // con LOCAL y HOSTING
+        header("Location: " . rutaBase() . "/autenticacion/login.php");
+
         exit;
     }
 }
 
-/* Verifica si el usuario es ADMINISTRADOR. */
+/*
+ * Verifica si el usuario es ADMINISTRADOR.
+ */
 function comprobarAdmin()
 {
-    comprobarSesion(); // Primero miramos si está logueado
+    // Primero comprobamos si está logueado
+    comprobarSesion();
+
+    // Si no es administrador,
+    // lo mandamos a la portada
     if ($_SESSION['tipo_usuario'] !== 'administrador') {
-        // Si intenta entrar y no es admin, lo mandamos a la portada
-        header("Location: /playgo/index.php");
+
+        header("Location: " . rutaBase() . "/index.php");
+
         exit;
     }
 }
 
-/* Verifica si el usuario es JUGADOR (Niño o Adulto). */
+/*
+ * Verifica si el usuario es JUGADOR
+ * (Niño o Adulto).
+ */
 function comprobarJugador()
 {
-    comprobarSesion(); // Primero miramos si está logueado
-    if ($_SESSION['tipo_usuario'] !== 'nino' && $_SESSION['tipo_usuario'] !== 'adulto') {
-        // Si es admin o algo raro, a la portada
-        header("Location: /playgo/index.php");
+    // Primero comprobamos si está logueado
+    comprobarSesion();
+
+    // Si NO es niño ni adulto,
+    // lo mandamos a la portada
+    if (
+        $_SESSION['tipo_usuario'] !== 'nino' &&
+        $_SESSION['tipo_usuario'] !== 'adulto'
+    ) {
+
+        header("Location: " . rutaBase() . "/index.php");
+
         exit;
     }
 }
