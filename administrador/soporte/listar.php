@@ -1,14 +1,11 @@
 <?php
 require_once "../../configuracion/conexion.php";
 require_once "../../configuracion/sesiones.php";
+
 /** @var mysqli $conn */
 
-comprobarSesion();
-
-if (!isset($_SESSION['tipo_usuario']) || $_SESSION['tipo_usuario'] !== 'administrador') {
-    header("Location: ../../index.php");
-    exit;
-}
+// Verifica sesión y rol administrador
+comprobarAdmin();
 
 $filtro = isset($_GET['tipo']) ? mysqli_real_escape_string($conn, $_GET['tipo']) : '';
 
@@ -129,7 +126,8 @@ $res = mysqli_query($conn, $sql);
                     </option>
                     <option value="error_alta_usuario" <?php if ($filtro == 'error_alta_usuario') echo 'selected'; ?>>👤
                         Error Alta</option>
-                    <option value="incidencia_juego" <?php if ($filtro == 'incidencia_juego') echo 'selected'; ?>>🕹️ Juego
+                    <option value="incidencia_juego" <?php if ($filtro == 'incidencia_juego') echo 'selected'; ?>>🕹️
+                        Juego
                     </option>
                 </select>
             </div>
