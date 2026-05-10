@@ -1,6 +1,9 @@
 <?php
 require_once "../configuracion/conexion.php";
+require_once "../configuracion/sesiones.php";
+
 /** @var mysqli $conn */
+
 $mensaje = '';
 $error = '';
 $registro_exitoso = false;
@@ -15,11 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "La contraseña debe tener al menos 8 caracteres.";
     } else {
         $clave = password_hash($clave_raw, PASSWORD_DEFAULT);
+
         $check = mysqli_query($conn, "SELECT * FROM usuario WHERE correo='$correo'");
+
         if (mysqli_num_rows($check) > 0) {
             $error = "Este correo ya está registrado.";
         } else {
-            $sql = "INSERT INTO usuario (nombres, correo, clave, tipo_usuario) VALUES ('$nombres', '$correo', '$clave', '$tipo_usuario')";
+            $sql = "INSERT INTO usuario (nombres, correo, clave, tipo_usuario) 
+                    VALUES ('$nombres', '$correo', '$clave', '$tipo_usuario')";
+
             if (mysqli_query($conn, $sql)) {
                 $mensaje = "¡Cuenta creada con éxito! Redirigiendo...";
                 $registro_exitoso = true;
@@ -41,14 +48,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             document.documentElement.classList.add('modo-dia');
         }
     </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayGo | Registro Adultos</title>
-    <link rel="stylesheet" href="/playgo/utils/theme.css">
+
+    <link rel="stylesheet" href="<?= rutaBase() ?>/utils/theme.css">
+
     <?php if ($registro_exitoso): ?>
-        <meta http-equiv="refresh" content="2;url=login.php"><?php endif; ?>
+        <meta http-equiv="refresh" content="2;url=login.php">
+    <?php endif; ?>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="icon" href="../assets/img/icono192-jugando-videojuegos.png?v=3" type="image/png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -301,24 +314,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <img src="../assets/img/logoPlayGo.png" alt="PlayGo logo" class="logoPlayGo">
                 <div>PLAY<span>GO</span></div>
             </div>
+
             <h2>Registro de Adultos</h2>
             <p>Crea una cuenta para gestionar tus desafíos.</p>
 
-            <?php if ($error)
-                echo "<div class='msg error'>$error</div>"; ?>
-            <?php if ($mensaje)
-                echo "<div class='msg success'>$mensaje</div>"; ?>
+            <?php if ($error): ?>
+                <div class='msg error'><?= $error ?></div>
+            <?php endif; ?>
+
+            <?php if ($mensaje): ?>
+                <div class='msg success'><?= $mensaje ?></div>
+            <?php endif; ?>
 
             <form method="POST">
                 <input type="hidden" name="tipo_usuario" value="adulto">
 
-                <div class="input-group"><input type="text" name="nombres" required placeholder=" "><label>Nombre
-                        Completo</label></div>
-                <div class="input-group"><input type="email" name="correo" id="emailField" required
-                        placeholder=" "><label>Correo
-                        Electrónico</label></div>
-                <div class="input-group"><input type="password" name="clave" id="passField"
-                        required><label>Contraseña</label></div>
+                <div class="input-group">
+                    <input type="text" name="nombres" required placeholder=" ">
+                    <label>Nombre Completo</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" name="correo" id="emailField" required placeholder=" ">
+                    <label>Correo Electrónico</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" name="clave" id="passField" required>
+                    <label>Contraseña</label>
+                </div>
 
                 <button type="submit" class="btn-space">¡CREAR MI CUENTA!</button>
 
@@ -336,6 +360,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </form>
         </div>
+
         <div class="visual-side">
             <div id="canvas-container"></div>
         </div>
@@ -348,7 +373,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script src="../assets/js/registro-animation.js"></script>
     <script src="../chatbot/bot.js"></script>
-    <script src="/playgo/utils/theme.js"></script>
+    <script src="<?= rutaBase() ?>/utils/theme.js"></script>
 </body>
 
 </html>
