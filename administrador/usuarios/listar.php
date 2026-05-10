@@ -3,7 +3,8 @@
 
 require_once "../../configuracion/sesiones.php";
 require_once "../../configuracion/conexion.php";
-comprobarAdmin(); 
+/** @var mysqli $conn */
+comprobarAdmin();
 
 // Consulta a la tabla 'usuario'
 $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FROM usuario");
@@ -53,8 +54,15 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
         }
 
         /* Redondeado de filas */
-        .table-space td:first-child { border-radius: 12px 0 0 12px; border-left: 1px solid rgba(255, 255, 255, 0.05); }
-        .table-space td:last-child { border-radius: 0 12px 12px 0; border-right: 1px solid rgba(255, 255, 255, 0.05); }
+        .table-space td:first-child {
+            border-radius: 12px 0 0 12px;
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .table-space td:last-child {
+            border-radius: 0 12px 12px 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
 
         .badge-perfil {
             padding: 6px 14px;
@@ -64,10 +72,24 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
             text-transform: uppercase;
             display: inline-block;
         }
-        
-        .bg-nino { background: rgba(0, 210, 255, 0.15); color: #00d2ff; border: 1px solid #00d2ff; }
-        .bg-adulto { background: rgba(40, 167, 69, 0.15); color: #28a745; border: 1px solid #28a745; }
-        .bg-admin { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid #fff; }
+
+        .bg-nino {
+            background: rgba(0, 210, 255, 0.15);
+            color: #00d2ff;
+            border: 1px solid #00d2ff;
+        }
+
+        .bg-adulto {
+            background: rgba(40, 167, 69, 0.15);
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+
+        .bg-admin {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid #fff;
+        }
 
         .btn-accion {
             padding: 8px;
@@ -79,10 +101,27 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
             justify-content: center;
             background: transparent;
         }
-        .btn-edit { border: 1px solid #00d2ff; color: #00d2ff; }
-        .btn-edit:hover { background: #00d2ff; color: #0f172a; }
-        .btn-delete { border: 1px solid #ff4444; color: #ff4444; margin-left: 5px; }
-        .btn-delete:hover { background: #ff4444; color: white; }
+
+        .btn-edit {
+            border: 1px solid #00d2ff;
+            color: #00d2ff;
+        }
+
+        .btn-edit:hover {
+            background: #00d2ff;
+            color: #0f172a;
+        }
+
+        .btn-delete {
+            border: 1px solid #ff4444;
+            color: #ff4444;
+            margin-left: 5px;
+        }
+
+        .btn-delete:hover {
+            background: #ff4444;
+            color: white;
+        }
     </style>
 </head>
 
@@ -96,7 +135,8 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
         </div>
 
         <div style="text-align: right; width: 100%; margin-bottom: 20px;">
-            <a href="alta.php" class="btn-admin" style="width: auto; padding: 10px 25px; background: #28a745; border-color: #28a745; color: white;">
+            <a href="alta.php" class="btn-admin"
+                style="width: auto; padding: 10px 25px; background: #28a745; border-color: #28a745; color: white;">
                 + Reclutar Nuevo Jugador
             </a>
             <a href="buscar.php" class="btn-admin" style="width: auto; padding: 10px 25px; margin-left: 10px;">
@@ -116,39 +156,45 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while($u = mysqli_fetch_assoc($res)): ?>
-                    <tr>
-                        <td style="font-family: monospace; color: #00d2ff;">#<?php echo $u['usuario_id']; ?></td>
-                        <td>
-                            <div style="font-weight: 600;"><?php echo htmlspecialchars($u['nombres']); ?></div>
-                        </td>
-                        <td style="opacity: 0.7; font-size: 0.9rem;"><?php echo htmlspecialchars($u['correo']); ?></td>
-                        <td style="text-align: center;">
-                            <?php 
-                                $badgeClass = 'bg-admin'; $icon = '🛡️';
-                                if($u['tipo_usuario'] == 'nino'){ $badgeClass = 'bg-nino'; $icon = '🧸'; }
-                                elseif($u['tipo_usuario'] == 'adulto'){ $badgeClass = 'bg-adulto'; $icon = '🧠'; }
-                            ?>
-                            <span class="badge-perfil <?php echo $badgeClass; ?>">
-                                <?php echo $icon . ' ' . $u['tipo_usuario']; ?>
-                            </span>
-                        </td>
-                        <td>
-                            <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
-                                <a href="modificar.php?id=<?php echo $u['usuario_id']; ?>" class="btn-admin" style="width: auto; margin-top: 0; padding: 5px 15px; font-size: 0.7rem;">Editar</a>
-                                <a href="baja.php?id=<?php echo $u['usuario_id']; ?>" 
-                                   class="btn-admin" 
-                                   style="width: auto; margin-top: 0; padding: 5px 10px; border-color: #ff4444; color: #ff4444;"
-                                   title="Eliminar"
-                                   onclick="return confirm('¿Confirmar desvinculación de <?php echo $u['nombres']; ?>?')">🗑️</a>
-                            </div>
-                        </td>
-                    </tr>
+                    <?php while ($u = mysqli_fetch_assoc($res)): ?>
+                        <tr>
+                            <td style="font-family: monospace; color: #00d2ff;">#<?php echo $u['usuario_id']; ?></td>
+                            <td>
+                                <div style="font-weight: 600;"><?php echo htmlspecialchars($u['nombres']); ?></div>
+                            </td>
+                            <td style="opacity: 0.7; font-size: 0.9rem;"><?php echo htmlspecialchars($u['correo']); ?></td>
+                            <td style="text-align: center;">
+                                <?php
+                                $badgeClass = 'bg-admin';
+                                $icon = '🛡️';
+                                if ($u['tipo_usuario'] == 'nino') {
+                                    $badgeClass = 'bg-nino';
+                                    $icon = '🧸';
+                                } elseif ($u['tipo_usuario'] == 'adulto') {
+                                    $badgeClass = 'bg-adulto';
+                                    $icon = '🧠';
+                                }
+                                ?>
+                                <span class="badge-perfil <?php echo $badgeClass; ?>">
+                                    <?php echo $icon . ' ' . $u['tipo_usuario']; ?>
+                                </span>
+                            </td>
+                            <td>
+                                <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
+                                    <a href="modificar.php?id=<?php echo $u['usuario_id']; ?>" class="btn-admin"
+                                        style="width: auto; margin-top: 0; padding: 5px 15px; font-size: 0.7rem;">Editar</a>
+                                    <a href="baja.php?id=<?php echo $u['usuario_id']; ?>" class="btn-admin"
+                                        style="width: auto; margin-top: 0; padding: 5px 10px; border-color: #ff4444; color: #ff4444;"
+                                        title="Eliminar"
+                                        onclick="return confirm('¿Confirmar desvinculación de <?php echo $u['nombres']; ?>?')">🗑️</a>
+                                </div>
+                            </td>
+                        </tr>
                     <?php endwhile; ?>
                 </tbody>
             </table>
 
-            <?php if(mysqli_num_rows($res) == 0): ?>
+            <?php if (mysqli_num_rows($res) == 0): ?>
                 <div style="padding: 40px; text-align: center; color: #ffc107;">
                     <p>No se han detectado tripulantes en la base de datos.</p>
                 </div>
@@ -163,4 +209,5 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
     </main>
 
 </body>
+
 </html>
