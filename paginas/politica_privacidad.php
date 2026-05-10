@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once "../configuracion/sesiones.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -26,8 +26,10 @@ session_start();
                 <span>PLAY<span class="accent">GO</span></span>
             </a>
             <div class="lang-selector-panel" style="margin-left: 20px;">
-                <button id="lang-es" onclick="aplicarTraduccion('es')"><img src="https://flagcdn.com/w20/es.png" width="20" alt="ES"> ES</button>
-                <button id="lang-en" onclick="aplicarTraduccion('en')"><img src="https://flagcdn.com/w20/gb.png" width="20" alt="UK"> UK</button>
+                <button id="lang-es" onclick="aplicarTraduccion('es')"><img src="https://flagcdn.com/w20/es.png"
+                        width="20" alt="ES"> ES</button>
+                <button id="lang-en" onclick="aplicarTraduccion('en')"><img src="https://flagcdn.com/w20/gb.png"
+                        width="20" alt="UK"> UK</button>
             </div>
         </div>
     </header>

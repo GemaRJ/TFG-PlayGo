@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once "../configuracion/sesiones.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -27,8 +27,10 @@ session_start();
                 <span>PLAY<span class="accent">GO</span></span>
             </a>
             <div class="lang-selector-panel" style="margin-left: 20px;">
-                <button id="lang-es" onclick="aplicarTraduccion('es')"><img src="https://flagcdn.com/w20/es.png" width="20" alt="ES"> ES</button>
-                <button id="lang-en" onclick="aplicarTraduccion('en')"><img src="https://flagcdn.com/w20/gb.png" width="20" alt="UK"> UK</button>
+                <button id="lang-es" onclick="aplicarTraduccion('es')"><img src="https://flagcdn.com/w20/es.png"
+                        width="20" alt="ES"> ES</button>
+                <button id="lang-en" onclick="aplicarTraduccion('en')"><img src="https://flagcdn.com/w20/gb.png"
+                        width="20" alt="UK"> UK</button>
             </div>
         </div>
     </header>
@@ -50,43 +52,43 @@ session_start();
         </div>
 
         <section class="info-card">
-                    <h2 data-key="about_mission_title">Nuestra misión</h2>
-                    <p data-key="about_mission_p">
-                        El objetivo de PlayGo es ofrecer un entorno digital atractivo en el que los usuarios
-                        puedan disfrutar de experiencias de juego adaptadas a distintas edades, combinando
-                        entretenimiento, aprendizaje y usabilidad.
-                    </p>
-                </section>
+            <h2 data-key="about_mission_title">Nuestra misión</h2>
+            <p data-key="about_mission_p">
+                El objetivo de PlayGo es ofrecer un entorno digital atractivo en el que los usuarios
+                puedan disfrutar de experiencias de juego adaptadas a distintas edades, combinando
+                entretenimiento, aprendizaje y usabilidad.
+            </p>
+        </section>
 
-                <section class="info-card">
-                    <h2 data-key="about_vision_title">Visión del proyecto</h2>
-                    <p data-key="about_vision_p">
-                        Este sitio ha sido diseñado para demostrar la aplicación práctica de conocimientos
-                        de desarrollo web, diseño visual, estructura de navegación y experiencia de usuario
-                        dentro del contexto de un proyecto final de estudios.
-                    </p>
-                </section>
+        <section class="info-card">
+            <h2 data-key="about_vision_title">Visión del proyecto</h2>
+            <p data-key="about_vision_p">
+                Este sitio ha sido diseñado para demostrar la aplicación práctica de conocimientos
+                de desarrollo web, diseño visual, estructura de navegación y experiencia de usuario
+                dentro del contexto de un proyecto final de estudios.
+            </p>
+        </section>
 
-                <section class="info-card">
-                    <h2 data-key="about_team_title">Equipo de desarrollo</h2>
-                    <p data-key="about_team_p">
-                        El proyecto PlayGo ha sido realizado con fines formativos dentro del curso académico 2025-2026.
-                    </p>
-                    <ul>
-                        <li>Gema Rodríguez Jorge</li>
-                        <li>Patricia Jiménez Berzal</li>
-                        <li>Sofía Fabiana Daniele</li>
-                    </ul>
-                </section>
+        <section class="info-card">
+            <h2 data-key="about_team_title">Equipo de desarrollo</h2>
+            <p data-key="about_team_p">
+                El proyecto PlayGo ha sido realizado con fines formativos dentro del curso académico 2025-2026.
+            </p>
+            <ul>
+                <li>Gema Rodríguez Jorge</li>
+                <li>Patricia Jiménez Berzal</li>
+                <li>Sofía Fabiana Daniele</li>
+            </ul>
+        </section>
 
-                <section class="info-card">
-                    <h2 data-key="about_academic_title">Finalidad académica</h2>
-                    <p data-key="about_academic_p">
-                        Todo el contenido de esta web ha sido elaborado con carácter educativo y demostrativo.
-                        Su finalidad es representar una propuesta funcional y visual de plataforma interactiva
-                        desarrollada en el marco de un TFG.
-                    </p>
-                </section>
+        <section class="info-card">
+            <h2 data-key="about_academic_title">Finalidad académica</h2>
+            <p data-key="about_academic_p">
+                Todo el contenido de esta web ha sido elaborado con carácter educativo y demostrativo.
+                Su finalidad es representar una propuesta funcional y visual de plataforma interactiva
+                desarrollada en el marco de un TFG.
+            </p>
+        </section>
 
         <div class="btn-volver-container">
             <a href="../index.php" class="btn-volver" data-key="return_home">← Volver al Inicio</a>
