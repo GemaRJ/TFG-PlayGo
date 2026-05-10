@@ -5,24 +5,25 @@
  */
 require_once "../../configuracion/conexion.php";
 require_once "../../configuracion/sesiones.php";
+
 /** @var mysqli $conn */
-session_start();
 
 // Definimos que la respuesta siempre será un objeto JSON para el JavaScript
 header('Content-Type: application/json');
 
-// Capturamos el flujo de entrada (stream) que viene del 'fetch' de JS
+// Capturamos el flujo de entrada que viene del fetch de JS
 $input = json_decode(file_get_contents('php://input'), true);
 
 // Verificamos que existan tanto el mensaje como la categoría seleccionada
 if (isset($input['mensaje']) && isset($input['tipo'])) {
 
-    // Saneamiento de variables para evitar Inyecciones SQL (Ticket de Seguridad)
+    // Saneamiento de variables para evitar inyecciones SQL
     $mensaje = mysqli_real_escape_string($conn, $input['mensaje']);
     $tipo = mysqli_real_escape_string($conn, $input['tipo']);
 
-    // Identificamos al usuario por su sesión; si no hay, se registra como NULL (Invitado)
-    $usuario_id = isset($_SESSION['usuario_id']) ? $_SESSION['usuario_id'] : "NULL";
+    // Identificamos al usuario por su sesión; si no hay, se registra como NULL
+    $usuario_id = isset($_SESSION['id']) ? $_SESSION['id'] : "NULL";
+
     $asunto = "Reporte interactivo desde Chatbot";
 
     // Inserción directa en la tabla unificada de incidencias
@@ -30,10 +31,10 @@ if (isset($input['mensaje']) && isset($input['tipo'])) {
             VALUES ($usuario_id, '$tipo', '$asunto', '$mensaje', 'pendiente')";
 
     if (mysqli_query($conn, $sql)) {
-        echo json_encode(['status' => 'ok']); // Respuesta de éxito
+        echo json_encode(['status' => 'ok']);
     } else {
-        echo json_encode(['status' => 'error', 'msg' => mysqli_error($conn)]); // Error de SQL
+        echo json_encode(['status' => 'error', 'msg' => mysqli_error($conn)]);
     }
 } else {
-    echo json_encode(['status' => 'error', 'msg' => 'Datos incompletos']); // Error de validación
+    echo json_encode(['status' => 'error', 'msg' => 'Datos incompletos']);
 }
