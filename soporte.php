@@ -4,10 +4,6 @@
 require_once "configuracion/conexion.php";
 require_once "configuracion/sesiones.php";
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 $correo_remitente = isset($_SESSION['correo']) ? $_SESSION['correo'] : 'invitado@playgo.com';
 $tipo_pre = isset($_GET['tipo']) ? htmlspecialchars($_GET['tipo']) : '';
 $asunto_auto = "";
@@ -60,11 +56,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soporte Galáctico | PlayGo</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
+
     <link rel="stylesheet" href="assets/css/soporte.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="chatbot/bot.css">
     <link rel="icon" href="assets/img/jugando-videojuegos.png" type="image/png">
@@ -74,6 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="soporte-card">
         <h2>📩 Ayuda PlayGo</h2>
+
         <form id="formSoporte" method="POST">
             <input type="hidden" name="email" value="<?php echo $correo_remitente; ?>">
             <input type="hidden" name="_subject" value="PlayGo Soporte: <?php echo $asunto_auto; ?>">
@@ -82,25 +82,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <select name="tipo" id="tipo" required>
 
-                <option value="queja" <?php echo ($tipo_pre == 'queja') ? 'selected' : ''; ?>>😡 Queja</option>
-
-                <option value="sugerencia" <?php echo ($tipo_pre == 'sugerencia') ? 'selected' : ''; ?>>💡 Sugerencia
+                <option value="queja" <?php echo ($tipo_pre == 'queja') ? 'selected' : ''; ?>>
+                    😡 Queja
                 </option>
 
-                <option value="incidencia_juego" <?php echo ($tipo_pre == 'incidencia_juego') ? 'selected' : ''; ?>>🕹️
-                    Error en Juego</option>
+                <option value="sugerencia" <?php echo ($tipo_pre == 'sugerencia') ? 'selected' : ''; ?>>
+                    💡 Sugerencia
+                </option>
 
-                <option value="fallo_seguridad" <?php echo ($tipo_pre == 'fallo_seguridad') ? 'selected' : ''; ?>>🛡️
-                    Fallo de Seguridad</option>
+                <option value="incidencia_juego" <?php echo ($tipo_pre == 'incidencia_juego') ? 'selected' : ''; ?>>
+                    🕹️ Error en Juego
+                </option>
 
-                <option value="problema_registro" <?php echo ($tipo_pre == 'problema_registro') ? 'selected' : ''; ?>>👤
-                    Problema Registro</option>
+                <option value="fallo_seguridad" <?php echo ($tipo_pre == 'fallo_seguridad') ? 'selected' : ''; ?>>
+                    🛡️ Fallo de Seguridad
+                </option>
 
-                <option value="problema_ranking" <?php echo ($tipo_pre == 'problema_ranking') ? 'selected' : ''; ?>>🏆
-                    Problema Ranking</option>
+                <option value="problema_registro" <?php echo ($tipo_pre == 'problema_registro') ? 'selected' : ''; ?>>
+                    👤 Problema Registro
+                </option>
 
-                <option value="solicitud_baja" <?php echo ($tipo_pre == 'solicitud_baja') ? 'selected' : ''; ?>>📉
-                    Solicitud de baja usuario</option>
+                <option value="problema_ranking" <?php echo ($tipo_pre == 'problema_ranking') ? 'selected' : ''; ?>>
+                    🏆 Problema Ranking
+                </option>
+
+                <option value="solicitud_baja" <?php echo ($tipo_pre == 'solicitud_baja') ? 'selected' : ''; ?>>
+                    📉 Solicitud de baja usuario
+                </option>
 
             </select>
 
@@ -112,34 +120,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <textarea name="mensaje" rows="4" placeholder="Describe tu problema aquí..." required></textarea>
 
             <button type="submit">ENVIAR TICKET</button>
-            <a href="index.php" class="volver-link">Cancelar y volver al inicio</a>
+
+            <a href="<?= rutaBase() ?>/index.php" class="volver-link">
+                Cancelar y volver al inicio
+            </a>
         </form>
     </div>
 
     <script>
         <?php if ($enviar_email_js): ?>
             fetch("https://formspree.io/f/mkovjpda", {
-                method: "POST",
-                body: new FormData(document.getElementById("formSoporte")),
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-                .then(function () {
+                    method: "POST",
+                    body: new FormData(document.getElementById("formSoporte")),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(function() {
                     Swal.fire({
                         title: '¡Recibido!',
                         text: 'Ticket guardado y alerta enviada al administrador.',
                         icon: 'success',
                         timer: 2500,
                         showConfirmButton: false
-                    }).then(function () {
-                        window.location.href = 'index.php';
+                    }).then(function() {
+                        window.location.href = '<?= rutaBase() ?>/index.php';
                     });
                 });
         <?php endif; ?>
     </script>
+
     <script src="assets/js/soporte.js"></script>
+
 </body>
-<script src="assets/js/soporte.js"></script>
 
 </html>
