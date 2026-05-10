@@ -1,13 +1,11 @@
 <?php
 require_once "../configuracion/conexion.php";
 require_once "../configuracion/sesiones.php";
-/** @var mysqli $conn */
-comprobarSesion();
 
-if ($_SESSION['tipo_usuario'] !== 'administrador') {
-    header("Location: ../index.php");
-    exit;
-}
+/** @var mysqli $conn */
+
+// Verifica que el usuario sea administrador
+comprobarAdmin();
 
 $sql_pendientes = "SELECT COUNT(*) as total FROM incidencias WHERE estado = 'pendiente'";
 $res_pendientes = mysqli_query($conn, $sql_pendientes);
