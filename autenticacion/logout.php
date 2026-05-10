@@ -1,15 +1,17 @@
 <?php
-/* Limpia la sesión en el servidor y la memoria del chatbot en el cliente.*/
+/* Limpia la sesión en el servidor y la memoria del chatbot en el cliente. */
 
-// 1. Iniciamos la sesión para poder destruirla
-session_start();
+// Cargamos sesiones.php
+require_once "../configuracion/sesiones.php";
 
-// 2. Limpiamos todas las variables de sesión del servidor
+// Limpiamos todas las variables de sesión del servidor
 $_SESSION = array();
 
-// 3. Borramos la cookie de sesión si existe
+// Borramos la cookie de sesión si existe
 if (ini_get("session.use_cookies")) {
+
     $params = session_get_cookie_params();
+
     setcookie(
         session_name(),
         '',
@@ -21,14 +23,15 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-// 4. Destruimos la sesión en el servidor
+// Destruimos la sesión en el servidor
 session_destroy();
 
-// 5. Limpiamos el LocalStorage y redirigimos mediante JS
-// Esto asegura que el chatbot vuelva a tratar al usuario como "Invitado"
+// Limpiamos LocalStorage y redirigimos
 echo "<script>
     localStorage.removeItem('usuario_id');
     localStorage.removeItem('usuario_nombre');
+
     window.location.href = '../index.php';
 </script>";
+
 exit;
