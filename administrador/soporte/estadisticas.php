@@ -1,14 +1,13 @@
 <?php
 require_once "../../configuracion/conexion.php";
 require_once "../../configuracion/sesiones.php";
-comprobarSesion();
 
-if ($_SESSION['tipo_usuario'] !== 'administrador') {
-    header("Location: ../../index.php");
-    exit;
-}
+/** @var mysqli $conn */
 
-// LÓGICA DE DATOS (Intacta)
+// Verifica sesión y rol administrador
+comprobarAdmin();
+
+// LÓGICA DE DATOS
 $sql_stats = "SELECT tipo, COUNT(*) as total FROM incidencias GROUP BY tipo";
 $res_stats = mysqli_query($conn, $sql_stats);
 
@@ -19,6 +18,7 @@ $total_pendiente = mysqli_fetch_assoc($res_total)['total'];
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,21 +104,21 @@ $total_pendiente = mysqli_fetch_assoc($res_total)['total'];
         </div>
 
         <div class="stats-grid">
-            <?php 
+            <?php
             if (mysqli_num_rows($res_stats) > 0):
-                while($f = mysqli_fetch_assoc($res_stats)): 
+                while ($f = mysqli_fetch_assoc($res_stats)):
             ?>
-            <div class="stat-card">
-                <span class="stat-label"><?php echo str_replace('_', ' ', $f['tipo']); ?></span>
-                <span class="stat-value"><?php echo $f['total']; ?></span>
-            </div>
-            <?php 
-                endwhile; 
+                    <div class="stat-card">
+                        <span class="stat-label"><?php echo str_replace('_', ' ', $f['tipo']); ?></span>
+                        <span class="stat-value"><?php echo $f['total']; ?></span>
+                    </div>
+                <?php
+                endwhile;
             else:
-            ?>
-            <div class="stat-card" style="grid-column: 1 / -1;">
-                <p>No hay transmisiones registradas todavía.</p>
-            </div>
+                ?>
+                <div class="stat-card" style="grid-column: 1 / -1;">
+                    <p>No hay transmisiones registradas todavía.</p>
+                </div>
             <?php endif; ?>
         </div>
 
@@ -140,4 +140,5 @@ $total_pendiente = mysqli_fetch_assoc($res_total)['total'];
     </main>
 
 </body>
+
 </html>

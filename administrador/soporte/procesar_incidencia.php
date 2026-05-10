@@ -5,6 +5,7 @@
  */
 require_once "../../configuracion/conexion.php";
 require_once "../../configuracion/sesiones.php";
+/** @var mysqli $conn */
 comprobarSesion();
 
 if (!isset($_SESSION['tipo_usuario']) || $_SESSION['tipo_usuario'] !== 'administrador') {

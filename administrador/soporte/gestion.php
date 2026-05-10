@@ -1,6 +1,7 @@
 <?php
 require_once "../../configuracion/conexion.php";
 require_once "../../configuracion/sesiones.php";
+/** @var mysqli $conn */
 comprobarSesion();
 
 if ($_SESSION['tipo_usuario'] !== 'administrador' || !isset($_GET['id'])) {
@@ -15,11 +16,15 @@ $sql = "SELECT i.*, u.nombres FROM incidencias i
 $res = mysqli_query($conn, $sql);
 $ticket = mysqli_fetch_assoc($res);
 
-if (!$ticket) { header("Location: listar.php"); exit; }
+if (!$ticket) {
+    header("Location: listar.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Expediente #<?php echo $id; ?> | PlayGo</title>
@@ -31,6 +36,7 @@ if (!$ticket) { header("Location: listar.php"); exit; }
             margin: 0 auto;
             text-align: left;
         }
+
         .ticket-meta {
             display: flex;
             justify-content: space-between;
@@ -38,6 +44,7 @@ if (!$ticket) { header("Location: listar.php"); exit; }
             padding-bottom: 20px;
             margin-bottom: 25px;
         }
+
         .mensaje-box {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 15px;
@@ -49,6 +56,7 @@ if (!$ticket) { header("Location: listar.php"); exit; }
         }
     </style>
 </head>
+
 <body class="portal-galactico">
     <main class="admin-main">
         <div class="header-panel">
@@ -60,11 +68,14 @@ if (!$ticket) { header("Location: listar.php"); exit; }
             <div class="ticket-meta">
                 <div>
                     <span class="form-label-space">Emisor</span>
-                    <h3 style="color: white;"><?php echo $ticket['nombres'] ? htmlspecialchars($ticket['nombres']) : 'Explorador Invitado'; ?></h3>
+                    <h3 style="color: white;">
+                        <?php echo $ticket['nombres'] ? htmlspecialchars($ticket['nombres']) : 'Explorador Invitado'; ?>
+                    </h3>
                 </div>
                 <div style="text-align: right;">
                     <span class="form-label-space">Estado de Señal</span>
-                    <span class="badge-status <?php echo $ticket['estado'] == 'pendiente' ? 'pend' : 'res'; ?>" style="font-size: 1rem;">
+                    <span class="badge-status <?php echo $ticket['estado'] == 'pendiente' ? 'pend' : 'res'; ?>"
+                        style="font-size: 1rem;">
                         <?php echo strtoupper($ticket['estado']); ?>
                     </span>
                 </div>
@@ -80,21 +91,24 @@ if (!$ticket) { header("Location: listar.php"); exit; }
             </div>
 
             <div style="display: flex; justify-content: space-between; margin-top: 40px;">
-                <a href="listar.php" class="btn-admin" style="width: auto; padding: 12px 30px; border-color: #94a3b8; color: #94a3b8;">← Volver</a>
-                
+                <a href="listar.php" class="btn-admin"
+                    style="width: auto; padding: 12px 30px; border-color: #94a3b8; color: #94a3b8;">← Volver</a>
+
                 <?php if ($ticket['estado'] === 'pendiente'): ?>
-                    <a href="procesar_incidencia.php?id=<?php echo $id; ?>&accion=resolver" 
-                       class="btn-admin btn-primary-space" style="width: auto; padding: 12px 40px; background: #28a745; color: white; border-color: #28a745;">
-                       RESOLVER SEÑAL
+                    <a href="procesar_incidencia.php?id=<?php echo $id; ?>&accion=resolver"
+                        class="btn-admin btn-primary-space"
+                        style="width: auto; padding: 12px 40px; background: #28a745; color: white; border-color: #28a745;">
+                        RESOLVER SEÑAL
                     </a>
                 <?php else: ?>
-                    <a href="procesar_incidencia.php?id=<?php echo $id; ?>&accion=reabrir" 
-                       class="btn-admin" style="width: auto; padding: 12px 40px; border-color: #ffc107; color: #ffc107;">
-                       ⚠️ REABRIR CASO
+                    <a href="procesar_incidencia.php?id=<?php echo $id; ?>&accion=reabrir" class="btn-admin"
+                        style="width: auto; padding: 12px 40px; border-color: #ffc107; color: #ffc107;">
+                        ⚠️ REABRIR CASO
                     </a>
                 <?php endif; ?>
             </div>
         </div>
     </main>
 </body>
+
 </html>
