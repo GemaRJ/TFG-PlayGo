@@ -2,7 +2,7 @@
 
 if ($_SERVER['HTTP_HOST'] === 'localhost') {
     // Conexión local con XAMPP
-    $conn = mysqli_connect("localhost", "root", "", "playgo");
+    $conn = mysqli_connect("localhost", "root", "playgo2026", "playgo");
 } else {
     // Conexión online con InfinityFree
     $conn = mysqli_connect(
