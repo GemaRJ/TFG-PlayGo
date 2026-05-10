@@ -51,10 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.head.insertAdjacentHTML("beforeend", botStyle);
 
   // --- 2. CONFIGURACIÓN DE RUTAS ---
+  const BASE_URL = window.location.hostname === "localhost" ? "/playgo" : "";
+
   const RUTAS = {
-    soporte: "/playgo/soporte.php",
-    login: "/playgo/autenticacion/login.php",
-    registro: "/playgo/autenticacion/registro.php",
+    soporte: BASE_URL + "/soporte.php",
+    login: BASE_URL + "/autenticacion/login.php",
+    registro: BASE_URL + "/autenticacion/registro.php",
   };
 
   // --- 3. INYECCIÓN DEL HTML (Cabecera arreglada) ---
