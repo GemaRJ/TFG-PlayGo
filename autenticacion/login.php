@@ -148,6 +148,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
         }
 
+        html.modo-dia .error-msg {
+            background: rgba(255, 0, 0, 0.1);
+            color: #cc0000;
+            border: 1px solid #cc0000;
+        }
+
         @keyframes stars-move {
             from {
                 transform: translateY(0);
