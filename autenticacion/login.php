@@ -169,7 +169,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             z-index: 10;
             display: flex;
             width: 950px;
-            height: 600px;
+            min-height: 600px;
+            height: auto;
             /* Un poco más alto para el link */
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(25px);
@@ -304,6 +305,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         #canvas-container {
             width: 100%;
             height: 100%;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 992px) {
+            .glass-card {
+                width: 95%;
+                flex-direction: column;
+                min-height: auto;
+                height: auto;
+            }
+
+            .login-side {
+                padding: 30px 20px;
+            }
+
+            .visual-side {
+                display: none; /* Ocultar el robot/animación en móviles para enfocar en el formulario */
+            }
         }
     </style>
 </head>

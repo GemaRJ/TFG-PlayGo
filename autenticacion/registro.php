@@ -12,10 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombres = mysqli_real_escape_string($conn, $_POST['nombres']);
     $correo = mysqli_real_escape_string($conn, $_POST['correo']);
     $clave_raw = $_POST['clave'];
+    $confirmar_clave = $_POST['confirmar_clave'] ?? '';
     $tipo_usuario = 'adulto';
 
-    if (strlen(trim($clave_raw)) < 8) {
+    if (!isset($_POST['terminos'])) {
+        $error = "Debes aceptar los términos y condiciones de privacidad.";
+    } elseif (strlen(trim($clave_raw)) < 8) {
         $error = "La contraseña debe tener al menos 8 caracteres.";
+    } elseif ($clave_raw !== $confirmar_clave) {
+        $error = "Las contraseñas no coinciden.";
     } else {
         $clave = password_hash($clave_raw, PASSWORD_DEFAULT);
 
@@ -118,7 +123,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             z-index: 10;
             display: flex;
             width: 950px;
-            height: 650px;
+            min-height: 650px;
+            height: auto;
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -207,6 +213,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             color: #00d2ff;
         }
 
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+            font-size: 0.85rem;
+            color: #ccc;
+        }
+
+        html.modo-dia .checkbox-group {
+            color: #4b5563;
+        }
+
+        .checkbox-group input {
+            margin-right: 10px;
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+
+        .checkbox-group label {
+            cursor: pointer;
+        }
+
+        .checkbox-group a {
+            color: #00d2ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        html.modo-dia .checkbox-group a {
+            color: #007791;
+        }
+
         .btn-space {
             width: 100%;
             padding: 14px;
@@ -254,10 +293,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             color: #ffcccc;
         }
 
+        html.modo-dia .error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ef4444;
+            color: #991b1b;
+        }
+
         .success {
             background: rgba(0, 255, 0, 0.2);
             border: 1px solid #00ff00;
             color: #ccffcc;
+        }
+
+        html.modo-dia .success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid #22c55e;
+            color: #166534;
         }
 
         .links {
@@ -304,6 +355,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         html.modo-dia .aviso-privacidad {
             color: #6b7a9e;
         }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 992px) {
+            .glass-card {
+                width: 95%;
+                flex-direction: column;
+                min-height: auto;
+                height: auto;
+            }
+
+            .login-side {
+                padding: 30px 20px;
+            }
+
+            .visual-side {
+                display: none; /* Opcional: ocultar la animación/imagen en móviles para ahorrar espacio */
+            }
+        }
     </style>
 </head>
 
@@ -342,6 +411,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="input-group">
                     <input type="password" name="clave" id="passField" required>
                     <label>Contraseña</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" name="confirmar_clave" id="confirmPassField" required>
+                    <label>Confirmar Contraseña</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" name="terminos" id="terminos" required>
+                    <label for="terminos">He leído y acepto los <a href="#">términos y condiciones</a></label>
                 </div>
 
                 <button type="submit" class="btn-space">¡CREAR MI CUENTA!</button>
