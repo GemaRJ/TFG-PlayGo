@@ -233,11 +233,12 @@ mysqli_free_result($res);
                                 </td>
                                 <td>
                                     <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
-                                        <a href="editar.php?id=<?php echo $j['id_juego']; ?>" class="btn-admin"
+                                        <a href="modificar.php?id=<?php echo $j['id_juego']; ?>" class="btn-admin"
                                             style="width: auto; margin-top: 0; padding: 5px 15px; font-size: 0.7rem;">Editar</a>
-                                        <a href="baja.php?id=<?php echo $j['id_juego']; ?>" class="btn-admin"
+                                        <a href="#" class="btn-admin"
                                             style="width: auto; margin-top: 0; padding: 5px 10px; border-color: #ff4444; color: #ff4444;"
-                                            onclick="return confirm('¿Confirmar desinstalación de la misión?')">🗑️</a>
+                                            onclick="confirmarEliminacion(<?php echo $j['id_juego']; ?>); return false;">
+                                            🗑️</a>
                                     </div>
                                 </td>
                             </tr>
@@ -253,7 +254,26 @@ mysqli_free_result($res);
             </a>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script>
+        function confirmarEliminacion(id) {
+            Swal.fire({
+                title: '¿Eliminar misión?',
+                text: 'Esta acción no se puede deshacer',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ff4444',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'baja.php?id=' + id;
+                }
+            });
+        }
+    </script>
     <script src="../../chatbot/bot.js"></script>
 </body>
 

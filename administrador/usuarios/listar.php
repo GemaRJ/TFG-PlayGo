@@ -19,6 +19,10 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/menu.css">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         .table-space {
             width: 100%;
@@ -183,10 +187,14 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
                                 <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
                                     <a href="modificar.php?id=<?php echo $u['usuario_id']; ?>" class="btn-admin"
                                         style="width: auto; margin-top: 0; padding: 5px 15px; font-size: 0.7rem;">Editar</a>
-                                    <a href="baja.php?id=<?php echo $u['usuario_id']; ?>" class="btn-admin"
+
+                                    <a href="#" class="btn-admin"
                                         style="width: auto; margin-top: 0; padding: 5px 10px; border-color: #ff4444; color: #ff4444;"
                                         title="Eliminar"
-                                        onclick="return confirm('¿Confirmar desvinculación de <?php echo $u['nombres']; ?>?')">🗑️</a>
+                                        onclick="confirmarEliminacion(<?php echo $u['usuario_id']; ?>, '<?php echo htmlspecialchars($u['nombres'], ENT_QUOTES); ?>')">
+                                        🗑️
+                                    </a>
+
                                 </div>
                             </td>
                         </tr>
@@ -207,6 +215,29 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
             </a>
         </div>
     </main>
+
+    <script>
+        function confirmarEliminacion(id, nombre) {
+
+            Swal.fire({
+                title: '¿Eliminar usuario?',
+                text: '¿Confirmar desvinculación de ' + nombre + '?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ff4444',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    window.location.href = 'baja.php?id=' + id;
+                }
+
+            });
+
+        }
+    </script>
 
 </body>
 

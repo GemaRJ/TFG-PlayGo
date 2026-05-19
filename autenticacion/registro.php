@@ -370,7 +370,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             .visual-side {
-                display: none; /* Opcional: ocultar la animación/imagen en móviles para ahorrar espacio */
+                display: none;
+                /* Opcional: ocultar la animación/imagen en móviles para ahorrar espacio */
             }
         }
     </style>
@@ -449,6 +450,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <span class="icon-luna">🌙</span>
         <span class="icon-sol">☀️</span>
     </button>
+    <!-- SWEET ALERT -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <?php if (!empty($error)): ?>
+
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '<?= $error ?>',
+                confirmButtonColor: '#ff4444'
+            });
+        </script>
+
+    <?php endif; ?>
+
+
+    <?php if ($registro_exitoso): ?>
+
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡Cuenta creada!',
+                text: 'Redirigiendo al login...',
+                timer: 2200,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = 'login.php';
+            });
+        </script>
+
+    <?php endif; ?>
 
     <script src="../assets/js/registro-animation.js"></script>
     <script src="../chatbot/bot.js"></script>
