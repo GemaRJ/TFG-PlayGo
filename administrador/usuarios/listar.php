@@ -223,6 +223,8 @@ $res = mysqli_query($conn, "SELECT usuario_id, nombres, correo, tipo_usuario FRO
                 title: '¿Eliminar usuario?',
                 text: '¿Confirmar desvinculación de ' + nombre + '?',
                 icon: 'warning',
+                background: '#0f172a',
+                color: '#fff',
                 showCancelButton: true,
                 confirmButtonColor: '#ff4444',
                 cancelButtonColor: '#6c757d',

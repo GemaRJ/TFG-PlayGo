@@ -101,7 +101,7 @@ require_once "../configuracion/sesiones.php";
         </section>
 
         <div class="btn-volver-container">
-            <a href="../index.php" class="btn-volver" data-key="return_home">← Volver al Inicio</a>
+            <a href="../autenticacion/logout.php" class="btn-volver" data-key="return_home">← Volver al Inicio</a>
         </div>
     </main>
 

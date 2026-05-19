@@ -262,6 +262,8 @@ mysqli_free_result($res);
                 title: '¿Eliminar misión?',
                 text: 'Esta acción no se puede deshacer',
                 icon: 'warning',
+                background: '#0f172a',
+                color: '#fff',
                 showCancelButton: true,
                 confirmButtonColor: '#ff4444',
                 cancelButtonColor: '#6c757d',
