@@ -44,6 +44,9 @@
             <button class="btn-grande btn-azul" onclick="window.location.href='index.html'">
                 VOLVER A JUGAR 🔄
             </button>
+            <button class="btn-grande" style="margin-top: 10px; background: linear-gradient(to right, #ff6b6b, #ff4757); border: none; color: white; box-shadow: 0 5px 15px rgba(255,107,107,0.4);" onclick="window.location.href='../portadaNinos.html'">
+                SALIR
+            </button>
         </div>
     </div>
 

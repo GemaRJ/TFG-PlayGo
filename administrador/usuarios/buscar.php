@@ -3,12 +3,13 @@
 
 require_once "../../configuracion/sesiones.php";
 require_once "../../configuracion/conexion.php";
-comprobarAdmin(); 
+/** @var mysqli $conn */
+comprobarAdmin();
 
 $busqueda = $_GET['busqueda'] ?? '';
 $usuarios = [];
 
-if($busqueda){
+if ($busqueda) {
     $busqueda_safe = mysqli_real_escape_string($conn, $busqueda);
     $sql = "SELECT usuario_id, nombres, correo, tipo_usuario FROM usuario 
             WHERE nombres LIKE '%$busqueda_safe%' 
@@ -21,6 +22,7 @@ if($busqueda){
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,9 +68,17 @@ if($busqueda){
             margin-top: 20px;
         }
 
-        .table-radar tr { background: rgba(255, 255, 255, 0.03); transition: 0.3s; }
-        .table-radar td, .table-radar th { padding: 15px; text-align: left; }
-        
+        .table-radar tr {
+            background: rgba(255, 255, 255, 0.03);
+            transition: 0.3s;
+        }
+
+        .table-radar td,
+        .table-radar th {
+            padding: 15px;
+            text-align: left;
+        }
+
         .badge-perfil {
             padding: 5px 12px;
             border-radius: 20px;
@@ -76,10 +86,24 @@ if($busqueda){
             font-weight: 800;
             text-transform: uppercase;
         }
-        
-        .bg-nino { background: rgba(0, 210, 255, 0.1); color: #00d2ff; border: 1px solid #00d2ff; }
-        .bg-adulto { background: rgba(40, 167, 69, 0.1); color: #28a745; border: 1px solid #28a745; }
-        .bg-admin { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid #fff; }
+
+        .bg-nino {
+            background: rgba(0, 210, 255, 0.1);
+            color: #00d2ff;
+            border: 1px solid #00d2ff;
+        }
+
+        .bg-adulto {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+
+        .bg-admin {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid #fff;
+        }
 
         .btn-accion {
             padding: 6px 12px;
@@ -90,10 +114,27 @@ if($busqueda){
             transition: 0.3s;
             display: inline-block;
         }
-        .btn-edit { border: 1px solid #00d2ff; color: #00d2ff; margin-right: 5px; }
-        .btn-edit:hover { background: #00d2ff; color: #0f172a; }
-        .btn-delete { border: 1px solid #ff4444; color: #ff4444; }
-        .btn-delete:hover { background: #ff4444; color: white; }
+
+        .btn-edit {
+            border: 1px solid #00d2ff;
+            color: #00d2ff;
+            margin-right: 5px;
+        }
+
+        .btn-edit:hover {
+            background: #00d2ff;
+            color: #0f172a;
+        }
+
+        .btn-delete {
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+
+        .btn-delete:hover {
+            background: #ff4444;
+            color: white;
+        }
     </style>
 </head>
 
@@ -108,56 +149,63 @@ if($busqueda){
 
         <div class="search-console">
             <form method="GET" class="search-group">
-                <input type="text" name="busqueda" class="input-scan" 
-                       placeholder="Escribe aquí (ej: Juan, nino, correo@...)"
-                       value="<?php echo htmlspecialchars($busqueda); ?>" required>
+                <input type="text" name="busqueda" class="input-scan"
+                    placeholder="Escribe aquí (ej: Juan, nino, correo@...)"
+                    value="<?php echo htmlspecialchars($busqueda); ?>" required>
                 <button type="submit" class="btn-admin" style="width: auto; padding: 0 30px;">ESCANEAR</button>
             </form>
         </div>
 
-        <?php if($busqueda): ?>
+        <?php if ($busqueda): ?>
             <div class="card-comando" style="width: 100%;">
                 <h3 style="color: #00d2ff; font-size: 1rem; margin-bottom: 20px; text-transform: uppercase;">
                     Resultados del Escaneo: "<?php echo htmlspecialchars($busqueda); ?>"
                 </h3>
 
-                <?php if($usuarios): ?>
-                <table class="table-radar">
-                    <thead>
-                        <tr style="color: #94a3b8; font-size: 0.8rem;">
-                            <th>ID</th>
-                            <th>JUGADOR</th>
-                            <th>IDENTIFICADOR</th>
-                            <th>RANGO</th>
-                            <th style="text-align: right;">OPERACIONES</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach($usuarios as $u): ?>
-                        <tr>
-                            <td style="font-family: monospace; color: #00d2ff;">#<?php echo $u['usuario_id']; ?></td>
-                            <td style="font-weight: 600;"><?php echo htmlspecialchars($u['nombres']); ?></td>
-                            <td style="opacity: 0.7;"><?php echo htmlspecialchars($u['correo']); ?></td>
-                            <td>
-                                <?php 
-                                    $clase = 'bg-admin'; $icon = '🛡️';
-                                    if($u['tipo_usuario'] == 'nino') { $clase = 'bg-nino'; $icon = '🧸'; }
-                                    if($u['tipo_usuario'] == 'adulto') { $clase = 'bg-adulto'; $icon = '🧠'; }
-                                ?>
-                                <span class="badge-perfil <?php echo $clase; ?>">
-                                    <?php echo $icon . ' ' . $u['tipo_usuario']; ?>
-                                </span>
-                            </td>
-                            <td style="text-align: right;">
-                                <a href="modificar.php?id=<?php echo $u['usuario_id']; ?>" class="btn-accion btn-edit">EDITAR</a>
-                                <a href="baja.php?id=<?php echo $u['usuario_id']; ?>" 
-                                   class="btn-accion btn-delete"
-                                   onclick="return confirm('¿Confirmar eliminación del registro?')">ELIMINAR</a>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                <?php if ($usuarios): ?>
+                    <table class="table-radar">
+                        <thead>
+                            <tr style="color: #94a3b8; font-size: 0.8rem;">
+                                <th>ID</th>
+                                <th>JUGADOR</th>
+                                <th>IDENTIFICADOR</th>
+                                <th>RANGO</th>
+                                <th style="text-align: right;">OPERACIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($usuarios as $u): ?>
+                                <tr>
+                                    <td style="font-family: monospace; color: #00d2ff;">#<?php echo $u['usuario_id']; ?></td>
+                                    <td style="font-weight: 600;"><?php echo htmlspecialchars($u['nombres']); ?></td>
+                                    <td style="opacity: 0.7;"><?php echo htmlspecialchars($u['correo']); ?></td>
+                                    <td>
+                                        <?php
+                                        $clase = 'bg-admin';
+                                        $icon = '🛡️';
+                                        if ($u['tipo_usuario'] == 'nino') {
+                                            $clase = 'bg-nino';
+                                            $icon = '🧸';
+                                        }
+                                        if ($u['tipo_usuario'] == 'adulto') {
+                                            $clase = 'bg-adulto';
+                                            $icon = '🧠';
+                                        }
+                                        ?>
+                                        <span class="badge-perfil <?php echo $clase; ?>">
+                                            <?php echo $icon . ' ' . $u['tipo_usuario']; ?>
+                                        </span>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <a href="modificar.php?id=<?php echo $u['usuario_id']; ?>"
+                                            class="btn-accion btn-edit">EDITAR</a>
+                                        <a href="baja.php?id=<?php echo $u['usuario_id']; ?>" class="btn-accion btn-delete"
+                                            onclick="return confirm('¿Confirmar eliminación del registro?')">ELIMINAR</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 <?php else: ?>
                     <div style="padding: 40px; text-align: center; color: #ff4444;">
                         <span style="font-size: 3rem; display: block;">📡</span>
@@ -175,4 +223,5 @@ if($busqueda){
     </main>
 
 </body>
+
 </html>

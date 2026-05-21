@@ -44,6 +44,9 @@
             <button id="btn-start-game" class="btn-siguiente disabled" onclick="iniciarPartidaMultijugador()" data-key="ta_min_teams">
                 👥 MÍNIMO 2 EQUIPOS
             </button>
+            <button class="btn-siguiente" style="margin-top: 10px; background: rgba(15,23,42,0.8); border: 1px solid #ff4444; color: #ff4444; box-shadow: 0 0 10px rgba(255,68,68,0.3);" onclick="window.location.href='../portadaAdulto.html'">
+                SALIR
+            </button>
 
             <p style="margin-top: 15px; font-size: 0.8rem; opacity: 0.6; text-align: center;" data-key="ta_multiplayer">Edición Multijugador</p>
         </div>
@@ -65,6 +68,7 @@
             <button class="btn-jugar" onclick="comenzarRonda()" data-key="ta_start_time">
                 🚀 EMPEZAR TIEMPO
             </button>
+            <button class="btn-action" style="margin-top: 20px; background: rgba(15,23,42,0.8); border: 1px solid #ff4444; color: #ff4444; box-shadow: 0 0 10px rgba(255,68,68,0.3);" onclick="window.location.href='../portadaAdulto.html'">SALIR</button>
         </div>
 
         <div id="game-screen" class="card hidden">
@@ -85,6 +89,7 @@
             <button class="btn-action btn-skip" onclick="nextCard(false)" data-key="ta_pass">❌ TABÚ / PASO</button>
 
             <div class="score-display"><span data-key="ta_round_points">Puntos ronda: </span><span id="round-score">0</span></div>
+            <button class="btn-action" style="margin-top: 20px; background: rgba(15,23,42,0.8); border: 1px solid #ff4444; color: #ff4444; box-shadow: 0 0 10px rgba(255,68,68,0.3);" onclick="window.location.href='../portadaAdulto.html'">SALIR</button>
         </div>
 
         <div id="end-screen" class="card hidden">
@@ -94,6 +99,7 @@
             </ul>
 
             <button class="btn-action btn-reset" onclick="location.reload()" data-key="ta_new_game">🔄 Nueva Partida</button>
+            <button class="btn-action" style="margin-top: 10px; background: rgba(15,23,42,0.8); border: 1px solid #ff4444; color: #ff4444; box-shadow: 0 0 10px rgba(255,68,68,0.3);" onclick="window.location.href='../portadaAdulto.html'">SALIR</button>
         </div>
 
     </div>

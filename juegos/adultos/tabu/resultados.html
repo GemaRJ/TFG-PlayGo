@@ -4,32 +4,49 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resultados Tabú</title>
+
     <link rel="stylesheet" href="estilos_ranking.css" />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   </head>
+
   <body>
     <section class="pantalla activa">
       <div class="panel-ranking-final">
-        <h1 class="titulo-final">🏆 SALÓN DE la FAMA 🏆</h1>
+        <h1 class="titulo-final">🏆 SALÓN DE LA FAMA 🏆</h1>
 
         <div id="contenedor-podio" class="podio-container"></div>
-        
+
         <div id="lista-resto" class="lista-resultados"></div>
 
         <div class="botones-finales">
-            <button class="btn-peque" onclick="borrarRecords()">🗑️ Borrar</button>
-            <button class="btn-grande" onclick="volverInicio()">
-                🔄 Jugar otra vez
-            </button>
-            <a href="../../../panel.php" class="btn-salir" target="_top">🏠 Salir al Menú</a>
+          <button class="btn-peque" onclick="borrarRecords()">🗑️ Borrar</button>
+
+          <button class="btn-grande" onclick="volverInicio()">
+            🔄 Jugar otra vez
+          </button>
+
+          <a id="btnSalirPanel" class="btn-salir" target="_top">
+            🏠 Salir al Menú
+          </a>
         </div>
       </div>
     </section>
 
     <script src="resultado.js"></script>
+
+    <script>
+      // Detecta si estamos en localhost o hosting
+      const BASE_URL =
+        window.location.hostname === "localhost" ? "/playgo" : "";
+
+      // Configura dinámicamente el botón salir
+      document.getElementById("btnSalirPanel").href = BASE_URL + "/panel.php";
+    </script>
   </body>
 </html>

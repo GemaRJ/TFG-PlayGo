@@ -1,20 +1,19 @@
 ﻿<?php
 // --- LÓGICA DE INICIO ---
-session_start();
+require_once "configuracion/sesiones.php";
 
 $es_invitado = false;
 
 if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado') {
     // CASO 1: ES UN INVITADO
     $es_invitado = true;
-    if (!isset($_SESSION['nombre']))
+
+    if (!isset($_SESSION['nombre'])) {
         $_SESSION['nombre'] = 'Explorador';
+    }
 } else {
     // CASO 2: ES UN USUARIO REGISTRADO
-    include_once "configuracion/sesiones.php";
-    if (function_exists('comprobarJugador')) {
-        comprobarJugador();
-    }
+    comprobarJugador();
 }
 ?>
 <!DOCTYPE html>
@@ -22,7 +21,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
 
 <head>
     <meta charset="UTF-8">
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zona de Juegos | PlayGo</title>
 
@@ -32,7 +31,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
     <link rel="stylesheet" href="assets/css/panel.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="utils/lang_selector.css">
     <link rel="icon" href="./assets/img/icono192-jugando-videojuegos.png?v=3" type="image/png">
-    <link rel="manifest" href="/playgo/manifest.json">
+    <link rel="manifest" href="<?= rutaBase() ?>/manifest.json">
     <meta name="theme-color" content="#0d1b2a">
 </head>
 
@@ -44,6 +43,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
                 <img src="assets/img/logoPlayGo.png" alt="PlayGo logo" class="logoPlayGo me-2">
                 <div class="brand" style="margin-bottom: 0;">PLAY<span>GO</span></div>
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContenido">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -56,7 +56,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
                             <?php echo strtoupper($_SESSION['tipo_usuario']); ?>
                         </span>
                     </div>
-                    
+
                     <!-- Selector de idioma -->
                     <div class="lang-selector-panel ms-2 me-2">
                         <button class="lang-btn active" id="lang-es" onclick="aplicarTraduccion('es')">
@@ -66,7 +66,9 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
                             <img src="https://flagcdn.com/w20/gb.png" width="20" alt="UK" class="flag-icon"> UK
                         </button>
                     </div>
-                    <a href="autenticacion/logout.php" class="btn btn-danger btn-sm rounded-pill fw-bold px-3 ms-2" data-key="panel_logout">
+
+                    <a href="autenticacion/logout.php" class="btn btn-danger btn-sm rounded-pill fw-bold px-3 ms-2"
+                        data-key="panel_logout">
                         Salir de la Nave
                     </a>
                 </div>
@@ -77,91 +79,111 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
     <div class="main-layout">
 
         <div class="sidebar-area shadow-sm">
-            <h6 class="px-4 fw-bold small mb-3 title-menu border-start border-3 border-info ms-3 ps-2" data-key="panel_system">
+            <h6 class="px-4 fw-bold small mb-3 title-menu border-start border-3 border-info ms-3 ps-2"
+                data-key="panel_system">
                 SISTEMA DE JUEGOS
             </h6>
 
             <div class="list-group list-group-flush px-3">
+
                 <?php if ($_SESSION['tipo_usuario'] === 'adulto'): ?>
+
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/adultos/trivial/index.html', this)">
                         <img src="juegos/adultos/trivial/img/trivial.png" alt="Trivial Logo" class="logo">
-
                         <div>
-                            <div class="fw-bold fs-6" data-key="panel_nav_trivial">Trivial</div><small data-key="game_knowledge">Conocimiento</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_trivial">Trivial</div>
+                            <small data-key="game_knowledge">Conocimiento</small>
                         </div>
                     </button>
+
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/adultos/blackjack/index.html', this)">
                         <img src="juegos/adultos/blackjack/images/blackjack.png" alt="Blackjack Logo" class="logo">
-
                         <div>
-                            <div class="fw-bold fs-6" data-key="panel_nav_blackjack">Blackjack</div><small data-key="game_cards">Cartas</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_blackjack">Blackjack</div>
+                            <small data-key="game_cards">Cartas</small>
                         </div>
                     </button>
+
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/adultos/impostor/index.html', this)">
                         <img src="juegos/adultos/impostor/img/impostor.png" alt="Impostor Logo" class="logo">
-
                         <div>
-                            <div class="fw-bold fs-6" data-key="panel_nav_impostor">Impostor</div><small data-key="game_strategy">Estrategia</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_impostor">Impostor</div>
+                            <small data-key="game_strategy">Estrategia</small>
                         </div>
                     </button>
+
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/adultos/tabu/index.html', this)">
                         <img src="juegos/adultos/tabu/img/tabu.png" alt="Tabú Logo" class="logo">
-
                         <div>
-                            <div class="fw-bold fs-6" data-key="panel_nav_tabu">Tabú</div><small data-key="game_words">Palabras</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_tabu">Tabú</div>
+                            <small data-key="game_words">Palabras</small>
                         </div>
                     </button>
 
                 <?php else: ?>
+
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/cuenta_numeros/index.html', this)">
                         <img src="juegos/ninos/cuenta_numeros/imagenes/logoCuentaNumeros.png" alt="cuentaNumeros Logo"
                             class="logo">
                         <div>
-                            <div class="fw-bold fs-6" data-key="panel_nav_cn">Cuenta Números</div><small data-key="game_math">Matemáticas</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_cn">Cuenta Números</div>
+                            <small data-key="game_math">Matemáticas</small>
                         </div>
                     </button>
+
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/cuenta_letras/index.html', this)">
                         <img src="juegos/ninos/cuenta_letras/utils/imagenes/logoCuentaLetras.png" alt="cuentaLetras Logo"
                             class="logo">
                         <div>
-                            <div class="fw-bold fs-6" data-key="panel_nav_cl">Cuenta Letras</div><small data-key="game_vocab">Vocabulario</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_cl">Cuenta Letras</div>
+                            <small data-key="game_vocab">Vocabulario</small>
                         </div>
                     </button>
+
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/memory/index.html', this)">
                         <img src="juegos/ninos/memory/img/logoMemory.png" alt="memory Logo" class="logo">
                         <div>
-                            <div class="fw-bold fs-6" data-key="panel_nav_memory">Memory</div><small data-key="game_memory">Memoria</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_memory">Memory</div>
+                            <small data-key="game_memory">Memoria</small>
                         </div>
                     </button>
+
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/tres_raya/index.html', this)">
                         <img src="juegos/ninos/tres_raya/utils/img/logoTresRaya.png" alt="tresRaya Logo" class="logo">
                         <div>
-                            <div class="fw-bold fs-6" data-key="panel_nav_tr">Tres en Raya</div><small data-key="game_classic">Clásico</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_tr">Tres en Raya</div>
+                            <small data-key="game_classic">Clásico</small>
                         </div>
                     </button>
+
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/trivial/index.html', this)">
                         <img src="juegos/ninos/trivial/img/logoTrivial.png" alt="trivial Logo" class="logo">
                         <div>
-                            <div class="fw-bold fs-6" data-key="panel_nav_tk">Trivial Kids</div><small data-key="game_questions">Preguntas</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_tk">Trivial Kids</div>
+                            <small data-key="game_questions">Preguntas</small>
                         </div>
                     </button>
+
                     <button class="list-group-item list-group-item-action d-flex gap-3 align-items-center"
                         onclick="cargarJuego('juegos/ninos/tabu/index.html', this)">
                         <img src="juegos/ninos/tabu/img/logoTabu.jpg" alt="tabu Logo" class="logo">
                         <div>
-                            <div class="fw-bold fs-6" data-key="panel_nav_tak">Tabú Kids</div><small data-key="game_guess">Adivina</small>
+                            <div class="fw-bold fs-6" data-key="panel_nav_tak">Tabú Kids</div>
+                            <small data-key="game_guess">Adivina</small>
                         </div>
                     </button>
+
                 <?php endif; ?>
+
             </div>
         </div>
 
@@ -173,19 +195,27 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
                     <div>
                         <strong data-key="panel_guest_warning">Modo Invitado:</strong>
                         <span data-key="panel_guest_desc">Juegas sin guardar progreso.</span>
-                        <a href="autenticacion/registro.php" class="fw-bold" data-key="panel_register_here">Regístrate aquí</a>.
+                        <a href="autenticacion/registro.php" class="fw-bold" data-key="panel_register_here">
+                            Regístrate aquí
+                        </a>.
                     </div>
                 </div>
             <?php endif; ?>
 
             <div class="game-card-container">
                 <div class="game-header">
-                    <span class="badge bg-danger bg-opacity-75 animate-pulse" data-key="panel_in_game">🔴 EN JUEGO</span>
-                    <button class="btn btn-sm btn-outline-light rounded-pill px-3"><a href="panel.php"
-                            style="text-decoration: none; color: inherit;" data-key="panel_home_btn">Panel de
-                            Inicio</a>
+                    <span class="badge bg-danger bg-opacity-75 animate-pulse" data-key="panel_in_game">
+                        🔴 EN JUEGO
+                    </span>
+
+                    <button class="btn btn-sm btn-outline-light rounded-pill px-3">
+                        <a href="panel.php" style="text-decoration: none; color: inherit;" data-key="panel_home_btn">
+                            Panel de Inicio
+                        </a>
                     </button>
-                    <button class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="pantallaCompleta()" data-key="panel_fullscreen_btn">
+
+                    <button class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="pantallaCompleta()"
+                        data-key="panel_fullscreen_btn">
                         ⛶ Pantalla Completa
                     </button>
                 </div>
@@ -207,7 +237,7 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
-        </script>
+    </script>
 
     <script>
         /* LÓGICA JAVASCRIPT */
@@ -223,37 +253,44 @@ if (isset($_SESSION['tipo_usuario']) && $_SESSION['tipo_usuario'] == 'invitado')
             if (iframeJuego) {
                 iframeJuego.src = ruta + '?t=' + new Date().getTime();
             }
+
             if (botonesMenu) {
                 botonesMenu.forEach(el => el.classList.remove('active'));
             }
+
             btn.classList.add('active');
         }
 
         function pantallaCompleta() {
             if (!iframeJuego) return;
+
             if (iframeJuego.requestFullscreen) iframeJuego.requestFullscreen();
             else if (iframeJuego.webkitRequestFullscreen) iframeJuego.webkitRequestFullscreen();
             else if (iframeJuego.msRequestFullscreen) iframeJuego.msRequestFullscreen();
         }
     </script>
+
     <script src="chatbot/bot.js"></script>
     <script src="utils/idiomas.js"></script>
     <script src="utils/traductor.js"></script>
+
     <script>
         // SEGURIDAD: Sincronizamos el ID de sesión con el entorno del navegador
         window.usuarioId = <?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 'null'; ?>;
         console.log("🛰️ PlayGo: Conexión establecida para Usuario ID: " + window.usuarioId);
 
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function () {
-                navigator.serviceWorker.register('/playgo/service-worker.js').then(function (registration) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('<?= rutaBase() ?>/service-worker.js').then(function(
+                    registration) {
                     console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, function (err) {
+                }, function(err) {
                     console.log('ServiceWorker registration failed: ', err);
                 });
             });
         }
     </script>
+
 </body>
 
 </html>

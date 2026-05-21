@@ -1,13 +1,11 @@
 <?php
-// ... (mantenemos tu código PHP inicial igual)
 require_once "../configuracion/conexion.php";
 require_once "../configuracion/sesiones.php";
-comprobarSesion();
 
-if ($_SESSION['tipo_usuario'] !== 'administrador') {
-    header("Location: ../index.php");
-    exit;
-}
+/** @var mysqli $conn */
+
+// Verifica que el usuario sea administrador
+comprobarAdmin();
 
 $sql_pendientes = "SELECT COUNT(*) as total FROM incidencias WHERE estado = 'pendiente'";
 $res_pendientes = mysqli_query($conn, $sql_pendientes);
@@ -99,7 +97,6 @@ $cont_pendientes = mysqli_fetch_assoc($res_pendientes)['total'];
             box-shadow: 0 20px 40px rgba(0, 210, 255, 0.3);
         }
 
-        /* ... (el resto de tus estilos btn-admin, etc. están bien) ... */
         .icono-vibrante {
             font-size: 4rem;
             margin-bottom: 20px;

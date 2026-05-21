@@ -3,6 +3,7 @@
 
 require_once "../../configuracion/sesiones.php";
 require_once "../../configuracion/conexion.php";
+/** @var mysqli $conn */
 comprobarAdmin();
 
 $id = intval($_GET['id'] ?? 0);
@@ -13,11 +14,11 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombres = mysqli_real_escape_string($conn, $_POST['nombres']);
     $correo = mysqli_real_escape_string($conn, $_POST['correo']);
-    $rol = $_POST['tipo_usuario']; 
+    $rol = $_POST['tipo_usuario'];
 
     $sql = "UPDATE usuario SET nombres='$nombres', correo='$correo', tipo_usuario='$rol' WHERE usuario_id=$id";
-    
-    if(mysqli_query($conn, $sql)) {
+
+    if (mysqli_query($conn, $sql)) {
         $mensaje = "Sincronización de datos completada.";
     } else {
         $error = "Error en el enlace de datos: " . mysqli_error($conn);
@@ -28,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $res = mysqli_query($conn, "SELECT * FROM usuario WHERE usuario_id=$id");
 $u = mysqli_fetch_assoc($res);
 
-if(!$u) {
+if (!$u) {
     die("
     <link rel='stylesheet' href='../../assets/css/menu.css'>
     <body class='portal-galactico'>
@@ -45,6 +46,7 @@ if(!$u) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,7 +59,7 @@ if(!$u) {
             margin: 0 auto;
             text-align: left;
         }
-        
+
         .msg-alerta {
             padding: 15px;
             border-radius: 12px;
@@ -65,11 +67,23 @@ if(!$u) {
             text-align: center;
             font-weight: 600;
         }
-        .success-space { background: rgba(0, 210, 255, 0.15); border: 1px solid #00d2ff; color: #00d2ff; }
-        .error-space { background: rgba(255, 68, 68, 0.15); border: 1px solid #ff4444; color: #ff4444; }
 
-        .form-group { margin-bottom: 20px; }
-        
+        .success-space {
+            background: rgba(0, 210, 255, 0.15);
+            border: 1px solid #00d2ff;
+            color: #00d2ff;
+        }
+
+        .error-space {
+            background: rgba(255, 68, 68, 0.15);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
         .form-label-space {
             display: block;
             color: #00d2ff;
@@ -98,7 +112,10 @@ if(!$u) {
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
         }
 
-        select.input-space option { background: #1e293b; color: white; }
+        select.input-space option {
+            background: #1e293b;
+            color: white;
+        }
 
         .btn-update {
             width: 100%;
@@ -118,7 +135,7 @@ if(!$u) {
             box-shadow: 0 5px 20px rgba(0, 210, 255, 0.4);
             background: #fff;
         }
-        
+
         .id-badge {
             background: rgba(255, 193, 7, 0.1);
             color: #ffc107;
@@ -147,33 +164,37 @@ if(!$u) {
                 <span class="id-badge">LOCALIZADOR: #<?php echo $id; ?></span>
             </div>
 
-            <?php if($mensaje): ?>
+            <?php if ($mensaje): ?>
                 <div class="msg-alerta success-space">✔ <?php echo $mensaje; ?></div>
             <?php endif; ?>
 
-            <?php if($error): ?>
+            <?php if ($error): ?>
                 <div class="msg-alerta error-space">⚠ <?php echo $error; ?></div>
             <?php endif; ?>
 
             <form method="POST">
                 <div class="form-group">
                     <label class="form-label-space">Nombre del Tripulante</label>
-                    <input type="text" name="nombres" class="input-space" 
-                           value="<?php echo htmlspecialchars($u['nombres']); ?>" required>
+                    <input type="text" name="nombres" class="input-space"
+                        value="<?php echo htmlspecialchars($u['nombres']); ?>" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label-space">Frecuencia (Correo)</label>
-                    <input type="email" name="correo" class="input-space" 
-                           value="<?php echo htmlspecialchars($u['correo']); ?>" required>
+                    <input type="email" name="correo" class="input-space"
+                        value="<?php echo htmlspecialchars($u['correo']); ?>" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label-space">Rango de Acceso</label>
                     <select name="tipo_usuario" class="input-space" required>
-                        <option value="nino" <?php echo ($u['tipo_usuario'] == 'nino') ? 'selected' : ''; ?>>🧸 Niño</option>
-                        <option value="adulto" <?php echo ($u['tipo_usuario'] == 'adulto') ? 'selected' : ''; ?>>🧠 Adulto</option>
-                        <option value="administrador" <?php echo ($u['tipo_usuario'] == 'administrador') ? 'selected' : ''; ?>>🛡️ Administrador</option>
+                        <option value="nino" <?php echo ($u['tipo_usuario'] == 'nino') ? 'selected' : ''; ?>>🧸 Niño
+                        </option>
+                        <option value="adulto" <?php echo ($u['tipo_usuario'] == 'adulto') ? 'selected' : ''; ?>>🧠
+                            Adulto</option>
+                        <option value="administrador"
+                            <?php echo ($u['tipo_usuario'] == 'administrador') ? 'selected' : ''; ?>>🛡️ Administrador
+                        </option>
                     </select>
                 </div>
 
@@ -189,4 +210,5 @@ if(!$u) {
     </main>
 
 </body>
+
 </html>
