@@ -27,7 +27,7 @@ main
 ## Despliegue Online
 
 ```txt
-https://playgo-space.ct.ws
+https://playgo.rf.gd/
 ```
 
 ---
